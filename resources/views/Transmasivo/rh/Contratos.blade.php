@@ -30,10 +30,7 @@
 						<label>Puesto <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="Puesto" name="Puesto" >
 					</div>
-                    <div class="col-md-2">
-						<label>Sueldo <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Sueldo" name="Sueldo" >
-					</div>
+                   
                     
 				</div>
 				<div class="form-group row " >
@@ -43,29 +40,25 @@
 					</div>
 					<div class="col-md-3">
 						<label>Sexo <span class="required-label">*</span></label>
-						<select  required  class="form-control input-with-border" id="Sexo" name="Sexo" >
-							<option>Masculino</option>
-							<option>Femenino</option>
+						<select required class="form-control input-with-border" id="Sexo" name="Sexo">
+							<option value="Masculino">Masculino</option>
+							<option value="Femenino">Femenino</option>
 						</select>
 					</div>
-                    <div class="col-md-3">
-					<label>Estado Civil <span class="required-label">*</span></label>
+					<div class="col-md-3">
+						<label>Estado Civil <span class="required-label">*</span></label>
 						<select required class="form-control input-with-border" id="Civil" name="Civil">
 							<option value="">Seleccione una opción</option>
-							<option value="soltero">Soltero/a</option>
-							<option value="casado">Casado/a</option>
-							<option value="divorciado">Divorciado/a</option>
-							<option value="viudo">Viudo/a</option>
-							<option value="union_libre">Unión libre</option>
-							<option value="separado">Separado/a</option>
-							<option value="comprometido">Comprometido/a</option>
+							<option value="Soltero">Soltero</option>
+							<option value="Casado">Casado</option>
+							<option value="Divorciado">Divorciado</option>
+							<option value="Viudo">Viudo</option>
+							<option value="Unión libre">Unión libre</option>
+							<option value="Separado">Separado</option>
+							<option value="Comprometido">Comprometido</option>
 						</select>
-
 					</div>
-                    <div class="col-md-3">
-						<label>RFC <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="RFC" name="RFC" >
-					</div>
+                  
                     
 				</div>
 				<div class="form-group row " >
@@ -104,53 +97,56 @@
 						<label>Estado <span class="required-label">*</span></label>
 						<select required class="form-control input-with-border" id="Estado" name="Estado">
 							<option value="">Seleccione un estado</option>
-							<option value="aguascalientes">Aguascalientes</option>
-							<option value="baja_california">Baja California</option>
-							<option value="baja_california_sur">Baja California Sur</option>
-							<option value="campeche">Campeche</option>
-							<option value="chiapas">Chiapas</option>
-							<option value="chihuahua">Chihuahua</option>
-							<option value="ciudad_de_mexico">Ciudad de México</option>
-							<option value="coahuila">Coahuila</option>
-							<option value="colima">Colima</option>
-							<option value="durango">Durango</option>
-							<option value="guanajuato">Guanajuato</option>
-							<option value="guerrero">Guerrero</option>
-							<option value="hidalgo">Hidalgo</option>
-							<option value="jalisco">Jalisco</option>
-							<option value="mexico">Estado de México</option>
-							<option value="michoacan">Michoacán</option>
-							<option value="morelos">Morelos</option>
-							<option value="nayarit">Nayarit</option>
-							<option value="nuevo_leon">Nuevo León</option>
-							<option value="oaxaca">Oaxaca</option>
-							<option value="puebla">Puebla</option>
-							<option value="queretaro">Querétaro</option>
-							<option value="quintana_roo">Quintana Roo</option>
-							<option value="san_luis_potosi">San Luis Potosí</option>
-							<option value="sinaloa">Sinaloa</option>
-							<option value="sonora">Sonora</option>
-							<option value="tabasco">Tabasco</option>
-							<option value="tamaulipas">Tamaulipas</option>
-							<option value="tlaxcala">Tlaxcala</option>
-							<option value="veracruz">Veracruz</option>
-							<option value="yucatan">Yucatán</option>
-							<option value="zacatecas">Zacatecas</option>
+							<option value="Aguascalientes">Aguascalientes</option>
+							<option value="Baja California">Baja California</option>
+							<option value="Baja California Sur">Baja California Sur</option>
+							<option value="Campeche">Campeche</option>
+							<option value="Chiapas">Chiapas</option>
+							<option value="Chihuahua">Chihuahua</option>
+							<option value="Ciudad de México">Ciudad de México</option>
+							<option value="Coahuila">Coahuila</option>
+							<option value="Colima">Colima</option>
+							<option value="Durango">Durango</option>
+							<option value="Guanajuato">Guanajuato</option>
+							<option value="Guerrero">Guerrero</option>
+							<option value="Hidalgo">Hidalgo</option>
+							<option value="Jalisco">Jalisco</option>
+							<option value="Estado de México">Estado de México</option>
+							<option value="Michoacán">Michoacán</option>
+							<option value="Morelos">Morelos</option>
+							<option value="Nayarit">Nayarit</option>
+							<option value="Nuevo León">Nuevo León</option>
+							<option value="Oaxaca">Oaxaca</option>
+							<option value="Puebla">Puebla</option>
+							<option value="Querétaro">Querétaro</option>
+							<option value="Quintana Roo">Quintana Roo</option>
+							<option value="San Luis Potosí">San Luis Potosí</option>
+							<option value="Sinaloa">Sinaloa</option>
+							<option value="Sonora">Sonora</option>
+							<option value="Tabasco">Tabasco</option>
+							<option value="Tamaulipas">Tamaulipas</option>
+							<option value="Tlaxcala">Tlaxcala</option>
+							<option value="Veracruz">Veracruz</option>
+							<option value="Yucatán">Yucatán</option>
+							<option value="Zacatecas">Zacatecas</option>
 						</select>
 
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<label>Codigo postal <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="postal" name="postal"  >
 					</div>
+					
+                    <div class="col-md-12">
+						
+                    <hr>
+					</div>
+				</div>
+				<div class="form-group row " >
 					<div class="col-md-2">
 						<label>RFC <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="RFC" name="RFC"  >
 					</div>
-                    
-                    
-				</div>
-				<div class="form-group row " >
 					<div class="col-md-4">
 						<label>IMSS <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="IMSS" name="IMSS"  >
@@ -159,11 +155,29 @@
 						<label>CURP <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="CURP" name="CURP"  >
 					</div>
+				</div>
+				<div class="form-group row " >
 					<div class="col-md-4">
 						<label>Correo <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="Correo" name="Correo"  >
 					</div>
-                    
+                    <div class="col-md-3">
+						<label>Salario diario <span class="required-label">*</span></label>
+						<input required type="text" class="form-control input-with-border" id="Salario_diario" name="Salario_diario" oninput="convertSalary()">
+					</div>
+					<div class="col-md-3">
+						<label>Salario en letras <span class="required-label">*</span></label>
+						<input type="text" class="form-control input-with-border" id="Salario_diario_letras" name="Salario_diario_letras" >
+					</div>
+					
+				</div>
+				<div class="form-group row " >
+					<div class="col-md-3">
+						<label>Fecha de contrato <span class="required-label">*</span></label>
+						<input required type="date" class="form-control input-with-border" id="fecha_contrato" name="fecha_contrato" value="{{ now()->format('Y-m-d') }}">
+						<input  type="hidden" class="form-control input-with-border" id="fecha_contrato_hidden" name="fecha_contrato_hidden" >
+
+					</div>
                     
 				</div>
                 <div class="form-group row " >
@@ -183,11 +197,112 @@
 @section('jscustom')
 <script type="text/javascript">
 	
-	$('#n_economico').select2();
-	$('#nom_supervisor').select2();
-	$('#n_mecanico').select2();
-	$('#n_economico').change(cambioEARTBUS);
 	
+	
+	function numberToWords(num) {
+    const units = ["", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve"];
+    const teens = ["Diez", "Once", "Doce", "Trece", "Catorce", "Quince", "Dieciséis", "Diecisiete", "Dieciocho", "Diecinueve"];
+    const tens = ["", "", "Veinte", "Treinta", "Cuarenta", "Cincuenta", "Sesenta", "Setenta", "Ochenta", "Noventa"];
+    const hundreds = ["", "Cien", "Doscientos", "Trescientos", "Cuatrocientos", "Quinientos", "Seiscientos", "Setecientos", "Ochocientos", "Novecientos"];
+
+    if (num === 0) return "Cero";
+
+    let words = '';
+
+    if (num >= 1000) {
+        words += "Mil ";
+        num %= 1000;
+    }
+
+    if (num >= 100) {
+        words += hundreds[Math.floor(num / 100)] + " ";
+        num %= 100;
+    }
+
+    if (num >= 20) {
+        words += tens[Math.floor(num / 10)] + " ";
+        num %= 10;
+    } else if (num >= 10) {
+        words += teens[num - 10] + " ";
+        num = 0;
+    }
+
+    if (num > 0) {
+        words += units[num] + " ";
+    }
+
+    return words.trim().toUpperCase();
+}
+$(document).ready(function() {
+	const fecha = new Date($('#fecha_contrato').val());
+        const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+        const diaSemana = dias[fecha.getUTCDay()];
+        const dia = fecha.getUTCDate();
+        const mes = meses[fecha.getUTCMonth()];
+        const año = fecha.getUTCFullYear();
+
+        const fechaTexto = `${diaSemana}, ${dia} de ${mes} de ${año}`;
+			$('#fecha_contrato_hidden').val(fechaTexto);
+       
+    });
+	$('#fecha_contrato').on('change', function() {
+		const fecha = new Date($('#fecha_contrato').val());
+        const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+        const diaSemana = dias[fecha.getUTCDay()];
+        const dia = fecha.getUTCDate();
+        const mes = meses[fecha.getUTCMonth()];
+        const año = fecha.getUTCFullYear();
+
+        const fechaTexto = `${diaSemana}, ${dia} de ${mes} de ${año}`;
+			$('#fecha_contrato_hidden').val(fechaTexto);
+			
+        });
+document.getElementById('Sexo').addEventListener('change', function() {
+        const sexo = this.value;
+		console.log('hie');
+        const estadoCivilSelect = document.getElementById('Civil');
+        estadoCivilSelect.innerHTML = ''; // Limpiar opciones anteriores
+
+        // Agregar opciones según el sexo seleccionado
+        if (sexo === 'Masculino') {
+            estadoCivilSelect.innerHTML = `
+                <option value="">Seleccione una opción</option>
+                <option value="Soltero">Soltero</option>
+                <option value="Casado">Casado</option>
+                <option value="Divorciado">Divorciado</option>
+                <option value="Viudo">Viudo</option>
+                <option value="Unión libre">Unión libre</option>
+                <option value="Separado">Separado</option>
+                <option value="Comprometido">Comprometido</option>
+            `;
+        } else if (sexo === 'Femenino') {
+            estadoCivilSelect.innerHTML = `
+                <option value="">Seleccione una opción</option>
+                <option value="Soltera">Soltera</option>
+                <option value="Casada">Casada</option>
+                <option value="Divorciada">Divorciada</option>
+                <option value="Viuda">Viuda</option>
+                <option value="Unión libre">Unión libre</option>
+                <option value="Separada">Separada</option>
+                <option value="Comprometida">Comprometida</option>
+            `;
+        }
+    });
+function convertSalary() {
+    const salaryInput = document.getElementById('Salario_diario');
+    const salaryInWords = document.getElementById('Salario_diario_letras');
+    const salary = parseInt(salaryInput.value);
+
+    if (!isNaN(salary)) {
+        salaryInWords.value = numberToWords(salary);
+    } else {
+        salaryInWords.value = '';
+    }
+}
 </script>
 @endsection
 </x-app-layout>
