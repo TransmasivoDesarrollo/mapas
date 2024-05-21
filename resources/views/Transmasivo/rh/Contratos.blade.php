@@ -90,7 +90,7 @@
 				<div class="form-group row " >
 					
 					<div class="col-md-3">
-						<label>Alcaldia/Municipio <span class="required-label">*</span></label>
+						<label>Alcaldía/Municipio <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="Alcaldia" name="Alcaldia"  >
 					</div>
 					<div class="col-md-3">
@@ -111,7 +111,7 @@
 							<option value="Guerrero">Guerrero</option>
 							<option value="Hidalgo">Hidalgo</option>
 							<option value="Jalisco">Jalisco</option>
-							<option value="Estado de México">Estado de México</option>
+							<option value="Estado de México" selected>Estado de México</option>
 							<option value="Michoacán">Michoacán</option>
 							<option value="Morelos">Morelos</option>
 							<option value="Nayarit">Nayarit</option>
@@ -133,7 +133,7 @@
 
 					</div>
 					<div class="col-md-2">
-						<label>Codigo postal <span class="required-label">*</span></label>
+						<label>Código postal <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="postal" name="postal"  >
 					</div>
 					
@@ -158,7 +158,7 @@
 				</div>
 				<div class="form-group row " >
 					<div class="col-md-4">
-						<label>Correo <span class="required-label">*</span></label>
+						<label>Correo </label>
 						<input required type="text" class="form-control input-with-border" id="Correo" name="Correo"  >
 					</div>
                     <div class="col-md-3">
