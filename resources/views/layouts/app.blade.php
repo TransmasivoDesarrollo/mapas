@@ -150,6 +150,11 @@
 											<span class="sub-item">Contratos</span>
 										</a>
 									</li>
+                                    <li>
+										<a  href="{{url('/Personal')}}">
+											<span class="sub-item">Personal</span>
+										</a>
+									</li>
 									
 								</ul>
 							</div>
@@ -216,6 +221,11 @@
                                     <li>
 										<a  href="{{url('/Contratos')}}">
 											<span class="sub-item">Contratos</span>
+										</a>
+									</li>
+                                    <li>
+										<a  href="{{url('/Personal')}}">
+											<span class="sub-item">Personal</span>
 										</a>
 									</li>
 									

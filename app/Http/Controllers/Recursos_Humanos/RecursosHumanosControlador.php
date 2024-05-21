@@ -79,4 +79,10 @@ class RecursosHumanosControlador extends Controller
         // Descargar el documento
         return response()->download(public_path($filename))->deleteFileAfterSend(true);
     }
+
+    public function Personal()
+    {
+        $consulta= DB::connection('mysql')->select('select * from t_personal');
+        return view('Transmasivo.rh.Personal',compact('consulta'));
+    }
 }

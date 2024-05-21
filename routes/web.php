@@ -67,9 +67,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/Inventario_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Inventario_caja_herramienta')->name('Inventario_caja_herramienta');
     
     Route::get('/exportar-a-word', '\App\Http\Controllers\Almacen\AlmacenController@exportToWord');
+
+    //recursos humanos
     Route::get('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contratos');
     Route::POST('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@generarContratos');
-
+    Route::get('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Personal');
+   
 
     //operaciones
     Route::get('/Bitacora_de_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones')->name('Bitacora_de_operaciones');
