@@ -138,11 +138,13 @@
 							</a>
 							<div class="collapse" id="forms">
 								<ul class="nav nav-collapse">
+                                    {{--
 									<li>
 										<a  href="{{url('/Alta_de_personal')}}">
 											<span class="sub-item">Alta de personal</span>
 										</a>
 									</li>
+                                    --}}
                                     <li>
 										<a  href="{{url('/Contratos')}}">
 											<span class="sub-item">Contratos</span>
@@ -204,11 +206,13 @@
 							</a>
 							<div class="collapse" id="forms">
 								<ul class="nav nav-collapse">
+                                {{--
 									<li>
 										<a  href="{{url('/Alta_de_personal')}}">
 											<span class="sub-item">Alta de personal</span>
 										</a>
 									</li>
+                                    --}}
                                     <li>
 										<a  href="{{url('/Contratos')}}">
 											<span class="sub-item">Contratos</span>
