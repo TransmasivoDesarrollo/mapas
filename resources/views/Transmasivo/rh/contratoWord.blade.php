@@ -24,7 +24,7 @@ font-size: 9pt;
 <p class="nueve">II. Declara el EMPLEADO, bajo protesta de decir verdad:</p>
 <p class="nueve">a. Que sus datos generales son los siguientes:</p>
 <p class="nueve">Nombre: {{$nombre}}</p>
-<p class="nueve">Edad: «EDAD» años</p>
+<p class="nueve">Edad: {{$edad}} años</p>
 <p class="nueve">Nacionalidad: Mexicana </p>
 <p class="nueve">Sexo: «SEXO»</p>
 <p class="nueve">Estado Civil: «EDO_CIVIL»</p>
