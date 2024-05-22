@@ -73,7 +73,11 @@
                         <li class="nav-item dropdown hidden-caret  card-round" >
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{url('/assets')}}/img/profile.png" alt="image profile" width="36" class="img-circle" id="profile_dropdown"></a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                
+                                <li>
+                                    <a class="dropdown-item"  href="{{ route('perfil') }}">
+                                        Cambiar contraseña
+                                    </a>
+                                </li>
                                 <li>
                                     <a class="dropdown-item"  href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
