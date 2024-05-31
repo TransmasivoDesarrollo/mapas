@@ -32,7 +32,6 @@
                         <div class="col-md-3">
                             <label>Seccion</label>
                             <select   class="form-control input-with-border" id="seccion" name="seccion">
-                                    <option value="Selecciona" >-Selecciona-</option>
                                 @foreach($seccion as $secc)
                                     <option value="{{$secc->id_seccion_liberacion_unidades}}" >{{$secc->seccion}}</option>
                                 @endforeach
@@ -41,7 +40,6 @@
                         <div class="col-md-3">
                             <label>Subseccion</label>
                             <select  class="form-control input-with-border" id="subseccion" name="subseccion">
-                                    <option value="Selecciona" >-Selecciona-</option>
                                 @foreach($subseccion as $sub)
                                     <option valor_seccion="{{$sub->id_seccion_liberacion_unidades}}" value="{{$sub->id_subseccion_liberacion_unidades}}" >{{$sub->subseccion}}</option>
                                 @endforeach

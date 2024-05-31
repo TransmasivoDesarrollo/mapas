@@ -1,3 +1,4 @@
+</html>
 <!DOCTYPE html>
         <html>
         
@@ -33,7 +34,7 @@
                     <img src="<?php echo $imagenBase64 ?>" alt="logo img" style="width:200px;" class="logo-img">
                 </a>
             </td>
-            <td style="width: 70%; border: 1px #ffffff; solid;"><center><b>Autorización De Liberacion De Unidades</b></center></td>
+            <td style="width: 70%; border: 1px #ffffff; solid;"><center><b>CHECK DE LIBERACIÓN DE UNIDADES</b></center></td>
         </tr>
     </table>
       <table>
@@ -432,8 +433,15 @@
         
               
     </table>
-    
+    <br>
 
 
 </body>
 @endforeach
+</html>
+
+
+
+
+
+

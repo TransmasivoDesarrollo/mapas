@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
+    Route::get('/sendWelcomeEmail', '\App\Http\Controllers\Mantenimiento\MantenimientoController@sendWelcomeEmail')->name('sendWelcomeEmail');
     Route::get('/mapas', '\App\Http\Controllers\Controller@mapas')->name('mapas');
     Route::get('/login', '\App\Http\Controllers\Controller@login')->name('login');
     Route::get('/dashboard', '\App\Http\Controllers\Controller@dashboard')->name('dashboard');
@@ -88,7 +89,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/Catalogo_de_fallas/baja', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Catalogo_de_fallas_baja')->name('Catalogo_de_fallas_baja');
     Route::get('/Catalogo_de_fallas/alta', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Catalogo_de_fallas_alta')->name('Catalogo_de_fallas_alta');
     
+
     
+    Route::get('/Autorizacion_check_mantenimiento', '\App\Http\Controllers\Operaciones\OperacionesController@Autorizacion_check_mantenimiento')->name('Autorizacion_check_mantenimiento');
+    Route::POST('/Autorizacion_check_mantenimiento', '\App\Http\Controllers\Operaciones\OperacionesController@acciones')->name('Autorizacion_check_mantenimientoacciones');
+    
+    
+    Route::get('/Inventario', '\App\Http\Controllers\Inventario\InventarioController@Inventario')->name('Inventario');
+    Route::POST('/Inventario', '\App\Http\Controllers\Inventario\InventarioController@GuardarInventario')->name('GuardarInventario');
+    
+    Route::get('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@ModificarInventario')->name('ModificarInventario');
+    Route::POST('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@cambios')->name('cambios');
     
 });
 

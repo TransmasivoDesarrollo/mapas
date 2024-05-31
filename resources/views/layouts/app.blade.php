@@ -164,6 +164,29 @@
 							</div>
 					</li>
                     @endif
+					@if(auth()->user()->tipo_usuario=='Inventario')
+                    <li class="nav-item">
+							<a data-toggle="collapse" href="#Inventario">
+								<i class="flaticon-laptop"></i>
+								<p>Inventario </p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Inventario">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Inventario')}}">
+											<span class="sub-item">Alta de inventario</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/ModificarInventario')}}">
+											<span class="sub-item">Modificar inventario</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
+                    @endif
                     
                     @if(auth()->user()->tipo_usuario=='Mantenimiento')
                     <li class="nav-item">
@@ -201,6 +224,42 @@
 											<span class="sub-item">Bitácora de liberación</span>
 										</a>
 									</li>
+									
+								</ul>
+							</div>
+					</li>
+                    @endif
+					@if(auth()->user()->tipo_usuario=='Operaciones')
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Operaciones">
+								<i class="la la-bus"></i>
+								<p>Operaciones</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Operaciones">
+								<ul class="nav nav-collapse">
+                                    <!--
+                                    <li>
+										<a  href="{{url('/Alta_de_unidades')}}">
+											<span class="sub-item">Alta de unidades</span>
+										</a>
+									</li>-->
+									<li>
+										<a  href="{{url('/Autorizacion_check_mantenimiento')}}">
+											<span class="sub-item">Autorización check mantenimiento</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Bitacora_de_operaciones')}}">
+											<span class="sub-item">Bitácora de operaciones</span>
+										</a>
+									</li>
+                                    <li>
+										<a  href="{{url('/Alta_de_reporte')}}">
+											<span class="sub-item">Alta de reporte</span>
+										</a>
+									</li>
+                                   
 									
 								</ul>
 							</div>
@@ -338,6 +397,11 @@
 										</a>
 									</li>-->
 									<li>
+										<a  href="{{url('/Autorizacion_check_mantenimiento')}}">
+											<span class="sub-item">Autorización check mantenimiento</span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/Bitacora_de_operaciones')}}">
 											<span class="sub-item">Bitácora de operaciones</span>
 										</a>
@@ -370,6 +434,28 @@
 							</div>
 					</li>
 
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Inventario">
+								<i class="flaticon-laptop"></i>
+								<p>Inventario </p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Inventario">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Inventario')}}">
+											<span class="sub-item">Alta de inventario</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/ModificarInventario')}}">
+											<span class="sub-item">Modificar inventario</span>
+										</a>
+									</li>
+									
+								</ul>
+							</div>
+					</li>
                     @endif
 
                     
