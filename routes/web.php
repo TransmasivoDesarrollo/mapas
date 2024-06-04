@@ -94,7 +94,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/Autorizacion_check_mantenimiento', '\App\Http\Controllers\Operaciones\OperacionesController@Autorizacion_check_mantenimiento')->name('Autorizacion_check_mantenimiento');
     Route::POST('/Autorizacion_check_mantenimiento', '\App\Http\Controllers\Operaciones\OperacionesController@acciones')->name('Autorizacion_check_mantenimientoacciones');
     
+    Route::get('/bannerModulo200', '\App\Http\Controllers\Operaciones\OperacionesController@bannerModulo200')->name('bannerModulo200');
+    Route::POST('/bannerModulo200', '\App\Http\Controllers\Operaciones\OperacionesController@subirBannerOperaciones')->name('subirBannerOperaciones');
+
+    Route::get('/modificar_banner_200', '\App\Http\Controllers\Operaciones\OperacionesController@modificar_banner_200')->name('modificar_banner_200');
+    Route::POST('/modificar_banner_200', '\App\Http\Controllers\Operaciones\OperacionesController@cambiar_estatus_banner_200')->name('cambiar_estatus_banner_200');
     
+    
+    
+
     Route::get('/Inventario', '\App\Http\Controllers\Inventario\InventarioController@Inventario')->name('Inventario');
     Route::POST('/Inventario', '\App\Http\Controllers\Inventario\InventarioController@GuardarInventario')->name('GuardarInventario');
     
@@ -102,5 +110,7 @@ Route::middleware('auth')->group(function () {
     Route::POST('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@cambios')->name('cambios');
     
 });
+
+Route::get('/200', '\App\Http\Controllers\Operaciones\OperacionesController@m200')->name('m200');
 
 require __DIR__.'/auth.php';

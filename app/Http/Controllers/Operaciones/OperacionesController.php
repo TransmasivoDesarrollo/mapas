@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Auth; // Asegúrate de importar Auth
 
 class OperacionesController extends Controller
 {
-    public function __construct()
-	{
-
-		$this->middleware(['auth']);
-	}
+    
 
     public function Bitacora_de_operaciones()
     {
@@ -699,6 +695,63 @@ class OperacionesController extends Controller
             ->update(['estatus' => $request->input('pendientes')]);
            return $this->Autorizacion_check_mantenimiento('Se aprobo con exito, con pendiente menor','info');
         }
+    }
+    public function bannerModulo200($mensaje="", $color="")
+    {
+        return view('Transmasivo.Operaciones.bannerModulo200',compact('mensaje','color'));
+   
+    }
+    public function subirBannerOperaciones(Request $request)
+    {
+        
+        $file =$request->file('uploadImg');
+        date_default_timezone_set('America/Mexico_City');
+        $hora_actual = time();
+        $hora_una_hora_atras = $hora_actual - 0;
+        $hora_formateada2 = date('Y_m_d_H_i_s', $hora_una_hora_atras);
+        $extension = $file->getClientOriginalExtension();
+        $NombreFinal =  auth()->user()->id ."_".$hora_formateada2.".".$extension;
+        $file->move(public_path().'/images/Operaciones/',$NombreFinal);
+
+        $pantalla= $request->input('pantalla');
+        
+        DB::connection('mysql')->table('banner200')->insert([
+            'imagen' => $NombreFinal,
+            'pantalla' => $pantalla,
+            'estatus' => 'Activo'
+        ]);
+        
+        return $this->bannerModulo200('Se subio la imagen correctamente!','success');
+    }
+    public function m200()
+    {
+        
+        $images = DB::connection('mysql')->select('SELECT * FROM banner200 where estatus="Activo"');
+        return view('Transmasivo.Operaciones.200',compact('images'));
+    }
+
+    public function modificar_banner_200($mensaje="",$color="")
+    {
+       
+        $images = DB::connection('mysql')->select('SELECT * FROM banner200 ORDER BY estatus = "Activo" DESC;        ');
+        return view('Transmasivo.Operaciones.modificar_banner_200',compact('images','mensaje','color'));
+    }
+    public function cambiar_estatus_banner_200(Request $request)
+    {
+        if($request->has('cambiar_segundos')){
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $request->input('id2'))
+            ->update(['pantalla' => $request->input('pantalla')]);
+            
+            return $this->modificar_banner_200('Se actualizo el estatus correctamente!','success');
+        }else if($request->has('Desactivar')){
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $request->input('id'))
+            ->update(['estatus' => 'Inactivo']);
+            
+            return $this->modificar_banner_200('Se actualizo el estatus correctamente!','success');
+        }
+       
     }
 
     public function Autorizacion_check_mantenimiento($mensaje="",$color="")

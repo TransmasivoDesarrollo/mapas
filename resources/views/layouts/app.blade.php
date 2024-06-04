@@ -259,6 +259,17 @@
 											<span class="sub-item">Alta de reporte</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/bannerModulo200')}}">
+											<span class="sub-item">Banner modulo 200</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/modificar_banner_200')}}">
+											<span class="sub-item">Modificar banner modulo 200</span>
+										</a>
+									</li>
+									
                                    
 									
 								</ul>
@@ -409,6 +420,16 @@
                                     <li>
 										<a  href="{{url('/Alta_de_reporte')}}">
 											<span class="sub-item">Alta de reporte</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/bannerModulo200')}}">
+											<span class="sub-item">Banner modulo 200</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/modificar_banner_200')}}">
+											<span class="sub-item">Modificar banner modulo 200</span>
 										</a>
 									</li>
                                    

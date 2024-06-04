@@ -200,7 +200,7 @@
                                                 <td class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Soporte transmisión</center></td>
                                                 <td class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Soporte transmisión falla</center></td>
                                                 <td class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Soporte transmisión observación</center></td>
-</tr>
+                                            </tr>
                                         </thead>
 
                                         <tbody id="llenaTabla">
