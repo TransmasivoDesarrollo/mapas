@@ -20,6 +20,25 @@
 				{{ session('mensaje') }}.
 				
 			</div>
+			<div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Enviar mensaje</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						Un correo fue enviado al área de supervisión, pero puedes enviar un mensaje de WhatsApp oprimiendo el botón
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<a href="whatsapp://send?phone=5515688077&text=Se abrió un nuevo reporte de mantenimiento con el folio" class="btn btn-success">Enviar mensaje por WhatsApp</a>
+					</div>
+					</div>
+				</div>
+				</div>
 			@endif
 
 			<form method="post" id="exampleValidation" action="{{url('/Bitacora_De_Liberacion_De_Unidades')}}">
@@ -51,6 +70,8 @@
                                 @foreach($mecanicos as $mecanico)
                                 <option>{{$mecanico->nombre}}</option>
                                 @endforeach
+								
+							<option>Corina Jared López</option>
                             </select>
                         </div>
 					<div class="col-md-4">
@@ -59,6 +80,8 @@
                                 @foreach($mecanicos as $mecanico)
                                 <option>{{$mecanico->nombre}}</option>
                                 @endforeach
+								
+							<option>Corina Jared López</option>
                         </select>
 						{{--
 						<input required type="text" class="form-control input-with-border" id="nom_supervisor" name="nom_supervisor">
@@ -402,8 +425,8 @@
 											
 										</tr>
 										<tr>
-											<td align="center"><input type="radio" required class="form-control" id="neu_eje_int_izq" name="neu_eje_int_izq" value="ok" ></td>
-											<td align="center"><input type="radio" required class="form-control" id="neu_eje_int_izq" name="neu_eje_int_izq" value="cambio"></td>
+											<td align="center"><input type="radio"  class="form-control" id="neu_eje_int_izq" name="neu_eje_int_izq" value="ok" ></td>
+											<td align="center"><input type="radio"  class="form-control" id="neu_eje_int_izq" name="neu_eje_int_izq" value="cambio"></td>
 											<td align="rigth">
 												<div class="form-check">
 													@foreach($fallas as $falla)
@@ -433,8 +456,8 @@
 											
 										</tr>
 										<tr>
-											<td align="center"><input type="radio" required class="form-control" id="neu_eje_int_der" name="neu_eje_int_der" value="ok" ></td>
-											<td align="center"><input type="radio" required class="form-control" id="neu_eje_int_der" name="neu_eje_int_der" value="cambio"></td>
+											<td align="center"><input type="radio"  class="form-control" id="neu_eje_int_der" name="neu_eje_int_der" value="ok" ></td>
+											<td align="center"><input type="radio"  class="form-control" id="neu_eje_int_der" name="neu_eje_int_der" value="cambio"></td>
 											<td align="rigth">
 												<div class="form-check">
 													@foreach($fallas as $falla)
@@ -676,8 +699,8 @@
 											
 										</tr>
 										<tr>
-											<td align="center"><input type="radio" required class="form-control" id="bal_eje_int_izq" name="bal_eje_int_izq" value="ok" ></td>
-											<td align="center"><input type="radio" required class="form-control" id="bal_eje_int_izq" name="bal_eje_int_izq" value="cambio"></td>
+											<td align="center"><input type="radio"  class="form-control" id="bal_eje_int_izq" name="bal_eje_int_izq" value="ok" ></td>
+											<td align="center"><input type="radio"  class="form-control" id="bal_eje_int_izq" name="bal_eje_int_izq" value="cambio"></td>
 											<td align="rigth">
 												<div class="form-check">
 													@foreach($fallas as $falla)
@@ -707,8 +730,8 @@
 											
 										</tr>
 										<tr>
-											<td align="center"><input type="radio" required class="form-control" id="bal_eje_int_der" name="bal_eje_int_der" value="ok" ></td>
-											<td align="center"><input type="radio" required class="form-control" id="bal_eje_int_der" name="bal_eje_int_der" value="cambio"></td>
+											<td align="center"><input type="radio"  class="form-control" id="bal_eje_int_der" name="bal_eje_int_der" value="ok" ></td>
+											<td align="center"><input type="radio"  class="form-control" id="bal_eje_int_der" name="bal_eje_int_der" value="cambio"></td>
 											<td align="rigth">
 												<div class="form-check">
 													@foreach($fallas as $falla)
@@ -953,8 +976,8 @@
 											
 										</tr>
 										<tr>
-											<td align="center"><input type="radio" required class="form-control" id="bols_air_eje_int_izq" name="bols_air_eje_int_izq" value="ok" ></td>
-											<td align="center"><input type="radio" required class="form-control" id="bols_air_eje_int_izq" name="bols_air_eje_int_izq" value="cambio"></td>
+											<td align="center"><input type="radio"  class="form-control" id="bols_air_eje_int_izq" name="bols_air_eje_int_izq" value="ok" ></td>
+											<td align="center"><input type="radio"  class="form-control" id="bols_air_eje_int_izq" name="bols_air_eje_int_izq" value="cambio"></td>
 											<td align="rigth">
 												<div class="form-check">
 													@foreach($fallas as $falla)
@@ -985,8 +1008,8 @@
 											
 										</tr>
 										<tr>
-											<td align="center"><input type="radio" required class="form-control" id="bols_air_eje_int_der" name="bols_air_eje_int_der" value="ok" ></td>
-											<td align="center"><input type="radio" required class="form-control" id="bols_air_eje_int_der" name="bols_air_eje_int_der" value="cambio"></td>
+											<td align="center"><input type="radio"  class="form-control" id="bols_air_eje_int_der" name="bols_air_eje_int_der" value="ok" ></td>
+											<td align="center"><input type="radio"  class="form-control" id="bols_air_eje_int_der" name="bols_air_eje_int_der" value="cambio"></td>
 											<td align="rigth">
 												<div class="form-check">
 													@foreach($fallas as $falla)
@@ -1203,28 +1226,22 @@
 										
 									</tr>
 									<tr>
-										<td align="center"><input type="radio" required class="form-control" id="asiento_carro2" name="asiento_carro2" value="ok" ></td>
-										<td align="center"><input type="radio" required class="form-control" id="asiento_carro2" name="asiento_carro2" value="cambio"></td>
+										<td align="center"><input type="radio"  class="form-control" id="asiento_carro2" name="asiento_carro2" value="ok" ></td>
+										<td align="center"><input type="radio"  class="form-control" id="asiento_carro2" name="asiento_carro2" value="cambio"></td>
 										<td align="rigth">
 											<div class="form-check">
 												@foreach($fallas as $falla)
-												@if($falla->id_subseccion == 27)
-												<label class="form-check-label">
-													<input class="form-check-input" type="checkbox" id="{{$falla->id_fallas_subseccion_liberacion_unidades}}_{{$falla->falla}}" name="{{$falla->id_fallas_subseccion_liberacion_unidades}}_{{$falla->falla}}" value="">
-													<span class="form-check-sign">{{$falla->falla}}</span>
-												</label>
-												@endif
+													@if($falla->id_subseccion == 27)
+													<label class="form-check-label">
+														<input class="form-check-input" type="checkbox" id="{{$falla->id_fallas_subseccion_liberacion_unidades}}_{{$falla->falla}}" name="{{$falla->id_fallas_subseccion_liberacion_unidades}}_{{$falla->falla}}" value="">
+														<span class="form-check-sign">{{$falla->falla}}</span>
+													</label>
+													@endif
 												@endforeach
-												
-												
 											</div>
 											<input type="text" class="form-control" placeholder="Observaciones" id="asiento_carro2_o" name="asiento_carro2_o">
 										</td>
 									</tr>
-									
-									
-									
-									
 								</table>
 								<br>
 							</div>
@@ -1315,8 +1332,8 @@
 									
 								</tr>
 								<tr>
-									<td align="center"><input type="radio" required class="form-control" id="articulacion" name="articulacion" value="ok" ></td>
-									<td align="center"><input type="radio" required class="form-control" id="articulacion" name="articulacion" value="cambio"></td>
+									<td align="center"><input type="radio"  class="form-control" id="articulacion" name="articulacion" value="ok" ></td>
+									<td align="center"><input type="radio"  class="form-control" id="articulacion" name="articulacion" value="cambio"></td>
 									<td align="rigth">
 										<div class="form-check">
 											@foreach($fallas as $falla)
@@ -1346,8 +1363,8 @@
 									
 								</tr>
 								<tr>
-									<td align="center"><input type="radio" required class="form-control" id="articulacion_soporte" name="articulacion_soporte" value="ok" ></td>
-									<td align="center"><input type="radio" required class="form-control" id="articulacion_soporte" name="articulacion_soporte" value="cambio"></td>
+									<td align="center"><input type="radio"  class="form-control" id="articulacion_soporte" name="articulacion_soporte" value="ok" ></td>
+									<td align="center"><input type="radio"  class="form-control" id="articulacion_soporte" name="articulacion_soporte" value="cambio"></td>
 									<td align="rigth">
 										<div class="form-check">
 											@foreach($fallas as $falla)
@@ -1378,8 +1395,8 @@
 									
 								</tr>
 								<tr>
-									<td align="center"><input type="radio" required class="form-control" id="articulacion_granada" name="articulacion_granada" value="ok" ></td>
-									<td align="center"><input type="radio" required class="form-control" id="articulacion_granada" name="articulacion_granada" value="cambio"></td>
+									<td align="center"><input type="radio"  class="form-control" id="articulacion_granada" name="articulacion_granada" value="ok" ></td>
+									<td align="center"><input type="radio"  class="form-control" id="articulacion_granada" name="articulacion_granada" value="cambio"></td>
 									<td align="rigth">
 										<div class="form-check">
 											@foreach($fallas as $falla)
@@ -1434,7 +1451,7 @@
 							</center>
 							<table width="100%;">
 								<tr>
-									<td align="center" colspan="3"><b>GRANADAS	</b></td>
+									<td align="center" colspan="3"><b>MODULO	</b></td>
 								</tr>
 								<tr>
 									<td align="center" width="15%">OK</td>
@@ -1596,8 +1613,8 @@
 									
 								</tr>
 								<tr>
-									<td align="center"><input type="radio" required class="form-control" id="eje_inter_izq" name="eje_inter_izq" value="ok" ></td>
-									<td align="center"><input type="radio" required class="form-control" id="eje_inter_izq" name="eje_inter_izq" value="cambio"></td>
+									<td align="center"><input type="radio"  class="form-control" id="eje_inter_izq" name="eje_inter_izq" value="ok" ></td>
+									<td align="center"><input type="radio"  class="form-control" id="eje_inter_izq" name="eje_inter_izq" value="cambio"></td>
 									<td align="rigth">
 										<div class="form-check">
 											@foreach($fallas as $falla)
@@ -1627,8 +1644,8 @@
 									
 								</tr>
 								<tr>
-									<td align="center"><input type="radio" required class="form-control" id="eje_inter_der" name="eje_inter_der" value="ok" ></td>
-									<td align="center"><input type="radio" required class="form-control" id="eje_inter_der" name="eje_inter_der" value="cambio"></td>
+									<td align="center"><input type="radio"  class="form-control" id="eje_inter_der" name="eje_inter_der" value="ok" ></td>
+									<td align="center"><input type="radio"  class="form-control" id="eje_inter_der" name="eje_inter_der" value="cambio"></td>
 									<td align="rigth">
 										<div class="form-check">
 											@foreach($fallas as $falla)
@@ -1846,8 +1863,8 @@
 									
 								</tr>
 								<tr>
-									<td align="center"><input type="radio" required class="form-control" id="susp_eje3" name="susp_eje3" value="ok" ></td>
-									<td align="center"><input type="radio" required class="form-control" id="susp_eje3" name="susp_eje3" value="cambio"></td>
+									<td align="center"><input type="radio"  class="form-control" id="susp_eje3" name="susp_eje3" value="ok" ></td>
+									<td align="center"><input type="radio"  class="form-control" id="susp_eje3" name="susp_eje3" value="cambio"></td>
 									<td align="rigth">
 										<div class="form-check">
 											@foreach($fallas as $falla)

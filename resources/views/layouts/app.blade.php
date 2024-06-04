@@ -73,7 +73,11 @@
                         <li class="nav-item dropdown hidden-caret  card-round" >
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{url('/assets')}}/img/profile.png" alt="image profile" width="36" class="img-circle" id="profile_dropdown"></a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                
+                                <li>
+                                    <a class="dropdown-item"  href="{{ route('perfil') }}">
+                                        Cambiar contraseña
+                                    </a>
+                                </li>
                                 <li>
                                     <a class="dropdown-item"  href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
@@ -138,17 +142,47 @@
 							</a>
 							<div class="collapse" id="forms">
 								<ul class="nav nav-collapse">
+                                    {{--
 									<li>
 										<a  href="{{url('/Alta_de_personal')}}">
 											<span class="sub-item">Alta de personal</span>
 										</a>
 									</li>
+                                    --}}
                                     <li>
 										<a  href="{{url('/Contratos')}}">
 											<span class="sub-item">Contratos</span>
 										</a>
 									</li>
+                                    <li>
+										<a  href="{{url('/Personal')}}">
+											<span class="sub-item">Personal</span>
+										</a>
+									</li>
 									
+								</ul>
+							</div>
+					</li>
+                    @endif
+					@if(auth()->user()->tipo_usuario=='Inventario')
+                    <li class="nav-item">
+							<a data-toggle="collapse" href="#Inventario">
+								<i class="flaticon-laptop"></i>
+								<p>Inventario </p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Inventario">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Inventario')}}">
+											<span class="sub-item">Alta de inventario</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/ModificarInventario')}}">
+											<span class="sub-item">Modificar inventario</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 					</li>
@@ -195,6 +229,53 @@
 							</div>
 					</li>
                     @endif
+					@if(auth()->user()->tipo_usuario=='Operaciones')
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Operaciones">
+								<i class="la la-bus"></i>
+								<p>Operaciones</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Operaciones">
+								<ul class="nav nav-collapse">
+                                    <!--
+                                    <li>
+										<a  href="{{url('/Alta_de_unidades')}}">
+											<span class="sub-item">Alta de unidades</span>
+										</a>
+									</li>-->
+									<li>
+										<a  href="{{url('/Autorizacion_check_mantenimiento')}}">
+											<span class="sub-item">Autorización check mantenimiento</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Bitacora_de_operaciones')}}">
+											<span class="sub-item">Bitácora de operaciones</span>
+										</a>
+									</li>
+                                    <li>
+										<a  href="{{url('/Alta_de_reporte')}}">
+											<span class="sub-item">Alta de reporte</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/bannerModulo200')}}">
+											<span class="sub-item">Banner modulo 200</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/modificar_banner_200')}}">
+											<span class="sub-item">Modificar banner modulo 200</span>
+										</a>
+									</li>
+									
+                                   
+									
+								</ul>
+							</div>
+					</li>
+                    @endif
                     @if(auth()->user()->tipo_usuario=='Sistemas')
                     <li class="nav-item">
 							<a data-toggle="collapse" href="#forms">
@@ -204,14 +285,21 @@
 							</a>
 							<div class="collapse" id="forms">
 								<ul class="nav nav-collapse">
+                                {{--
 									<li>
 										<a  href="{{url('/Alta_de_personal')}}">
 											<span class="sub-item">Alta de personal</span>
 										</a>
 									</li>
+                                    --}}
                                     <li>
 										<a  href="{{url('/Contratos')}}">
 											<span class="sub-item">Contratos</span>
+										</a>
+									</li>
+                                    <li>
+										<a  href="{{url('/Personal')}}">
+											<span class="sub-item">Personal</span>
 										</a>
 									</li>
 									
@@ -320,6 +408,11 @@
 										</a>
 									</li>-->
 									<li>
+										<a  href="{{url('/Autorizacion_check_mantenimiento')}}">
+											<span class="sub-item">Autorización check mantenimiento</span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/Bitacora_de_operaciones')}}">
 											<span class="sub-item">Bitácora de operaciones</span>
 										</a>
@@ -327,6 +420,16 @@
                                     <li>
 										<a  href="{{url('/Alta_de_reporte')}}">
 											<span class="sub-item">Alta de reporte</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/bannerModulo200')}}">
+											<span class="sub-item">Banner modulo 200</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/modificar_banner_200')}}">
+											<span class="sub-item">Modificar banner modulo 200</span>
 										</a>
 									</li>
                                    
@@ -352,6 +455,28 @@
 							</div>
 					</li>
 
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Inventario">
+								<i class="flaticon-laptop"></i>
+								<p>Inventario </p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Inventario">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Inventario')}}">
+											<span class="sub-item">Alta de inventario</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/ModificarInventario')}}">
+											<span class="sub-item">Modificar inventario</span>
+										</a>
+									</li>
+									
+								</ul>
+							</div>
+					</li>
                     @endif
 
                     

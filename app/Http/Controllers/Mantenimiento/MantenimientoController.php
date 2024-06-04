@@ -12,6 +12,8 @@ use App\Exports\bitacoraMantenimiento;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 use Dompdf\Dompdf;
+use App\Mail\mantenimientoMail;
+use Illuminate\Support\Facades\Mail;
 
 class MantenimientoController extends Controller
 {
@@ -19,6 +21,11 @@ class MantenimientoController extends Controller
     {
 
         $this->middleware(['auth']);
+    }
+    public function sendWelcomeEmail()
+    {
+        $name = 'John Doe'; // Esto puede ser el nombre del usuario real
+
     }
 
     public function Revisión()
@@ -262,10 +269,8 @@ class MantenimientoController extends Controller
             $bitacora->susp_eje3_o = $request->input('susp_eje3_o');
             $bitacora->tan_drenado = $request->input('tan_drenado');
             $bitacora->tan_drenado_o = $request->input('tan_drenado_o');
-            
             $bitacora->tan_chicote = $request->input('tan_chicotes');
             $bitacora->tan_chicote_o = $request->input('tan_chicotes_o');
-
             $bitacora->soport_motor = $request->input('soport_motor');
             $bitacora->soport_motor_o = $request->input('soport_motor_o');
             $bitacora->soport_transmi = $request->input('soport_transmi');
@@ -308,6 +313,9 @@ class MantenimientoController extends Controller
         }
         $mensaje="Se registro con exito!";
         $color="success";
+        
+       
+        Mail::mailer('smtp')->to('2517160117lcamarenas@gmail.com')->send(new mantenimientoMail());
         return redirect()->route('Bitacora_De_Liberacion_De_Unidades_express')->with('mensaje', $mensaje)->with('color', $color);
     }
 
@@ -524,7 +532,9 @@ public function Consulta_bitacora(Request $request)
         $consulta_fallas = json_decode($request->input('consulta_fallas'), true);
                 //dd($consulta_fallas);
         $i=0;
-
+        
+        //dd( $consulta_fallas);
+          //  dd($res);
         foreach ($res as &$elemento) {
             $claves = array_keys($elemento);
             $indice = array_search('servicio', $claves);
@@ -851,7 +861,7 @@ foreach ($res as &$row) {
     }
 }
             //dd($res);
-$html = view('Transmasivo.Operaciones.reporte_bitacora_terminal',compact('res'))->render();
+$html = view('Transmasivo.Mantenimiento.pdf_liberacion_unidades',compact('res'))->render();
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
 $dompdf->render();
@@ -1485,6 +1495,8 @@ return Excel::download(new bitacoraMantenimiento($res), 'reporte_liberacion_de_u
     $where_completa.= ' id_bitacora_liberacion > 0 ';
     $consulta_completa.=$where_completa;
     $consulta_completa.=" GROUP BY 
+     
+    bitacora_liberacion_unidades.n_economico,
     detalle_falla_bitacora_liberacion_unidades.id_bitacora_liberacion; ";
     $consulta = $query->get();
     $consulta_fallas = DB::connection('mysql')->select($consulta_completa);
