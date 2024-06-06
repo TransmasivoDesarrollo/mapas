@@ -15,12 +15,16 @@
 				{{ session('mensaje') }}.
 			</div>
 			@endif
-			<form method="post" id="exampleValidation" action="{{url('/Contratos')}}">
+			<form method="post" id="contratoForm" action="{{url('/Contratos')}}">
 				@csrf
 				<div class="form-group row " >
 					<div class="col-md-3">
 						<label>Nombre completo <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="nombre" name="nombre" >
+					</div>
+					<div class="col-md-2">
+						<label>Fecha de nacimiento <span class="required-label">*</span></label>
+						<input required type="date" class="form-control input-with-border" id="nacimiento" name="nacimiento" >
 					</div>
 					<div class="col-md-2">
 						<label>Edad <span class="required-label">*</span></label>
@@ -234,6 +238,28 @@
     return words.trim().toUpperCase();
 }
 $(document).ready(function() {
+	$('#contratoForm').on('submit', function(event) {
+		console.log('a');
+            // Escuchar el evento de carga en el iframe para saber cuándo se ha descargado el archivo
+          
+                // Limpiar el formulario
+                $('#contratoForm')[0].reset();
+        });
+	$('#nacimiento').on('change', function() {
+            var nacimiento = $(this).val();
+            if (nacimiento) {
+                var hoy = new Date();
+                var cumpleanos = new Date(nacimiento);
+                var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+                var mes = hoy.getMonth() - cumpleanos.getMonth();
+                if (mes < 0 || (mes === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                    edad--;
+                }
+                $('#Edad').val(edad);
+            } else {
+                $('#Edad').val('');
+            }
+        });
 	const fecha = new Date($('#fecha_contrato').val());
         const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];

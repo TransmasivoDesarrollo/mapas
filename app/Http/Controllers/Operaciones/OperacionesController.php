@@ -753,6 +753,10 @@ class OperacionesController extends Controller
         }
        
     }
+    public function m419()
+    {
+        return view('errors.419');
+    }
 
     public function Autorizacion_check_mantenimiento($mensaje="",$color="")
     {

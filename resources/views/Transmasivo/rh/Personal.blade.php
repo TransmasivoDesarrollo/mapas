@@ -12,9 +12,6 @@
                   padding: 2px;
               }
 
-              tr:nth-child(even) {
-                 ;
-              }
         .input-with-border {
             border: 1px solid black;
         }
@@ -44,33 +41,10 @@
             </div>
             @endif
 
-            <form method="post" id="exampleValidation" action="{{url('/Reporte_de_supervisión')}}">
-                @csrf
-                {{-- inicio del row --}}
-
-                <div class="form-group row " >
-                 
-                 
-                </div>
-                
-                <div class="row">
-                  
-                    
-
-                    
-                </div>
-                
-                
-                <br>
-                
-                
-            </div>
-            
-        </form>
-        <div class="card-footer">{{-- inicio del row --}}
+           
             
             <div class="table-responsive" style="overflow-x: auto;">
-                <table class="table table-bordered  " id="list_user22">
+            <table class="table table-bordered  " id="list_user22">
                     <thead>
                         <tr>
                             <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Nombre</center></th>
@@ -90,7 +64,9 @@
                             <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Puesto  </center></th>
                             <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Fecha_contrato </center></th>
                             <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Fecha_real </center></th>
-                            <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Operador </center></th>
+                            <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Quien registro </center></th>
+                            <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Estatus </center></th>
+                            <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Acción </center></th>
                         </tr>
                     </thead>
 
@@ -115,7 +91,9 @@
                             <td>{{$consul->Puesto}}</td>
                             <td>{{$consul->Fecha_contrato}}</td>
                             <td>{{$consul->Fecha_real}}</td>
-                            <td>{{$consul->id_operador}}</td>
+                            <td>{{$consul->name}}</td>
+                            <td>{{$consul->Estatus}}</td>
+                            <td><input type='submit' value="Eliminar" class="btn btn-danger"></td>
                         </tr>
                         @endforeach
                       @endif
@@ -131,8 +109,6 @@
     </div>
     
 
-</div>
-</div>
 
 @section('jscustom')
 <script type="text/javascript">

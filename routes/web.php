@@ -112,5 +112,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/200', '\App\Http\Controllers\Operaciones\OperacionesController@m200')->name('m200');
+Route::get('/419', '\App\Http\Controllers\Operaciones\OperacionesController@m419')->name('m419');
 
 require __DIR__.'/auth.php';

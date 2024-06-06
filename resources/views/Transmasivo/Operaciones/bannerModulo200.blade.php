@@ -44,7 +44,7 @@
                             <div class="col-lg-4 col-md-9 col-sm-8">
                                 <div class="input-file input-file-image">
                                     <img class="img-upload-preview img" width="100"  src="{{url('/images/sin_imagen.jpg')}}" alt="preview">
-                                    <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" required="">
+                                    <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*, .mp4" required="">
                                     <label for="uploadImg" class=" label-input-file btn btn-primary btn-round btn-lg"> Seleccionar archivo</label>
                                 </div>
                             </div>
