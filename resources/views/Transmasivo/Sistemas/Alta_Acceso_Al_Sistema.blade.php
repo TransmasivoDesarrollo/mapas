@@ -54,6 +54,9 @@
                                 <option value="Sistemas">Sistemas</option>
                                 <option value="Recursos humanos">Recursos humanos</option>
                                 <option value="Mantenimiento">Mantenimiento</option>
+                                <option value="Operaciones">Operaciones</option>
+                                <option value="Inventario">Inventario</option>
+								
                             </select>
 						</div>
 					</div>

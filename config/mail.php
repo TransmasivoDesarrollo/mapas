@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'roundrobin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,15 +36,15 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
+            'host' => env('MAIL_HOST', 'localhost'),
+            'port' => env('MAIL_PORT', 25),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
-        ],
+
+            'verify_peer' => false,
+        ], 
 
         'ses' => [
             'transport' => 'ses',
@@ -52,6 +52,8 @@ return [
 
         'postmark' => [
             'transport' => 'postmark',
+            'token' => env('POSTMARK_TOKEN'),
+            'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
             // 'message_stream_id' => null,
             // 'client' => [
             //     'timeout' => 5,
@@ -82,8 +84,9 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'smtp',
-                'log',
+                'postmark',
+                'mailgun',
+                'sendmail',
             ],
         ],
 

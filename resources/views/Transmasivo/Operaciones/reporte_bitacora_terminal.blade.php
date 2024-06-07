@@ -33,7 +33,7 @@
                     <img src="<?php echo $imagenBase64 ?>" alt="logo img" style="width:200px;" class="logo-img">
                 </a>
             </td>
-            <td style="width: 70%; border: 1px #ffffff; solid;"><center><b>CHECK DE LIBERACIÓN DE UNIDADES</b></center></td>
+            <td style="width: 70%; border: 1px #ffffff; solid;"><center><b>Autorización De Liberacion De Unidades</b></center></td>
         </tr>
     </table>
       <table>
@@ -317,7 +317,7 @@
             <td style="background-color: #dddddd; font-size: 9px; width: 50%;" ><center>OBSERVACIONES</center></td>
         </tr>
         <tr>
-            <td style=" background-color: #fff; font-size: 9px; width: 25%;" colspan="2"><center>GRANADA</center></td>
+            <td style=" background-color: #fff; font-size: 9px; width: 25%;" colspan="2"><center>MODULO</center></td>
             <td style=" background-color: #fff; font-size: 9px; width: 25%;"><center>{{$respuesta['calibracion_neum_granada']}}</center></td>
             <td style="background-color: #fff; font-size: 9px; width: 50%;" ><center>{{$respuesta['calibracion_neum_granada_o']}}@if($respuesta['calibracion_neum_granada_fallas'] !== null ) , Falla(s): {{$respuesta['calibracion_neum_granada_fallas']}}@endif</center></td>
         </tr>
@@ -432,12 +432,8 @@
         
               
     </table>
-    <br>
+    
 
 
 </body>
 @endforeach
-</html>
-
-
-

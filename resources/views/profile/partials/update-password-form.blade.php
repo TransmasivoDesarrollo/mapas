@@ -32,7 +32,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Actualizar') }}</x-primary-button>
+            <input type="submit" value="Actualizar" name="Actualizar" id="Actualizar" class="btn btn-success">
 
             @if (session('status') === 'password-updated')
                 <p

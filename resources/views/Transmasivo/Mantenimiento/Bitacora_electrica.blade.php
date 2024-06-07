@@ -22,7 +22,7 @@
                     </div>
                 @endif
 
-                <form method="post" id="exampleValidation" action="{{url('/Bitacora_Liberacion_De_Unidades')}}">
+                <form method="post" id="exampleValidation" action="{{url('/Bitacora_Liberacion_De_Unidades_electrico')}}">
 					@csrf
 					{{-- inicio del row --}}
 

@@ -20,6 +20,25 @@
 				{{ session('mensaje') }}.
 				
 			</div>
+			<div class="modal fade show" id="modalWhatsApp" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Registro con exito</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						Un correo fue enviado al área de supervisión, pero puedes enviar un mensaje de WhatsApp oprimiendo el botón
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+						<a href="whatsapp://send?phone=5515688077&text=Se abrió un nuevo reporte de mantenimiento con el folio" class="btn btn-success">Enviar mensaje por WhatsApp</a>
+					</div>
+					</div>
+				</div>
+				</div>
 			@endif
 
 			<form method="post" id="exampleValidation" action="{{url('/Bitacora_De_Liberacion_De_Unidades_express')}}">
@@ -27,10 +46,12 @@
 				{{-- inicio del row --}}
 
 				<div class="form-group row " >
-					{{-- <div class="col-md-2">
+					{{-- 
+					<div class="col-md-2">
 						<label>Numero de economico <span class="required-label">*</span></label>
 						<input  required type="text" class="form-control  input-with-border" style="width:100%; height:100%; border:black 1px solid;" id="n_economico" name="n_economico">
-					</div>--}}
+					</div>
+					--}}
 					<div class="col-md-2">
 						<label>Numero de economico <span class="required-label">*</span></label>
 						<select  required type="text" class="form-control  input-with-border" id="n_economico" name="n_economico">
@@ -48,9 +69,12 @@
 					<div class="col-md-4">
                             <label>Nombre del  mecanico</label>
                             <select   class="form-control input-with-border"  id="n_mecanico" name="n_mecanico">
+								
                                 @foreach($mecanicos as $mecanico)
                                 <option>{{$mecanico->nombre}}</option>
                                 @endforeach
+								
+							<option>Corina Jared López</option>
                             </select>
                         </div>
 					<div class="col-md-4">
@@ -58,7 +82,10 @@
 						<select   class="form-control input-with-border"  id="nom_supervisor" name="nom_supervisor">
                                 @foreach($mecanicos as $mecanico)
                                 <option>{{$mecanico->nombre}}</option>
+								
                                 @endforeach
+								
+							<option>Corina Jared López</option>
                         </select>
 						{{--
 						<input required type="text" class="form-control input-with-border" id="nom_supervisor" name="nom_supervisor">
@@ -70,7 +97,7 @@
 				{{-- inicio del row --}}
 
 				<div class="form-group row " >
-                <div class="col-md-3">
+                	<div class="col-md-3">
 						<label>Fecha <span class="required-label">*</span></label>
 						<input required type="date" class="form-control input-with-border" id="Fecha" name="Fecha" value="{{ now()->format('Y-m-d') }}">
 					</div>
@@ -2105,7 +2132,9 @@
 
 @section('jscustom')
 <script type="text/javascript">
-	
+	@if (session('mensaje'))
+$('#modalWhatsApp').modal('show');
+	@endif
 	$('#n_economico').select2();
 	$('#nom_supervisor').select2();
 	$('#n_mecanico').select2();

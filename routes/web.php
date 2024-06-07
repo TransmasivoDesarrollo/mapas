@@ -23,10 +23,11 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('/');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/perfil', [ProfileController::class, 'edit'])->name('perfil');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
+    Route::get('/sendWelcomeEmail', '\App\Http\Controllers\Mantenimiento\MantenimientoController@sendWelcomeEmail')->name('sendWelcomeEmail');
     Route::get('/mapas', '\App\Http\Controllers\Controller@mapas')->name('mapas');
     Route::get('/login', '\App\Http\Controllers\Controller@login')->name('login');
     Route::get('/dashboard', '\App\Http\Controllers\Controller@dashboard')->name('dashboard');
@@ -67,9 +68,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/Inventario_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Inventario_caja_herramienta')->name('Inventario_caja_herramienta');
     
     Route::get('/exportar-a-word', '\App\Http\Controllers\Almacen\AlmacenController@exportToWord');
+
+    //recursos humanos
     Route::get('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contratos');
     Route::POST('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@generarContratos');
-
+    Route::get('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Personal')->name('Personal');
+    Route::POST('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@accionParaPersonal');
+   
 
     //operaciones
     Route::get('/Bitacora_de_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones')->name('Bitacora_de_operaciones');
@@ -85,8 +90,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/Catalogo_de_fallas/baja', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Catalogo_de_fallas_baja')->name('Catalogo_de_fallas_baja');
     Route::get('/Catalogo_de_fallas/alta', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Catalogo_de_fallas_alta')->name('Catalogo_de_fallas_alta');
     
+
     
+    Route::get('/Autorizacion_check_mantenimiento', '\App\Http\Controllers\Operaciones\OperacionesController@Autorizacion_check_mantenimiento')->name('Autorizacion_check_mantenimiento');
+    Route::POST('/Autorizacion_check_mantenimiento', '\App\Http\Controllers\Operaciones\OperacionesController@acciones')->name('Autorizacion_check_mantenimientoacciones');
+    
+    Route::get('/bannerModulo200', '\App\Http\Controllers\Operaciones\OperacionesController@bannerModulo200')->name('bannerModulo200');
+    Route::POST('/bannerModulo200', '\App\Http\Controllers\Operaciones\OperacionesController@subirBannerOperaciones')->name('subirBannerOperaciones');
+
+    Route::get('/modificar_banner_200', '\App\Http\Controllers\Operaciones\OperacionesController@modificar_banner_200')->name('modificar_banner_200');
+    Route::POST('/modificar_banner_200', '\App\Http\Controllers\Operaciones\OperacionesController@cambiar_estatus_banner_200')->name('cambiar_estatus_banner_200');
+    
+    
+    
+
+    Route::get('/Inventario', '\App\Http\Controllers\Inventario\InventarioController@Inventario')->name('Inventario');
+    Route::POST('/Inventario', '\App\Http\Controllers\Inventario\InventarioController@GuardarInventario')->name('GuardarInventario');
+    
+    Route::get('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@ModificarInventario')->name('ModificarInventario');
+    Route::POST('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@cambios')->name('cambios');
+    
+    Route::get('/id={id_personal}', '\App\Http\Controllers\Marketing\MarketingController@generadorQR')->name('generadorQR');
     
 });
+
+Route::get('/200', '\App\Http\Controllers\Operaciones\OperacionesController@m200')->name('m200');
+Route::get('/419', '\App\Http\Controllers\Operaciones\OperacionesController@m419')->name('m419');
 
 require __DIR__.'/auth.php';
