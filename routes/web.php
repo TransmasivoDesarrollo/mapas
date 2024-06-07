@@ -72,7 +72,8 @@ Route::middleware('auth')->group(function () {
     //recursos humanos
     Route::get('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contratos');
     Route::POST('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@generarContratos');
-    Route::get('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Personal');
+    Route::get('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Personal')->name('Personal');
+    Route::POST('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@accionParaPersonal');
    
 
     //operaciones
@@ -108,6 +109,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@ModificarInventario')->name('ModificarInventario');
     Route::POST('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@cambios')->name('cambios');
+    
+    Route::get('/id={id_personal}', '\App\Http\Controllers\Marketing\MarketingController@generadorQR')->name('generadorQR');
     
 });
 

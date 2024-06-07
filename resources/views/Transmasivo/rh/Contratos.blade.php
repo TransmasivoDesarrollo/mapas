@@ -45,21 +45,21 @@
 					<div class="col-md-3">
 						<label>Sexo <span class="required-label">*</span></label>
 						<select required class="form-control input-with-border" id="Sexo" name="Sexo">
-							<option value="Masculino">Masculino</option>
-							<option value="Femenino">Femenino</option>
+							<option value="MASCULINO">Masculino</option>
+							<option value="FEMENINO">Femenino</option>
 						</select>
 					</div>
 					<div class="col-md-3">
 						<label>Estado Civil <span class="required-label">*</span></label>
 						<select required class="form-control input-with-border" id="Civil" name="Civil">
 							<option value="">Seleccione una opción</option>
-							<option value="Soltero">Soltero</option>
-							<option value="Casado">Casado</option>
-							<option value="Divorciado">Divorciado</option>
-							<option value="Viudo">Viudo</option>
-							<option value="Unión libre">Unión libre</option>
-							<option value="Separado">Separado</option>
-							<option value="Comprometido">Comprometido</option>
+							<option value="SOLTERO">Soltero</option>
+                                        <option value="CASADO">Casado</option>
+                                        <option value="DIVORCIADO">Divorciado</option>
+                                        <option value="VIUDO">Viudo</option>
+                                        <option value="UNIÓN LIBRE">Unión libre</option>
+                                        <option value="SEPARADO">Separado</option>
+                                        <option value="COMPROMETIDO">Comprometido</option>
 						</select>
 					</div>
                   
@@ -100,39 +100,39 @@
 					<div class="col-md-3">
 						<label>Estado <span class="required-label">*</span></label>
 						<select required class="form-control input-with-border" id="Estado" name="Estado">
-							<option value="">Seleccione un estado</option>
-							<option value="Aguascalientes">Aguascalientes</option>
-							<option value="Baja California">Baja California</option>
-							<option value="Baja California Sur">Baja California Sur</option>
-							<option value="Campeche">Campeche</option>
-							<option value="Chiapas">Chiapas</option>
-							<option value="Chihuahua">Chihuahua</option>
-							<option value="Ciudad de México">Ciudad de México</option>
-							<option value="Coahuila">Coahuila</option>
-							<option value="Colima">Colima</option>
-							<option value="Durango">Durango</option>
-							<option value="Guanajuato">Guanajuato</option>
-							<option value="Guerrero">Guerrero</option>
-							<option value="Hidalgo">Hidalgo</option>
-							<option value="Jalisco">Jalisco</option>
-							<option value="Estado de México" selected>Estado de México</option>
-							<option value="Michoacán">Michoacán</option>
-							<option value="Morelos">Morelos</option>
-							<option value="Nayarit">Nayarit</option>
-							<option value="Nuevo León">Nuevo León</option>
-							<option value="Oaxaca">Oaxaca</option>
-							<option value="Puebla">Puebla</option>
-							<option value="Querétaro">Querétaro</option>
-							<option value="Quintana Roo">Quintana Roo</option>
-							<option value="San Luis Potosí">San Luis Potosí</option>
-							<option value="Sinaloa">Sinaloa</option>
-							<option value="Sonora">Sonora</option>
-							<option value="Tabasco">Tabasco</option>
-							<option value="Tamaulipas">Tamaulipas</option>
-							<option value="Tlaxcala">Tlaxcala</option>
-							<option value="Veracruz">Veracruz</option>
-							<option value="Yucatán">Yucatán</option>
-							<option value="Zacatecas">Zacatecas</option>
+						<option value="">SELECCIONE UN ESTADO</option>
+                                                <option value="AGUASCALIENTES">Aguascalientes</option>
+                                                <option value="BAJA CALIFORNIA">Baja California</option>
+                                                <option value="BAJA CALIFORNIA SUR">Baja California Sur</option>
+                                                <option value="CAMPECHE">Campeche</option>
+                                                <option value="CHIAPAS">Chiapas</option>
+                                                <option value="CHIHUAHUA">Chihuahua</option>
+                                                <option value="CIUDAD DE MEXICO">Ciudad de México</option>
+                                                <option value="COAHUILA">Coahuila</option>
+                                                <option value="COLIMA">Colima</option>
+                                                <option value="DURANGO">Durango</option>
+                                                <option value="GUANAJUATO">Guanajuato</option>
+                                                <option value="GUERRERO">Guerrero</option>
+                                                <option value="HIDALGO">Hidalgo</option>
+                                                <option value="JALISCO">Jalisco</option>
+                                                <option value="ESTADO DE MEXICO" selected>Estado de México</option>
+                                                <option value="MICHOACAN">Michoacán</option>
+                                                <option value="MORELOS">Morelos</option>
+                                                <option value="NAYARIT">Nayarit</option>
+                                                <option value="NUEVO LEON">Nuevo León</option>
+                                                <option value="OAXACA">Oaxaca</option>
+                                                <option value="PUEBLA">Puebla</option>
+                                                <option value="QUERÉTARO">Querétaro</option>
+                                                <option value="QUINTANA ROO">Quintana Roo</option>
+                                                <option value="SAN LUIS POTOSÍ">San Luis Potosí</option>
+                                                <option value="SINALOA">Sinaloa</option>
+                                                <option value="SONORA">Sonora</option>
+                                                <option value="TABASCO">Tabasco</option>
+                                                <option value="TAMAULIPAS">Tamaulipas</option>
+                                                <option value="TLAXCALA">Tlaxcala</option>
+                                                <option value="VERACRUZ">Veracruz</option>
+                                                <option value="YUCATÁN">Yucatán</option>
+                                                <option value="ZACATECAS">Zacatecas</option>
 						</select>
 
 					</div>
@@ -167,7 +167,7 @@
 					</div>
                     <div class="col-md-3">
 						<label>Salario diario <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Salario_diario" name="Salario_diario" oninput="convertSalary()">
+						<input required type="number" class="form-control input-with-border" id="Salario_diario" name="Salario_diario" oninput="convertSalary()">
 					</div>
 					<div class="col-md-3">
 						<label>Salario en letras <span class="required-label">*</span></label>
@@ -240,10 +240,10 @@
 $(document).ready(function() {
 	$('#contratoForm').on('submit', function(event) {
 		console.log('a');
-            // Escuchar el evento de carga en el iframe para saber cuándo se ha descargado el archivo
-          
-                // Limpiar el formulario
-                $('#contratoForm')[0].reset();
+		setTimeout(function(){
+			$('#contratoForm')[0].reset();
+}, 2000);
+                
         });
 	$('#nacimiento').on('change', function() {
             var nacimiento = $(this).val();
@@ -294,27 +294,27 @@ document.getElementById('Sexo').addEventListener('change', function() {
         estadoCivilSelect.innerHTML = ''; // Limpiar opciones anteriores
 
         // Agregar opciones según el sexo seleccionado
-        if (sexo === 'Masculino') {
+		if (sexo === 'MASCULINO') {
             estadoCivilSelect.innerHTML = `
-                <option value="">Seleccione una opción</option>
-                <option value="Soltero">Soltero</option>
-                <option value="Casado">Casado</option>
-                <option value="Divorciado">Divorciado</option>
-                <option value="Viudo">Viudo</option>
-                <option value="Unión libre">Unión libre</option>
-                <option value="Separado">Separado</option>
-                <option value="Comprometido">Comprometido</option>
+            <option value="">Seleccione una opción</option>
+                                        <option value="SOLTERO">Soltero</option>
+                                        <option value="CASADO">Casado</option>
+                                        <option value="DIVORCIADO">Divorciado</option>
+                                        <option value="VIUDO">Viudo</option>
+                                        <option value="UNIÓN LIBRE">Unión libre</option>
+                                        <option value="SEPARADO">Separado</option>
+                                        <option value="COMPROMETIDO">Comprometido</option>
             `;
-        } else if (sexo === 'Femenino') {
+        } else if (sexo === 'FEMENINO') {
             estadoCivilSelect.innerHTML = `
-                <option value="">Seleccione una opción</option>
-                <option value="Soltera">Soltera</option>
-                <option value="Casada">Casada</option>
-                <option value="Divorciada">Divorciada</option>
-                <option value="Viuda">Viuda</option>
-                <option value="Unión libre">Unión libre</option>
-                <option value="Separada">Separada</option>
-                <option value="Comprometida">Comprometida</option>
+            <option value="">Seleccione una opción</option>
+                                        <option value="SOLTERA">Soltera</option>
+                                        <option value="CASADA">Casada</option>
+                                        <option value="DIVORCIADA">Divorciada</option>
+                                        <option value="VIUDA">Viuda</option>
+                                        <option value="UNIÓN LIBRE">Unión libre</option>
+                                        <option value="SEPARADA">Separada</option>
+                                        <option value="COMPROMETIDA">Comprometida</option>
             `;
         }
     });

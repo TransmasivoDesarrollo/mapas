@@ -17,6 +17,7 @@ class TPersonal extends Model
         'Edad',
         'Fecha_nacimiento',
         'Sexo',
+        'Nacionalidad',
         'Estado_civil',
         'Calle',
         'Numero',
@@ -29,10 +30,13 @@ class TPersonal extends Model
         'CURP',
         'Correo',
         'Puesto',
+        'Salario_diario',
         'Fecha_contrato',
         'Fecha_real',
         'Estatus',
         'id_operador',
+        'Fecha_contrato_date',
+        
     ];
 
     // Si no se van a utilizar los campos created_at y updated_at, ajusta las siguientes propiedades:
