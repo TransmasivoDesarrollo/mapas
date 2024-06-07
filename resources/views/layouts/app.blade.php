@@ -154,6 +154,11 @@
 											<span class="sub-item">Contratos</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Renuncias')}}">
+											<span class="sub-item">Renuncias</span>
+										</a>
+									</li>
                                     <li>
 										<a  href="{{url('/Personal')}}">
 											<span class="sub-item">Personal</span>
@@ -297,9 +302,19 @@
 											<span class="sub-item">Contratos</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Renuncias')}}">
+											<span class="sub-item">Renuncias</span>
+										</a>
+									</li>
                                     <li>
 										<a  href="{{url('/Personal')}}">
 											<span class="sub-item">Personal</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Encuesta_de_renuncia')}}">
+											<span class="sub-item">Encuesta de renuncia </span>
 										</a>
 									</li>
 									

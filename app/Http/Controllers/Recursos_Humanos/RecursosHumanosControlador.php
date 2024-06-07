@@ -11,25 +11,78 @@ use Dompdf\Dompdf;
 use PhpOffice\PhpWord\PhpWord;
 use Illuminate\Support\Facades\View;
 use PhpOffice\PhpWord\IOFactory; 
+use DateTime;
 
 class RecursosHumanosControlador extends Controller
 {
     public function __construct()
 	{
-
 		$this->middleware(['auth']);
 	}
 
     public function Alta_de_personal()
     {
-        
         return view('Transmasivo.rh.alta_de_personal');
     }
     public function Contratos()
     {
-        
         return view('Transmasivo.rh.Contratos');
     }
+    public function Renuncias()
+    {
+        $c_empresas = DB::connection('mysql')->table('c_empresa')->get();
+        
+        return view('Transmasivo.rh.Renuncias',compact('c_empresas'));
+    }
+
+    public function Encuesta_de_renuncia()
+    {
+        return view('Transmasivo.rh.Encuesta_de_renuncia');
+    }
+    public function descargarRenuncia(Request $request)
+    {
+        $fechaInicio = $request->input('inicio');
+        $fechaFin = $request->input('fin');
+        $dateInicio = new DateTime($fechaInicio);
+        $dateFin = new DateTime($fechaFin);
+        $inicioFormateado = $this->formatearFecha($dateInicio);
+        $finFormateado = $this->formatearFecha($dateFin);
+    
+        $data = [
+            'nombre' => $request->input('nombre'),
+            'inicio' => $inicioFormateado,
+            'fin' => $finFormateado,
+            'Puesto' => $request->input('Puesto'),
+            'Empresa' => $request->input('Empresa'),
+        ];
+    
+        $html = View::make('Transmasivo.rh.renunciasWord', $data)->render();
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection([
+            'pageSizeW' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(8.5),
+            'pageSizeH' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(11)
+        ]);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
+        $filename = 'Renuncia '.$request->input('nombre').'.docx';
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save(public_path($filename));
+        return response()->download(public_path($filename))->deleteFileAfterSend(true);
+    }
+    
+    private function formatearFecha(DateTime $fecha)
+    {
+        $dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+        $meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    
+        $diaSemana = $dias[$fecha->format('w')];
+        $dia = $fecha->format('d');
+        $mes = $meses[$fecha->format('n') - 1];
+        $anio = $fecha->format('Y');
+    
+        return "$diaSemana $dia de $mes del $anio";
+    }
+    
+    
     public function generarContratos(Request $request)
     {
         $id_operador = auth()->id();

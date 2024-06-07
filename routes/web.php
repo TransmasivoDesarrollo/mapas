@@ -72,8 +72,16 @@ Route::middleware('auth')->group(function () {
     //recursos humanos
     Route::get('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contratos');
     Route::POST('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@generarContratos');
+
+    Route::get('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Renuncias');
+    Route::POST('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@descargarRenuncia');
+
     Route::get('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Personal')->name('Personal');
     Route::POST('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@accionParaPersonal');
+
+    
+    Route::get('/Encuesta_de_renuncia', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Encuesta_de_renuncia')->name('Encuesta_de_renuncia');
+    
    
 
     //operaciones
