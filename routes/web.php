@@ -81,6 +81,12 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/Encuesta_de_renuncia', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Encuesta_de_renuncia')->name('Encuesta_de_renuncia');
+    Route::POST('/Encuesta_de_renuncia', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Encuesta_de_renuncia_guardar')->name('Encuesta_de_renuncia_guardar');
+
+    
+    Route::get('/estadisticas_renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@estadisticas_renuncias')->name('estadisticas_renuncias');
+    Route::get('/geo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo')->name('geo');
+    
     
    
 

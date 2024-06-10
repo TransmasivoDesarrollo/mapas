@@ -22,20 +22,25 @@
 						<label>Nombre completo <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="nombre" name="nombre" >
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-4">
 						<label>Fecha de inicio labores <span class="required-label">*</span></label>
 						<input required type="date" class="form-control input-with-border" id="inicio" name="inicio" >
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-4">
                         <label>Fecha de fin labores <span class="required-label">*</span></label>
 						<input required type="date" class="form-control input-with-border" id="fin" name="fin" >
+					</div>
+                    
+				</div>
+				<div class="form-group row " >
+                    <div class="col-md-4">
+                        <label>Fecha de elaboración renuncia <span class="required-label">*</span></label>
+						<input required type="date" class="form-control input-with-border" id="elaboracion" name="elaboracion" >
 					</div>
                     <div class="col-md-4">
 						<label>Puesto <span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="Puesto" name="Puesto" >
 					</div>
-				</div>
-				<div class="form-group row " >
 					<div class="col-md-4">
 						<label>Empresa <span class="required-label">*</span></label>
 						<select required class="form-control input-with-border" id="Empresa" name="Empresa">

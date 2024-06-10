@@ -167,13 +167,16 @@
 					</div>
                     <div class="col-md-3">
 						<label>Salario diario <span class="required-label">*</span></label>
-						<input required type="number" class="form-control input-with-border" id="Salario_diario" name="Salario_diario" oninput="convertSalary()">
+						<input required type="text" class="form-control input-with-border" id="Salario_diario" name="Salario_diario" oninput="validateAndConvertSalary()">
 					</div>
-					<div class="col-md-3">
+					
+					
+				</div>
+				<div class="form-group row " >
+				<div class="col-md-8">
 						<label>Salario en letras <span class="required-label">*</span></label>
 						<input type="text" class="form-control input-with-border" id="Salario_diario_letras" name="Salario_diario_letras" >
 					</div>
-					
 				</div>
 				<div class="form-group row " >
 					<div class="col-md-3">
@@ -203,40 +206,7 @@
 	
 	
 	
-	function numberToWords(num) {
-    const units = ["", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve"];
-    const teens = ["Diez", "Once", "Doce", "Trece", "Catorce", "Quince", "Dieciséis", "Diecisiete", "Dieciocho", "Diecinueve"];
-    const tens = ["", "", "Veinte", "Treinta", "Cuarenta", "Cincuenta", "Sesenta", "Setenta", "Ochenta", "Noventa"];
-    const hundreds = ["", "Cien", "Doscientos", "Trescientos", "Cuatrocientos", "Quinientos", "Seiscientos", "Setecientos", "Ochocientos", "Novecientos"];
-
-    if (num === 0) return "Cero";
-
-    let words = '';
-
-    if (num >= 1000) {
-        words += "Mil ";
-        num %= 1000;
-    }
-
-    if (num >= 100) {
-        words += hundreds[Math.floor(num / 100)] + " ";
-        num %= 100;
-    }
-
-    if (num >= 20) {
-        words += tens[Math.floor(num / 10)] + " ";
-        num %= 10;
-    } else if (num >= 10) {
-        words += teens[num - 10] + " ";
-        num = 0;
-    }
-
-    if (num > 0) {
-        words += units[num] + " ";
-    }
-
-    return words.trim().toUpperCase();
-}
+	
 $(document).ready(function() {
 	$('#contratoForm').on('submit', function(event) {
 		console.log('a');
@@ -318,16 +288,74 @@ document.getElementById('Sexo').addEventListener('change', function() {
             `;
         }
     });
-function convertSalary() {
+	
+function validateAndConvertSalary() {
     const salaryInput = document.getElementById('Salario_diario');
     const salaryInWords = document.getElementById('Salario_diario_letras');
-    const salary = parseInt(salaryInput.value);
+    const salary = salaryInput.value;
 
-    if (!isNaN(salary)) {
-        salaryInWords.value = numberToWords(salary);
+    // Validar que el valor es un número
+    const isValidNumber = /^\d*\.?\d*$/.test(salary);
+
+    if (isValidNumber) {
+        salaryInWords.value = numberToWords(parseFloat(salary));
     } else {
         salaryInWords.value = '';
+		$('#Salario_diario').val('');
     }
+}
+
+function numberToWords(num) {
+    const units = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"];
+    const teens = ["diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"];
+    const tens = ["", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
+    const hundreds = ["", "cien", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"];
+
+    if (num === 0) return "cero";
+
+    const integerPart = Math.floor(num);
+    const decimalPart = Math.round((num - integerPart) * 100);
+
+    let words = convertIntegerToWords(integerPart);
+
+    if (decimalPart > 0) {
+        words += " con " + convertIntegerToWords(decimalPart) + " centavos";
+    }
+
+    return words.trim().toUpperCase();
+}
+
+function convertIntegerToWords(num) {
+    const units = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"];
+    const teens = ["diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"];
+    const tens = ["", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
+    const hundreds = ["", "cien", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"];
+
+    let words = '';
+
+    if (num >= 1000) {
+        words += "mil ";
+        num %= 1000;
+    }
+
+    if (num >= 100) {
+        words += hundreds[Math.floor(num / 100)] + " ";
+        num %= 100;
+    }
+
+    if (num >= 20) {
+        words += tens[Math.floor(num / 10)] + " ";
+        num %= 10;
+    } else if (num >= 10) {
+        words += teens[num - 10] + " ";
+        num = 0;
+    }
+
+    if (num > 0) {
+        words += units[num] + " ";
+    }
+
+    return words.trim();
 }
 </script>
 @endsection
