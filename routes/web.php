@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/exportar-a-word', '\App\Http\Controllers\Almacen\AlmacenController@exportToWord');
 
     //recursos humanos
+    Route::get('/check-location', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@checkLocation');
     Route::get('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contratos');
     Route::POST('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@generarContratos');
 
@@ -85,7 +86,14 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/estadisticas_renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@estadisticas_renuncias')->name('estadisticas_renuncias');
+
     Route::get('/geo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo')->name('geo');
+    
+    Route::get('/geo2', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo2')->name('geo2');
+    Route::POST('/geo2', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas')->name('insertar_cordenadas');
+    
+    Route::POST('/geo_eco1000', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo_eco1000')->name('geo_eco1000');
+    
     
     
    

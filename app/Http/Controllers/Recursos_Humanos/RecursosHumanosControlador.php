@@ -14,6 +14,7 @@ use PhpOffice\PhpWord\PhpWord;
 use Illuminate\Support\Facades\View;
 use PhpOffice\PhpWord\IOFactory; 
 use DateTime;
+use geoPHP;
 
 class RecursosHumanosControlador extends Controller
 {
@@ -21,6 +22,37 @@ class RecursosHumanosControlador extends Controller
 	{
 		$this->middleware(['auth']);
 	}
+    public function checkLocation(Request $request)
+    {
+        $lat = $request->input('latitude');
+        $lon = $request->input('longitude');
+        $polygon = [
+            [-99.01161661797045, 19.61788033321528],
+            [-99.00943866431281, 19.619103161356616],
+            [-99.00789371196451, 19.617243650417787],
+            [-99.01074758227455, 19.616455372984262],
+            [-99.01161661797045, 19.61788033321528]
+        ];
+
+        if ($this->pointInPolygon($lat, $lon, $polygon)) {
+            return response()->json(['status' => 'inside']);
+        } else {
+            return response()->json(['status' => 'outside']);
+        }
+    }
+
+    private function pointInPolygon($lat, $lon, $polygon)
+    {
+        $point = [$lon, $lat];
+        $inside = false;
+        for ($i = 0, $j = count($polygon) - 1; $i < count($polygon); $j = $i++) {
+            if ((($polygon[$i][1] > $point[1]) != ($polygon[$j][1] > $point[1])) &&
+                ($point[0] < ($polygon[$j][0] - $polygon[$i][0]) * ($point[1] - $polygon[$i][1]) / ($polygon[$j][1] - $polygon[$i][1]) + $polygon[$i][0])) {
+                $inside = !$inside;
+            }
+        }
+        return $inside;
+    }
 
     public function Alta_de_personal()
     {
@@ -28,8 +60,36 @@ class RecursosHumanosControlador extends Controller
     }
     public function geo()
     {
-        return view('Transmasivo.rh.geo');
+        $eco_1000 = DB::connection('mysql')
+        ->table('t_geolocalizacion_eco')
+        ->where('economico', '=', 1000)
+        ->latest('id_geolocalizacion')
+        ->first();
+    
+  //  dd($eco_1000);
+        $secciones = DB::connection('mysql')
+        ->table('t_secciones-geolocalizacion')
+        ->get();
+        return view('Transmasivo.rh.geo',compact('eco_1000','secciones'));
     }
+    public function geo2()
+    {
+        return view('Transmasivo.rh.geo2');
+    }
+    public function insertar_cordenadas(Request $request)
+    {
+        $cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');
+        return 'si';
+    }
+    public function geo_eco1000()
+    {
+        return DB::connection('mysql')
+        ->table('t_geolocalizacion_eco')
+        ->where('economico', '=', 1000)
+        ->latest('id_geolocalizacion')
+        ->first();
+    }
+    
     
     public function Contratos()
     {
