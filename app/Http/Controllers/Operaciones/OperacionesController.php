@@ -726,7 +726,15 @@ class OperacionesController extends Controller
     public function m200()
     {
         
-        $images = DB::connection('mysql')->select('SELECT * FROM banner200 where estatus="Activo"');
+        $images = DB::connection('mysql')->select('SELECT * 
+        FROM banner200 
+        WHERE estatus="Activo"
+        ORDER BY 
+          CASE 
+            WHEN RIGHT(imagen, 3) = "mp4" THEN 1 
+            ELSE 0 
+          END, 
+          imagen; ');
         return view('Transmasivo.Operaciones.200',compact('images'));
     }
 
@@ -743,11 +751,23 @@ class OperacionesController extends Controller
             ->where('id', $request->input('id2'))
             ->update(['pantalla' => $request->input('pantalla')]);
             
-            return $this->modificar_banner_200('Se actualizo el estatus correctamente!','success');
+            return $this->modificar_banner_200('Se actualizo los segundos correctamente!','success');
         }else if($request->has('Desactivar')){
             DB::connection('mysql')->table('banner200')
             ->where('id', $request->input('id'))
             ->update(['estatus' => 'Inactivo']);
+            
+            return $this->modificar_banner_200('Se actualizo el estatus correctamente!','success');
+        }else if($request->has('Eliminar')){
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $request->input('id'))
+            ->update(['estatus' => 'Eliminar']);
+            
+            return $this->modificar_banner_200('Se actualizo el estatus correctamente!','success');
+        }else if($request->has('Activo')){
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $request->input('id'))
+            ->update(['estatus' => 'Activo']);
             
             return $this->modificar_banner_200('Se actualizo el estatus correctamente!','success');
         }
@@ -972,8 +992,6 @@ class OperacionesController extends Controller
         ORDER BY c_fallas_subseccion_liberacion_unidades.falla ASC
         SEPARATOR ', '
         ) AS SOPORTES__TRANSMISION
-    
-    
     FROM 
     detalle_falla_bitacora_liberacion_unidades
     INNER JOIN 
@@ -981,7 +999,6 @@ class OperacionesController extends Controller
     bitacora_liberacion_unidades ON detalle_falla_bitacora_liberacion_unidades.id_bitacora_liberacion = bitacora_liberacion_unidades.id_bitacora_liberacion_unidades
     where bitacora_liberacion_unidades.estatus='Pendiente' 
     GROUP BY 
-     
      bitacora_liberacion_unidades.n_economico,
      detalle_falla_bitacora_liberacion_unidades.id_bitacora_liberacion;
  ";

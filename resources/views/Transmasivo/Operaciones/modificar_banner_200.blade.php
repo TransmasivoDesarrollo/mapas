@@ -30,6 +30,7 @@
                 <tbody id="llenaTabla">
                     @if(null !== $images)
                         @foreach($images as $fila)
+                        @if($fila->estatus=="Activo" || $fila->estatus=="Inactivo")
                             <tr >
                                 <td>{{$fila->id}}</td>
                                 <td><img src="{{url('/images/Operaciones/')}}/{{$fila->imagen}}"   width="160" ></td>
@@ -38,11 +39,19 @@
                                     <form method="post" id="exampleValidation" action="{{url('/modificar_banner_200')}}">
 					                    @csrf
                                             @if($fila->estatus=="Activo")
+                                            
+                                            <center><b style="color:green;">{{$fila->estatus}}</b></center><br>
                                                 <input type="submit" class="btn btn-primary" value="Desactivar" id="Desactivar"  name="Desactivar">
-                                                <input type="hidden" class="btn btn-primary" value="{{$fila->id}}" id="id"  name="id">
-                                                <button id="modifySecondsBtn{{$fila->id}}" type="button" class="btn btn-primary" >Modificar Segundos</button>      
+                                                <input type="submit" class="btn btn-danger" value="Eliminar" id="Eliminar"  name="Eliminar">
+                                                <input type="hidden" class="btn btn-success" value="{{$fila->id}}" id="id"  name="id">
+                                                <button id="modifySecondsBtn{{$fila->id}}" type="button" class="btn btn-success" >Modificar Segundos</button>      
                                             @elseif($fila->estatus=="Inactivo")
-                                                <b style="color:red;">{{$fila->estatus}}</b>
+                                            <center><b style="color:red;">{{$fila->estatus}}</b></center><br>
+                                                
+                                                
+                                            <input type="hidden" class="btn btn-success" value="{{$fila->id}}" id="id"  name="id">
+                                                <input type="submit" class="btn btn-primary" value="Activar" id="Activo"  name="Activo">
+                                                <input type="submit" class="btn btn-danger" value="Eliminar" id="Eliminar"  name="Eliminar">
                                             @endif
                                     </form>
                                     <form method="post" id="exampleValidation" action="{{url('/modificar_banner_200')}}">
@@ -70,6 +79,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            @endif
                          @endforeach
                     @endif
                 </tbody>
