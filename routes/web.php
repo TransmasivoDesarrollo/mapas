@@ -38,6 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/AltaAccesoAlSistema', '\App\Http\Controllers\Sistemas\SistemasController@AltaAccesoAlSistema')->name('AltaAccesoAlSistema');
     Route::POST('/AltaAccesoAlSistema', '\App\Http\Controllers\Sistemas\SistemasController@Registro_de_acceso')->name('Registro_de_acceso');
     //mantenimiento
+
+    
+    
+    Route::get('/Reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Reporte_de_estado_fisico_y_funcionamiento')->name('Reporte_de_estado_fisico_y_funcionamiento');
+
+
     Route::get('/Bitacora_De_Liberacion_De_Unidades', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Revisión')->name('Revisión');
     Route::get('/Bitacora_De_Liberacion_De_Unidadesv1', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Revisiónv1')->name('Revisiónv1');
     Route::get('/Bitacora_De_Liberacion_De_Unidades_express', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Bitacora_De_Liberacion_De_Unidades_express')->name('Bitacora_De_Liberacion_De_Unidades_express');

@@ -1777,4 +1777,12 @@ public function Bitacora_Liberacion_unidades_electrico(Request $request)
     $mecanicos = DB::connection('mysql_produc')->select('SELECT * FROM adatospersonal where area="MECANICO"');
     return view('Transmasivo.Mantenimiento.Bitacora_electrica',compact('unidades','mecanicos'));
 }
+
+    public function Reporte_de_estado_fisico_y_funcionamiento(Request $request)
+    {
+        $unidades = DB::connection('mysql_produc')->select('SELECT cunidades.consecutivo,cmodelos.modelo FROM cunidades 
+            INNER JOIN cmodelos on cmodelos.idmodelo=cunidades.modelofkcmodelos WHERE cmodelos.idmodelo IN(3,2,4) order by cunidades.consecutivo DESC');
+        $mecanicos = DB::connection('mysql_produc')->select('SELECT * FROM adatospersonal where area="MECANICO"');
+        return view('Transmasivo.Mantenimiento.Bitacora_electrica',compact('unidades','mecanicos'));
+    }
 }

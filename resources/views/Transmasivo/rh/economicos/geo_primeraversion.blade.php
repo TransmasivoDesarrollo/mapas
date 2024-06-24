@@ -4,12 +4,7 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         <style>
-            #map { height: 3000px; }
-            .center {
-text-align: center;
-font-family: Arial, sans-serif;
-font-size: 9pt;
-}
+            #map { height: 550px; width: 100%; }
         </style>
     </head>
     <body>
@@ -21,299 +16,320 @@ font-size: 9pt;
                 </div>
             </div>
             <div class="card-body">
-                
-                <div class="row ">
-                    <div class="col-md-6">
-                        <div id="map"></div>
-                    </div>
-                    <div class="col-md-2" >
+                <div id="map"></div>
+                <br>
+                <br>
+                <div class="row form-control">
+                    <div class="col-md-12"  class="table-responsive">
                         <center>
-                            <b >
-                            Ordinario<br>Ojo de agua<br>Ciudad azteca
-                            </b>
+                            Linea de mexibus
                         </center>
-                        <table>
-                            <tr><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="2"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="3"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="4"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="5"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/insurgentes.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="6"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="7"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="8"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="9"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="10"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="11"></td></tr>   
-                            <tr><td  style=""><img src="{{url('/assets/img/hidalgo.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="12"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="13"></td></tr>                    
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_sur.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="14"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="15"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="16"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="17"></td></tr>                
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_nor.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="18"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="19"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="20"></td></tr>                        
-                            <tr><td  style=""><img src="{{url('/assets/img/esmeralda.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="21"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="22"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="23"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="24"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="25"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"></td></tr>
+                <br>
+                <br>
+                <br>
+                <br>
+                        <table class="table-responsive">
+                            <tr>
+                                <td rowspan="2" ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/josefa.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/industrial.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/unitec.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/torres.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/hospital.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/jardines.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/palomas.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/insurgentes.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/hidalgo.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/cuau_sur.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/cuau_nor.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/esmeralda.ico')}}" width="50px;"></td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td rowspan="2" style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="50px;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                                <td style="border-top:1px black solid;"><img src="{{url('/assets/img/zvacio.png')}}" width="40px;"></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" id="93"></td>
+                                <td id="92"></td>
+                                <td id="91"></td>
+                                <td id="90"></td>
+                                <td rowspan="2" id="89"></td>
+                                <td id="88"></td>
+                                <td id="87"></td>
+                                <td id="86"></td>
+                                <td id="85"></td>
+                                <td id="84"></td>
+                                <td id="83"></td>
+                                <td rowspan="2" id="82"></td>
+                                <td id="81"></td>
+                                <td id="80"></td>
+                                <td id="79"></td>
+                                <td rowspan="2" id="78"></td>
+                                <td id="77"></td>
+                                <td id="76"></td>
+                                <td id="75"></td>
+                                <td rowspan="2" id="74"></td>
+                                <td id="73"></td>
+                                <td id="72"></td>
+                                <td rowspan="2" id="71"></td>
+                                <td id="70"></td>
+                                <td id="69"></td>
+                                <td id="68"></td>
+                                <td rowspan="2" id="67"></td>
+                                <td id="66"></td>
+                                <td id="65"></td>
+                                <td rowspan="2" id="64"></td>
+                                <td id="63"></td>
+                                <td rowspan="2" id="62"></td>
+                                <td id="61"></td>
+                                <td id="60"></td>
+                                <td rowspan="2" id="59"></td>
+                                <td id="58"></td>
+                                <td id="57"></td>
+                                <td id="56"></td>
+                                <td id="55"></td>
+                                <td id="54"></td>
+                                <td rowspan="2" id="53"></td>{{--americas--}}
+                                <td id="52"></td>
+                                <td id="51"></td>
+                                <td id="50"></td>
+                                <td rowspan="2" id="49"></td>
+                                <td id="48"></td>
+                                <td id="47"></td>
+                                <td id="46"></td>
+                                <td rowspan="2" id="45"></td>
+                                <td id="44"></td>
+                                <td id="43"></td>
+                                <td rowspan="2" id="42"></td>
+                                <td id="41"></td>
+                                <td id="40"></td>
+                                <td rowspan="2" id="39"></td>
+                                <td id="38"></td>
+                                <td id="37"></td>
+                                <td id="36"></td>
+                                <td id="35"></td>
+                                <td rowspan="2" id="34"></td>
+                                <td id="33"></td>
+                                <td id="32"></td>
+                                <td id="31"></td>
+                                <td rowspan="2" id="30"></td>
+                                <td id="29"></td>
+                                <td id="28"></td>
+                                <td id="27"></td>
+                                <td id="26"></td>
+                                <td rowspan="2" id="1"></td>
+                                <td id="2"></td>
+                                <td id="3"></td>
+                                <td id="4"></td>
+                                <td id="5"></td>
+                                <td rowspan="2" id="6"></td>
+                                <td id="7"></td>
+                                <td id="8"></td>
+                                <td id="9"></td>
+                                <td id="10"></td>
+                                <td id="11"></td>
+                                <td rowspan="2" id="12"></td>
+                                <td id="13"></td>
+                                <td rowspan="2" id="14"></td>
+                                <td id="15"></td>
+                                <td id="16"></td>
+                                <td id="17"></td>
+                                <td rowspan="2" id="18"></td>
+                                <td id="19"></td>
+                                <td id="20"></td>
+                                <td rowspan="2" id="21"></td>
+                                <td id="22"></td>
+                                <td id="23"></td>
+                                <td id="24"></td>
+                                <td id="25"></td>
+                                <td rowspan="2" id="1111"></td>
+                            </tr>
+                            
                         </table>
+                        
+                <br>
+                <br>
+                <br>
+                <br>
                     </div>
-                    <div class="col-md-2">
-                    <center>
-                            <b >
-                            Express<br>Ojo de agua<br>Ciudad azteca
-                            </b>
-                        </center>
-                        <table>
-                            <tr><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="2"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="3"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="4"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="5"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/insurgentes.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="6"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="7"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="8"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="9"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="10"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="11"></td></tr>   
-                            <tr><td  style=""><img src="{{url('/assets/img/hidalgo.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="12"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="13"></td></tr>                    
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_sur.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="14"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="15"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="16"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="17"></td></tr>                
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_nor.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="18"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="19"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="20"></td></tr>                        
-                            <tr><td  style=""><img src="{{url('/assets/img/esmeralda.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="21"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="22"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="23"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="24"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="25"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"></td></tr>
-                        </table>
-                        </table>
-                    </div>
-                    <div class="col-md-2" >
-                        <center>
-                            <b >
-                            Express<br>Central de abastos<br>Ciudad azteca
-                            </b>
-                        </center>
-                        <<table>
-                            <tr><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
-                        </table>
-                    </div>
+                    
                 </div>
+                
             </div>
+            
         </div>
+        
     </body>
 
     @section('jscustom')
@@ -340,7 +356,7 @@ font-size: 9pt;
                 @if($seccion->cord7 != null) [{{$seccion->cord7}}], @endif
                 @if($seccion->cord8 != null) [{{$seccion->cord8}}], @endif
             ];
-            @if($i==25)
+            @if($i==93)
                 const polygon{{$i}} = L.polygon(polygonCoordinates{{$i}}, {
                     color: 'red',
                     fillColor: '#3388ff',
@@ -368,7 +384,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$i}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$i}}').append('<center class="center" >1000</center>');
+                                $('#{{$i}}').append('<center>1000</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1000');
                                 console.log('entro1000');
@@ -392,7 +408,7 @@ font-size: 9pt;
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
                                 
-                                $('#{{$a}}').append('<center class="center" >65</center>');
+                                $('#{{$a}}').append('<center>65</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 65');
                                 console.log('65');} 
@@ -411,7 +427,7 @@ font-size: 9pt;
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
                                 
-                                $('#{{$a}}').append('<center class="center" >66</center>');
+                                $('#{{$a}}').append('<center>66</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 66');
                                 console.log('66');} 
@@ -428,7 +444,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >67</center>');
+                                $('#{{$a}}').append('<center>67</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 67');
                                 console.log('67');} 
@@ -438,6 +454,11 @@ font-size: 9pt;
                     }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
+
+
+
+
+
             async function eco68() {
             $.ajax({url: '{{ url("/geo_eco68") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
                 success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
@@ -446,7 +467,7 @@ font-size: 9pt;
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
                                 
-                                $('#{{$a}}').append('<center class="center" >68</center>');
+                                $('#{{$a}}').append('<center>68</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 68');
                                 console.log('68');} 
@@ -463,7 +484,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >69</center>');
+                                $('#{{$a}}').append('<center>69</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 69');
                                 console.log('69');} 
@@ -480,7 +501,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >70</center>');
+                                $('#{{$a}}').append('<center>70</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 70');
                                 console.log('70');} 
@@ -497,7 +518,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >71</center>');
+                                $('#{{$a}}').append('<center>71</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 71');
                                 console.log('71');} 
@@ -514,7 +535,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >72</center>');
+                                $('#{{$a}}').append('<center>72</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 72');
                                 console.log('72');} 
@@ -532,7 +553,7 @@ font-size: 9pt;
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
                                 
-                                $('#{{$a}}').append('<center class="center" >73</center>');
+                                $('#{{$a}}').append('<center>73</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 73');
                                 console.log('73');} 
@@ -549,7 +570,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >74</center>');
+                                $('#{{$a}}').append('<center>74</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 74');
                                 console.log('74');} 
@@ -566,7 +587,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >75</center>');
+                                $('#{{$a}}').append('<center>75</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 75');
                                 console.log('75');} 
@@ -583,7 +604,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >76</center>');
+                                $('#{{$a}}').append('<center>76</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 76');
                                 console.log('76');} 
@@ -600,7 +621,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >77</center>');
+                                $('#{{$a}}').append('<center>77</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 77');
                                 console.log('77');} 
@@ -617,7 +638,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >78</center>');
+                                $('#{{$a}}').append('<center>78</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 78');
                                 console.log('78');} 
@@ -634,7 +655,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >79</center>');
+                                $('#{{$a}}').append('<center>79</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 79');
                                 console.log('79');} 
@@ -645,6 +666,14 @@ font-size: 9pt;
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
 
+
+
+
+
+
+
+
+
             async function eco80() {
             $.ajax({url: '{{ url("/geo_eco80") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
                 success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
@@ -652,7 +681,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >80</center>');
+                                $('#{{$a}}').append('<center>80</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 80');
                                 console.log('80');} 
@@ -669,7 +698,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >81</center>');
+                                $('#{{$a}}').append('<center>81</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 81');
                                 console.log('81');} 
@@ -686,7 +715,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >82</center>');
+                                $('#{{$a}}').append('<center>82</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 82');
                                 console.log('82');} 
@@ -703,7 +732,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >83</center>');
+                                $('#{{$a}}').append('<center>83</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 83');
                                 console.log('83');} 
@@ -720,7 +749,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >84</center>');
+                                $('#{{$a}}').append('<center>84</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 84');
                                 console.log('84');} 
@@ -737,7 +766,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >85</center>');
+                                $('#{{$a}}').append('<center>85</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 85');
                                 console.log('85');} 
@@ -754,7 +783,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >86</center>');
+                                $('#{{$a}}').append('<center>86</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 86');
                                 console.log('86');} 
@@ -771,7 +800,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >87</center>');
+                                $('#{{$a}}').append('<center>87</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 87');
                                 console.log('87');} 
@@ -788,7 +817,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >88</center>');
+                                $('#{{$a}}').append('<center>88</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 88');
                                 console.log('88');} 
@@ -805,7 +834,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >89</center>');
+                                $('#{{$a}}').append('<center>89</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 89');
                                 console.log('89');} 
@@ -822,7 +851,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >90</center>');
+                                $('#{{$a}}').append('<center>90</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 90');
                                 console.log('90');} 
@@ -839,7 +868,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >91</center>');
+                                $('#{{$a}}').append('<center>91</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 91');
                                 console.log('91');} 
@@ -856,7 +885,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >92</center>');
+                                $('#{{$a}}').append('<center>92</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 92');
                                 console.log('92');} 
@@ -873,7 +902,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >93</center>');
+                                $('#{{$a}}').append('<center>93</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 93');
                                 console.log('93');} 
@@ -890,7 +919,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >94</center>');
+                                $('#{{$a}}').append('<center>94</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 94');
                                 console.log('94');} 
@@ -907,7 +936,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >95</center>');
+                                $('#{{$a}}').append('<center>95</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 95');
                                 console.log('95');} 
@@ -924,7 +953,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >96</center>');
+                                $('#{{$a}}').append('<center>96</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 96');
                                 console.log('96');} 
@@ -941,7 +970,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >97</center>');
+                                $('#{{$a}}').append('<center>97</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 97');
                                 console.log('97');} 
@@ -958,7 +987,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >98</center>');
+                                $('#{{$a}}').append('<center>98</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 98');
                                 console.log('98');} 
@@ -975,7 +1004,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >99</center>');
+                                $('#{{$a}}').append('<center>99</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 99');
                                 console.log('99');} 
@@ -994,7 +1023,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1001</center>');
+                                $('#{{$a}}').append('<center>1001</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1001');
                                 console.log('1001');} 
@@ -1011,7 +1040,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1002</center>');
+                                $('#{{$a}}').append('<center>1002</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1002');
                                 console.log('1002');} 
@@ -1028,7 +1057,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1003</center>');
+                                $('#{{$a}}').append('<center>1003</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1003');
                                 console.log('1003');} 
@@ -1045,7 +1074,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1004</center>');
+                                $('#{{$a}}').append('<center>1004</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1004');
                                 console.log('1004');} 
@@ -1062,7 +1091,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1005</center>');
+                                $('#{{$a}}').append('<center>1005</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1005');
                                 console.log('1005');} 
@@ -1079,7 +1108,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1006</center>');
+                                $('#{{$a}}').append('<center>1006</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1006');
                                 console.log('1006');} 
@@ -1096,7 +1125,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1007</center>');
+                                $('#{{$a}}').append('<center>1007</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1007');
                                 console.log('1007');} 
@@ -1113,7 +1142,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1008</center>');
+                                $('#{{$a}}').append('<center>1008</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1008');
                                 console.log('1008');} 
@@ -1130,7 +1159,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1009</center>');
+                                $('#{{$a}}').append('<center>1009</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1009');
                                 console.log('1009');} 
@@ -1147,7 +1176,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1012</center>');
+                                $('#{{$a}}').append('<center>1012</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 12');
                                 console.log('1012');} 
@@ -1164,7 +1193,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1</center>');
+                                $('#{{$a}}').append('<center>1</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 1');
                                 console.log('1');} 
@@ -1181,7 +1210,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >15</center>');
+                                $('#{{$a}}').append('<center>15</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 15');
                                 console.log('15');} 
@@ -1198,7 +1227,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >24</center>');
+                                $('#{{$a}}').append('<center>24</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 24');
                                 console.log('24');} 
@@ -1215,7 +1244,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >25</center>');
+                                $('#{{$a}}').append('<center>25</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 25');
                                 console.log('25');} 
@@ -1232,7 +1261,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >35</center>');
+                                $('#{{$a}}').append('<center>35</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 35');
                                 console.log('35');} 
@@ -1249,7 +1278,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >41</center>');
+                                $('#{{$a}}').append('<center>41</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 41');
                                 console.log('41');} 
@@ -1267,7 +1296,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >45</center>');
+                                $('#{{$a}}').append('<center>45</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 45');
                                 console.log('45');} 
@@ -1284,7 +1313,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >46</center>');
+                                $('#{{$a}}').append('<center>46</center>');
                                 const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76] });
                                 const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('Tu ubicación actual 46');
                                 console.log('46');} 
@@ -1311,7 +1340,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         const poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]);
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1011</center>');
+                                $('#{{$a}}').append('<center>1011</center>');
                                 const customIcon = L.icon({
                                     iconUrl: '{{url("/assets/img/mexibus2024.ico")}}', iconSize: [45, 45], iconAnchor: [22, 38],  popupAnchor: [-3, -76] 
                                 });
@@ -1347,7 +1376,7 @@ font-size: 9pt;
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); // Invertir las coordenadas para Turf.js
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$a}}').append('<center class="center" >1010</center>');
+                                $('#{{$a}}').append('<center>1010</center>');
                                 const customIcon = L.icon({ iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [60, 60],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
                         const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map)
                                     .bindPopup('Tu ubicación actual 1010');  
@@ -1432,7 +1461,7 @@ font-size: 9pt;
                 map.removeLayer(layer);
                 console.log('limpio');
                 @php 
-                for($r=1; $r<=94;$r++){
+                for($r=1; $r<=93;$r++){
                 @endphp
                     $('#{{$r}}').html('');
                 @php 
@@ -1441,65 +1470,63 @@ font-size: 9pt;
             }
         });
                         
-        
-        setInterval(await estaciones(), 10);
-        
-        setInterval(await eco65(), 10);
-        setInterval(await eco66(), 10);
-        setInterval(await eco67(), 10);
-        setInterval(await eco68(), 10);
-        setInterval(await eco69(), 10);
-        setInterval(await eco70(), 10);
-        setInterval(await eco71(), 10);
-        setInterval(await eco72(), 10);
-        setInterval(await eco73(), 10);
-        setInterval(await eco74(), 10);
-        setInterval(await eco75(), 10);
-        setInterval(await eco76(), 10);
-        setInterval(await eco77(), 10);
-        setInterval(await eco78(), 10);
-        setInterval(await eco79(), 10);
-        setInterval(await eco80(), 10);
-        setInterval(await eco81(), 10);
-        setInterval(await eco82(), 10);
-        setInterval(await eco83(), 10);
-        setInterval(await eco84(), 10);
-        setInterval(await eco85(), 10);
-        setInterval(await eco86(), 10);
-        setInterval(await eco87(), 10);
-        setInterval(await eco88(), 10);
-        setInterval(await eco89(), 10);
-        setInterval(await eco90(), 10);
-        setInterval(await eco91(), 10);
-        setInterval(await eco92(), 10);
-        setInterval(await eco93(), 10);
-        setInterval(await eco94(), 10);
-        setInterval(await eco95(), 10);
-        setInterval(await eco96(), 10);
-        setInterval(await eco97(), 10);
-        setInterval(await eco98(), 10);
-        setInterval(await eco99(), 10);
-        setInterval(await eco1001(), 10);
-        setInterval(await eco1002(), 10);
-        setInterval(await eco1003(), 10);
-        setInterval(await eco1004(), 10);
-        setInterval(await eco1005(), 10);
-        setInterval(await eco1006(), 10);
-        setInterval(await eco1007(), 10);
-        setInterval(await eco1008(), 10);
-        setInterval(await eco1009(), 10);
-        setInterval(await eco1012(), 10);
-        setInterval(await eco1(), 10);
-        setInterval(await eco15(), 10);
-        setInterval(await eco24(), 10);
-        setInterval(await eco25(), 10);
-        setInterval(await eco35(), 10);
-        setInterval(await eco41(), 10);
-        setInterval(await eco45(), 10);
-        setInterval(await eco46(), 10);
-        setInterval(await eco1000(), 10);
-        setInterval(await eco1011(), 10);
-        setInterval(await eco1010(), 10);
+        estaciones();
+        setInterval(await eco65(), 100);
+        setInterval(await eco66(), 100);
+        setInterval(await eco67(), 100);
+        setInterval(await eco68(), 100);
+        setInterval(await eco69(), 100);
+        setInterval(await eco70(), 100);
+        setInterval(await eco71(), 100);
+        setInterval(await eco72(), 100);
+        setInterval(await eco73(), 100);
+        setInterval(await eco74(), 100);
+        setInterval(await eco75(), 100);
+        setInterval(await eco76(), 100);
+        setInterval(await eco77(), 100);
+        setInterval(await eco78(), 100);
+        setInterval(await eco79(), 100);
+        setInterval(await eco80(), 100);
+        setInterval(await eco81(), 100);
+        setInterval(await eco82(), 100);
+        setInterval(await eco83(), 100);
+        setInterval(await eco84(), 100);
+        setInterval(await eco85(), 100);
+        setInterval(await eco86(), 100);
+        setInterval(await eco87(), 100);
+        setInterval(await eco88(), 100);
+        setInterval(await eco89(), 100);
+        setInterval(await eco90(), 100);
+        setInterval(await eco91(), 100);
+        setInterval(await eco92(), 100);
+        setInterval(await eco93(), 100);
+        setInterval(await eco94(), 100);
+        setInterval(await eco95(), 100);
+        setInterval(await eco96(), 100);
+        setInterval(await eco97(), 100);
+        setInterval(await eco98(), 100);
+        setInterval(await eco99(), 100);
+        setInterval(await eco1001(), 100);
+        setInterval(await eco1002(), 100);
+        setInterval(await eco1003(), 100);
+        setInterval(await eco1004(), 100);
+        setInterval(await eco1005(), 100);
+        setInterval(await eco1006(), 100);
+        setInterval(await eco1007(), 100);
+        setInterval(await eco1008(), 100);
+        setInterval(await eco1009(), 100);
+        setInterval(await eco1012(), 100);
+        setInterval(await eco1(), 100);
+        setInterval(await eco15(), 100);
+        setInterval(await eco24(), 100);
+        setInterval(await eco25(), 100);
+        setInterval(await eco35(), 100);
+        setInterval(await eco41(), 100);
+        setInterval(await eco45(), 100);
+        setInterval(await eco46(), 100);
+        setInterval(await eco1000(), 100);
+        setInterval(await eco1011(), 100);
+        setInterval(await eco1010(), 100);
         
         }
 

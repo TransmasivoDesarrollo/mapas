@@ -239,6 +239,11 @@
 											<span class="sub-item">Bitácora de liberación</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Reporte de estado físico y funcionamiento</span>
+										</a>
+									</li>
 									
 								</ul>
 							</div>
@@ -282,6 +287,11 @@
 									<li>
 										<a  href="{{url('/modificar_banner_200')}}">
 											<span class="sub-item">Modificar banner modulo 200</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/geo')}}">
+											<span class="sub-item">Geolocalización</span>
 										</a>
 									</li>
 									
@@ -370,6 +380,11 @@
                                     <li>
 										<a  href="{{url('/Bitacora_Liberacion_De_Unidades')}}">
 											<span class="sub-item">Bitácora de liberación</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Reporte de estado físico y funcionamiento</span>
 										</a>
 									</li>
 									
@@ -461,6 +476,11 @@
 									<li>
 										<a  href="{{url('/modificar_banner_200')}}">
 											<span class="sub-item">Modificar banner modulo 200</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/geo')}}">
+											<span class="sub-item">Geolocalización</span>
 										</a>
 									</li>
                                    

@@ -714,22 +714,28 @@ class OperacionesController extends Controller
         $file->move(public_path().'/images/Operaciones/',$NombreFinal);
 
         $pantalla= $request->input('pantalla');
-        
+        $ultimo = DB::connection('mysql')->select('SELECT id
+        FROM banner200 
+        ORDER BY id DESC 
+        LIMIT 1;');
+        $masuno=$ultimo[0]->id;
+        $masuno=$masuno + 1;
+
         DB::connection('mysql')->table('banner200')->insert([
             'imagen' => $NombreFinal,
             'pantalla' => $pantalla,
-            'estatus' => 'Activo'
+            'estatus' => 'Activo',
+            'orden' => $masuno
         ]);
         
         return $this->bannerModulo200('Se subio la imagen correctamente!','success');
     }
     public function m200()
     {
-        
         $images = DB::connection('mysql')->select('SELECT * 
         FROM banner200 
         WHERE estatus="Activo"
-        ORDER BY 
+        ORDER BY  orden ASC,
           CASE 
             WHEN RIGHT(imagen, 3) = "mp4" THEN 1 
             ELSE 0 
@@ -741,8 +747,10 @@ class OperacionesController extends Controller
     public function modificar_banner_200($mensaje="",$color="")
     {
        
-        $images = DB::connection('mysql')->select('SELECT * FROM banner200 ORDER BY estatus = "Activo" DESC;        ');
-        return view('Transmasivo.Operaciones.modificar_banner_200',compact('images','mensaje','color'));
+        $images = DB::connection('mysql')->select('SELECT * FROM banner200 WHERE estatus IN ("Activo", "Inactivo") ORDER BY estatus ASC, orden ASC;      ');
+        $cuenta = DB::connection('mysql')->select('SELECT count(*) as cuenta FROM banner200 where estatus in ("Activo") ');
+        //dd($cuenta);
+        return view('Transmasivo.Operaciones.modificar_banner_200',compact('images','mensaje','color','cuenta'));
     }
     public function cambiar_estatus_banner_200(Request $request)
     {
@@ -770,6 +778,62 @@ class OperacionesController extends Controller
             ->update(['estatus' => 'Activo']);
             
             return $this->modificar_banner_200('Se actualizo el estatus correctamente!','success');
+        }
+        else if($request->has('Bajar')){
+            $actual=$request->input('orden_subir_bajar');
+            $actual_menos= $actual ;
+            $contador= DB::connection('mysql')->table('banner200')->get();
+           // dd(count($contador));
+            $consultar="";
+            for ($i = 0;count($contador)>$i;$i++) {
+
+                $actual_menos= $actual_menos + 1;
+                $consultar= DB::connection('mysql')->table('banner200')->where('orden', $actual_menos)->get();
+                //dd($consultar[0]->estatus);
+                if($consultar[0]->estatus == 'Activo'){
+                    //dd($i);
+                    break;
+                }
+            } 
+            //dd($consultar);
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $request->input('id_subir_bajar'))
+            ->update(['orden' => $consultar[0]->orden]);
+
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $consultar[0]->id)
+            ->update(['orden' => $request->input('orden_subir_bajar')]);
+            
+            
+            return redirect()->route('modificar_banner_200')->with('mensaje', 'Se actualizo el orden correctamente!')->with('color', 'success');
+        }
+        else if($request->has('Subir')){
+            $actual=$request->input('orden_subir_bajar');
+            $actual_menos= $actual ;
+            $contador= DB::connection('mysql')->table('banner200')->get();
+           // dd(count($contador));
+            $consultar="";
+            for ($i = 0;count($contador)>$i;$i++) {
+
+                $actual_menos= $actual_menos -1 ;
+                $consultar= DB::connection('mysql')->table('banner200')->where('orden', $actual_menos)->get();
+                //dd($consultar[0]);
+                if($consultar[0]->estatus == 'Activo'){
+                    //dd($i);
+                    break;
+                }
+            } 
+            //dd($consultar);
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $request->input('id_subir_bajar'))
+            ->update(['orden' => $consultar[0]->orden]);
+
+            DB::connection('mysql')->table('banner200')
+            ->where('id', $consultar[0]->id)
+            ->update(['orden' => $request->input('orden_subir_bajar')]);
+            
+            
+            return redirect()->route('modificar_banner_200')->with('mensaje', 'Se actualizo el orden correctamente!')->with('color', 'success');
         }
        
     }
