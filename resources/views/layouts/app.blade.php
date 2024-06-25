@@ -294,6 +294,11 @@
 											<span class="sub-item">Geolocalización</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Reporte de estado físico y funcionamiento</span>
+										</a>
+									</li>
 									
                                    
 									

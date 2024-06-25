@@ -1778,11 +1778,33 @@ public function Bitacora_Liberacion_unidades_electrico(Request $request)
     return view('Transmasivo.Mantenimiento.Bitacora_electrica',compact('unidades','mecanicos'));
 }
 
-    public function Reporte_de_estado_fisico_y_funcionamiento(Request $request)
-    {
-        $unidades = DB::connection('mysql_produc')->select('SELECT cunidades.consecutivo,cmodelos.modelo FROM cunidades 
-            INNER JOIN cmodelos on cmodelos.idmodelo=cunidades.modelofkcmodelos WHERE cmodelos.idmodelo IN(3,2,4) order by cunidades.consecutivo DESC');
-        $mecanicos = DB::connection('mysql_produc')->select('SELECT * FROM adatospersonal where area="MECANICO"');
-        return view('Transmasivo.Mantenimiento.Bitacora_electrica',compact('unidades','mecanicos'));
-    }
+public function Reporte_de_estado_fisico_y_funcionamiento(Request $request)
+{
+   
+    $c_reporte = DB::connection('mysql')
+                    ->table('c_reporte_fisico_funcionalidad')
+                    ->orderBy('id_c_reporte', 'asc')->get();
+                    //->paginate(10);
+    $form_data = $request->session()->get('form_data', []);
+    $unidades = DB::connection('mysql_produc')->select('SELECT cunidades.consecutivo,cmodelos.modelo FROM cunidades 
+                INNER JOIN cmodelos on cmodelos.idmodelo=cunidades.modelofkcmodelos WHERE cmodelos.idmodelo IN(3,2,4) order by cunidades.consecutivo DESC');
+            $mecanicos = DB::connection('mysql_produc')->select('SELECT * FROM adatospersonal where area="MECANICO"');
+            $tipo_informes = DB::connection('mysql')->select('SELECT * FROM c_tipo_informe_bitacora_liberacion ');
+
+    return view('Transmasivo.Mantenimiento.Reporte_de_estado_fisico_y_funcionamiento', compact('c_reporte', 'form_data','unidades','mecanicos','tipo_informes'));
+}
+public function postReporte_de_estado_fisico_y_funcionamiento(Request $request)
+{
+    // Guardamos los datos del formulario en la sesión
+    $request->session()->put('form_data', $request->all());
+
+    // Aquí puedes procesar los datos del formulario como desees
+    // ...
+
+    return redirect()->back()->with('mensaje', 'Datos guardados!')->with('color', 'success');
+
+}
+
+
+
 }

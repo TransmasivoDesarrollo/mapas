@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     
     
     Route::get('/Reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Reporte_de_estado_fisico_y_funcionamiento')->name('Reporte_de_estado_fisico_y_funcionamiento');
+    Route::POST('/Reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@postReporte_de_estado_fisico_y_funcionamiento')->name('postReporte_de_estado_fisico_y_funcionamiento');
 
 
     Route::get('/Bitacora_De_Liberacion_De_Unidades', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Revisión')->name('Revisión');
