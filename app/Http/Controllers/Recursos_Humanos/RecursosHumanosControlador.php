@@ -268,6 +268,31 @@ class RecursosHumanosControlador extends Controller
     
 
     
+    public function geo_ecotodos() {
+        $economicos = [
+            65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+            1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012,
+            1, 15, 24, 25, 35, 41, 45, 46
+        ];
+        
+        $results = [];
+        
+        foreach ($economicos as $economico) {
+            $result = DB::connection('mysql')->select('SELECT * FROM t_geolocalizacion_eco WHERE economico = ? ORDER BY id_geolocalizacion DESC LIMIT 1', [$economico]);
+            $results[$economico] = $result;
+        }
+        
+        return $results;
+    }
+
+    public function geo3() {
+        $secciones = DB::connection('mysql')
+        ->table('t_secciones-geolocalizacion')
+        ->get();
+       return view('Transmasivo.rh.geo3',compact('secciones'));
+    }
+
+
     public function geo_eco65(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 65)->latest('id_geolocalizacion')->first();}
     public function geo_eco66(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 66)->latest('id_geolocalizacion')->first();}
     public function geo_eco67(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 67)->latest('id_geolocalizacion')->first();}

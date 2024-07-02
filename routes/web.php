@@ -100,129 +100,15 @@ Route::middleware('auth')->group(function () {
     Route::POST('/geo2', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas')->name('insertar_cordenadas');
 
 
-
-    Route::get('/geo1011', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1011')->name('insertar_cordenadas1011');
-    Route::POST('/geo1011', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1011_i')->name('insertar_cordenadas1011_i');
-
-    Route::get('/geo65', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas65')->name('insertar_cordenadas65');
-    Route::POST('/geo65', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas65_i')->name('insertar_cordenadas65_i');
-    Route::get('/geo66', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas66')->name('insertar_cordenadas66');
-    Route::POST('/geo66', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas66_i')->name('insertar_cordenadas66_i');
-    Route::get('/geo67', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas67')->name('insertar_cordenadas67');
-    Route::POST('/geo67', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas67_i')->name('insertar_cordenadas67_i');
-    Route::get('/geo68', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas68')->name('insertar_cordenadas68');
-    Route::POST('/geo68', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas68_i')->name('insertar_cordenadas68_i');
-    Route::get('/geo69', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas69')->name('insertar_cordenadas69');
-    Route::POST('/geo69', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas69_i')->name('insertar_cordenadas69_i');
-    Route::get('/geo70', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas70')->name('insertar_cordenadas70');
-    Route::POST('/geo70', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas70_i')->name('insertar_cordenadas70_i');
-    Route::get('/geo71', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas71')->name('insertar_cordenadas71');
-    Route::POST('/geo71', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas71_i')->name('insertar_cordenadas71_i');
-    Route::get('/geo72', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas72')->name('insertar_cordenadas72');
-    Route::POST('/geo72', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas72_i')->name('insertar_cordenadas72_i');
-    Route::get('/geo73', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas73')->name('insertar_cordenadas73');
-    Route::POST('/geo73', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas73_i')->name('insertar_cordenadas73_i');
-    Route::get('/geo74', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas74')->name('insertar_cordenadas74');
-    Route::POST('/geo74', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas74_i')->name('insertar_cordenadas74_i');
-    
-    Route::get('/geo75', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas75')->name('insertar_cordenadas75');
-    Route::POST('/geo75', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas75_i')->name('insertar_cordenadas75_i');
-    Route::get('/geo76', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas76')->name('insertar_cordenadas76');
-    Route::POST('/geo76', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas76_i')->name('insertar_cordenadas76_i');
-    Route::get('/geo77', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas77')->name('insertar_cordenadas77');
-    Route::POST('/geo77', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas77_i')->name('insertar_cordenadas77_i');
-    Route::get('/geo78', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas78')->name('insertar_cordenadas78');
-    Route::POST('/geo78', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas78_i')->name('insertar_cordenadas78_i');
-    Route::get('/geo79', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas79')->name('insertar_cordenadas79');
-    Route::POST('/geo79', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas79_i')->name('insertar_cordenadas79_i');
-    Route::get('/geo80', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas80')->name('insertar_cordenadas80');
-    Route::POST('/geo80', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas80_i')->name('insertar_cordenadas80_i');
-    Route::get('/geo81', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas81')->name('insertar_cordenadas81');
-    Route::POST('/geo81', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas81_i')->name('insertar_cordenadas81_i');
-    Route::get('/geo82', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas82')->name('insertar_cordenadas82');
-    Route::POST('/geo82', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas82_i')->name('insertar_cordenadas82_i');
-    Route::get('/geo83', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas83')->name('insertar_cordenadas83');
-    Route::POST('/geo83', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas83_i')->name('insertar_cordenadas83_i');
-    Route::get('/geo84', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas84')->name('insertar_cordenadas84');
-    Route::POST('/geo84', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas84_i')->name('insertar_cordenadas84_i');
-    
-    Route::get('/geo85', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas85')->name('insertar_cordenadas85');
-    Route::POST('/geo85', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas85_i')->name('insertar_cordenadas85_i');
-    Route::get('/geo86', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas86')->name('insertar_cordenadas86');
-    Route::POST('/geo86', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas86_i')->name('insertar_cordenadas86_i');
-    Route::get('/geo87', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas87')->name('insertar_cordenadas87');
-    Route::POST('/geo87', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas87_i')->name('insertar_cordenadas87_i');
-    Route::get('/geo88', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas88')->name('insertar_cordenadas88');
-    Route::POST('/geo88', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas88_i')->name('insertar_cordenadas88_i');
-    Route::get('/geo89', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas89')->name('insertar_cordenadas89');
-    Route::POST('/geo89', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas89_i')->name('insertar_cordenadas89_i');
-    Route::get('/geo90', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas90')->name('insertar_cordenadas90');
-    Route::POST('/geo90', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas90_i')->name('insertar_cordenadas90_i');
-    Route::get('/geo91', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas91')->name('insertar_cordenadas91');
-    Route::POST('/geo91', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas91_i')->name('insertar_cordenadas91_i');
-    Route::get('/geo92', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas92')->name('insertar_cordenadas92');
-    Route::POST('/geo92', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas92_i')->name('insertar_cordenadas92_i');
-    Route::get('/geo93', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas93')->name('insertar_cordenadas93');
-    Route::POST('/geo93', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas93_i')->name('insertar_cordenadas93_i');
-    Route::get('/geo94', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas94')->name('insertar_cordenadas94');
-    Route::POST('/geo94', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas94_i')->name('insertar_cordenadas94_i');
-    
-    Route::get('/geo95', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas95')->name('insertar_cordenadas95');
-    Route::POST('/geo95', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas95_i')->name('insertar_cordenadas95_i');
-    Route::get('/geo96', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas96')->name('insertar_cordenadas96');
-    Route::POST('/geo96', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas96_i')->name('insertar_cordenadas96_i');
-    Route::get('/geo97', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas97')->name('insertar_cordenadas97');
-    Route::POST('/geo97', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas97_i')->name('insertar_cordenadas97_i');
-    Route::get('/geo98', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas98')->name('insertar_cordenadas98');
-    Route::POST('/geo98', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas98_i')->name('insertar_cordenadas98_i');
-    Route::get('/geo99', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas99')->name('insertar_cordenadas99');
-    Route::POST('/geo99', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas99_i')->name('insertar_cordenadas99_i');
-    Route::get('/geo1001', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1001')->name('insertar_cordenadas1001');
-    Route::POST('/geo1001', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1001_i')->name('insertar_cordenadas1001_i');
-    Route::get('/geo1002', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1002')->name('insertar_cordenadas1002');
-    Route::POST('/geo1002', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1002_i')->name('insertar_cordenadas1002_i');
-    Route::get('/geo1003', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1003')->name('insertar_cordenadas1003');
-    Route::POST('/geo1003', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1003_i')->name('insertar_cordenadas1003_i');
-    Route::get('/geo1004', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1004')->name('insertar_cordenadas1004');
-    Route::POST('/geo1004', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1004_i')->name('insertar_cordenadas1004_i');
-    Route::get('/geo1005', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1005')->name('insertar_cordenadas1005');
-    Route::POST('/geo1005', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1005_i')->name('insertar_cordenadas1005_i');
-    
-    Route::get('/geo1006', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1006')->name('insertar_cordenadas1006');
-    Route::POST('/geo1006', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1006_i')->name('insertar_cordenadas1006_i');
-    Route::get('/geo1007', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1007')->name('insertar_cordenadas1007');
-    Route::POST('/geo1007', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1007_i')->name('insertar_cordenadas1007_i');
-    Route::get('/geo1008', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1008')->name('insertar_cordenadas1008');
-    Route::POST('/geo1008', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1008_i')->name('insertar_cordenadas1008_i');
-    Route::get('/geo1009', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1009')->name('insertar_cordenadas1009');
-    Route::POST('/geo1009', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1009_i')->name('insertar_cordenadas1009_i');
-    Route::get('/geo1010', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1010')->name('insertar_cordenadas1010');
-    Route::POST('/geo1010', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1010_i')->name('insertar_cordenadas1010_i');
-    Route::get('/geo1012', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1012')->name('insertar_cordenadas1012');
-    Route::POST('/geo1012', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1012_i')->name('insertar_cordenadas1012_i');
-    Route::get('/geo1', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1')->name('insertar_cordenadas1');
-    Route::POST('/geo1', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas1_i')->name('insertar_cordenadas1_i');
-    Route::get('/geo15', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas15')->name('insertar_cordenadas15');
-    Route::POST('/geo15', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas15_i')->name('insertar_cordenadas15_i');
-    Route::get('/geo24', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas24')->name('insertar_cordenadas24');
-    Route::POST('/geo24', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas24_i')->name('insertar_cordenadas24_i');
-    
-    Route::get('/geo25', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas25')->name('insertar_cordenadas25');
-    Route::POST('/geo25', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas25_i')->name('insertar_cordenadas25_i');
-    Route::get('/geo35', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas35')->name('insertar_cordenadas35');
-    Route::POST('/geo35', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas35_i')->name('insertar_cordenadas35_i');
-    Route::get('/geo41', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas41')->name('insertar_cordenadas41');
-    Route::POST('/geo41', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas41_i')->name('insertar_cordenadas41_i');
-    Route::get('/geo45', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas45')->name('insertar_cordenadas45');
-    Route::POST('/geo45', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas45_i')->name('insertar_cordenadas45_i');
-    Route::get('/geo46', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas46')->name('insertar_cordenadas46');
-    Route::POST('/geo46', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas46_i')->name('insertar_cordenadas46_i');
     
     
     Route::POST('/geo_eco1000', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo_eco1000')->name('geo_eco1000');
     Route::POST('/geo_eco1011', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo_eco1011')->name('geo_eco1011');
     Route::POST('/geo_eco1010', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo_eco1010')->name('geo_eco1010');
 
+
+    Route::get('/geo_ecotodos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo_ecotodos')->name('geo_ecotodos');
+    Route::get('/geo3', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo3')->name('geo3');
 
     Route::POST('/geo_eco65', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo_eco65')->name('geo_eco65');
     Route::POST('/geo_eco66', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo_eco66')->name('geo_eco66');
@@ -290,6 +176,13 @@ Route::middleware('auth')->group(function () {
    
 
     //operaciones
+
+    
+    Route::get('/recorrido', '\App\Http\Controllers\Operaciones\OperacionesController@recorrido')->name('recorrido');
+    Route::get('/geodata', '\App\Http\Controllers\Operaciones\OperacionesController@geodata')->name('geodata');
+    
+
+
     Route::get('/Bitacora_de_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones')->name('Bitacora_de_operaciones');
     Route::POST('/Bitacora_de_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@Registro_bitacora_terminal')->name('Registro_bitacora_terminal');
     Route::get('/Alta_de_reporte', '\App\Http\Controllers\Operaciones\OperacionesController@Alta_de_reporte')->name('Alta_de_reporte');
@@ -329,5 +222,126 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/200', '\App\Http\Controllers\Operaciones\OperacionesController@m200')->name('m200');
 Route::get('/419', '\App\Http\Controllers\Operaciones\OperacionesController@m419')->name('m419');
+
+
+
+
+
+Route::get('/geo1011', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1011')->name('insertar_cordenadas1011');
+Route::POST('/geo1011', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1011_i')->name('insertar_cordenadas1011_i');
+
+Route::get('/geo65', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas65')->name('insertar_cordenadas65');
+Route::POST('/geo65', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas65_i')->name('insertar_cordenadas65_i');
+Route::get('/geo66', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas66')->name('insertar_cordenadas66');
+Route::POST('/geo66', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas66_i')->name('insertar_cordenadas66_i');
+Route::get('/geo67', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas67')->name('insertar_cordenadas67');
+Route::POST('/geo67', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas67_i')->name('insertar_cordenadas67_i');
+Route::get('/geo68', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas68')->name('insertar_cordenadas68');
+Route::POST('/geo68', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas68_i')->name('insertar_cordenadas68_i');
+Route::get('/geo69', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas69')->name('insertar_cordenadas69');
+Route::POST('/geo69', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas69_i')->name('insertar_cordenadas69_i');
+Route::get('/geo70', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas70')->name('insertar_cordenadas70');
+Route::POST('/geo70', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas70_i')->name('insertar_cordenadas70_i');
+Route::get('/geo71', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas71')->name('insertar_cordenadas71');
+Route::POST('/geo71', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas71_i')->name('insertar_cordenadas71_i');
+Route::get('/geo72', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas72')->name('insertar_cordenadas72');
+Route::POST('/geo72', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas72_i')->name('insertar_cordenadas72_i');
+Route::get('/geo73', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas73')->name('insertar_cordenadas73');
+Route::POST('/geo73', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas73_i')->name('insertar_cordenadas73_i');
+Route::get('/geo74', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas74')->name('insertar_cordenadas74');
+Route::POST('/geo74', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas74_i')->name('insertar_cordenadas74_i');
+
+Route::get('/geo75', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas75')->name('insertar_cordenadas75');
+Route::POST('/geo75', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas75_i')->name('insertar_cordenadas75_i');
+Route::get('/geo76', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas76')->name('insertar_cordenadas76');
+Route::POST('/geo76', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas76_i')->name('insertar_cordenadas76_i');
+Route::get('/geo77', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas77')->name('insertar_cordenadas77');
+Route::POST('/geo77', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas77_i')->name('insertar_cordenadas77_i');
+Route::get('/geo78', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas78')->name('insertar_cordenadas78');
+Route::POST('/geo78', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas78_i')->name('insertar_cordenadas78_i');
+Route::get('/geo79', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas79')->name('insertar_cordenadas79');
+Route::POST('/geo79', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas79_i')->name('insertar_cordenadas79_i');
+Route::get('/geo80', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas80')->name('insertar_cordenadas80');
+Route::POST('/geo80', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas80_i')->name('insertar_cordenadas80_i');
+Route::get('/geo81', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas81')->name('insertar_cordenadas81');
+Route::POST('/geo81', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas81_i')->name('insertar_cordenadas81_i');
+Route::get('/geo82', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas82')->name('insertar_cordenadas82');
+Route::POST('/geo82', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas82_i')->name('insertar_cordenadas82_i');
+Route::get('/geo83', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas83')->name('insertar_cordenadas83');
+Route::POST('/geo83', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas83_i')->name('insertar_cordenadas83_i');
+Route::get('/geo84', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas84')->name('insertar_cordenadas84');
+Route::POST('/geo84', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas84_i')->name('insertar_cordenadas84_i');
+
+Route::get('/geo85', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas85')->name('insertar_cordenadas85');
+Route::POST('/geo85', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas85_i')->name('insertar_cordenadas85_i');
+Route::get('/geo86', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas86')->name('insertar_cordenadas86');
+Route::POST('/geo86', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas86_i')->name('insertar_cordenadas86_i');
+Route::get('/geo87', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas87')->name('insertar_cordenadas87');
+Route::POST('/geo87', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas87_i')->name('insertar_cordenadas87_i');
+Route::get('/geo88', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas88')->name('insertar_cordenadas88');
+Route::POST('/geo88', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas88_i')->name('insertar_cordenadas88_i');
+Route::get('/geo89', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas89')->name('insertar_cordenadas89');
+Route::POST('/geo89', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas89_i')->name('insertar_cordenadas89_i');
+Route::get('/geo90', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas90')->name('insertar_cordenadas90');
+Route::POST('/geo90', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas90_i')->name('insertar_cordenadas90_i');
+Route::get('/geo91', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas91')->name('insertar_cordenadas91');
+Route::POST('/geo91', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas91_i')->name('insertar_cordenadas91_i');
+Route::get('/geo92', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas92')->name('insertar_cordenadas92');
+Route::POST('/geo92', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas92_i')->name('insertar_cordenadas92_i');
+Route::get('/geo93', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas93')->name('insertar_cordenadas93');
+Route::POST('/geo93', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas93_i')->name('insertar_cordenadas93_i');
+Route::get('/geo94', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas94')->name('insertar_cordenadas94');
+Route::POST('/geo94', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas94_i')->name('insertar_cordenadas94_i');
+
+Route::get('/geo95', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas95')->name('insertar_cordenadas95');
+Route::POST('/geo95', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas95_i')->name('insertar_cordenadas95_i');
+Route::get('/geo96', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas96')->name('insertar_cordenadas96');
+Route::POST('/geo96', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas96_i')->name('insertar_cordenadas96_i');
+Route::get('/geo97', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas97')->name('insertar_cordenadas97');
+Route::POST('/geo97', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas97_i')->name('insertar_cordenadas97_i');
+Route::get('/geo98', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas98')->name('insertar_cordenadas98');
+Route::POST('/geo98', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas98_i')->name('insertar_cordenadas98_i');
+Route::get('/geo99', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas99')->name('insertar_cordenadas99');
+Route::POST('/geo99', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas99_i')->name('insertar_cordenadas99_i');
+Route::get('/geo1001', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1001')->name('insertar_cordenadas1001');
+Route::POST('/geo1001', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1001_i')->name('insertar_cordenadas1001_i');
+Route::get('/geo1002', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1002')->name('insertar_cordenadas1002');
+Route::POST('/geo1002', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1002_i')->name('insertar_cordenadas1002_i');
+Route::get('/geo1003', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1003')->name('insertar_cordenadas1003');
+Route::POST('/geo1003', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1003_i')->name('insertar_cordenadas1003_i');
+Route::get('/geo1004', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1004')->name('insertar_cordenadas1004');
+Route::POST('/geo1004', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1004_i')->name('insertar_cordenadas1004_i');
+Route::get('/geo1005', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1005')->name('insertar_cordenadas1005');
+Route::POST('/geo1005', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1005_i')->name('insertar_cordenadas1005_i');
+
+Route::get('/geo1006', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1006')->name('insertar_cordenadas1006');
+Route::POST('/geo1006', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1006_i')->name('insertar_cordenadas1006_i');
+Route::get('/geo1007', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1007')->name('insertar_cordenadas1007');
+Route::POST('/geo1007', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1007_i')->name('insertar_cordenadas1007_i');
+Route::get('/geo1008', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1008')->name('insertar_cordenadas1008');
+Route::POST('/geo1008', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1008_i')->name('insertar_cordenadas1008_i');
+Route::get('/geo1009', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1009')->name('insertar_cordenadas1009');
+Route::POST('/geo1009', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1009_i')->name('insertar_cordenadas1009_i');
+Route::get('/geo1010', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1010')->name('insertar_cordenadas1010');
+Route::POST('/geo1010', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1010_i')->name('insertar_cordenadas1010_i');
+Route::get('/geo1012', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1012')->name('insertar_cordenadas1012');
+Route::POST('/geo1012', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1012_i')->name('insertar_cordenadas1012_i');
+Route::get('/geo1', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1')->name('insertar_cordenadas1');
+Route::POST('/geo1', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas1_i')->name('insertar_cordenadas1_i');
+Route::get('/geo15', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas15')->name('insertar_cordenadas15');
+Route::POST('/geo15', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas15_i')->name('insertar_cordenadas15_i');
+Route::get('/geo24', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas24')->name('insertar_cordenadas24');
+Route::POST('/geo24', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas24_i')->name('insertar_cordenadas24_i');
+
+Route::get('/geo25', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas25')->name('insertar_cordenadas25');
+Route::POST('/geo25', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas25_i')->name('insertar_cordenadas25_i');
+Route::get('/geo35', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas35')->name('insertar_cordenadas35');
+Route::POST('/geo35', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas35_i')->name('insertar_cordenadas35_i');
+Route::get('/geo41', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas41')->name('insertar_cordenadas41');
+Route::POST('/geo41', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas41_i')->name('insertar_cordenadas41_i');
+Route::get('/geo45', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas45')->name('insertar_cordenadas45');
+Route::POST('/geo45', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas45_i')->name('insertar_cordenadas45_i');
+Route::get('/geo46', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas46')->name('insertar_cordenadas46');
+Route::POST('/geo46', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas46_i')->name('insertar_cordenadas46_i');
 
 require __DIR__.'/auth.php';

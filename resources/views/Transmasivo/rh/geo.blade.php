@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         <style>
-            #map { height: 3000px; }
+            #map { height: 2500px; }
             .center {
 text-align: center;
 font-family: Arial, sans-serif;
@@ -31,285 +31,288 @@ font-size: 9pt;
                             <b >
                             Ordinario<br>Ojo de agua<br>Ciudad azteca
                             </b>
-                        </center>
-                        <table>
-                            <tr><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="2"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="3"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="4"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="5"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/insurgentes.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="6"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="7"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="8"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="9"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="10"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="11"></td></tr>   
-                            <tr><td  style=""><img src="{{url('/assets/img/hidalgo.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="12"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="13"></td></tr>                    
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_sur.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="14"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="15"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="16"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="17"></td></tr>                
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_nor.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="18"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="19"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="20"></td></tr>                        
-                            <tr><td  style=""><img src="{{url('/assets/img/esmeralda.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="21"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="22"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="23"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="24"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="25"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"></td></tr>
+                        <table style="border:1px black solid; ">
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Ojo De Agua </td><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"  width="30px;"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="25"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="24"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="23"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="22"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Esmeralda  </td><td  style=""><img src="{{url('/assets/img/esmeralda.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="21"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="20"></td></tr>     
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="19"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Cuauhtémoc Norte </td><td  style=""><img src="{{url('/assets/img/cuau_nor.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="18"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="17"></td></tr>    
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="16"></td></tr>  
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="15"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Cuauhtémoc Sur  </td><td  style=""><img src="{{url('/assets/img/cuau_sur.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="14"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="13"></td></tr>  
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Hidalgo  </td><td  style=""><img src="{{url('/assets/img/hidalgo.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="12"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="11"></td></tr> 
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="10"></td></tr>  
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="9"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="8"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="7"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Las Torres </td><td  style=""><img src="{{url('/assets/img/insurgentes.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="6"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="5"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="4"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="3"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="2"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Central De Abasto </td><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;"> 19 De Septiembre </td><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Palomas </td><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Jardines De Morelos  </td><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="30px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Aquiles Serdán  </td><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="30px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Hospital Las Américas </td><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Primero De Mayo </td><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Las Américas </td><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Valle De Ecatepec  </td><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;"> Vocacional 3 </td><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Adolfo López Mateos </td><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Zodiaco </td><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Torres </td><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Unitec </td><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Industrial </td><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Josefa Ortíz</td><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Quinto Sol</td><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>                            
+			<tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
+<tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Ciudad Azteca</td><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
                         </table>
+                        
+                        </center>
+
                     </div>
                     <div class="col-md-2">
                     <center>
                             <b >
                             Express<br>Ojo de agua<br>Ciudad azteca
                             </b>
+                        <table style="border:1px black solid; ">
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Ojo De Agua </td><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"  width="30px;"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="25"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="24"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="23"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="22"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Esmeralda  </td><td  style=""><img src="{{url('/assets/img/esmeralda.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="21"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="20"></td></tr>     
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="19"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Cuauhtémoc Norte </td><td  style=""><img src="{{url('/assets/img/cuau_nor.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="18"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="17"></td></tr>    
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="16"></td></tr>  
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="15"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Cuauhtémoc Sur  </td><td  style=""><img src="{{url('/assets/img/cuau_sur.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="14"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="13"></td></tr>  
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Hidalgo  </td><td  style=""><img src="{{url('/assets/img/hidalgo.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="12"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="11"></td></tr> 
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="10"></td></tr>  
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="9"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="8"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="7"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Las Torres </td><td  style=""><img src="{{url('/assets/img/insurgentes.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="6"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="5"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="4"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="3"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="2"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Central De Abasto </td><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;"> 19 De Septiembre </td><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Palomas </td><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Jardines De Morelos  </td><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="30px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Aquiles Serdán  </td><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="30px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Hospital Las Américas </td><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Primero De Mayo </td><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Las Américas </td><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Valle De Ecatepec  </td><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;"> Vocacional 3 </td><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Adolfo López Mateos </td><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Zodiaco </td><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Torres </td><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Unitec </td><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Industrial </td><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Josefa Ortíz</td><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Quinto Sol</td><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>                            
+			<tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
+<tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Ciudad Azteca</td><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
+                        </table>
+                        
                         </center>
-                        <table>
-                            <tr><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="2"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="3"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="4"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="5"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/insurgentes.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="6"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="7"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="8"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="9"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="10"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="11"></td></tr>   
-                            <tr><td  style=""><img src="{{url('/assets/img/hidalgo.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="12"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="13"></td></tr>                    
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_sur.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="14"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="15"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="16"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="17"></td></tr>                
-                            <tr><td  style=""><img src="{{url('/assets/img/cuau_nor.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="18"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="19"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="20"></td></tr>                        
-                            <tr><td  style=""><img src="{{url('/assets/img/esmeralda.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="21"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="22"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="23"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="24"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="25"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"></td></tr>
-                        </table>
-                        </table>
                     </div>
                     <div class="col-md-2" >
                         <center>
                             <b >
                             Express<br>Central de abastos<br>Ciudad azteca
                             </b>
-                        </center>
-                        <<table>
-                            <tr><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="35px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="35px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
-                            <tr><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="25px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
-                            <tr><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="35px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
+                        <table style="border:1px black solid; ">
+                           <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Central De Abasto </td><td  style=""><img src="{{url('/assets/img/central_abastos.ico')}}" width="30px;"></td><td  width="30px;" style="border-top:1px black solid; border-bottom:1px black solid;"  id="1"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="26"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="27"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="28"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="29"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;"> 19 De Septiembre </td><td  style=""><img src="{{url('/assets/img/19_sep.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="30"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="31"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="32"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="33"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Palomas </td><td  style=""><img src="{{url('/assets/img/palomas.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="34"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="35"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="36"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="37"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="38"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Jardines De Morelos  </td><td  style=""><img src="{{url('/assets/img/jardines.ico')}}" width="30px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="39"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="40"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="41"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Aquiles Serdán  </td><td  style=""><img src="{{url('/assets/img/aquiles_cerdan.ico')}}" width="30px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;" id="42"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="43"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="44"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Hospital Las Américas </td><td  style=""><img src="{{url('/assets/img/hospital.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="45"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="46"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="47"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="48"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Primero De Mayo </td><td  style=""><img src="{{url('/assets/img/1_mayo.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="49"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="50"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="51"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="52"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Las Américas </td><td  style=""><img src="{{url('/assets/img/las_americas.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="53"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="54"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="55"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="56"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="57"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="58"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Valle De Ecatepec  </td><td  style=""><img src="{{url('/assets/img/valle_ecatepec.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="59"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="60"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="61"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;"> Vocacional 3 </td><td  style=""><img src="{{url('/assets/img/vocacional.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="62"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="63"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Adolfo López Mateos </td><td  style=""><img src="{{url('/assets/img/adolfo_lopez.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="64"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="65"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="66"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Zodiaco </td><td  style=""><img src="{{url('/assets/img/zodiaco.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="67"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="68"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="69"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="70"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Torres </td><td  style=""><img src="{{url('/assets/img/torres.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="71"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="72"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="73"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Unitec </td><td  style=""><img src="{{url('/assets/img/unitec.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="74"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="75"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="76"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="77"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Industrial </td><td  style=""><img src="{{url('/assets/img/industrial.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="78"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="79"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="80"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="81"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Josefa Ortíz</td><td  style=""><img src="{{url('/assets/img/josefa.ico')}}" width="30px;"></td><td   style="border-top:1px black solid; border-bottom:1px black solid;" id="82"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="83"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="84"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="85"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="86"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="87"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="88"></td></tr>
+                            <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Quinto Sol</td><td  style=""><img src="{{url('/assets/img/quinto_sol.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="89"></td></tr> 
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="90"></td></tr>                            
+			<tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td style="border-top:1px black solid; border-bottom:1px black solid;"  id="91"></td></tr>
+                            <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td ><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="92"></td></tr>
+<tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Ciudad Azteca</td><td ><img src="{{url('/assets/img/ico_cdazteca.ico')}}" width="30px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;" id="93"></td></tr>
                         </table>
+                        
+                        </center>
                     </div>
                 </div>
             </div>
@@ -360,9 +363,62 @@ font-size: 9pt;
         allPolygons.addTo(map); 
         map.fitBounds(allPolygons.getBounds()); 
 
+        async function geo_ecotodos() {
+    $.ajax({
+        url: '{{ url("/geo_ecotodos") }}',
+        type: 'get',
+        data: {},
+        success: function(response) {
+            var economicos_a = [
+                65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+                1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1, 15, 24, 25, 35, 41, 45, 46
+            ];
+
+            for (var i = 0; i < economicos_a.length; i++) {
+                var index = economicos_a[i];
+                
+                // Verifica si el índice existe en la respuesta y tiene al menos un elemento
+                if (response[index] && response[index].length > 0) {
+                    var lat = response[index][0]['lat'];
+                    var lon = response[index][0]['lon'];
+                    var economico = response[index][0]['economico'];
+
+                    console.log(lat); // Aquí imprime la latitud
+                    console.log(lon); // Aquí imprime la longitud
+                    console.log(economico); // Aquí imprime la longitud
+
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const userLat = position.coords.latitude;
+                        const userLon = position.coords.longitude;
+                        const point = turf.point([lon, lat]);
+
+                        @foreach($secciones as $seccion)
+                        var poly{{$i}} = turf.polygon([polygonCoordinates{{$i}}.map(coord => [coord[1], coord[0]])]);
+                        if (turf.booleanPointInPolygon(point, poly{{$i}})) {
+                            $('#{{$i}}').append('<center class="center" >'+economico+'</center>');
+                            const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}', iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76]});
+                            const userLocation = L.marker([userLat, userLon], {icon: customIcon}).addTo(map).bindPopup('Tu ubicación actual '+economico);
+                            console.log('entro'+economico);
+                        }
+                        @php $i++; @endphp
+                        @endforeach
+                    }, function(error) {
+                        console.log('Error al obtener la ubicación: ' + error.message);
+                    });
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('Error en la solicitud: ' + error);
+        }
+    });
+}
+
+
         async function eco1000() {
             $.ajax({url: '{{ url("/geo_eco1000") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
                 success: function(response) {
+                      if(response){
                     navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);
                         @foreach($secciones as $seccion)
@@ -378,6 +434,7 @@ font-size: 9pt;
                     }, function(error) {
                         console.log('Error al obtener la ubicación: ' + error.message);
                     });
+                      }
                 },
                 error: function(xhr, status, error) {
                     console.log('Error en la solicitud: ' + error);
@@ -386,7 +443,7 @@ font-size: 9pt;
         }
         async function eco65() {
             $.ajax({url: '{{ url("/geo_eco65") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -399,13 +456,13 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });
         }
         async function eco66() {
             $.ajax({url: '{{ url("/geo_eco66") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -418,12 +475,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco67() {
             $.ajax({url: '{{ url("/geo_eco67") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -435,12 +492,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco68() {
             $.ajax({url: '{{ url("/geo_eco68") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -453,12 +510,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco69() {
             $.ajax({url: '{{ url("/geo_eco69") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -470,12 +527,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco70() {
             $.ajax({url: '{{ url("/geo_eco70") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -487,12 +544,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco71() {
             $.ajax({url: '{{ url("/geo_eco71") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -504,12 +561,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco72() {
             $.ajax({url: '{{ url("/geo_eco72") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -521,12 +578,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco73() {
             $.ajax({url: '{{ url("/geo_eco73") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -539,12 +596,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco74() {
             $.ajax({url: '{{ url("/geo_eco74") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -556,12 +613,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco75() {
             $.ajax({url: '{{ url("/geo_eco75") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -573,12 +630,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco76() {
             $.ajax({url: '{{ url("/geo_eco76") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -590,12 +647,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco77() {
             $.ajax({url: '{{ url("/geo_eco77") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -607,12 +664,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco78() {
             $.ajax({url: '{{ url("/geo_eco78") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -624,12 +681,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco79() {
             $.ajax({url: '{{ url("/geo_eco79") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -641,13 +698,13 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
 
             async function eco80() {
             $.ajax({url: '{{ url("/geo_eco80") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -659,12 +716,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco81() {
             $.ajax({url: '{{ url("/geo_eco81") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -676,12 +733,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco82() {
             $.ajax({url: '{{ url("/geo_eco82") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -693,12 +750,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco83() {
             $.ajax({url: '{{ url("/geo_eco83") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -710,12 +767,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco84() {
             $.ajax({url: '{{ url("/geo_eco84") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -727,12 +784,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco85() {
             $.ajax({url: '{{ url("/geo_eco85") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -744,12 +801,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco86() {
             $.ajax({url: '{{ url("/geo_eco86") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -761,12 +818,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco87() {
             $.ajax({url: '{{ url("/geo_eco87") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -778,12 +835,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco88() {
             $.ajax({url: '{{ url("/geo_eco88") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -795,12 +852,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco89() {
             $.ajax({url: '{{ url("/geo_eco89") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -812,12 +869,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco90() {
             $.ajax({url: '{{ url("/geo_eco90") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -829,12 +886,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco91() {
             $.ajax({url: '{{ url("/geo_eco91") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -846,12 +903,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco92() {
             $.ajax({url: '{{ url("/geo_eco92") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -863,12 +920,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco93() {
             $.ajax({url: '{{ url("/geo_eco93") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -880,12 +937,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco94() {
             $.ajax({url: '{{ url("/geo_eco94") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -897,12 +954,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco95() {
             $.ajax({url: '{{ url("/geo_eco95") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -914,12 +971,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco96() {
             $.ajax({url: '{{ url("/geo_eco96") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -931,12 +988,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco97() {
             $.ajax({url: '{{ url("/geo_eco97") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -948,12 +1005,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco98() {
             $.ajax({url: '{{ url("/geo_eco98") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -965,12 +1022,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco99() {
             $.ajax({url: '{{ url("/geo_eco99") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -982,14 +1039,14 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
 
 
             async function eco1001() {
             $.ajax({url: '{{ url("/geo_eco1001") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1001,12 +1058,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1002() {
             $.ajax({url: '{{ url("/geo_eco1002") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1018,12 +1075,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1003() {
             $.ajax({url: '{{ url("/geo_eco1003") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1035,12 +1092,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1004() {
             $.ajax({url: '{{ url("/geo_eco1004") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1052,12 +1109,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1005() {
             $.ajax({url: '{{ url("/geo_eco1005") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {   if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1069,12 +1126,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);});} },
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1006() {
             $.ajax({url: '{{ url("/geo_eco1006") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) { if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1086,12 +1143,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1007() {
             $.ajax({url: '{{ url("/geo_eco1007") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1103,12 +1160,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1008() {
             $.ajax({url: '{{ url("/geo_eco1008") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1120,12 +1177,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1009() {
             $.ajax({url: '{{ url("/geo_eco1009") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) { if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1137,12 +1194,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1012() {
             $.ajax({url: '{{ url("/geo_eco1012") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1154,12 +1211,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco1() {
             $.ajax({url: '{{ url("/geo_eco1") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) { if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1171,12 +1228,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco15() {
             $.ajax({url: '{{ url("/geo_eco15") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) { if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1188,12 +1245,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco24() {
             $.ajax({url: '{{ url("/geo_eco24") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) { if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1205,12 +1262,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco25() {
             $.ajax({url: '{{ url("/geo_eco25") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) { if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1222,12 +1279,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco35() {
             $.ajax({url: '{{ url("/geo_eco35") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1239,12 +1296,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco41() {
             $.ajax({url: '{{ url("/geo_eco41") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1256,13 +1313,13 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
 
             async function eco45() {
             $.ajax({url: '{{ url("/geo_eco45") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) {  if(response){navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1274,12 +1331,12 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
             async function eco46() {
             $.ajax({url: '{{ url("/geo_eco46") }}',type: 'POST',data: {'_token': '{{ csrf_token() }}' },
-                success: function(response) { navigator.geolocation.getCurrentPosition(function(position) {
+                success: function(response) { if(response){ navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];const lon = response['lon'];const point = turf.point([lon, lat]);@php $a=1; @endphp
                         @foreach($secciones as $seccion)
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); 
@@ -1291,7 +1348,7 @@ font-size: 9pt;
                             @php $i++;
                             $a++; @endphp
                         @endforeach
-                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); },
+                    }, function(error) {console.log('Error al obtener la ubicación: ' + error.message);}); }},
                 error: function(xhr, status, error) { console.log('Error en la solicitud: ' + error); }
             });}
            
@@ -1303,6 +1360,7 @@ font-size: 9pt;
                     '_token': '{{ csrf_token() }}' // Necesario para Laravel
                 },
                 success: function(response) {
+                     if(response){
                     navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];
                         const lon = response['lon'];
@@ -1325,6 +1383,7 @@ font-size: 9pt;
                     }, function(error) {
                         console.log('Error al obtener la ubicación: ' + error.message);
                     });
+                     }
                 },
                 error: function(xhr, status, error) {
                 }
@@ -1339,6 +1398,9 @@ font-size: 9pt;
                     '_token': '{{ csrf_token() }}' // Necesario para Laravel
                 },
                 success: function(response) {
+                    if(response){
+                        
+                    
                     navigator.geolocation.getCurrentPosition(function(position) {
                         const lat = response['lat'];
                         const lon = response['lon'];
@@ -1348,7 +1410,7 @@ font-size: 9pt;
                         var poly{{$i}} = turf.polygon([polygonCoordinates{{$a}}.map(coord => [coord[1], coord[0]])]); // Invertir las coordenadas para Turf.js
                             if (turf.booleanPointInPolygon(point, poly{{$i}})) {
                                 $('#{{$a}}').append('<center class="center" >1010</center>');
-                                const customIcon = L.icon({ iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [60, 60],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
+                                const customIcon = L.icon({ iconUrl: '{{url("/assets/img/mexibus2024.ico")}}',iconSize: [45, 45],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
                         const userLocation = L.marker([lat, lon], { icon: customIcon }).addTo(map)
                                     .bindPopup('Tu ubicación actual 1010');  
                         console.log('entro1010');
@@ -1359,6 +1421,8 @@ font-size: 9pt;
                     }, function(error) {
                         console.log('Error al obtener la ubicación: ' + error.message);
                     });
+                    
+                    }
                 },
                 error: function(xhr, status, error) {
                 }
@@ -1416,13 +1480,17 @@ font-size: 9pt;
                 const azteca = L.marker([19.534824127431403, -99.02695087270375], { icon: ico_cdazteca }).addTo(map).bindPopup('cd azteca');
             });
         }
-        estaciones();        eco65();        eco66();        eco67();         eco68();         eco69();         eco70();         eco71();         eco72(); 
-        eco73();         eco74();         eco75();         eco76();         eco77();         eco78();         eco79();         eco80();         eco81(); 
+        estaciones(); 
+        geo_ecotodos(); 
+        {{--
+        eco77();       eco65();        eco66();        eco67();         eco68();         eco69();         eco70();         eco71();         eco72(); 
+        eco73();         eco74();         eco75();         eco76();                 eco78();         eco79();         eco80();         eco81(); 
         eco82();         eco83();         eco84();         eco85();         eco86();         eco87();         eco88();         eco89();         eco90(); 
         eco91();         eco92();         eco93();         eco94();         eco95();         eco96();         eco97();         eco98();         eco99(); 
         eco1000();        eco1001();        eco1002();        eco1003();        eco1004();        eco1005();        eco1006();        eco1007();        eco1008();
         eco1009();        eco1012();        eco1();        eco15();        eco24();        eco25();        eco35();        eco41();        eco45();        eco46();
         eco1011();        eco1010();
+        --}}
 
         @php $i=1; @endphp
 
@@ -1444,6 +1512,10 @@ font-size: 9pt;
         
         setInterval(await estaciones(), 10);
         
+        setInterval(await geo_ecotodos(), 10);
+        {{--
+
+        setInterval(await eco77(), 10);
         setInterval(await eco65(), 10);
         setInterval(await eco66(), 10);
         setInterval(await eco67(), 10);
@@ -1456,7 +1528,6 @@ font-size: 9pt;
         setInterval(await eco74(), 10);
         setInterval(await eco75(), 10);
         setInterval(await eco76(), 10);
-        setInterval(await eco77(), 10);
         setInterval(await eco78(), 10);
         setInterval(await eco79(), 10);
         setInterval(await eco80(), 10);
@@ -1500,7 +1571,7 @@ font-size: 9pt;
         setInterval(await eco1000(), 10);
         setInterval(await eco1011(), 10);
         setInterval(await eco1010(), 10);
-        
+        --}}
         }
 
 

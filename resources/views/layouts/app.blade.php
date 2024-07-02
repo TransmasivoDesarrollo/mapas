@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Transmasivo</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="{{url('/assets')}}/img/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="{{url('/assets')}}/img/mexibus2024.ico" type="image/x-icon"/>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -486,6 +486,16 @@
 									<li>
 										<a  href="{{url('/geo')}}">
 											<span class="sub-item">Geolocalización</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Reporte de estado físico y funcionamiento</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Descarga_reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Desacargas de reporte de estado físico y funcionamiento</span>
 										</a>
 									</li>
                                    
