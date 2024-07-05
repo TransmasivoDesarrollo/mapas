@@ -87,7 +87,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/estadisticas_renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@estadisticas_renuncias')->name('estadisticas_renuncias');
     Route::get('/geo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo')->name('geo');
     
-    
+    Route::get('/Contrato_Dasimo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contrato_Dasimo');
+    Route::POST('/Contrato_Dasimo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Registro_Contrato_Dasimo')->name('Registro_Contrato_Dasimo');
    
 
     //operaciones

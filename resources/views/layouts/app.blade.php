@@ -174,6 +174,11 @@
 											<span class="sub-item">Estadisticas de renuncia </span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Contrato_Dasimo')}}">
+											<span class="sub-item">Contrato Dasimo </span>
+										</a>
+									</li>
 									
 								</ul>
 							</div>
@@ -330,6 +335,11 @@
 									<li>
 										<a  href="{{url('/estadisticas_renuncias')}}">
 											<span class="sub-item">Estadisticas de renuncia </span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Contrato_Dasimo')}}">
+											<span class="sub-item">Contrato Dasimo </span>
 										</a>
 									</li>
 									
