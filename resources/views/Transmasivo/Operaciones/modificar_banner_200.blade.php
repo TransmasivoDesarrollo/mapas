@@ -21,7 +21,8 @@
             <table class="table table-bordered  " id="list_user2">
                 <thead>
                     <tr>
-                        <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>ID</center></th>
+                        <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Orden</center></th>
+                        <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Subir/Bajar</center></th>
                         <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Imagenes</center></th>
                         <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Tiempo en pantalla</center></th>
                         <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Estatus</center></th>
@@ -29,20 +30,53 @@
                 </thead>
                 <tbody id="llenaTabla">
                     @if(null !== $images)
+                    @php $contador=1;@endphp
                         @foreach($images as $fila)
+                        @if($fila->estatus=="Activo" || $fila->estatus=="Inactivo")
                             <tr >
-                                <td>{{$fila->id}}</td>
+                            <td> {{$fila->orden}}</td>
+                                <td> 
+                                @if($fila->estatus=="Activo")
+                                @if($contador<=$cuenta[0]->cuenta)
+                                    <form method="post" id="exampleValidation" action="{{url('/modificar_banner_200')}}">
+					                    @csrf
+                                        <input type="hidden" class="btn btn-success" value="{{$fila->id}}" id="id_subir_bajar"  name="id_subir_bajar">
+                                        <input type="hidden" class="btn btn-success" value="{{$fila->orden}}" id="orden_subir_bajar"  name="orden_subir_bajar">
+                                            @if($contador==1)
+                                                <input type="submit" class="btn btn-primary" value="Bajar" id="Bajar"  name="Bajar">
+                                            @elseif($contador==$cuenta[0]->cuenta)
+                                                <input type="submit" class="btn btn-primary" value="Subir" id="Subir"  name="Subir">
+                                               
+                                                
+                                            @else
+                                                
+                                                <input type="submit" class="btn btn-primary" value="Subir" id="Subir"  name="Subir">
+                                               <input type="submit" class="btn btn-primary" value="Bajar" id="Bajar"  name="Bajar">
+                                            @endif
+                                            @php $contador++;@endphp
+                                    </form>
+                                    @endif
+                                    @endif
+                                </td>
                                 <td><img src="{{url('/images/Operaciones/')}}/{{$fila->imagen}}"   width="160" ></td>
                                 <td>{{$fila->pantalla}} segundos</td>
                                 <td>
                                     <form method="post" id="exampleValidation" action="{{url('/modificar_banner_200')}}">
 					                    @csrf
                                             @if($fila->estatus=="Activo")
+                                            
+                                            <center><b style="color:green;">{{$fila->estatus}}</b></center><br>
                                                 <input type="submit" class="btn btn-primary" value="Desactivar" id="Desactivar"  name="Desactivar">
-                                                <input type="hidden" class="btn btn-primary" value="{{$fila->id}}" id="id"  name="id">
-                                                <button id="modifySecondsBtn{{$fila->id}}" type="button" class="btn btn-primary" >Modificar Segundos</button>      
+                                                <input type="submit" class="btn btn-danger" value="Eliminar" id="Eliminar"  name="Eliminar">
+                                                <input type="hidden" class="btn btn-success" value="{{$fila->id}}" id="id"  name="id">
+                                                <button id="modifySecondsBtn{{$fila->id}}" type="button" class="btn btn-success" >Modificar Segundos</button>      
                                             @elseif($fila->estatus=="Inactivo")
-                                                <b style="color:red;">{{$fila->estatus}}</b>
+                                            <center><b style="color:red;">{{$fila->estatus}}</b></center><br>
+                                                
+                                                
+                                                <input type="hidden" class="btn btn-success" value="{{$fila->id}}" id="id"  name="id">
+                                                <input type="submit" class="btn btn-primary" value="Activar" id="Activo"  name="Activo">
+                                                <input type="submit" class="btn btn-danger" value="Eliminar" id="Eliminar"  name="Eliminar">
                                             @endif
                                     </form>
                                     <form method="post" id="exampleValidation" action="{{url('/modificar_banner_200')}}">
@@ -70,6 +104,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            @endif
                          @endforeach
                     @endif
                 </tbody>
@@ -92,9 +127,8 @@
             scrollX: false,
             scrollCollapse: true,
             filter: true,
-            lengthMenu: [[7, 14, 21, 28, 35, -1], [7, 14, 21, 28, 35, "Todos"]],
-            iDisplayLength: 7,
-            dom: 'lBfrtip', // Agrega los elementos que quieres mostrar y sus ubicaciones
+            lengthMenu: [[10, 20, 30, 40, 50, -1], [10, 20, 30, 40, 50, "Todos"]],
+            iDisplayLength: 10,
             ordering: false, // Desactiva el ordenamiento
 
             "language": {

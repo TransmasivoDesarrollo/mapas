@@ -14,6 +14,7 @@ use PhpOffice\PhpWord\PhpWord;
 use Illuminate\Support\Facades\View;
 use PhpOffice\PhpWord\IOFactory; 
 use DateTime;
+use geoPHP;
 
 class RecursosHumanosControlador extends Controller
 {
@@ -21,6 +22,37 @@ class RecursosHumanosControlador extends Controller
 	{
 		$this->middleware(['auth']);
 	}
+    public function checkLocation(Request $request)
+    {
+        $lat = $request->input('latitude');
+        $lon = $request->input('longitude');
+        $polygon = [
+            [-99.01161661797045, 19.61788033321528],
+            [-99.00943866431281, 19.619103161356616],
+            [-99.00789371196451, 19.617243650417787],
+            [-99.01074758227455, 19.616455372984262],
+            [-99.01161661797045, 19.61788033321528]
+        ];
+
+        if ($this->pointInPolygon($lat, $lon, $polygon)) {
+            return response()->json(['status' => 'inside']);
+        } else {
+            return response()->json(['status' => 'outside']);
+        }
+    }
+
+    private function pointInPolygon($lat, $lon, $polygon)
+    {
+        $point = [$lon, $lat];
+        $inside = false;
+        for ($i = 0, $j = count($polygon) - 1; $i < count($polygon); $j = $i++) {
+            if ((($polygon[$i][1] > $point[1]) != ($polygon[$j][1] > $point[1])) &&
+                ($point[0] < ($polygon[$j][0] - $polygon[$i][0]) * ($point[1] - $polygon[$i][1]) / ($polygon[$j][1] - $polygon[$i][1]) + $polygon[$i][0])) {
+                $inside = !$inside;
+            }
+        }
+        return $inside;
+    }
 
     public function Alta_de_personal()
     {
@@ -28,8 +60,299 @@ class RecursosHumanosControlador extends Controller
     }
     public function geo()
     {
-        return view('Transmasivo.rh.geo');
+        $eco_1000 = DB::connection('mysql')
+        ->table('t_geolocalizacion_eco')
+        ->where('economico', '=', 1000)
+        ->latest('id_geolocalizacion')
+        ->first();
+    
+        $secciones = DB::connection('mysql')
+        ->table('t_secciones-geolocalizacion')
+        ->get();
+        return view('Transmasivo.rh.geo',compact('eco_1000','secciones'));
+        
     }
+    public function geo2()
+    {
+        return view('Transmasivo.rh.geo2');
+    }
+    public function insertar_cordenadas1011(){return view('Transmasivo.rh.insertar_cordenadas1011'); }
+
+    public function insertar_cordenadas65(){return view('Transmasivo.rh.economicos.insertar_cordenadas65'); }
+    public function insertar_cordenadas66(){return view('Transmasivo.rh.economicos.insertar_cordenadas66'); }
+    public function insertar_cordenadas67(){return view('Transmasivo.rh.economicos.insertar_cordenadas67'); }
+    public function insertar_cordenadas68(){return view('Transmasivo.rh.economicos.insertar_cordenadas68'); }
+    public function insertar_cordenadas69(){return view('Transmasivo.rh.economicos.insertar_cordenadas69'); }
+    public function insertar_cordenadas70(){return view('Transmasivo.rh.economicos.insertar_cordenadas70'); }
+    public function insertar_cordenadas71(){return view('Transmasivo.rh.economicos.insertar_cordenadas71'); }
+    public function insertar_cordenadas72(){return view('Transmasivo.rh.economicos.insertar_cordenadas72'); }
+    public function insertar_cordenadas73(){return view('Transmasivo.rh.economicos.insertar_cordenadas73'); }
+    public function insertar_cordenadas74(){return view('Transmasivo.rh.economicos.insertar_cordenadas74'); }
+    
+
+    public function insertar_cordenadas75(){return view('Transmasivo.rh.economicos.insertar_cordenadas75'); }
+    public function insertar_cordenadas76(){return view('Transmasivo.rh.economicos.insertar_cordenadas76'); }
+    public function insertar_cordenadas77(){return view('Transmasivo.rh.economicos.insertar_cordenadas77'); }
+    public function insertar_cordenadas78(){return view('Transmasivo.rh.economicos.insertar_cordenadas78'); }
+    public function insertar_cordenadas79(){return view('Transmasivo.rh.economicos.insertar_cordenadas79'); }
+    public function insertar_cordenadas80(){return view('Transmasivo.rh.economicos.insertar_cordenadas80'); }
+    public function insertar_cordenadas81(){return view('Transmasivo.rh.economicos.insertar_cordenadas81'); }
+    public function insertar_cordenadas82(){return view('Transmasivo.rh.economicos.insertar_cordenadas82'); }
+    public function insertar_cordenadas83(){return view('Transmasivo.rh.economicos.insertar_cordenadas83'); }
+    public function insertar_cordenadas84(){return view('Transmasivo.rh.economicos.insertar_cordenadas84'); }
+    
+
+    public function insertar_cordenadas85(){return view('Transmasivo.rh.economicos.insertar_cordenadas85'); }
+    public function insertar_cordenadas86(){return view('Transmasivo.rh.economicos.insertar_cordenadas86'); }
+    public function insertar_cordenadas87(){return view('Transmasivo.rh.economicos.insertar_cordenadas87'); }
+    public function insertar_cordenadas88(){return view('Transmasivo.rh.economicos.insertar_cordenadas88'); }
+    public function insertar_cordenadas89(){return view('Transmasivo.rh.economicos.insertar_cordenadas89'); }
+    public function insertar_cordenadas90(){return view('Transmasivo.rh.economicos.insertar_cordenadas90'); }
+    public function insertar_cordenadas91(){return view('Transmasivo.rh.economicos.insertar_cordenadas91'); }
+    public function insertar_cordenadas92(){return view('Transmasivo.rh.economicos.insertar_cordenadas92'); }
+    public function insertar_cordenadas93(){return view('Transmasivo.rh.economicos.insertar_cordenadas93'); }
+    public function insertar_cordenadas94(){return view('Transmasivo.rh.economicos.insertar_cordenadas94'); }
+    
+
+    public function insertar_cordenadas95(){return view('Transmasivo.rh.economicos.insertar_cordenadas95'); }
+    public function insertar_cordenadas96(){return view('Transmasivo.rh.economicos.insertar_cordenadas96'); }
+    public function insertar_cordenadas97(){return view('Transmasivo.rh.economicos.insertar_cordenadas97'); }
+    public function insertar_cordenadas98(){return view('Transmasivo.rh.economicos.insertar_cordenadas98'); }
+    public function insertar_cordenadas99(){return view('Transmasivo.rh.economicos.insertar_cordenadas99'); }
+    public function insertar_cordenadas1001(){return view('Transmasivo.rh.economicos.insertar_cordenadas1001'); }
+    public function insertar_cordenadas1002(){return view('Transmasivo.rh.economicos.insertar_cordenadas1002'); }
+    public function insertar_cordenadas1003(){return view('Transmasivo.rh.economicos.insertar_cordenadas1003'); }
+    public function insertar_cordenadas1004(){return view('Transmasivo.rh.economicos.insertar_cordenadas1004'); }
+    public function insertar_cordenadas1005(){return view('Transmasivo.rh.economicos.insertar_cordenadas1005'); }
+    
+
+    public function insertar_cordenadas1006(){return view('Transmasivo.rh.economicos.insertar_cordenadas1006'); }
+    public function insertar_cordenadas1007(){return view('Transmasivo.rh.economicos.insertar_cordenadas1007'); }
+    public function insertar_cordenadas1008(){return view('Transmasivo.rh.economicos.insertar_cordenadas1008'); }
+    public function insertar_cordenadas1009(){return view('Transmasivo.rh.economicos.insertar_cordenadas1009'); }
+    public function insertar_cordenadas1010(){return view('Transmasivo.rh.economicos.insertar_cordenadas1010'); }
+    public function insertar_cordenadas1012(){return view('Transmasivo.rh.economicos.insertar_cordenadas1012'); }
+    public function insertar_cordenadas1(){return view('Transmasivo.rh.economicos.insertar_cordenadas1'); }
+    public function insertar_cordenadas15(){return view('Transmasivo.rh.economicos.insertar_cordenadas15'); }
+    public function insertar_cordenadas24(){return view('Transmasivo.rh.economicos.insertar_cordenadas24'); }
+    public function insertar_cordenadas25(){return view('Transmasivo.rh.economicos.insertar_cordenadas25'); }
+
+    
+    public function insertar_cordenadas35(){return view('Transmasivo.rh.economicos.insertar_cordenadas35'); }
+    public function insertar_cordenadas41(){return view('Transmasivo.rh.economicos.insertar_cordenadas41'); }
+    public function insertar_cordenadas45(){return view('Transmasivo.rh.economicos.insertar_cordenadas45'); }
+    public function insertar_cordenadas46(){return view('Transmasivo.rh.economicos.insertar_cordenadas46'); }
+    
+    public function insertar_cordenadas(Request $request)
+    {
+        $cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');
+        return 'si';
+    }
+    public function insertar_cordenadas1011_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+
+    public function insertar_cordenadas65_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas66_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas67_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas68_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas69_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas70_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas71_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas72_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas73_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas74_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+
+    public function insertar_cordenadas75_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas76_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas77_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas78_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas79_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas80_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas81_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas82_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas83_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas84_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+
+    public function insertar_cordenadas85_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas86_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas87_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas88_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas89_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas90_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas91_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas92_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas93_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas94_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+
+    public function insertar_cordenadas95_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas96_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas97_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas98_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas99_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1001_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1002_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1003_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1004_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1005_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    
+    public function insertar_cordenadas1006_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1007_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1008_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1009_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1010_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1012_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas1_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas15_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas24_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas25_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+
+    
+    public function insertar_cordenadas35_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas41_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas45_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    public function insertar_cordenadas46_i(Request $request)
+    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    
+
+    
+    public function geo_ecotodos() {
+        $economicos = [
+            65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+            1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012,
+            1, 15, 24, 25, 35, 41, 45, 46
+        ];
+        
+        $results = [];
+        
+        foreach ($economicos as $economico) {
+            $result = DB::connection('mysql')->select('SELECT * FROM t_geolocalizacion_eco WHERE economico = ? ORDER BY id_geolocalizacion DESC LIMIT 1', [$economico]);
+            $results[$economico] = $result;
+        }
+        
+        return $results;
+    }
+
+    public function geo3() {
+        $secciones = DB::connection('mysql')
+        ->table('t_secciones-geolocalizacion')
+        ->get();
+       return view('Transmasivo.rh.geo3',compact('secciones'));
+    }
+
+
+    public function geo_eco65(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 65)->latest('id_geolocalizacion')->first();}
+    public function geo_eco66(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 66)->latest('id_geolocalizacion')->first();}
+    public function geo_eco67(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 67)->latest('id_geolocalizacion')->first();}
+    public function geo_eco68(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 68)->latest('id_geolocalizacion')->first();}
+    public function geo_eco69(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 69)->latest('id_geolocalizacion')->first();}
+    public function geo_eco70(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 70)->latest('id_geolocalizacion')->first();}
+    public function geo_eco71(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 71)->latest('id_geolocalizacion')->first();}
+    public function geo_eco72(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 72)->latest('id_geolocalizacion')->first();}
+    public function geo_eco73(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 73)->latest('id_geolocalizacion')->first();}
+    public function geo_eco74(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 74)->latest('id_geolocalizacion')->first();}
+    public function geo_eco75(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 75)->latest('id_geolocalizacion')->first();}
+    public function geo_eco76(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 76)->latest('id_geolocalizacion')->first();}
+    public function geo_eco77(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 77)->latest('id_geolocalizacion')->first();}
+    public function geo_eco78(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 78)->latest('id_geolocalizacion')->first();}
+    public function geo_eco79(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 79)->latest('id_geolocalizacion')->first();}
+    public function geo_eco80(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 80)->latest('id_geolocalizacion')->first();}
+    public function geo_eco81(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 81)->latest('id_geolocalizacion')->first();}
+    public function geo_eco82(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 82)->latest('id_geolocalizacion')->first();}
+    public function geo_eco83(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 83)->latest('id_geolocalizacion')->first();}
+    public function geo_eco84(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 84)->latest('id_geolocalizacion')->first();}
+    public function geo_eco85(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 85)->latest('id_geolocalizacion')->first();}
+    public function geo_eco86(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 86)->latest('id_geolocalizacion')->first();}
+    public function geo_eco87(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 87)->latest('id_geolocalizacion')->first();}
+    public function geo_eco88(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 88)->latest('id_geolocalizacion')->first();}
+    public function geo_eco89(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 89)->latest('id_geolocalizacion')->first();}
+    public function geo_eco90(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 90)->latest('id_geolocalizacion')->first();}
+    public function geo_eco91(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 91)->latest('id_geolocalizacion')->first();}
+    public function geo_eco92(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 92)->latest('id_geolocalizacion')->first();}
+    public function geo_eco93(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 93)->latest('id_geolocalizacion')->first();}
+    public function geo_eco94(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 94)->latest('id_geolocalizacion')->first();}
+    public function geo_eco95(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 95)->latest('id_geolocalizacion')->first();}
+    public function geo_eco96(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 96)->latest('id_geolocalizacion')->first();}
+    public function geo_eco97(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 97)->latest('id_geolocalizacion')->first();}
+    public function geo_eco98(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 98)->latest('id_geolocalizacion')->first();}
+    public function geo_eco99(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 99)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1000(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1000)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1001(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1001)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1002(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1002)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1003(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1003)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1004(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1004)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1005(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1005)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1006(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1006)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1007(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1007)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1008(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1008)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1009(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1009)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1010(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1010)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1011(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1011)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1012(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1012)->latest('id_geolocalizacion')->first();}
+    public function geo_eco1(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 1)->latest('id_geolocalizacion')->first();}
+    public function geo_eco15(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 15)->latest('id_geolocalizacion')->first();}
+    public function geo_eco24(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 24)->latest('id_geolocalizacion')->first();}
+    public function geo_eco25(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 25)->latest('id_geolocalizacion')->first();}
+    public function geo_eco35(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 35)->latest('id_geolocalizacion')->first();}
+    public function geo_eco41(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 41)->latest('id_geolocalizacion')->first();}
+    public function geo_eco45(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 45)->latest('id_geolocalizacion')->first();}
+    public function geo_eco46(){return DB::connection('mysql')->table('t_geolocalizacion_eco')->where('economico', '=', 46)->latest('id_geolocalizacion')->first();}
+
+
+
+
     
     public function Contratos()
     {
@@ -38,7 +361,6 @@ class RecursosHumanosControlador extends Controller
     public function Renuncias()
     {
         $c_empresas = DB::connection('mysql')->table('c_empresa')->get();
-        
         return view('Transmasivo.rh.Renuncias',compact('c_empresas'));
     }
 

@@ -1777,4 +1777,66 @@ public function Bitacora_Liberacion_unidades_electrico(Request $request)
     $mecanicos = DB::connection('mysql_produc')->select('SELECT * FROM adatospersonal where area="MECANICO"');
     return view('Transmasivo.Mantenimiento.Bitacora_electrica',compact('unidades','mecanicos'));
 }
+
+public function Reporte_de_estado_fisico_y_funcionamiento(Request $request)
+{
+    $html="";
+    for($i=112; $i<690; $i++)
+    {
+        $html.="
+        ALTER TABLE t_reporte_fisico_funcionalidad
+        ADD COLUMN `".$i."` VARCHAR(10);
+        ALTER TABLE t_reporte_fisico_funcionalidad
+        ADD COLUMN `".$i."_o` longtext;";
+    }
+   //return $html;
+   
+    $c_reporte = DB::connection('mysql')
+                    ->table('c_reporte_fisico_funcionalidad')
+                    ->orderBy('id_c_reporte', 'asc')->get();
+                    //->paginate(10);
+    $form_data = $request->session()->get('form_data', []);
+    $unidades = DB::connection('mysql_produc')->select('SELECT cunidades.consecutivo,cmodelos.modelo FROM cunidades 
+                INNER JOIN cmodelos on cmodelos.idmodelo=cunidades.modelofkcmodelos WHERE cmodelos.idmodelo IN(3,2,4) order by cunidades.consecutivo DESC');
+            $mecanicos = DB::connection('mysql_produc')->select('SELECT * FROM adatospersonal where area="MECANICO"');
+            $tipo_informes = DB::connection('mysql')->select('SELECT * FROM c_tipo_informe_bitacora_liberacion ');
+
+    return view('Transmasivo.Mantenimiento.Reporte_de_estado_fisico_y_funcionamiento', compact('c_reporte', 'form_data','unidades','mecanicos','tipo_informes'));
+}
+public function postReporte_de_estado_fisico_y_funcionamiento(Request $request)
+{
+   // dd($request->all());
+    $fecha=now();
+    DB::table('t_reporte_fisico_funcionalidad')->insert([
+        'economico' => $request->input('n_economico'),
+        'mecanico' => $request->input('n_mecanico'),
+        'supervisor' => $request->input('nom_supervisor'),
+        'fecha_reporte' => $request->input('Fecha'),
+        'fecha_ultimo_preventivo' => $request->input('Fecha_preventivo'),
+        'fecha_ultimo_articulacion' => $request->input('Fecha_articulacion'),
+        'fecha_ultima_fumigación' => $request->input('fecha_fumigacion'),
+        'consumo_promedio' => $request->input('Consumo'),
+        'km' => $request->input('km'),
+        'bares' => $request->input('bares'),
+        'obs_extras' => $request->input('obs_extras'),
+        'fecha_creacion' => $fecha,
+    ]);
+    $registro = DB::table('t_reporte_fisico_funcionalidad')->where('fecha_creacion', $fecha)->first();
+    $id_registro=$registro->id;
+    for($i=1; $i<=690;$i++)
+    {
+       // dd();
+        DB::table('t_preguntas_reporte_fisico_funcionalidad')->insert(['id_reporte_fisico_funcionalidad' => $id_registro,'id_c_reporte_fisico_funcionalidad' => $i,
+        'check_observacion' => 'check','respuesta' => $request->input($i),]);
+        DB::table('t_preguntas_reporte_fisico_funcionalidad')->insert(['id_reporte_fisico_funcionalidad' => $id_registro,'id_c_reporte_fisico_funcionalidad' => $i,
+        'check_observacion' => 'observacion','respuesta' => $request->input($i.'_obs'),]);
+    }
+   
+    
+    return redirect()->back()->with('mensaje', 'Datos guardados!')->with('color', 'success');
+
+}
+
+
+
 }
