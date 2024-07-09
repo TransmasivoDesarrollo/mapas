@@ -16,6 +16,8 @@ use PhpOffice\PhpWord\IOFactory;
 use DateTime;
 use geoPHP;
 
+use Carbon\Carbon;
+
 class RecursosHumanosControlador extends Controller
 {
     public function __construct()
@@ -759,5 +761,139 @@ class RecursosHumanosControlador extends Controller
 
 
         }
+    }
+
+    public function Permisos()
+    {  
+        $nombre = auth()->user()->name; 
+        $id = auth()->user()->id; 
+        $tipo_usuario = auth()->user()->tipo_usuario;       
+        return view('Transmasivo.rh.Permisos', compact('nombre','id','tipo_usuario'));
+    }
+    public function PermisosPOST(Request $request)
+    {
+        
+        $result = [];
+        
+        date_default_timezone_set('America/Mexico_City');
+        $hora_actual = time();
+            
+        $hora_formateada = date('Y-m-d H:i:s', $hora_actual);
+        if($request->input('incidencia')== "Permiso especial")
+        {
+            $result['nombre'] = $request->input('nombre');
+            $result['id_empleado_h'] = $request->input('id_empleado_h');
+            $result['area'] = $request->input('area');
+            $result['jefe_inmediato'] = $request->input('jefe_inmediato');
+            $result['autorizacion_rh_h'] = $request->input('autorizacion_rh_h');
+            $result['autorizacion_dir_h'] = $request->input('autorizacion_dir_h');
+            $result['incidencia'] = $request->input('incidencia');
+            $result['fecha_inicio'] = $request->input('fecha_inicio');
+            $result['fecha_fin'] = $request->input('fecha_fin');
+            $result['motivo_solicitud'] = $request->input('motivo_solicitud');
+            $result['soportes_anexos'] = $request->input('soportes_anexos');
+
+            DB::connection('mysql')->table('t_incidencias')->insert([
+                'id_elemento' => $request->input('id_empleado_h'),
+                'Incidencia' => $request->input('incidencia'),
+                'motivo_solicitud' => $request->input('motivo_solicitud'),
+                'soporte_anexo' => $request->input('soportes_anexos'),
+                'fecha_inicio' => $request->input('fecha_inicio'),
+                'fecha_termino' => $request->input('fecha_fin'),
+                'fecha_registro' => $hora_formateada,
+                'estatus_jefe_directo' => 'Pendiente',
+                'estatus_rh' => 'Pendiente',
+                'estatus_direccion' => 'Pendiente',
+            ]);
+            
+            return redirect()->route('Permisos')->with('mensaje', 'Se registro tu permiso especial !!')->with('color', 'success');
+        } 
+        if($request->input('incidencia') == "Vacaciones")
+        {
+            $result['nombre'] = $request->input('nombre');
+            $result['id_empleado_h'] = $request->input('id_empleado_h');
+            $result['area'] = $request->input('area');
+            $result['jefe_inmediato'] = $request->input('jefe_inmediato');
+            $result['autorizacion_rh_h'] = $request->input('autorizacion_rh_h');
+            $result['autorizacion_dir_h'] = $request->input('autorizacion_dir_h');
+            $result['incidencia'] = $request->input('incidencia');
+            $result['fecha_inicio'] = $request->input('fecha_inicio');
+            $result['fecha_fin'] = $request->input('fecha_fin');
+            DB::connection('mysql')->table('t_incidencias')->insert([
+                'id_elemento' => $request->input('id_empleado_h'),
+                'Incidencia' => $request->input('incidencia'),
+                'fecha_inicio' => $request->input('fecha_inicio'),
+                'fecha_termino' => $request->input('fecha_fin'),
+                'fecha_registro' => $hora_formateada,
+                'estatus_jefe_directo' => 'Pendiente',
+                'estatus_rh' => 'Pendiente',
+                'estatus_direccion' => 'Pendiente',
+            ]);
+            return redirect()->route('Permisos')->with('mensaje', 'Se registraron tus vacaciones !!')->with('color', 'success');
+
+        }
+        
+        $html = view('Transmasivo.rh.pdf_permiso', compact('result'))->render();
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('Carta', 'landscape'); 
+        $dompdf->render();
+        return $dompdf->stream('Permiso_'.$request->input('incidencia').'.pdf');
+    }
+    public function Consultar_permisos()
+    {        
+        $nombre = auth()->user()->name; 
+        Carbon::setLocale('es');
+        $id = auth()->user()->id; 
+        $tipo_usuario = auth()->user()->tipo_usuario; 
+        $consulta=DB::connection('mysql')->table('t_incidencias')->where('id_elemento',$id)->get();
+        return view('Transmasivo.rh.Consultar_permisos', compact('nombre','id','tipo_usuario','consulta'));
+    }
+    public function postConsultar_permiso(Request $request)
+    {
+        $id=$request->input('id_h');
+        $result=DB::connection('mysql')->table('t_incidencias')->where('id',$id)->get();
+        $html = view('Transmasivo.rh.pdf_permiso', compact('result'))->render();
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('Carta', 'landscape'); 
+        $dompdf->render();
+        return $dompdf->stream('Permiso_'.$request->input('incidencia').'.pdf');
+    }
+    public function Gestión_de_permisos()
+    {
+        $nombre = auth()->user()->name;
+        Carbon::setLocale('es');
+        $id = auth()->user()->id;
+        $tipo_usuario = auth()->user()->tipo_usuario;
+        $consulta = DB::table('t_incidencias as t')
+        ->join('users as u', 'u.id', '=', 't.id_elemento')
+        ->select('t.*', 'u.name')
+        ->get();
+    
+        return view('Transmasivo.rh.Gestión_de_permisos', compact('nombre','id','tipo_usuario','consulta'));
+    }
+    public function postGestión_de_permisos(Request $request)
+    {
+        if($request->input('Aprobado') == "Aprobar")
+        {
+            $id_h=$request->input('id_h');
+            $consulta=DB::connection('mysql')->table('t_incidencias')->where('id', $id_h)->update(['estatus_jefe_directo' => 'Aprobado']);
+            $mensaje="Se aprobo el permiso!!";
+            $color="success";
+            return redirect()->route('Gestión_de_permisos')->with('mensaje', $mensaje)->with('color', $color);
+        }
+        if ($request->input('Rechazar') == "Confirmar") {
+            $id_h = $request->input('id_h_m');
+            $observaciones = $request->input('observaciones');
+            $consulta = DB::connection('mysql')->table('t_incidencias')->where('id', $id_h)->update([
+                'estatus_jefe_directo' => 'Rechazado',
+                'observaciones' => 'Observacion del jefe directo: ' . $observaciones
+            ]);
+            $mensaje = "Se rechazó el permiso!!";
+            $color = "success";
+            return redirect()->route('Gestión_de_permisos')->with('mensaje', $mensaje)->with('color', $color);
+        }
+        
     }
 }

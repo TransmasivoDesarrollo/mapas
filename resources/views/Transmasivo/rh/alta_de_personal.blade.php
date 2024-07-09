@@ -2,7 +2,9 @@
     <style>
         .input-with-border {
     border: 1px solid black;
-}
+}.custom-icon {
+			font-size: 22px;
+		}
 
     </style>
         <div class="card">

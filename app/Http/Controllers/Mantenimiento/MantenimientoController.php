@@ -1780,17 +1780,7 @@ public function Bitacora_Liberacion_unidades_electrico(Request $request)
 
 public function Reporte_de_estado_fisico_y_funcionamiento(Request $request)
 {
-    $html="";
-    for($i=112; $i<690; $i++)
-    {
-        $html.="
-        ALTER TABLE t_reporte_fisico_funcionalidad
-        ADD COLUMN `".$i."` VARCHAR(10);
-        ALTER TABLE t_reporte_fisico_funcionalidad
-        ADD COLUMN `".$i."_o` longtext;";
-    }
-   //return $html;
-   
+    
     $c_reporte = DB::connection('mysql')
                     ->table('c_reporte_fisico_funcionalidad')
                     ->orderBy('id_c_reporte', 'asc')->get();
@@ -1836,7 +1826,26 @@ public function postReporte_de_estado_fisico_y_funcionamiento(Request $request)
     return redirect()->back()->with('mensaje', 'Datos guardados!')->with('color', 'success');
 
 }
+public function Descarga_reporte_de_estado_fisico_y_funcionamiento(Request $request)
+{
+   
+    $t_reportes = DB::connection('mysql')->select('SELECT * FROM t_reporte_fisico_funcionalidad ');
 
+    return view('Transmasivo.Mantenimiento.Descarga_reporte_de_estado_fisico_y_funcionamiento', compact( 't_reportes'));
+}
+public function postDescarga_reporte_de_estado_fisico_y_funcionamiento(Request $request)
+{
+    $id_reporte=$request->input('id_reporte');
+    $encabezado = DB::connection('mysql')->select('SELECT * FROM t_reporte_fisico_funcionalidad where  id='.$id_reporte);
+    $c_reporte_fisico_funcionalidad = DB::connection('mysql')->select('SELECT * FROM c_reporte_fisico_funcionalidad ');
+    $preguntas = DB::connection('mysql')->select('SELECT * FROM t_preguntas_reporte_fisico_funcionalidad where  id_reporte_fisico_funcionalidad='.$id_reporte);
+    //dd($encabezado);
+    $html = view('Transmasivo.Mantenimiento.pdf_reporte_liberacion_unidades',compact('preguntas','encabezado','c_reporte_fisico_funcionalidad'))->render();
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+    $dompdf->render();
+    return $dompdf->stream('Bitacora de terminales '.now().'.pdf');
+}
 
 
 }

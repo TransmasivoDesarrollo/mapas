@@ -22,7 +22,7 @@
             sessionStorage.fonts = true;
         }
     });
-
+	
 
 </script>
 
@@ -244,6 +244,11 @@
 											<span class="sub-item">Reporte de estado físico y funcionamiento</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Descarga_reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Desacargas de reporte de estado físico y funcionamiento</span>
+										</a>
+									</li>
 									
 								</ul>
 							</div>
@@ -297,6 +302,11 @@
 									<li>
 										<a  href="{{url('/Reporte_de_estado_fisico_y_funcionamiento')}}">
 											<span class="sub-item">Reporte de estado físico y funcionamiento</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Descarga_reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Desacargas de reporte de estado físico y funcionamiento</span>
 										</a>
 									</li>
 									
@@ -392,6 +402,11 @@
 											<span class="sub-item">Reporte de estado físico y funcionamiento</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Descarga_reporte_de_estado_fisico_y_funcionamiento')}}">
+											<span class="sub-item">Desacargas de reporte de estado físico y funcionamiento</span>
+										</a>
+									</li>
 									
 								</ul>
 							</div>
@@ -484,7 +499,7 @@
 										</a>
 									</li>
 									<li>
-										<a  href="{{url('/geo')}}">
+										<a  href="{{url('/geo3')}}">
 											<span class="sub-item">Geolocalización</span>
 										</a>
 									</li>
@@ -544,7 +559,24 @@
 							</div>
 					</li>
                     @endif
-
+					<li class="nav-item">
+						<a href="{{url('/Permisos')}}">
+							<i class="la la-calendar-plus-o"></i>
+							<p>Solicitar permiso</p>
+						</a>
+					</li>
+					<li class="nav-item">
+							<a href="{{url('/Consultar_permisos')}}">
+								<i class="la la-calendar-o"></i>
+								<p>Consultar mis permisos</p>
+							</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{url('/Gestión_de_permisos')}}">
+							<i class="flaticon-list"></i>
+							<p>Gestión de permisos</p>
+						</a>
+					</li>
                     
                 </ul>
             </div>

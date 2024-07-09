@@ -53,7 +53,7 @@
 					</div>
 					--}}
 					<div class="col-md-2">
-						<label>Numero de economico <span class="required-label">*</span></label>
+						<label>Economico <span class="required-label">*</span></label>
 						<select  required type="text" class="form-control  input-with-border" id="n_economico" name="n_economico">
 							@foreach($unidades as $unidad)
 							<option value="{{$unidad->consecutivo}}">{{$unidad->consecutivo}}</option>
@@ -102,7 +102,7 @@
 						<input required type="date" class="form-control input-with-border" id="Fecha" name="Fecha" value="{{ now()->format('Y-m-d') }}">
 					</div>
 					<div class="col-md-2">
-						<label>Agregar kilometraje<span class="required-label">*</span></label>
+						<label>Kilometraje<span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border"  id="km" name="km" max="" >
 					</div>
 					<div class="col-md-2">

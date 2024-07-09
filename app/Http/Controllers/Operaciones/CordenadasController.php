@@ -119,7 +119,28 @@ class CordenadasController extends Controller
     public function insertar_cordenadas76_i(Request $request)
     {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
     public function insertar_cordenadas77_i(Request $request)
-    {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
+    {
+        date_default_timezone_set('America/Mexico_City');
+            $hora_actual = time();
+            
+            $hora_formateada = date('Y-m-d H:i:s', $hora_actual);
+        if($request->has('Siniestro'))
+        {
+            $cambios=DB::connection('mysql')->insert('insert into t_reporte_economico_celular 
+            values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('lon').'","'.$hora_formateada.'","Siniestro","Activo")');
+        }
+        if($request->has('Falla'))
+        {
+            $cambios=DB::connection('mysql')->insert('insert into t_reporte_economico_celular 
+            values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('lon').'","'.$hora_formateada.'","Falla","Activo")');
+        }
+        if($request->has('Manifestación'))
+        {
+            $cambios=DB::connection('mysql')->insert('insert into t_reporte_economico_celular 
+            values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('lon').'","'.$hora_formateada.'","Manifestación","Activo")');
+        }
+        
+    }
     public function insertar_cordenadas78_i(Request $request)
     {$cambios=DB::connection('mysql')->insert('insert into t_geolocalizacion_eco values(null,"'.$request->input('eco').'","'.$request->input('lat').'","'.$request->input('log').'","'.now().'")');return 'si';}
     public function insertar_cordenadas79_i(Request $request)

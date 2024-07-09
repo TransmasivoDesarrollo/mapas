@@ -28,7 +28,7 @@
                         <center>
                             <b>Ordinario<br>Ojo de agua<br>Ciudad azteca</b>
                             <table style="border:1px black solid; ">
-                                <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Ojo De Agua </td><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="28px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"  width="28px;"></td></tr>
+                                <tr><td  style="border-top:1px black solid; border-bottom:1px black solid;">Ojo De Agua </td><td  style=""><img src="{{url('/assets/img/ojo_agua.ico')}}" width="28px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="94"  width="50px;"></td></tr>
                                 <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="25"></td></tr>
                                 <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="24"></td></tr>
                                 <tr><td ></td ><td ><img src="{{url('/assets/img/zvacio_vertical.png')}}" width="20px;"></td><td  style="border-top:1px black solid; border-bottom:1px black solid;"  id="23"></td></tr>
@@ -349,6 +349,7 @@
         allPolygons.addTo(map); 
         map.fitBounds(allPolygons.getBounds()); 
         async function geo_ecotodos() {
+            estaciones();
             $.ajax({
                 url: '{{ url("/geo_ecotodos") }}',
                 type: 'get',
@@ -369,8 +370,8 @@
                                 @foreach($secciones as $seccion)
                                 var poly{{$i}} = turf.polygon([polygonCoordinates{{$i}}.map(coord => [coord[1], coord[0]])]);
                                 if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                    $('#{{$i}}').append('<center class="center" >'+economico+'</center>');
-                                    const customIcon = L.icon({iconUrl: '{{url("/assets/img/mexibus2024.ico")}}', iconSize: [45, 45], iconAnchor: [22, 38], popupAnchor: [-3, -76]});
+                                    $('#{{$i}}').append('<p class="center" > <img src="{{url("/assets/img/bus_v_fondo1.png")}}" width="20px">&nbsp;'+economico+'</p><img src="{{url("/assets/img/bus_v_fondo77.png")}}" width="30px">');
+                                    const customIcon = L.icon({iconUrl: '{{url("/assets/img/bus_v_fondo1.png")}}', iconSize: [30, 30]});
                                     const userLocation = L.marker([lat, lon], {icon: customIcon}).addTo(map).bindPopup('Economico '+economico);
                                     console.log('entro '+economico);
                                 }
@@ -386,34 +387,34 @@
                     console.log('Error en la solicitud: ' + error);
                 }
             });
-            setInterval(await estaciones(), 10);
+            
         }
         async function estaciones() {
             navigator.geolocation.getCurrentPosition(function(position) {
-                const ico_cdazteca = L.icon({ iconUrl: '{{url("/assets/img/ico_cdazteca.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_quinto = L.icon({ iconUrl: '{{url("/assets/img/quinto_sol.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_josefa = L.icon({ iconUrl: '{{url("/assets/img/josefa.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_industrial = L.icon({ iconUrl: '{{url("/assets/img/industrial.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_unitec = L.icon({ iconUrl: '{{url("/assets/img/unitec.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_torres = L.icon({ iconUrl: '{{url("/assets/img/torres.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_zodiaco = L.icon({ iconUrl: '{{url("/assets/img/zodiaco.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_adolfo = L.icon({ iconUrl: '{{url("/assets/img/adolfo_lopez.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_vocacional = L.icon({ iconUrl: '{{url("/assets/img/vocacional.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_ecatepec = L.icon({ iconUrl: '{{url("/assets/img/valle_ecatepec.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_americas = L.icon({ iconUrl: '{{url("/assets/img/las_americas.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_mayo = L.icon({ iconUrl: '{{url("/assets/img/1_mayo.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_hospital = L.icon({ iconUrl: '{{url("/assets/img/hospital.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_aquiles = L.icon({ iconUrl: '{{url("/assets/img/aquiles_cerdan.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_jardines = L.icon({ iconUrl: '{{url("/assets/img/jardines.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_palomas = L.icon({ iconUrl: '{{url("/assets/img/palomas.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico__sep_19 = L.icon({ iconUrl: '{{url("/assets/img/19_sep.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_ojo_agua = L.icon({ iconUrl: '{{url("/assets/img/ojo_agua.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_esmeralda = L.icon({ iconUrl: '{{url("/assets/img/esmeralda.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_cuauhtemocN = L.icon({ iconUrl: '{{url("/assets/img/cuau_nor.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_cuauhtemoc = L.icon({ iconUrl: '{{url("/assets/img/cuau_sur.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_Hidalgo = L.icon({ iconUrl: '{{url("/assets/img/hidalgo.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_insurgentes = L.icon({ iconUrl: '{{url("/assets/img/insurgentes.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
-                const ico_estacionCentralA = L.icon({ iconUrl: '{{url("/assets/img/central_abastos.ico")}}',iconSize: [30, 30],iconAnchor: [22, 38],popupAnchor: [-3, -76] });
+                const ico_cdazteca = L.icon({ iconUrl: '{{url("/assets/img/ico_cdazteca.ico")}}',iconSize: [30, 30] });
+                const ico_quinto = L.icon({ iconUrl: '{{url("/assets/img/quinto_sol.ico")}}',iconSize: [30, 30] });
+                const ico_josefa = L.icon({ iconUrl: '{{url("/assets/img/josefa.ico")}}',iconSize: [30, 30] });
+                const ico_industrial = L.icon({ iconUrl: '{{url("/assets/img/industrial.ico")}}',iconSize: [30, 30] });
+                const ico_unitec = L.icon({ iconUrl: '{{url("/assets/img/unitec.ico")}}',iconSize: [30, 30] });
+                const ico_torres = L.icon({ iconUrl: '{{url("/assets/img/torres.ico")}}',iconSize: [30, 30] });
+                const ico_zodiaco = L.icon({ iconUrl: '{{url("/assets/img/zodiaco.ico")}}',iconSize: [30, 30] });
+                const ico_adolfo = L.icon({ iconUrl: '{{url("/assets/img/adolfo_lopez.ico")}}',iconSize: [30, 30] });
+                const ico_vocacional = L.icon({ iconUrl: '{{url("/assets/img/vocacional.ico")}}',iconSize: [30, 30] });
+                const ico_ecatepec = L.icon({ iconUrl: '{{url("/assets/img/valle_ecatepec.ico")}}',iconSize: [30, 30] });
+                const ico_americas = L.icon({ iconUrl: '{{url("/assets/img/las_americas.ico")}}',iconSize: [30, 30] });
+                const ico_mayo = L.icon({ iconUrl: '{{url("/assets/img/1_mayo.ico")}}',iconSize: [30, 30] });
+                const ico_hospital = L.icon({ iconUrl: '{{url("/assets/img/hospital.ico")}}',iconSize: [30, 30] });
+                const ico_aquiles = L.icon({ iconUrl: '{{url("/assets/img/aquiles_cerdan.ico")}}',iconSize: [30, 30] });
+                const ico_jardines = L.icon({ iconUrl: '{{url("/assets/img/jardines.ico")}}',iconSize: [30, 30] });
+                const ico_palomas = L.icon({ iconUrl: '{{url("/assets/img/palomas.ico")}}',iconSize: [30, 30] });
+                const ico__sep_19 = L.icon({ iconUrl: '{{url("/assets/img/19_sep.ico")}}',iconSize: [30, 30] });
+                const ico_ojo_agua = L.icon({ iconUrl: '{{url("/assets/img/ojo_agua.ico")}}',iconSize: [30, 30] });
+                const ico_esmeralda = L.icon({ iconUrl: '{{url("/assets/img/esmeralda.ico")}}',iconSize: [30, 30] });
+                const ico_cuauhtemocN = L.icon({ iconUrl: '{{url("/assets/img/cuau_nor.ico")}}',iconSize: [30, 30] });
+                const ico_cuauhtemoc = L.icon({ iconUrl: '{{url("/assets/img/cuau_sur.ico")}}',iconSize: [30, 30] });
+                const ico_Hidalgo = L.icon({ iconUrl: '{{url("/assets/img/hidalgo.ico")}}',iconSize: [30, 30] });
+                const ico_insurgentes = L.icon({ iconUrl: '{{url("/assets/img/insurgentes.ico")}}',iconSize: [30, 30] });
+                const ico_estacionCentralA = L.icon({ iconUrl: '{{url("/assets/img/central_abastos.ico")}}',iconSize: [30, 30] });
                 const estacionCentralA = L.marker([19.616544424211213, -99.00803461449348], { icon: ico_estacionCentralA }).addTo(map).bindPopup('Central de abastos');
                 const insurgentes = L.marker([19.62539866895445, -99.00321162537098], { icon: ico_insurgentes }).addTo(map).bindPopup('Las Torres');
                 const Hidalgo = L.marker([19.6335203965161, -99.00211895374885], { icon: ico_Hidalgo }).addTo(map).bindPopup('Hidalgo');

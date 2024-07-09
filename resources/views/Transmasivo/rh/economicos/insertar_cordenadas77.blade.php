@@ -23,30 +23,30 @@
             sessionStorage.fonts = true;
         }
     });
-
-
 </script>
 
-<!-- CSS Files -->
 <link rel="stylesheet" href="{{url('/assets')}}/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{url('/assets')}}/css/ready.css">
-
-<!-- CSS Just for demo purpose, don't include it in your project -->
 <link rel="stylesheet" href="{{url('/assets')}}/css/demo.css">
 
 </head>
-        <center>
-            <h2>Economico 77</h2>
-        <div id="countdown">10</div> <!-- Contador regresivo -->
-        
-        <button style="width:80%; height:40%;" class="btn btn-danger"><h2>Siniestro</h2></button>
-        <br><br><br>
-        <button style="width:80%; height:40%;" class="btn btn-danger"><h2>Falla Eco</h2></button>
-         <br><br><br>
-        <button style="width:80%; height:40%;" class="btn btn-danger"><h2>Manifestación</h2></button>
-        </center>
-    </body>
-
+<body>
+    <form method="post" id="exampleValidation" action="{{url('/geo77')}}">
+        @csrf
+            <center>
+                <h2><br>Economico 77</h2>
+            <div id="countdown">10</div> <!-- Contador regresivo -->
+            <input type="hidden" id="eco" name="eco" value="77">
+            <input type="hidden" id="lat" name="lat" >
+            <input type="hidden" id="lon" name="lon" >
+            <input type="submit" style="width:80%; height:40%; font-size:50px;" id="Siniestro" name="Siniestro" class="btn btn-danger" value="Siniestro">
+            <br><br><br>
+            <input type="submit" style="width:80%; height:40%; font-size:50px;" id="Falla" name="Falla" class="btn btn-danger" value="Falla Eco">
+            <br><br><br>
+            <input type="submit" style="width:80%; height:40%; font-size:50px;" id="Manifestación" name="Manifestación" class="btn btn-danger" value="Manifestación">
+            </center>
+    </form>
+</body>
 <script src="{{url('/assets')}}/js/core/jquery.3.2.1.min.js"></script>
 <script src="{{url('/assets')}}/js/core/popper.min.js"></script>
 <script src="{{url('/assets')}}/js/core/bootstrap.min.js"></script>
@@ -60,7 +60,6 @@
 <!-- Moment JS -->
 <script src="{{url('/assets')}}/js/plugin/moment/moment.min.js"></script>
 
-
 <!-- jQuery Vector Maps -->
 <script src="{{url('/assets')}}/js/plugin/jqvmap/jquery.vmap.min.js"></script>
 <script src="{{url('/assets')}}/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
@@ -73,7 +72,6 @@
 
 <!-- Summernote -->
 <script src="{{url('/assets')}}/js/plugin/summernote/summernote-bs4.min.js"></script>
-
 
 <!-- Ready Pro JS -->
 <script src="{{url('/assets')}}/js/ready.min.js"></script>
@@ -89,20 +87,17 @@
                     clearInterval(interval);
                     countdownValue = 10; // Reiniciar el contador
                     startCountdown(); // Reiniciar la cuenta regresiva
-                   
                 }
             }, 1000);
         }
-
         function updateLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
-
                     const point = turf.point([lon, lat]);
-
-                    // Enviar coordenadas al servidor
+                    $('#lat').val(lat);
+                    $('#lon').val(lon);
                     $.ajax({
                         url: '{{ url("/geo24i") }}',
                         type: 'get',
@@ -115,23 +110,17 @@
                            
                         },
                         error: function(xhr, status, error) {
-                            alert('Error en la solicitud: ' + error);
+                            console.log('Error en la solicitud: ' + error);
                         }
                     });
-
-                    
-
                 }, function(error) {
-                    alert('Error al obtener la ubicación: ' + error.message);
+                    console.log('Error al obtener la ubicación: ' + error.message);
                 });
             } else {
-                alert('Geolocalización no es soportada por este navegador.');
+                console.log('Geolocalización no es soportada por este navegador.');
             }
         }
-
-        // Iniciar la cuenta regresiva y actualizar la ubicación cada 10 segundos
         startCountdown();
-        
         setInterval(function() {
             updateLocation();
         }, 10000); // Cada 10 segundos

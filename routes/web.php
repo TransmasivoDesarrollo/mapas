@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/Reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Reporte_de_estado_fisico_y_funcionamiento')->name('Reporte_de_estado_fisico_y_funcionamiento');
     Route::POST('/Reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@postReporte_de_estado_fisico_y_funcionamiento')->name('postReporte_de_estado_fisico_y_funcionamiento');
 
+    
+    Route::get('/Descarga_reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Descarga_reporte_de_estado_fisico_y_funcionamiento')->name('Descarga_reporte_de_estado_fisico_y_funcionamiento');
+    Route::POST('/Descarga_reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@postDescarga_reporte_de_estado_fisico_y_funcionamiento')->name('postDescarga_reporte_de_estado_fisico_y_funcionamiento');
+
 
     Route::get('/Bitacora_De_Liberacion_De_Unidades', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Revisión')->name('Revisión');
     Route::get('/Bitacora_De_Liberacion_De_Unidadesv1', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Revisiónv1')->name('Revisiónv1');
@@ -217,6 +221,20 @@ Route::middleware('auth')->group(function () {
     Route::POST('/ModificarInventario', '\App\Http\Controllers\Inventario\InventarioController@cambios')->name('cambios');
     
     Route::get('/id={id_personal}', '\App\Http\Controllers\Marketing\MarketingController@generadorQR')->name('generadorQR');
+
+    
+    Route::get('/Permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Permisos')->name('Permisos');
+    Route::POST('/Permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@PermisosPOST')->name('PermisosPOST');
+
+    
+    Route::get('/Consultar_permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Consultar_permisos')->name('Consultar_permisos');
+    Route::POST('/Consultar_permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postConsultar_permiso')->name('postConsultar_permiso');
+    
+    
+    Route::get('/Gestión_de_permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Gestión_de_permisos')->name('Gestión_de_permisos');
+    Route::POST('/Gestión_de_permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postGestión_de_permisos')->name('postGestión_de_permisos');
+    
+
     
 });
 

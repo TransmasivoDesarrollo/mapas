@@ -24,12 +24,12 @@
                 <div class="form-group row " >
 					{{-- 
 					<div class="col-md-2">
-						<label>Numero de economico <span class="required-label">*</span></label>
+						<label>Economico <span class="required-label">*</span></label>
 						<input  required type="text" class="form-control  input-with-border" style="width:100%; height:100%; border:black 1px solid;" id="n_economico" name="n_economico">
 					</div>
 					--}}
 					<div class="col-md-2">
-						<label>Numero de economico <span class="required-label">*</span></label>
+						<label>Economico <span class="required-label">*</span></label>
 						<select  required type="text" class="form-control  input-with-border" id="n_economico" name="n_economico">
 							@foreach($unidades as $unidad)
 							<option value="{{$unidad->consecutivo}}">{{$unidad->consecutivo}}</option>
@@ -38,12 +38,12 @@
 					</div>
 					{{--
 					<div class="col-md-4">
-						<label>Nombre del mecanico<span class="required-label">*</span></label>
+						<label>Mecanico<span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border" id="n_mecanico" name="n_mecanico">
 					</div>
 					--}}
 					<div class="col-md-4">
-                            <label>Nombre del  mecanico</label>
+                            <label>Mecanico</label>
                             <select   class="form-control input-with-border"  id="n_mecanico" name="n_mecanico">
 								
                                 @foreach($mecanicos as $mecanico)
@@ -54,7 +54,7 @@
                             </select>
                         </div>
 					<div class="col-md-4">
-						<label>Nombre del supervisor <span class="required-label">*</span></label>
+						<label>Supervisor <span class="required-label">*</span></label>
 						<select   class="form-control input-with-border"  id="nom_supervisor" name="nom_supervisor">
                                 @foreach($mecanicos as $mecanico)
                                 <option>{{$mecanico->nombre}}</option>
@@ -73,33 +73,34 @@
 				{{-- inicio del row --}}
 
 				<div class="form-group row " >
-                	<div class="col-md-3">
-						<label>Fecha del reporte<span class="required-label">*</span></label>
-						<input required type="date" class="form-control input-with-border" id="Fecha" name="Fecha" value="{{ now()->format('Y-m-d') }}">
+                    <div class="col-md-3">
+						<label>Ultima fecha <br> de fumigación<span class="required-label">*</span></label>
+						<input required type="date" class="form-control input-with-border"  id="fecha_fumigacion" name="fecha_fumigacion" max="" >
 					</div>
                     <div class="col-md-3">
-						<label>Fecha de ultimo mantenimiento preventivo<span class="required-label">*</span></label>
+						<label>Fecha ultimo  <br> mantenimiento preventivo<span class="required-label">*</span></label>
 						<input required type="date" class="form-control input-with-border" id="Fecha_preventivo" name="Fecha_preventivo" >
 					</div>
                     <div class="col-md-3">
-						<label>Fecha de mantenimiento a la articulación<span class="required-label">*</span></label>
+						<label>Fecha de mantenimiento  <br> a la articulación<span class="required-label">*</span></label>
 						<input required type="date" class="form-control input-with-border" id="Fecha_articulacion" name="Fecha_articulacion" >
 					</div>
                     <div class="col-md-2">
-						<label>Consumo promedio de display o calculado<span class="required-label">*</span></label>
+						<label>Consumo promedio  <br>de display o calculado<span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border"  id="Consumo" name="Consumo" max="" >
 					</div>
 				</div>
                 <div class="form-group row " >
                     <div class="col-md-3">
-						<label>Ultima fecha de fumigación<span class="required-label">*</span></label>
-						<input required type="date" class="form-control input-with-border"  id="fecha_fumigacion" name="fecha_fumigacion" max="" >
+						<label>Fecha del reporte<span class="required-label">*</span></label>
+						<input required type="date" class="form-control input-with-border" id="Fecha" name="Fecha" value="{{ now()->format('Y-m-d') }}">
 					</div>
-					<div class="col-md-2">
+                    
+					<div class="col-md-3">
 						<label>Agregar kilometraje<span class="required-label">*</span></label>
 						<input required type="text" class="form-control input-with-border"  id="km" name="km" max="" >
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<label>Carga de bares<span class="required-label">*</span></label>
 						<input  required type="number" class="form-control input-with-border" id="bares" name="bares"  >
 					</div>
