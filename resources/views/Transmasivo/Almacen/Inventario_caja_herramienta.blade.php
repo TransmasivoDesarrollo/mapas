@@ -15,12 +15,26 @@
 				{{ session('mensaje') }}.
 			</div>
 			@endif
-			<form method="post" id="exampleValidation" action="{{url('/Bitacora_De_Liberacion_De_Unidades')}}">
+			<form method="post" id="exampleValidation" action="{{url('/Inventario_caja_herramienta')}}" enctype="multipart/form-data">
 				@csrf
 				<div class="form-group row " >
+					<div class="col-md-3">
+						<label><br>Refacción <span class="required-label">*</span></label>
+						<input required type="text" class="form-control input-with-border" id="Refacción" name="Refacción" >
+					</div>
 					<div class="col-md-2">
-						<label>Fecha <span class="required-label">*</span></label>
-						<input required type="date" class="form-control input-with-border" id="Fecha" name="Fecha" value="{{ now()->format('Y-m-d') }}">
+						<label><br>Cantidad <span class="required-label">*</span></label>
+						<input required type="number" class="form-control input-with-border" id="Cantidad" name="Cantidad" >
+					</div>
+					<div class="col-md-4">
+						<label><br>Foto  <span class="required-label">*</span></label>
+						<input type="file" class="form-control input-with-border" id="Foto" name="Foto" accept="image/*" capture="camera">
+
+					</div>
+					<div class="col-md-12">
+						<br>
+						<center><input type="submit" class="btn btn-primary" value="Registrar" id="Registrar" name="Registrar"></center>
+
 					</div>
 				</div>
 			</form>

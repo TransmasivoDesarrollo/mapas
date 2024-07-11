@@ -174,7 +174,16 @@
 											<span class="sub-item">Estadisticas de renuncia </span>
 										</a>
 									</li>
-									
+									<li>
+										<a  href="{{url('/subir_biometrico')}}">
+											<span class="sub-item">Subir biométrico  </span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/consultar_biometrico')}}">
+											<span class="sub-item">Consultar biométrico  </span>
+										</a>
+									</li>
 								</ul>
 							</div>
 					</li>
@@ -316,6 +325,29 @@
 							</div>
 					</li>
                     @endif
+                    @if(auth()->user()->tipo_usuario=='Almacen')
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Inventario_caja_herramienta">
+								<i class="flaticon-idea"></i>
+								<p>Almacen  </p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Inventario_caja_herramienta">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Inventario_caja_herramienta')}}">
+											<span class="sub-item">Inventario caja de herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Solicitar_herramienta')}}">
+											<span class="sub-item">Solicitar herramienta</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
+                    @endif
                     @if(auth()->user()->tipo_usuario=='Sistemas')
                     <li class="nav-item">
 							<a data-toggle="collapse" href="#forms">
@@ -357,7 +389,16 @@
 											<span class="sub-item">Estadisticas de renuncia </span>
 										</a>
 									</li>
-									
+									<li>
+										<a  href="{{url('/subir_biometrico')}}">
+											<span class="sub-item">Subir biometrico </span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/consultar_biometrico')}}">
+											<span class="sub-item">Consultar biométrico  </span>
+										</a>
+									</li>
 									
 								</ul>
 							</div>
@@ -448,14 +489,16 @@
 							</a>
 							<div class="collapse" id="Inventario_caja_herramienta">
 								<ul class="nav nav-collapse">
-                                    
 									<li>
 										<a  href="{{url('/Inventario_caja_herramienta')}}">
 											<span class="sub-item">Inventario caja de herramienta</span>
 										</a>
 									</li>
-                                   
-									
+									<li>
+										<a  href="{{url('/Solicitar_herramienta')}}">
+											<span class="sub-item">Solicitar herramienta</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 					</li>
@@ -689,12 +732,8 @@
     scrollX: false,
     scrollCollapse: true,
     filter: true,
-    lengthMenu: [[7, 14, 21, 28, 35, -1], [7, 14, 21, 28, 35, "Todos"]],
-    iDisplayLength: 7,
-    dom: 'lBfrtip', // Agrega los elementos que quieres mostrar y sus ubicaciones
-    buttons: [ // Configura los botones de descarga
-        'excel' // Agrega el botón de Excel
-    ],
+    lengthMenu: [[12, 24, 36, 48, 60, -1], [12, 24, 36, 48, 60, "Todos"]],
+    iDisplayLength: 12,
     "language": {
         "lengthMenu": "Mostrar _MENU_ datos",
         "zeroRecords": "No existe el dato introducido",

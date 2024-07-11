@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     //Almacen
     
     Route::get('/Inventario_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Inventario_caja_herramienta')->name('Inventario_caja_herramienta');
+    Route::POST('/Inventario_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@postInventario_caja_herramienta')->name('postInventario_caja_herramienta');
     
     Route::get('/exportar-a-word', '\App\Http\Controllers\Almacen\AlmacenController@exportToWord');
 
@@ -234,7 +235,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/Gestión_de_permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Gestión_de_permisos')->name('Gestión_de_permisos');
     Route::POST('/Gestión_de_permisos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postGestión_de_permisos')->name('postGestión_de_permisos');
     
+    
+    Route::get('/subir_biometrico', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@subir_biometrico')->name('subir_biometrico');
+    Route::POST('/subir_biometrico', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_subir_biometrico')->name('post_subir_biometrico');
 
+    Route::get('/consultar_biometrico', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@consultar_biometrico')->name('consultar_biometrico');
+    Route::POST('/consultar_biometrico', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_consultar_biometrico')->name('post_consultar_biometrico');
+    
+    Route::get('/Solicitar_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Solicitar_herramienta')->name('Solicitar_herramienta');
+    
     
 });
 

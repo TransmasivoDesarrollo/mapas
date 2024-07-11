@@ -67,7 +67,6 @@
                                                 
                                             <td>{{$consul->observaciones}}</td>
                                             <td> 
-
                                                 <form method="post" id="contratoForm" action="{{url('/Consultar_permisos')}}">
                                                     @csrf
                                                     <input type="hidden" id="id_h" name="id_h" value="{{$consul->id}}"> 

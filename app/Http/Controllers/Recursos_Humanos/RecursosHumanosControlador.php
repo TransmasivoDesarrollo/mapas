@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use DB;
 use App\Models\TPersonal;
 use App\Models\t_entrevista_salida;
+use App\Imports\importarBiometrico;
 
 use Dompdf\Dompdf;
 use PhpOffice\PhpWord\PhpWord;
@@ -896,4 +897,75 @@ class RecursosHumanosControlador extends Controller
         }
         
     }
+    public function subir_biometrico()
+    {
+        return view('Transmasivo.rh.subir_biometrico');
+    }
+    public function post_subir_biometrico(Request $request)
+    {
+        
+        $request->validate([
+            'uploadImg' => 'required|file|mimes:xls,xlsx'
+        ]);
+
+        try {
+            $filePath = $request->file('uploadImg')->store('temp');
+            $import = new importarBiometrico();
+            Excel::import($import, storage_path('app/' . $filePath));
+            $result = $import->result;
+            //dd($result);
+            for($i=0; count($result) > $i; $i++)
+            {
+                DB::connection('mysql')->table('t_biometrico')->insert([
+                    'id_elemento' => $result[$i]['id'],
+                    'fecha_hora' => $result[$i]['fecha_hora'],
+                ]);
+            }
+            $mensaje = "Archivo importado correctamente!";
+            $color = "success";
+        } catch (\Exception $e) {
+            $mensaje = "Error al importar el archivo: " . $e->getMessage();
+            $color = "danger";
+        }
+
+        return redirect()->route('subir_biometrico')->with('mensaje', $mensaje)->with('color', $color);
+    }
+
+    public function consultar_biometrico()
+    {
+        $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
+        $consulta=DB::connection('mysql')->table('t_biometrico')->get();
+        $id_ele="-Selecciona-";
+        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele'));
+    }
+    public function post_consultar_biometrico(Request $request)
+    {
+        $id_empleado=$request->input('id_empleado');
+        $fecha_inicio=$request->input('fecha_inicio');
+        $fecha_fin=$request->input('fecha_fin');
+
+        $id_ele=$id_empleado;
+        $consulta;
+        $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
+        if($fecha_inicio != "" && $fecha_fin != ""){
+            $consulta=DB::connection('mysql')->table('t_biometrico')->get();
+        }
+        else if($id_empleado!="-Selecciona-" && $fecha_inicio != "" && $fecha_fin != ""){
+            $consulta=DB::connection('mysql')->table('t_biometrico')->get();
+        }
+        else if($id_empleado=="-Selecciona-"){
+            $consulta=DB::connection('mysql')->table('t_biometrico')->get();
+        }
+        else{
+            $consulta=DB::connection('mysql')->table('t_biometrico')->where('id_elemento',$id_empleado)->get();
+        }
+        
+        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele'));
+    }
+    
+    public function Solicitar_herramienta()
+    {
+        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele'));
+    }
+
 }

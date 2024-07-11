@@ -56,6 +56,7 @@
                                 <option value="Mantenimiento">Mantenimiento</option>
                                 <option value="Operaciones">Operaciones</option>
                                 <option value="Inventario">Inventario</option>
+                                <option value="Almacen">Almacen</option>
 								
                             </select>
 						</div>
