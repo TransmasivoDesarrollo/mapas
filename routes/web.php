@@ -78,6 +78,11 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/Inventario_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Inventario_caja_herramienta')->name('Inventario_caja_herramienta');
     Route::POST('/Inventario_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@postInventario_caja_herramienta')->name('postInventario_caja_herramienta');
+
+    
+    Route::get('/Consultar_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Consultar_caja_herramienta')->name('Consultar_caja_herramienta');
+    Route::POST('/Consultar_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@post_Consultar_caja_herramienta')->name('post_Consultar_caja_herramienta');
+    
     
     Route::get('/exportar-a-word', '\App\Http\Controllers\Almacen\AlmacenController@exportToWord');
 
@@ -243,6 +248,7 @@ Route::middleware('auth')->group(function () {
     Route::POST('/consultar_biometrico', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_consultar_biometrico')->name('post_consultar_biometrico');
     
     Route::get('/Solicitar_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Solicitar_herramienta')->name('Solicitar_herramienta');
+    Route::POST('/Solicitar_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@post_Solicitar_herramienta')->name('post_Solicitar_herramienta');
     
     
 });

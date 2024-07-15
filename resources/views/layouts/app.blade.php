@@ -340,6 +340,11 @@
 										</a>
 									</li>
 									<li>
+										<a  href="{{url('/Consultar_caja_herramienta')}}">
+											<span class="sub-item">Consultar caja de herramienta</span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/Solicitar_herramienta')}}">
 											<span class="sub-item">Solicitar herramienta</span>
 										</a>
@@ -492,6 +497,11 @@
 									<li>
 										<a  href="{{url('/Inventario_caja_herramienta')}}">
 											<span class="sub-item">Inventario caja de herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Consultar_caja_herramienta')}}">
+											<span class="sub-item">Consultar caja de herramienta</span>
 										</a>
 									</li>
 									<li>
