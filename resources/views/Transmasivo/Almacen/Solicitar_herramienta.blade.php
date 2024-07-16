@@ -85,20 +85,20 @@
         @if(session('pdf_url'))
                             
         <div class="modal fade" id="otroModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Solicitud creada correctamente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <center><a href="{{ session('pdf_url') }}" target="_blank" class="btn btn-primary">Descargar PDF</a></center> 
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Solicitud creada correctamente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <center><a href="{{ session('pdf_url') }}" target="_blank" class="btn btn-primary">Descargar PDF</a></center> 
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 
         @endif
@@ -141,13 +141,40 @@
                             
                             
                         </div>
-                        <form method="post" id="acceso" action="{{url('/Solicitar_herramienta')}}">
-                                @csrf
-                                <center>
-                                    <input type="submit" value="Solicitar prestamo" class="btn btn-primary" id="solicitar_prestamo" name="solicitar_prestamo">
-                                    <input type="hidden" id="arreglo_pedidos" name="arreglo_pedidos">
-                                </center>
-                            </form>
+                        <center><button class="btn btn-primary" id="solicitar_modal" class="solicitar_modal">Solicitar prestamo</button></center>
+                        <div class="modal fade" id="solicitar_modals" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true" >
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel2">Solicitud de herramientas</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <form method="post" id="acceso" action="{{url('/Solicitar_herramienta')}}">
+                                        @csrf
+                                        <div class=" row form-group " >
+                                            <div class="col-md-12 text-left">
+                                                <label>Unidad o autobus</label>
+                                                <input type="text" class="form-control" id="unidad" name="unidad" >
+                                            </div>
+                                            <div class="col-md-12 text-left">
+                                                <label>
+                                            <br>Quien lo solicita</label>
+                                                <input type="text" disabled class="form-control" id="usuario" name="usuario" value="{{ auth()->user()->name }}">
+                                            </div>
+                                        </div>
+                                        <center><br><hr>
+                                            <input type="submit" value="Solicitar prestamo" class="btn btn-primary" id="solicitar_prestamo" name="solicitar_prestamo">
+                                            <input type="hidden" id="arreglo_pedidos" name="arreglo_pedidos">
+                                        </center>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                            
                         </div>
                        
@@ -198,6 +225,11 @@
             "loadingRecords": "Cargando..."
         }
     });
+    $('#solicitar_modal').on('click', function() {
+        
+        $('#solicitar_modals').modal('show');
+    });
+
     function abrirModal(cantidad, refaccion, id,foto) {
         $('#herramienta_modal').html(refaccion);
         refaccion = refaccion.replace(/'/g, "\\'");

@@ -509,6 +509,11 @@
 											<span class="sub-item">Solicitar herramienta</span>
 										</a>
 									</li>
+									<li>
+										<a  href="{{url('/Recepcion_herramienta')}}">
+											<span class="sub-item">Recepción de herramienta</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 					</li>
