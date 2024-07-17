@@ -446,7 +446,7 @@
 											<span class="sub-item">Consultar biométrico  </span>
 										</a>
 									</li>
-
+									<li>
 										<a  href="{{url('/Contrato_Dasimo')}}">
 											<span class="sub-item">Contrato Dasimo </span>
 										</a>
