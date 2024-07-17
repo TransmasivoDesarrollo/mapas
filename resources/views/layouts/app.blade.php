@@ -262,6 +262,33 @@
 								</ul>
 							</div>
 					</li>
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Inventario_caja_herramienta">
+								<i class="flaticon-idea"></i>
+								<p>Almacen  </p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Inventario_caja_herramienta">
+								<ul class="nav nav-collapse">
+									
+									<li>
+										<a  href="{{url('/Consultar_caja_herramienta')}}">
+											<span class="sub-item">Consultar caja de herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Solicitar_herramienta')}}">
+											<span class="sub-item">Solicitar herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Historial_herramienta')}}">
+											<span class="sub-item">Historial de solicitud herramienta</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
                     @endif
 					@if(auth()->user()->tipo_usuario=='Operaciones')
 					<li class="nav-item">
@@ -347,6 +374,16 @@
 									<li>
 										<a  href="{{url('/Solicitar_herramienta')}}">
 											<span class="sub-item">Solicitar herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Recepcion_herramienta')}}">
+											<span class="sub-item">Recepción de herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Historial_herramienta')}}">
+											<span class="sub-item">Historial de solicitud herramienta</span>
 										</a>
 									</li>
 								</ul>
@@ -512,6 +549,11 @@
 									<li>
 										<a  href="{{url('/Recepcion_herramienta')}}">
 											<span class="sub-item">Recepción de herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Historial_herramienta')}}">
+											<span class="sub-item">Historial de solicitud herramienta</span>
 										</a>
 									</li>
 								</ul>

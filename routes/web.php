@@ -254,6 +254,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/Recepcion_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Recepcion_herramienta')->name('Recepcion_herramienta');
     Route::get('/buscar_solicitud_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@buscar_solicitud_herramienta')->name('buscar_solicitud_herramienta');
     Route::get('/validar_cambio_solicitud_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@validar_cambio_solicitud_herramienta')->name('validar_cambio_solicitud_herramienta');
+
+
+    Route::get('/Historial_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Historial_herramienta')->name('Historial_herramienta');
+
+    
+    Route::get('/buscar_Historial_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@buscar_Historial_herramienta')->name('buscar_Historial_herramienta');
     
     
     Route::POST('/post_Recepcion_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@post_Recepcion_herramienta')->name('post_Recepcion_herramienta');

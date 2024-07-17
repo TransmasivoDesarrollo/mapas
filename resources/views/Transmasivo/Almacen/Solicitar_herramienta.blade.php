@@ -5,7 +5,24 @@
 		}
 
 	</style>
-    <div class="h4"> Solicitud de herramientas</div>
+    <div class="">
+		<ul class="breadcrumbs">
+			<li class="nav-home">
+				<a href="{{url('/')}}">
+					<i class="flaticon-home"></i>
+		    	</a>
+			</li>
+			<li class="separator">
+				<i class="flaticon-right-arrow"></i>
+			</li>
+			<li class="nav-item">
+				<a href="{{url('/Solicitar_herramienta')}}"><i class="la la-wrench"></i></a>
+			</li>
+            <li class="separator">
+                <h4 class="page-title">Solicitud de herramientas</h4>
+			</li>				
+		</ul>
+    </div>
     <div class=" row form-group " >
         <div class="col-md-6">
             <div class="card">
@@ -118,7 +135,7 @@
                         <div class=" row form-group " >
                         
                         <div class="col-md-12 text-right">
-                            <a class="btn btn-warning" href="{{url('/Solicitar_herramienta')}}">Limpiar</a>
+                            <a class="btn btn-warning" href="{{url('/Solicitar_herramienta')}}"> <i class="la la-trash"></i> Limpiar</a>
                         </div>
 
                         <div class="col-md-12">
@@ -139,9 +156,9 @@
                                 </table>
                             </div>
                             
+                        <center><button class="btn btn-primary" id="solicitar_modal" class="solicitar_modal">Solicitar prestamo</button></center>
                             
                         </div>
-                        <center><button class="btn btn-primary" id="solicitar_modal" class="solicitar_modal">Solicitar prestamo</button></center>
                         <div class="modal fade" id="solicitar_modals" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true" >
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">

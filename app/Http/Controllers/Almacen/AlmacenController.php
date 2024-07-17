@@ -192,5 +192,20 @@ class AlmacenController extends Controller
         
     }
 
-    
+    public function Historial_herramienta()
+    {
+        $consulta = DB::connection('mysql')->select('select t_solicitud_herramienta.*,users.name from  t_solicitud_herramienta
+        INNER JOIN users on users.id=t_solicitud_herramienta.Cliente
+        WHERE  users.id='.auth()->user()->id);
+        return view('Transmasivo.Almacen.Historial_herramienta',compact('consulta'));
+    }
+
+    public function buscar_Historial_herramienta(Request $request)
+    {
+        $id = $request->input('id_solicitud_herramienta');
+        return DB::connection('mysql')->select('select t_herramienta_de_solicitud.*, t_caja_herramienta.Refaccion, t_caja_herramienta.Foto 
+        from t_herramienta_de_solicitud
+        INNER JOIN t_caja_herramienta ON t_caja_herramienta.id=t_herramienta_de_solicitud.id_t_caja_herramienta
+        where  t_herramienta_de_solicitud.id_t_solicitud_herramienta='.$id);
+    }
 }
