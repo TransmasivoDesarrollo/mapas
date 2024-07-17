@@ -106,6 +106,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/geo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo')->name('geo');
     
+
+    Route::get('/Contrato_Dasimo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contrato_Dasimo');
+    Route::POST('/Contrato_Dasimo', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Registro_Contrato_Dasimo')->name('Registro_Contrato_Dasimo');
+
     Route::get('/geo2', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@geo2')->name('geo2');
     Route::POST('/geo2', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@insertar_cordenadas')->name('insertar_cordenadas');
 
@@ -183,6 +187,7 @@ Route::middleware('auth')->group(function () {
     
     
     
+
    
 
     //operaciones

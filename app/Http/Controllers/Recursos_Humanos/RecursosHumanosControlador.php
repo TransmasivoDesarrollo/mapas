@@ -763,7 +763,7 @@ class RecursosHumanosControlador extends Controller
 
         }
     }
-
+    
     public function Permisos()
     {  
         $nombre = auth()->user()->name; 
@@ -967,5 +967,64 @@ class RecursosHumanosControlador extends Controller
     {
         return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele'));
     }
+    
+    public function Contrato_Dasimo() {
+        return view('Transmasivo.rh.Contrato_Dasimo');
+        }
+        public function Registro_Contrato_Dasimo(Request $request)  {
+        //dd($request->all());
+        $nombre=$request->input('nombre');
+        $nacimiento=$request->input('nacimiento');
+        $Edad=$request->input('Edad');
+        $Puesto=$request->input('Puesto');
+        $Nacionalidad=$request->input('Nacionalidad');
+        $Sexo=$request->input('Sexo');
+        $Civil=$request->input('Civil');
+        $Calle=$request->input('Calle');
+        $Colonia=$request->input('Colonia');
+        $Alcaldia=$request->input('Alcaldia');
+        $Estado=$request->input('Estado');
+        $Postal=$request->input('Postal');
+        $rfc=$request->input('rfc');
+        $imss=$request->input('imss');
+        $curp=$request->input('curp');
+        $rfc=$request->input('rfc');
+        $correo=$request->input('correo');
+        $rfc=$request->input('rfc');
+        $Sueldo=$request->input('Sueldo');
+        $fecha_contrato=$request->input('fecha_contrato');
+        $fecha_contrato_hidden=$request->input('fecha_contrato_hidden');
+        $generar=$request->input('generar');
+        $data=["nombre"=>$nombre,"nacimiento"=>$nacimiento,"Edad"=>$Edad,"Puesto"=>$Puesto,
+        "Nacionalidad"=>$Nacionalidad,"Sexo"=>$Sexo,"Civil"=>$Civil,"Calle"=>$Calle,"Colonia"=>$Colonia,"Alcaldia"=>$Alcaldia,"Estado"=>$Estado,"Postal"=>$Postal,"rfc"=>$rfc,"Sueldo"=>$Sueldo,
+        "imss"=>$imss,"curp"=>$curp,"correo"=>$correo,"fecha_contrato"=>$fecha_contrato,"fecha_contrato_hidden"=>$fecha_contrato_hidden,"generar"=>$generar];
+
+        $html = View::make('Transmasivo.rh.contratoWordDasimo', $data)->render();
+            
+                    // Crear un nuevo documento de Word
+                    $phpWord = new PhpWord();
+                
+                    // Configurar el tamaño de la página a carta (8.5 x 11 pulgadas)
+                    $section = $phpWord->addSection([
+                        'pageSizeW' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(8.5),
+                        'pageSizeH' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(11)
+                    ]);
+                
+                    // Agregar el HTML al documento de Word
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
+                
+                    // Guardar el documento
+                    $filename = 'Contrato '.$nombre.'.docx';
+                    $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+                    $objWriter->save(public_path($filename));
+                
+                    // Descargar el documento
+                    return response()->download(public_path($filename))->deleteFileAfterSend(true);
+                    
+
+
+        }
+            
+
 
 }

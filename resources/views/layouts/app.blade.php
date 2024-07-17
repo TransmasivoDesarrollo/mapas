@@ -184,6 +184,11 @@
 											<span class="sub-item">Consultar biométrico  </span>
 										</a>
 									</li>
+										<a  href="{{url('/Contrato_Dasimo')}}">
+											<span class="sub-item">Contrato Dasimo </span>
+										</a>
+									</li>
+								
 								</ul>
 							</div>
 					</li>
@@ -439,6 +444,11 @@
 									<li>
 										<a  href="{{url('/consultar_biometrico')}}">
 											<span class="sub-item">Consultar biométrico  </span>
+										</a>
+									</li>
+
+										<a  href="{{url('/Contrato_Dasimo')}}">
+											<span class="sub-item">Contrato Dasimo </span>
 										</a>
 									</li>
 									
