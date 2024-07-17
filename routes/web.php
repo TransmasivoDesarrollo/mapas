@@ -378,7 +378,8 @@ Route::POST('/geo1', '\App\Http\Controllers\Operaciones\CordenadasController@ins
 Route::get('/geo15', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas15')->name('insertar_cordenadas15');
 Route::POST('/geo15', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas15_i')->name('insertar_cordenadas15_i');
 Route::get('/geo24', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas24')->name('insertar_cordenadas24');
-Route::POST('/geo24', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas24_i')->name('insertar_cordenadas24_i');
+Route::get('/geo24i', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas24_i')->name('insertar_cordenadas24_i');
+Route::POST('/geo24i', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas24_i')->name('insertar_cordenadas24_i');
 
 Route::get('/geo25', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas25')->name('insertar_cordenadas25');
 Route::POST('/geo25', '\App\Http\Controllers\Operaciones\CordenadasController@insertar_cordenadas25_i')->name('insertar_cordenadas25_i');
