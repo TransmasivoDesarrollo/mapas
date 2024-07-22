@@ -934,33 +934,119 @@ class RecursosHumanosControlador extends Controller
     public function consultar_biometrico()
     {
         $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
-        $consulta=DB::connection('mysql')->table('t_biometrico')->get();
+        
+            $consulta=DB::connection('mysql')->select("SELECT 
+                                                        id_elemento,
+                                                        DATE(fecha_hora) AS dia,
+                                                        MIN(fecha_hora) AS inicio,
+                                                        MAX(fecha_hora) AS fin,
+                                                        TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                                                        CASE 
+                                                            WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                                                            ELSE 'En tiempo'
+                                                        END AS estado,
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                    FROM 
+                                                        t_biometrico
+                                                    GROUP BY 
+                                                        id_elemento, dia;");
         $id_ele="-Selecciona-";
-        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele'));
+        $fecha_fin=null;
+        $fecha_inicio=null;
+        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
     }
     public function post_consultar_biometrico(Request $request)
     {
         $id_empleado=$request->input('id_empleado');
-        $fecha_inicio=$request->input('fecha_inicio');
-        $fecha_fin=$request->input('fecha_fin');
-
+        $fecha_inicio=$request->input('fecha_inicio').' 00:00:00';
+        $fecha_fin=$request->input('fecha_fin').' 23:59:59';
+        
         $id_ele=$id_empleado;
         $consulta;
         $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
-        if($fecha_inicio != "" && $fecha_fin != ""){
-            $consulta=DB::connection('mysql')->table('t_biometrico')->get();
-        }
-        else if($id_empleado!="-Selecciona-" && $fecha_inicio != "" && $fecha_fin != ""){
-            $consulta=DB::connection('mysql')->table('t_biometrico')->get();
-        }
-        else if($id_empleado=="-Selecciona-"){
-            $consulta=DB::connection('mysql')->table('t_biometrico')->get();
-        }
-        else{
-            $consulta=DB::connection('mysql')->table('t_biometrico')->where('id_elemento',$id_empleado)->get();
+        if($id_empleado!="-Selecciona-" && $request->input('fecha_inicio') != null && $request->input('fecha_fin') != null){
+
+            $consulta = DB::connection('mysql')->select(
+            "SELECT 
+                                                        id_elemento,
+                                                        DATE(fecha_hora) AS dia,
+                                                        MIN(fecha_hora) AS inicio,
+                                                        MAX(fecha_hora) AS fin,
+                                                        TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                                                        CASE 
+                                                            WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                                                            ELSE 'En tiempo'
+                                                        END AS estado,
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                    FROM 
+                                                        t_biometrico WHERE id_elemento=? and fecha_hora BETWEEN ? AND ?
+                                                    GROUP BY 
+                                                        id_elemento, dia;", [$id_empleado,$fecha_inicio, $fecha_fin]);
+
         }
         
-        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele'));
+        else if ($request->input('fecha_inicio') != null && $request->input('fecha_fin') != null) {
+            $consulta = DB::connection('mysql')->select("
+                SELECT 
+                                                        id_elemento,
+                                                        DATE(fecha_hora) AS dia,
+                                                        MIN(fecha_hora) AS inicio,
+                                                        MAX(fecha_hora) AS fin,
+                                                        TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                                                        CASE 
+                                                            WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                                                            ELSE 'En tiempo'
+                                                        END AS estado,
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                    FROM 
+                                                        t_biometrico WHERE fecha_hora BETWEEN ? AND ?
+                                                    GROUP BY 
+                                                        id_elemento, dia;
+            ", [$fecha_inicio, $fecha_fin]);
+    
+        }
+        else if($id_empleado!="-Selecciona-"){
+            $consulta = DB::connection('mysql')->select("
+            SELECT 
+                                                        id_elemento,
+                                                        DATE(fecha_hora) AS dia,
+                                                        MIN(fecha_hora) AS inicio,
+                                                        MAX(fecha_hora) AS fin,
+                                                        TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                                                        CASE 
+                                                            WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                                                            ELSE 'En tiempo'
+                                                        END AS estado,
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                    FROM 
+                                                        t_biometrico WHERE id_elemento=? 
+                                                    GROUP BY 
+                                                        id_elemento, dia;
+        ", [$id_empleado]);
+        
+        }
+        else{
+            $consulta = DB::connection('mysql')->select("
+           SELECT 
+                                                        id_elemento,
+                                                        DATE(fecha_hora) AS dia,
+                                                        MIN(fecha_hora) AS inicio,
+                                                        MAX(fecha_hora) AS fin,
+                                                        TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                                                        CASE 
+                                                            WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                                                            ELSE 'En tiempo'
+                                                        END AS estado,
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                    FROM 
+                                                        t_biometrico
+                                                    GROUP BY 
+                                                        id_elemento, dia;
+        ");
+        }
+        $fecha_inicio=$request->input('fecha_inicio');
+        $fecha_fin=$request->input('fecha_fin');
+        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
     }
     
     public function Solicitar_herramienta()

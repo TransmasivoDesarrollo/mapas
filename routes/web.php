@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/Bitacora_Liberacion_De_Unidades_electrico', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Bitacora_Liberacion_unidades_electrico')->name('Bitacora_Liberacion_unidades_electrico');
+    Route::POST('/Bitacora_Liberacion_De_Unidades_electrico', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Bitacora_Liberacion_unidades_electrico')->name('Bitacora_Liberacion_unidades_electrico');
     
     //Almacen
     
