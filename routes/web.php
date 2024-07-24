@@ -269,6 +269,9 @@ Route::middleware('auth')->group(function () {
     
     
     Route::POST('/post_Recepcion_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@post_Recepcion_herramienta')->name('post_Recepcion_herramienta');
+
+    
+    Route::get('/Consultar_biometricos_usuario', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Consultar_biometricos_usuario')->name('Consultar_biometricos_usuario');
     
     
 });

@@ -687,7 +687,12 @@
 							<p>Gestión de permisos</p>
 						</a>
 					</li>
-                    
+                    <li class="nav-item">
+							<a href="{{url('/Consultar_biometricos_usuario')}}">
+								<i class="la la-calendar-o"></i>
+								<p>Consultar biometrico</p>
+							</a>
+					</li>
                 </ul>
             </div>
         </div>

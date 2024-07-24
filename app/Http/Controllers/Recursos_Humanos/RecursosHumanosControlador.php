@@ -935,11 +935,7 @@ class RecursosHumanosControlador extends Controller
     {
         $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
         
-            $consulta=DB::connection('mysql')->select("SELECT 
-                                                        id_elemento,
-                                                        DATE(fecha_hora) AS dia,
-                                                        MIN(fecha_hora) AS inicio,
-                                                        MAX(fecha_hora) AS fin,
+        $consulta=DB::connection('mysql')->select("SELECT id_elemento,DATE(fecha_hora) AS dia, MIN(fecha_hora) AS inicio,MAX(fecha_hora) AS fin,
                                                         TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
                                                         CASE 
                                                             WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
@@ -951,6 +947,7 @@ class RecursosHumanosControlador extends Controller
                                                     GROUP BY 
                                                         id_elemento, dia;");
         $id_ele="-Selecciona-";
+        $consulta="";
         $fecha_fin=null;
         $fecha_inicio=null;
         return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
@@ -958,6 +955,7 @@ class RecursosHumanosControlador extends Controller
     public function post_consultar_biometrico(Request $request)
     {
         $id_empleado=$request->input('id_empleado');
+        $qna=$request->input('qna');
         $fecha_inicio=$request->input('fecha_inicio').' 00:00:00';
         $fecha_fin=$request->input('fecha_fin').' 23:59:59';
         
@@ -977,7 +975,7 @@ class RecursosHumanosControlador extends Controller
                                                             WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
                                                             ELSE 'En tiempo'
                                                         END AS estado,
-                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<br> ') AS todas_las_fechas
                                                     FROM 
                                                         t_biometrico WHERE id_elemento=? and fecha_hora BETWEEN ? AND ?
                                                     GROUP BY 
@@ -997,7 +995,7 @@ class RecursosHumanosControlador extends Controller
                                                             WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
                                                             ELSE 'En tiempo'
                                                         END AS estado,
-                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<br> ') AS todas_las_fechas
                                                     FROM 
                                                         t_biometrico WHERE fecha_hora BETWEEN ? AND ?
                                                     GROUP BY 
@@ -1017,7 +1015,7 @@ class RecursosHumanosControlador extends Controller
                                                             WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
                                                             ELSE 'En tiempo'
                                                         END AS estado,
-                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<br> ') AS todas_las_fechas
                                                     FROM 
                                                         t_biometrico WHERE id_elemento=? 
                                                     GROUP BY 
@@ -1037,12 +1035,38 @@ class RecursosHumanosControlador extends Controller
                                                             WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
                                                             ELSE 'En tiempo'
                                                         END AS estado,
-                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<br> ') AS todas_las_fechas
                                                     FROM 
                                                         t_biometrico
                                                     GROUP BY 
                                                         id_elemento, dia;
         ");
+        }
+       
+        Carbon::setLocale('es');
+
+       // Suponiendo que $consulta es tu colección de datos
+        foreach($consulta as $consul) {
+            // Reemplazar las etiquetas <br> por comas y luego eliminar espacios en blanco adicionales
+            $fechas_html = str_replace('<br>', ',', $consul->todas_las_fechas);
+
+            // Convertir la cadena de fechas a un array utilizando una coma como delimitador
+            $fechas = explode(',', $fechas_html);
+
+            // Eliminar espacios y duplicados
+            $fechas = array_map('trim', $fechas);
+            $fechas_unicas = array_unique($fechas);
+
+            // Filtrar las fechas vacías
+            $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+
+            // Formatear las fechas
+            $fechas_formateadas = array_map(function($fecha) {
+                return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+            }, $fechas_unicas);
+
+            // Convertir el array de nuevo a una cadena
+            $consul->todas_las_fechas = implode('<br>', $fechas_formateadas);
         }
         $fecha_inicio=$request->input('fecha_inicio');
         $fecha_fin=$request->input('fecha_fin');
@@ -1117,6 +1141,46 @@ class RecursosHumanosControlador extends Controller
         return response()->download(public_path($filename))->deleteFileAfterSend(true);
     }
             
+    public function Consultar_biometricos_usuario()
+    {
+        $id = auth()->user()->id; 
+        $consulta = DB::connection('mysql')->select("SELECT id_elemento, DATE(fecha_hora) AS dia, MIN(fecha_hora) AS inicio,  MAX(fecha_hora) AS fin,
+                                                    TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                                                    CASE 
+                                                        WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                                                        ELSE 'En tiempo'
+                                                    END AS estado,
+                                                    GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<br> ') AS todas_las_fechas
+                                                FROM t_biometrico WHERE id_elemento=?  GROUP BY  id_elemento, dia;", [$id]);
+       Carbon::setLocale('es');
+
+       // Suponiendo que $consulta es tu colección de datos
+        foreach($consulta as $consul) {
+            // Reemplazar las etiquetas <br> por comas y luego eliminar espacios en blanco adicionales
+            $fechas_html = str_replace('<br>', ',', $consul->todas_las_fechas);
+
+            // Convertir la cadena de fechas a un array utilizando una coma como delimitador
+            $fechas = explode(',', $fechas_html);
+
+            // Eliminar espacios y duplicados
+            $fechas = array_map('trim', $fechas);
+            $fechas_unicas = array_unique($fechas);
+
+            // Filtrar las fechas vacías
+            $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+
+            // Formatear las fechas
+            $fechas_formateadas = array_map(function($fecha) {
+                return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+            }, $fechas_unicas);
+
+            // Convertir el array de nuevo a una cadena
+            $consul->todas_las_fechas = implode('<br>', $fechas_formateadas);
+        }
+
+
+        return view('Transmasivo.rh.Consultar_biometricos_usuario',compact('consulta'));
+    }
 
 
 }
