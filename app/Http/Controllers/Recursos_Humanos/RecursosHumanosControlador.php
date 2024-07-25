@@ -967,7 +967,7 @@ class RecursosHumanosControlador extends Controller
                     WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
                         ELSE 'En tiempo'
                     END AS estado,
-                       GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<br> ') AS todas_las_fechas
+                       GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
                     FROM 
             t_biometrico WHERE ";
 
@@ -991,8 +991,8 @@ class RecursosHumanosControlador extends Controller
 
        // Suponiendo que $consulta es tu colección de datos
         foreach($consulta as $consul) {
-            // Reemplazar las etiquetas <br> por comas y luego eliminar espacios en blanco adicionales
-            $fechas_html = str_replace('<br>', ',', $consul->todas_las_fechas);
+            // Reemplazar las etiquetas <hr> por comas y luego eliminar espacios en blanco adicionales
+            $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
 
             // Convertir la cadena de fechas a un array utilizando una coma como delimitador
             $fechas = explode(',', $fechas_html);
@@ -1010,7 +1010,7 @@ class RecursosHumanosControlador extends Controller
             }, $fechas_unicas);
 
             // Convertir el array de nuevo a una cadena
-            $consul->todas_las_fechas = implode('<br>', $fechas_formateadas);
+            $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
         }
         $fecha_inicio=$request->input('fecha_inicio');
         $fecha_fin=$request->input('fecha_fin');
@@ -1105,7 +1105,7 @@ class RecursosHumanosControlador extends Controller
                     WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
                         ELSE 'En tiempo'
                     END AS estado,
-                       GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<br> ') AS todas_las_fechas
+                       GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
                     FROM 
             t_biometrico WHERE ";
 
@@ -1126,7 +1126,7 @@ class RecursosHumanosControlador extends Controller
        // Suponiendo que $consulta es tu colección de datos
         foreach($consulta as $consul) {
             // Reemplazar las etiquetas <br> por comas y luego eliminar espacios en blanco adicionales
-            $fechas_html = str_replace('<br>', ',', $consul->todas_las_fechas);
+            $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
 
             // Convertir la cadena de fechas a un array utilizando una coma como delimitador
             $fechas = explode(',', $fechas_html);
@@ -1144,7 +1144,7 @@ class RecursosHumanosControlador extends Controller
             }, $fechas_unicas);
 
             // Convertir el array de nuevo a una cadena
-            $consul->todas_las_fechas = implode('<br>', $fechas_formateadas);
+            $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
         }
         $fecha_inicio=$request->input('fecha_inicio');
         $fecha_fin=$request->input('fecha_fin');

@@ -66,7 +66,7 @@
                         @endphp
 
                         <div class="col-md-5">
-                            <label>Qna <span class="required-label"></span></label>
+                            <label><br>Qna <span class="required-label"></span></label>
                             <select style="border:1px black solid;" class="form-control" id="qna" name="qna">
                                 
                             <option value="-Selecciona-">-Selecciona-</option>
@@ -85,6 +85,14 @@
                                 <input type="submit" value="Consultar" class="btn btn-primary" id="Consultar" name="Consultar">
                             </center>
                         </div>
+                        <div class="col-md-12 text-right">
+                            <br>
+                            <button class="btn btn-danger" id="Descargar" name="Descargar">
+                                <i class="la la-file-pdf-o la-2x">
+                                Descargar biometrico</i>
+                            </button>
+                        </div>
+
                     </div>
                 </form>
                 <div class="form-group row " >
@@ -94,14 +102,13 @@
                         <table class="table table-striped table-bordered" id="list_user2">
                             <thead>
                                 <tr>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 5%;"><center>Empleado</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Día</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Entrada oficina</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Salida oficina</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Empleado</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 20%;"><center>Día</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Entrada oficina</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Salida oficina</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Tiempo de trabajo</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Retardo</center></th>
-                                    
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Todas las fechas del día</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 20%;"><center>Todas las fechas del día</center></th>
                                 </tr>
                             </thead>
                             <tbody id="llenaTabla">

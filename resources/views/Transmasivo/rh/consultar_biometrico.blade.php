@@ -25,9 +25,8 @@
                 <form method="post" id="contratoForm" action="{{url('/consultar_biometrico')}}">
                     @csrf
                     <div class="form-group row " >
-                        
                         <div class="col-md-2">
-                            <label>ID empleado <span class="required-label"></span></label>
+                            <label><br>ID empleado <span class="required-label"></span></label>
                             <select  id="id_empleado" name="id_empleado" class="form-control" >
                                     <option value="-Selecciona-">-Selecciona-</option>
                                 @foreach($elementos as $elemento)
@@ -40,11 +39,11 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <label>Fecha inicio <span class="required-label"></span></label>
+                            <label><br>Fecha inicio <span class="required-label"></span></label>
                             <input type="date" style="border: 1px solid black;" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{$fecha_inicio}}" max="<?php echo date('Y-m-d'); ?>">
                         </div>
                         <div class="col-md-2">
-                            <label>Fecha fin <span class="required-label"></span></label>
+                            <label><br>Fecha fin <span class="required-label"></span></label>
                             <input type="date" style="border:1px black solid;" class="form-control" id="fecha_fin" name="fecha_fin" value="{{$fecha_fin}}" max="<?php echo date('Y-m-d'); ?>">
                         </div>
                         @php
@@ -85,7 +84,7 @@
                         @endphp
 
                         <div class="col-md-5">
-                            <label>Qna <span class="required-label"></span></label>
+                            <label><br>Qna <span class="required-label"></span></label>
                             <select style="border:1px black solid;" class="form-control" id="qna" name="qna">
                                 
                             <option value="-Selecciona-">-Selecciona-</option>
@@ -118,14 +117,13 @@
                         <table class="table table-striped table-bordered" id="list_user2">
                             <thead>
                                 <tr>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 5%;"><center>Empleado</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Día</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Entrada oficina</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Salida oficina</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Empleado</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 20%;"><center>Día</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Entrada oficina</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Salida oficina</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Tiempo de trabajo</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Retardo</center></th>
-                                    
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Todas las fechas del día</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 20%;"><center>Todas las fechas del día</center></th>
                                 </tr>
                             </thead>
                             <tbody id="llenaTabla">

@@ -699,9 +699,9 @@
     </div>
     <!-- End Sidebar -->
     <div class="main-panel"><!-- main panel -->
-        <div class="content"><!-- content -->
+        <div class="content" style="background-color:#ddd;"><!-- content -->
 
-            <div class="container-fluid"><!--container-fluid -->
+            <div class="container-fluid" ><!--container-fluid -->
 
                 <div id="app"><!-- id app -->
                         
