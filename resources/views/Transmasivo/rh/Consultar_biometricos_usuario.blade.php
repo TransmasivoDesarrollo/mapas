@@ -73,7 +73,7 @@
                                 
                             </option>
                                 @foreach ($quincenas as $quincena)
-                                    <option value="{{ $quincena['value'] }}" @if($quincena['value'] == $selectedQna) style="background-color:green; color:#fff;" @endif>
+                                    <option value="{{ $quincena['value'] }}" @if($quincena['value'] == $selectedQna) style="background-color:green; color:#fff;" @endif @if($quincena['value'] == $where) selected @endif >
                                         {{ $quincena['label'] }}
                                     </option>
                                 @endforeach

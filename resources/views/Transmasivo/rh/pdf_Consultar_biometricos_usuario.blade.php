@@ -68,13 +68,13 @@
             @else
                 <tr>
             @endif
-                    <td style="font-size: 11px;">{{$consul->id_elemento}}</td>
-                    <td style="font-size: 11px;">{{$consul->dia[0]}}</td>
-                    <td style="font-size: 11px;">{{$consul->inicio[0]}} hrs.</td>
-                    <td style="font-size: 11px;">{{$consul->fin[0]}} hrs.</td>
-                    <td style="font-size: 11px;">{{$consul->tiempo_trabajado}} hrs.</td>
-                    <td style="font-size: 11px;">{{$consul->estado}}</td>
-                    <td style="font-size: 11px;">{!! $consul->todas_las_fechas !!}</td>
+                    <td style="font-size: 10px;">{{$consul->id_elemento}}</td>
+                    <td style="font-size: 10px;">{{$consul->dia[0]}}</td>
+                    <td style="font-size: 10px;">{{$consul->inicio[0]}} hrs.</td>
+                    <td style="font-size: 10px;">{{$consul->fin[0]}} hrs.</td>
+                    <td style="font-size: 10px;">{{$consul->tiempo_trabajado}} hrs.</td>
+                    <td style="font-size: 10px;">{{$consul->estado}}</td>
+                    <td style="font-size: 10px;">{!! $consul->todas_las_fechas !!}</td>
                 </tr>
             @php $i++; @endphp
         @endforeach
