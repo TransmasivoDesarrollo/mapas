@@ -59,7 +59,7 @@
                                 // Primera quincena del mes
                                 $startFirstHalf = \Carbon\Carbon::create($currentYear, $month, 1)->format('Y-m-d');
                                 $endFirstHalf = \Carbon\Carbon::create($currentYear, $month, 15)->format('Y-m-d');
-                                $quincenaValueFirstHalf = "$startFirstHalf & $endFirstHalf";
+                                $quincenaValueFirstHalf = "'$startFirstHalf 00:00:00' AND '$endFirstHalf 23:59:59'";
                                 $quincenas[] = [
                                     'label' => "Qna ".$j." - 1 de " . \Carbon\Carbon::create($currentYear, $month, 1)->translatedFormat('F') . " - 15 de " . \Carbon\Carbon::create($currentYear, $month, 1)->translatedFormat('F') . " $currentYear",
                                     'value' => $quincenaValueFirstHalf
@@ -72,7 +72,7 @@
                                 // Segunda quincena del mes
                                 $startSecondHalf = \Carbon\Carbon::create($currentYear, $month, 16)->format('Y-m-d');
                                 $endSecondHalf = \Carbon\Carbon::create($currentYear, $month, 1)->endOfMonth()->format('Y-m-d');
-                                $quincenaValueSecondHalf = "$startSecondHalf & $endSecondHalf";
+                                $quincenaValueSecondHalf = "'$startSecondHalf 00:00:00' AND '$endSecondHalf 23:59:59'";
                                 $quincenas[] = [
                                     'label' => "Qna ".$j." - 16 de " . \Carbon\Carbon::create($currentYear, $month, 1)->translatedFormat('F') . " - " . \Carbon\Carbon::create($currentYear, $month, 1)->endOfMonth()->day . " de " . \Carbon\Carbon::create($currentYear, $month, 1)->translatedFormat('F') . " $currentYear",
                                     'value' => $quincenaValueSecondHalf
@@ -92,7 +92,7 @@
                                 
                             </option>
                                 @foreach ($quincenas as $quincena)
-                                    <option value="{{ $quincena['value'] }}" {{ $quincena['value'] == $selectedQna ? 'selected' : '' }}>
+                                    <option value="{{ $quincena['value'] }}" @if($quincena['value'] == $selectedQna) style="background-color:green; color:#fff;" @endif>
                                         {{ $quincena['label'] }}
                                     </option>
                                 @endforeach

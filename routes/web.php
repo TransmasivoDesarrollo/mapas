@@ -272,6 +272,7 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/Consultar_biometricos_usuario', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Consultar_biometricos_usuario')->name('Consultar_biometricos_usuario');
+    Route::POST('/Consultar_biometricos_usuario', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postConsultar_biometricos_usuario')->name('postConsultar_biometricos_usuario');
     
     
 });
