@@ -87,9 +87,8 @@
                         </div>
                         <div class="col-md-12 text-right">
                             <br>
-                            <button class="btn btn-danger" id="Descargar" name="Descargar">
-                                <i class="la la-file-pdf-o la-2x">
-                                Descargar biometrico</i>
+                            <button class="btn btn-danger" value="{{$where}}" id="Descargar" name="Descargar">
+                                <i class="la la-file-pdf-o la-2x">Descargar biometrico</i>
                             </button>
                         </div>
 

@@ -1090,65 +1090,128 @@ class RecursosHumanosControlador extends Controller
         $id = auth()->user()->id; 
         
         $consulta="";
+        $where="";
         
-        return view('Transmasivo.rh.Consultar_biometricos_usuario',compact('consulta'));
+        return view('Transmasivo.rh.Consultar_biometricos_usuario',compact('consulta','where'));
         
     }
     public function postConsultar_biometricos_usuario(Request $request)
     {
-        $id = auth()->user()->id; 
-        $qna=$request->input('qna');
-        
-        $consulta;
-        $consulta_sql="SELECT id_elemento,  DATE(fecha_hora) AS dia,   MIN(fecha_hora) AS inicio,  MAX(fecha_hora) AS fin, TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
-                CASE 
-                    WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
-                        ELSE 'En tiempo'
-                    END AS estado,
-                       GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
-                    FROM 
-            t_biometrico WHERE ";
+        if ($request->has('Descargar'))
+        {
+            $id = auth()->user()->id; 
+            $qna=$request->input('Descargar');
+            
+            $consulta;
+            $consulta_sql="SELECT id_elemento,  DATE(fecha_hora) AS dia,   MIN(fecha_hora) AS inicio,  MAX(fecha_hora) AS fin, TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                    CASE 
+                        WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                            ELSE 'En tiempo'
+                        END AS estado,
+                           GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
+                        FROM 
+                t_biometrico WHERE ";
+                $consulta_sql.=" id_elemento=".$id." and ";
+                $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
+            $consulta_sql.=" id_elemento > 0 ";
+            $consulta_sql.="GROUP BY id_elemento, dia;";
+            Carbon::setLocale('es');
+            $consulta = DB::connection('mysql')->select($consulta_sql);
+    
+            foreach($consulta as $consul) {
+                $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    $fecha_form = Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+                    return $fecha_form.' hrs.';
+                }, $fechas_unicas);
+                
+               
+                $consul->todas_las_fechas = implode('<br>', $fechas_formateadas);
+            }
+            foreach($consulta as $consul) {
+                $fechas_html = $consul->inicio;
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+                }, $fechas_unicas);
+                $consul->inicio =  $fechas_formateadas;
+            }
+            foreach($consulta as $consul) {
+                $fechas_html =  $consul->fin;
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+                }, $fechas_unicas);
+                $consul->fin = $fechas_formateadas;
+            }
+            foreach($consulta as $consul) {
+                $fechas_html =  $consul->dia;
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y ');
+                }, $fechas_unicas);
+                $consul->dia = $fechas_formateadas;
+            }
+            
+            //DD($consulta);
+            $html = view('Transmasivo.rh.pdf_Consultar_biometricos_usuario', compact('consulta'))->render();
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('Carta'); 
+            $dompdf->render();
+            return $dompdf->stream($id.'_'.$request->input('Descargar').'.pdf');
 
-
-            $consulta_sql.=" id_elemento=".$id." and ";
-        
-        if($qna!="-Selecciona-" ){
-            $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
+        }else{
+            $id = auth()->user()->id; 
+            $qna=$request->input('qna');
+            
+            $consulta;
+            $consulta_sql="SELECT id_elemento,  DATE(fecha_hora) AS dia,   MIN(fecha_hora) AS inicio,  MAX(fecha_hora) AS fin, TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                    CASE 
+                        WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
+                            ELSE 'En tiempo'
+                        END AS estado,
+                           GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
+                        FROM 
+                t_biometrico WHERE ";
+                $consulta_sql.=" id_elemento=".$id." and ";
+            if($qna!="-Selecciona-" ){
+                $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
+            }
+            $consulta_sql.=" id_elemento > 0 ";
+            $consulta_sql.="GROUP BY id_elemento, dia;";
+            Carbon::setLocale('es');
+            $consulta = DB::connection('mysql')->select($consulta_sql);
+    
+            foreach($consulta as $consul) {
+                $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+                }, $fechas_unicas);
+                $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
+            }
+            $where=$qna;
+            
+            return view('Transmasivo.rh.Consultar_biometricos_usuario',compact('consulta','where'));
         }
-        $consulta_sql.=" id_elemento > 0 ";
-
-        $consulta_sql.="GROUP BY id_elemento, dia;";
-
-
-        Carbon::setLocale('es');
-        $consulta = DB::connection('mysql')->select($consulta_sql);
-
-       // Suponiendo que $consulta es tu colección de datos
-        foreach($consulta as $consul) {
-            // Reemplazar las etiquetas <br> por comas y luego eliminar espacios en blanco adicionales
-            $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
-
-            // Convertir la cadena de fechas a un array utilizando una coma como delimitador
-            $fechas = explode(',', $fechas_html);
-
-            // Eliminar espacios y duplicados
-            $fechas = array_map('trim', $fechas);
-            $fechas_unicas = array_unique($fechas);
-
-            // Filtrar las fechas vacías
-            $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
-
-            // Formatear las fechas
-            $fechas_formateadas = array_map(function($fecha) {
-                return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
-            }, $fechas_unicas);
-
-            // Convertir el array de nuevo a una cadena
-            $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
-        }
-        $fecha_inicio=$request->input('fecha_inicio');
-        $fecha_fin=$request->input('fecha_fin');
-        return view('Transmasivo.rh.Consultar_biometricos_usuario',compact('consulta'));
+       
         
     }
 
