@@ -991,27 +991,29 @@ class RecursosHumanosControlador extends Controller
 
        // Suponiendo que $consulta es tu colección de datos
         foreach($consulta as $consul) {
-            // Reemplazar las etiquetas <hr> por comas y luego eliminar espacios en blanco adicionales
             $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
-
-            // Convertir la cadena de fechas a un array utilizando una coma como delimitador
             $fechas = explode(',', $fechas_html);
-
-            // Eliminar espacios y duplicados
             $fechas = array_map('trim', $fechas);
             $fechas_unicas = array_unique($fechas);
-
-            // Filtrar las fechas vacías
             $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
-
-            // Formatear las fechas
             $fechas_formateadas = array_map(function($fecha) {
                 return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
             }, $fechas_unicas);
-
-            // Convertir el array de nuevo a una cadena
             $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
         }
+        foreach($consulta as $consul) {
+            $fechas_html =  $consul->dia;
+            $fechas = explode(',', $fechas_html);
+            $fechas = array_map('trim', $fechas);
+            $fechas_unicas = array_unique($fechas);
+            $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+            $fechas_formateadas = array_map(function($fecha) {
+                return Carbon::parse($fecha)->translatedFormat(' D d  M  Y ');
+            }, $fechas_unicas);
+            $consul->dia = $fechas_formateadas;
+        }
+        
+        //dd($consulta[0]);
         $fecha_inicio=$request->input('fecha_inicio');
         $fecha_fin=$request->input('fecha_fin');
         return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
@@ -1112,7 +1114,9 @@ class RecursosHumanosControlador extends Controller
                         FROM 
                 t_biometrico WHERE ";
                 $consulta_sql.=" id_elemento=".$id." and ";
-                $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
+                if($qna!="-Selecciona-" ){
+                    $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
+                }
             $consulta_sql.=" id_elemento > 0 ";
             $consulta_sql.="GROUP BY id_elemento, dia;";
             Carbon::setLocale('es');
@@ -1206,6 +1210,17 @@ class RecursosHumanosControlador extends Controller
                     return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
                 }, $fechas_unicas);
                 $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
+            }
+            foreach($consulta as $consul) {
+                $fechas_html =  $consul->dia;
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y ');
+                }, $fechas_unicas);
+                $consul->dia = $fechas_formateadas;
             }
             $where=$qna;
             

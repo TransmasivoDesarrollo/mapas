@@ -32,6 +32,37 @@
 
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link rel="stylesheet" href="{{url('/assets')}}/css/demo.css">
+<style>
+	
+
+	
+
+	.overlay {
+		display: none; /* Oculto por defecto */
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5); /* Fondo traslúcido */
+		z-index: 1000; /* Asegúrate de que esté sobre otros elementos */
+		justify-content: center;
+		align-items: center;
+	}
+
+	.gif-container {
+		
+		padding: 20px;
+		border-radius: 10px;
+		text-align: center;
+	}
+
+	.gif-container img {
+		max-width: 100%;
+		height: auto;
+	}
+
+</style>
 
 </head>
 <body>
@@ -704,7 +735,11 @@
             <div class="container-fluid" ><!--container-fluid -->
 
                 <div id="app"><!-- id app -->
-                        
+					<div id="overlay" class="overlay">
+						<div class="gif-container">
+							<img src="{{url('/carga.gif')}}" alt="Cargando...">
+						</div>
+					</div>
                 {{ $slot }}
                        
 
@@ -796,7 +831,9 @@
 
 
 <script>
-
+document.getElementById('Consultar_gif').addEventListener('click', function() {
+        document.getElementById('overlay').style.display = 'flex';
+    });
     $('#BotonProfile').click(function(e){
       $(".dropdown-menu").dropdown('toggle')
     });

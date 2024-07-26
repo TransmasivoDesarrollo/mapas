@@ -105,7 +105,7 @@
                         <div class="col-md-12">
                             <center>
                                 <br>
-                                <input type="submit" value="Consultar" class="btn btn-primary" id="Consultar" name="Consultar">
+                                <input type="submit" value="Consultar" class="btn btn-primary" id="Consultar_gif" name="Consultar">
                             </center>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                                             <tr style="background-color: #fff;">
                                         @endif
                                                 <td>{{$consul->id_elemento}}</td>
-                                                <td data-fecha-inicio="{{$consul->dia}}">{{$consul->dia}}</td>
+                                                <td><b>{{$consul->dia[0]}}</b></td>
                                                 <td>{{$consul->inicio}}</td>
                                                 <td>{{$consul->fin}}</td>
                                                 <td>{{$consul->tiempo_trabajado}}</td>

@@ -22,6 +22,12 @@
 				{{ session('mensaje') }}.
 			</div>
 			@endif
+            <div id="overlay" class="overlay">
+                <div class="gif-container">
+                    <img src="{{url('/carga.gif')}}" alt="Cargando...">
+                </div>
+            </div>
+
                 <form method="post" id="contratoForm" action="{{url('/Consultar_biometricos_usuario')}}">
                     @csrf
                     <div class="form-group row " >
@@ -82,7 +88,7 @@
                         <div class="col-md-12">
                             <center>
                                 <br>
-                                <input type="submit" value="Consultar" class="btn btn-primary" id="Consultar" name="Consultar">
+                                <input type="submit" value="Consultar" class="btn btn-primary" id="Consultar_gif" name="Consultar">
                             </center>
                         </div>
                         <div class="col-md-12 text-right">
@@ -121,7 +127,7 @@
                                                 <tr style="background-color: #fff;">
                                             @endif
                                                     <td>{{$consul->id_elemento}}</td>
-                                                    <td data-fecha-inicio="{{$consul->dia}}">{{$consul->dia}}</td>
+                                                    <td ><b>{{$consul->dia[0]}}</b></td>
                                                     <td>{{$consul->inicio}}</td>
                                                     <td>{{$consul->fin}}</td>
                                                     <td>{{$consul->tiempo_trabajado}}</td>
@@ -149,39 +155,38 @@
 
 <script type="text/javascript">
 	
+    
     $(document).ready(function() {
         $('#id_empleados').select2();
         moment.locale('es');
-        $('td[data-fecha-inicio]').each(function() {
-            var fechaRegistro = $(this).data('fecha-inicio');
-            var fechaFormateada = moment(fechaRegistro).format('dddd, D [de] MMMM [de] YYYY');
-            fechaFormateada = fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
-            $(this).html( '<b>'+fechaFormateada+'</b>');
-        });
-        $('#list_user2').DataTable({
-            scrollX: false,
-            scrollCollapse: true,
-            filter: true,
-            lengthMenu: [[8,16 , 24, 32, 40, -1], [8, 16, 24, 32, 40, "Todos"]],
-            iDisplayLength: 8,
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ datos",
-                "zeroRecords": "No existe el dato introducido",
-                "info": "Página _PAGE_ de _PAGES_ ",
-                "infoEmpty": "Sin datos disponibles",
-                "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-                "search": "Buscar",
-                "processing": "Buscando...",
-                "loadingRecords": "Cargando..."
-            }
-        });
-    }); 
+       
+
+$('#list_user2').DataTable({
+    scrollX: false,
+    scrollCollapse: true,
+    filter: true,
+    lengthMenu: [[8,16, 24, 32, 40, -1], [8, 16, 24, 32, 40, "Todos"]],
+    iDisplayLength: 8,
+    "language": {
+        "lengthMenu": "Mostrar _MENU_ datos",
+        "zeroRecords": "No existe el dato introducido",
+        "info": "Página _PAGE_ de _PAGES_ ",
+        "infoEmpty": "Sin datos disponibles",
+        "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        },
+        "search": "Buscar",
+        "processing": "Buscando...",
+        "loadingRecords": "Cargando..."
+    },
+    // Manejar el evento de finalización de la carga
+    
+});
+});
 
 </script>
 @endsection
