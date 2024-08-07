@@ -7,7 +7,7 @@
 	</style>
 	<div class="card">
 		<div class="card-header">
-			<div class="card-title"> Inventario para caja de herramientas </div>
+			<div class="card-title"> Recepción de suministros </div>
 		</div>
 		<div class="card-body">
 			@if (session('mensaje'))
@@ -15,41 +15,44 @@
 				{{ session('mensaje') }}.
 			</div>
 			@endif
-			    <div class=" row form-group " >
-                   
-                        
-                   
+			
+				<div class="form-group row " >
+					
+					<div class="col-md-12">
+						
+					</div>
                     <div class="col-md-12">
-                        <table class=" table " id="t_inventario">
-                            <thead>
-                                <tr>
-                                    <th class="bg-primary sorting" style="color:#fff;">ID </th>
-                                    <th class="bg-primary sorting" style="color:#fff;">Nombre</th>
-                                    <th class="bg-primary sorting" style="color:#fff;">Fecha</th>
-                                    <th class="bg-primary sorting" style="color:#fff;">Estatus</th>
-                                    <th class="bg-primary sorting" style="color:#fff;">Ver herramientas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($consulta as $consul)
-                                    <tr>
-                                        <td>{{$consul->id_solicitud_herramienta}}</td>
-                                        <td>{{$consul->name}}</td>
-                                        <td>{{$consul->Economico}}</td>
-                                        <td>{{$consul->Fecha}}</td>
-                                        <td>@if($consul->estatus=="Devuelto")
+                            <div class="table-responsive">
+                                <table class="table" style="width:100%;" id="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="bg-primary sorting" style="color:#fff;">Folio</th>
+                                            <th class="bg-primary sorting" style="color:#fff;">Fecha</th>
+                                            <th class="bg-primary sorting" style="color:#fff;">Cliente</th>
+                                            <th class="bg-primary sorting" style="color:#fff;">Estatus</th>
+                                            <th class="bg-primary sorting" style="color:#fff;">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla_llenar">
+                                        @foreach($consulta as $consul)
+                                        <tr>
+                                            <td>{{$consul->id}}</td>
+                                            <td>{{$consul->fecha}}</td>
+                                            <td>{{$consul->name}}</td>
+                                            <td>
+                                                @if($consul->estatus=="Devuelto")
                                                 <b style="color:green;">{{$consul->estatus}}</b>
-                                            @elseif($consul->estatus=="Prestado")
-                                                <b style="color:orange;">{{$consul->estatus}}</b>
-                                            @endif
-                                        </td>
-                                        <td><input type="submit" value="Ver herramienta"  onclick="abrirModal('{{$consul->id_solicitud_herramienta}}')" class="btn btn-primary" id="ver_herramienta" name="ver_herramienta"></td>
-                                    </tr>
-                                @endforeach          
-                                    
-                            </tbody>
-                        </table>
-			        </div>
+                                                @elseif($consul->estatus=="Prestado")
+                                                    <b style="color:orange;">{{$consul->estatus}}</b>
+                                                @endif
+                                            </td>
+                                            <td><button class="btn btn-primary" onclick="abrirModal('{{$consul->id}}')">Ver suministro</button></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
                     <div class="modal fade bd-example-modal-lg" id="modal_herramienta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -72,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-			    </div>
+				</div>
 		</div>
 	</div>
 
@@ -82,13 +85,11 @@
 @section('jscustom')
 <script type="text/javascript">
 	
-	$('#n_economico').select2();
-	$('#nom_supervisor').select2();
-	$('#n_mecanico').select2();
-    $('#t_inventario').DataTable({
+	$('#table').DataTable({
         scrollX: false,
-        scrollCollapse: true,
-        filter: true,
+        scrollCollapse: false,
+        filter: false,
+        order: [[0, 'desc']], // Ordenar por la primera columna de mayor a menor
         lengthMenu: [[12, 24, 36, 48, 60, -1], [12, 24, 36, 48, 60, "Todos"]],
         iDisplayLength: 12,
         "language": {
@@ -114,7 +115,7 @@
         
         $('#llenarFormulario').html('');
         $.ajax({
-            url : '{{url("/buscar_Historial_herramienta")}}',
+            url : '{{url("/buscar_Historial_solicitud_insumo")}}',
             data : { 'id_solicitud_herramienta' : id_solicitud_herramienta },
             type : 'GET',
             success : function(json) {
@@ -124,21 +125,30 @@
                     html += '<div class="col-md-6">';
                     html += '<div class="card">';
                     html += '<div class="card-header" style="border: 1px black solid">';
-                    html += '<center>Herramienta: '+json[i].Refaccion+'</center>';
+                    html += '<center>Herramienta: '+json[i].nombre+'</center>';
                     html += '</div>';
                     html += '<div class="card-body" style="border: 1px black solid">';
-                    html += '<center><img  width="150px;" src="'+'{{url("/images/Caja de herramienta/")}}'+'/'+json[i].Foto+'"></center>';
+                    if(json[i].foto==null || json[i].foto==""){
+                        var imagen = "{{url('/images/')}}/sin_imagen.jpg" ;
+                        html += "<center><img width='100px' src='" + imagen + "'></center>";
+                            
+                    }else{
+                        var imagen = "{{url('/images/Inventario_dasimo/')}}/" + foto;
+                        html += "<center><img width='150px' src='" + imagen + "'></center>";
+                    }
                     html += '</div>';
                     html += '<div class="card-footer" style="border: 1px black solid">';
                     html += '<center>Cantidad: '+json[i].cantidad+'<br>';
                     if(json[i].estatus == "Devuelto")
                     {
-                        html += '<b style="color:green;">'+json[i].estatus+'</b></center>';
+                        html += '<b style="color:green;">'+json[i].estatus+'</b><br>';
                     }else if(json[i].estatus == "Prestado")
                     {
-                        html += '<b style="color:orange;">'+json[i].estatus+'</b></center>';
+                        html += '<b style="color:orange;">'+json[i].estatus+'</b><br>';
+                    }else{
+                        html += '<b style="color:green;">Entregado con '+json[i].estatus+'</b><br>';
                     }
-                    
+                    html += '</center>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
@@ -153,6 +163,30 @@
             }
         });
     }
+    function validar_cambio(id_solicitud_herramienta, t_herramienta_solicitud) {
+        $.ajax({
+            url: '{{url("/validar_cambio_solicitud_suministro")}}',
+            data: {
+                't_herramienta_solicitud': t_herramienta_solicitud,
+            },
+            type: 'GET',
+            success: function(json) {
+                if(json=="termino"){
+                    location.reload();
+                }else{
+                    abrirModal(id_solicitud_herramienta);
+                }
+                
+            },
+            error: function(xhr, status) {
+                alert('Disculpe, existió un problema');
+            },
+            complete: function(xhr, status) {
+                // Código a ejecutar después de la llamada AJAX
+            }
+        });
+    }
+
 	
 </script>
 @endsection

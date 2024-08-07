@@ -57,6 +57,10 @@
                                 <option value="Operaciones">Operaciones</option>
                                 <option value="Inventario">Inventario</option>
                                 <option value="Almacen">Almacen</option>
+                                <option value="Dasimo-empleado">Dasimo-empleado</option>
+                                <option value="Dasimo-supervisor">Dasimo-supervisor</option>
+                                <option value="Dasimo-Jefe">Dasimo-Jefe</option>
+								
 								
                             </select>
 						</div>

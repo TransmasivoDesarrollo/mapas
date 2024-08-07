@@ -367,7 +367,7 @@
 										</a>
 									</li>
 									<li>
-										<a  href="{{url('/geo')}}">
+										<a  href="{{url('/geo3')}}">
 											<span class="sub-item">Geolocalización</span>
 										</a>
 									</li>
@@ -420,6 +420,95 @@
 									<li>
 										<a  href="{{url('/Historial_herramienta')}}">
 											<span class="sub-item">Historial de solicitud herramienta</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
+                    @endif
+					@if(auth()->user()->tipo_usuario=='Dasimo-Jefe')
+                    <li class="nav-item">
+							<a data-toggle="collapse" href="#Dasimo">
+								<i class="la flaticon-add-user"></i>
+								<p>Dasimo</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Dasimo">
+								<ul class="nav nav-collapse">
+                                    <li>
+										<a  href="{{url('/Registro_de_inventario')}}">
+											<span class="sub-item">Registro de inventario</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/DasimoConsultar_caja_herramienta')}}">
+											<span class="sub-item">Consulta caja de herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Solicitar_suministro')}}">
+											<span class="sub-item">Solicitar suministro</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Recepcion_suministro')}}">
+											<span class="sub-item">Recepcion de suministro</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Historial_solicitud_insumo')}}">
+											<span class="sub-item">Historial solicitud de insumos</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
+                    @endif
+					@if(auth()->user()->tipo_usuario=='Dasimo-supervisor')
+                    <li class="nav-item">
+							<a data-toggle="collapse" href="#Dasimo">
+								<i class="la flaticon-add-user"></i>
+								<p>Dasimo</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Dasimo">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Solicitar_suministro')}}">
+											<span class="sub-item">Solicitar suministro</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Recepcion_suministro')}}">
+											<span class="sub-item">Recepcion de suministro</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Historial_solicitud_insumo')}}">
+											<span class="sub-item">Historial solicitud de insumos</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
+                    @endif
+					@if(auth()->user()->tipo_usuario=='Dasimo-empleado')
+                    <li class="nav-item">
+							<a data-toggle="collapse" href="#Dasimo">
+								<i class="la flaticon-add-user"></i>
+								<p>Dasimo</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Dasimo">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Solicitar_suministro')}}">
+											<span class="sub-item">Solicitar suministro</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Historial_solicitud_insumo')}}">
+											<span class="sub-item">Historial solicitud de insumos</span>
 										</a>
 									</li>
 								</ul>
@@ -600,6 +689,42 @@
 								</ul>
 							</div>
 					</li>
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Dasimo">
+								<i class="la flaticon-add-user"></i>
+								<p>Dasimo</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Dasimo">
+								<ul class="nav nav-collapse">
+                                    <li>
+										<a  href="{{url('/Registro_de_inventario')}}">
+											<span class="sub-item">Registro de inventario</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/DasimoConsultar_caja_herramienta')}}">
+											<span class="sub-item">Consulta caja de herramienta</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Solicitar_suministro')}}">
+											<span class="sub-item">Solicitar suministro</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Recepcion_suministro')}}">
+											<span class="sub-item">Recepcion de suministro</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Historial_solicitud_insumo')}}">
+											<span class="sub-item">Historial solicitud de insumos</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
                     <li class="nav-item">
 							<a data-toggle="collapse" href="#Operaciones">
 								<i class="la la-bus"></i>
@@ -608,12 +733,7 @@
 							</a>
 							<div class="collapse" id="Operaciones">
 								<ul class="nav nav-collapse">
-                                    <!--
-                                    <li>
-										<a  href="{{url('/Alta_de_unidades')}}">
-											<span class="sub-item">Alta de unidades</span>
-										</a>
-									</li>-->
+									
 									<li>
 										<a  href="{{url('/Autorizacion_check_mantenimiento')}}">
 											<span class="sub-item">Autorización check mantenimiento</span>
@@ -672,7 +792,11 @@
 											<span class="sub-item">Acceso al sistema</span>
 										</a>
 									</li>
-									
+									<li>
+										<a  href="{{url('/Revision_de_camaras')}}">
+											<span class="sub-item">Revisión de cámaras</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 					</li>
@@ -699,7 +823,6 @@
 								</ul>
 							</div>
 					</li>
-                    @endif
 					<li class="nav-item">
 						<a href="{{url('/Permisos')}}">
 							<i class="la la-calendar-plus-o"></i>
@@ -724,6 +847,8 @@
 								<p>Consultar biometrico</p>
 							</a>
 					</li>
+                    @endif
+					
                 </ul>
             </div>
         </div>
@@ -831,9 +956,7 @@
 
 
 <script>
-document.getElementById('Consultar_gif').addEventListener('click', function() {
-        document.getElementById('overlay').style.display = 'flex';
-    });
+
     $('#BotonProfile').click(function(e){
       $(".dropdown-menu").dropdown('toggle')
     });

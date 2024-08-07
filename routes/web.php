@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+
+Route::get('/login', [LoginController::class, 'create'])->name('login');
+Route::post('/login', [LoginController::class, 'store']);
+Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/Alta_de_personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Alta_de_personal')->name('Alta_de_personal');
     Route::get('/AltaAccesoAlSistema', '\App\Http\Controllers\Sistemas\SistemasController@AltaAccesoAlSistema')->name('AltaAccesoAlSistema');
     Route::POST('/AltaAccesoAlSistema', '\App\Http\Controllers\Sistemas\SistemasController@Registro_de_acceso')->name('Registro_de_acceso');
+    
+    Route::get('/Revision_de_camaras', '\App\Http\Controllers\Sistemas\SistemasController@Revision_de_camaras')->name('Revision_de_camaras');
     //mantenimiento
 
     
@@ -273,6 +280,33 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/Consultar_biometricos_usuario', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Consultar_biometricos_usuario')->name('Consultar_biometricos_usuario');
     Route::POST('/Consultar_biometricos_usuario', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postConsultar_biometricos_usuario')->name('postConsultar_biometricos_usuario');
+    
+    
+    Route::get('/Registro_de_inventario', '\App\Http\Controllers\Dasimo\DasimoController@Registro_de_inventario')->name('Registro_de_inventario');
+    Route::POST('/Registro_de_inventario', '\App\Http\Controllers\Dasimo\DasimoController@postRegistro_de_inventario')->name('postRegistro_de_inventario');
+
+    
+    Route::get('/DasimoConsultar_caja_herramienta', '\App\Http\Controllers\Dasimo\DasimoController@DasimoConsultar_caja_herramienta')->name('DasimoConsultar_caja_herramienta');
+    Route::POST('/DasimoConsultar_caja_herramienta', '\App\Http\Controllers\Dasimo\DasimoController@post_DasimoConsultar_caja_herramienta')->name('post_DasimoConsultar_caja_herramienta');
+    
+    Route::get('/Solicitar_suministro', '\App\Http\Controllers\Dasimo\DasimoController@Solicitar_suministro')->name('Solicitar_suministro');
+    Route::POST('/Solicitar_suministro', '\App\Http\Controllers\Dasimo\DasimoController@post_Solicitar_suministro')->name('post_Solicitar_suministro');
+
+    Route::get('/Recepcion_suministro', '\App\Http\Controllers\Dasimo\DasimoController@Recepcion_suministro')->name('Recepcion_suministro');
+    Route::POST('/Recepcion_suministro', '\App\Http\Controllers\Dasimo\DasimoController@post_Recepcion_suministro')->name('post_Recepcion_suministro');
+
+    Route::get('/buscar_solicitud_suministro', '\App\Http\Controllers\Dasimo\DasimoController@buscar_solicitud_suministro')->name('buscar_solicitud_suministro');
+
+    Route::get('/validar_cambio_solicitud_suministro', '\App\Http\Controllers\Dasimo\DasimoController@validar_cambio_solicitud_suministro')->name('validar_cambio_solicitud_suministro');
+
+    Route::get('/validar_cambio_solicitud_suministro_vida_util', '\App\Http\Controllers\Dasimo\DasimoController@validar_cambio_solicitud_suministro_vida_util')->name('validar_cambio_solicitud_suministro_vida_util');
+    
+    
+    
+    Route::get('/Historial_solicitud_insumo', '\App\Http\Controllers\Dasimo\DasimoController@Historial_solicitud_insumo')->name('Historial_solicitud_insumo');
+    Route::get('/buscar_Historial_solicitud_insumo', '\App\Http\Controllers\Dasimo\DasimoController@post_Historial_solicitud_insumo')->name('post_Historial_solicitud_insumo');
+
+    
     
     
 });

@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <head>
         <title>Visualizar Polígono en el Mapa</title>
@@ -302,12 +303,15 @@
                             </table>
                         </center>
                     </div>
+                    <div class="col-md-12" id="fuera">
+                        
+                    </div>
                 </div>
             </div>
         </div>
     </body>
     @section('jscustom')
-    <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+    <script src="{{url('/turf.min.js')}}"></script>
     <script type="text/javascript">
         const map = L.map('map').setView([19.61788, -99.011616], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -349,53 +353,70 @@
         allPolygons.addTo(map); 
         map.fitBounds(allPolygons.getBounds()); 
 
-        async function geo_ecotodos() {
+        function geo_ecotodos() {
     estaciones();
     $.ajax({
-        url: '{{ url("/geo_ecotodos") }}',
-        type: 'get',
-        data: {},
-        success: function(response) {
-            var economicos_a = [
-                65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
-                1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1, 15, 24, 25, 35, 41, 45, 46
-            ];
+    url: '{{ url("/geo_ecotodos") }}',
+    type: 'get',
+    data: {},
+    success: function(response) {
+        var disponibles = {};
+        var economicos_a = [
+            65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+            1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1, 15, 24, 25, 35, 41, 45, 46
+        ];
 
-            for (let i = 0; i < economicos_a.length; i++) {
-                var index = economicos_a[i];
+        for (let i = 0; i < economicos_a.length; i++) {
+            var index = economicos_a[i];
 
-                if (response[index].length > 0) {
-                    (function(economico, lat, lon) {
-                        console.log(economico); // Primer console.log
+            if (response[index].length > 0) {
+                console.log(response[index][0]['economico']);
+                
+                disponibles[response[index][0]['economico']] = response[index][0]['economico'];
 
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            console.log(economico); // Segundo console.log
-                            const point = turf.point([lon, lat]);
+                (function(economico, lat, lon) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const point = turf.point([lon, lat]);
 
-                            @foreach($secciones as $seccion)
-                            var poly{{$i}} = turf.polygon([polygonCoordinates{{$i}}.map(coord => [coord[1], coord[0]])]);
+                        @foreach($secciones as $seccion)
+                        var poly{{$i}} = turf.polygon([polygonCoordinates{{$i}}.map(coord => [coord[1], coord[0]])]);
 
-                            if (turf.booleanPointInPolygon(point, poly{{$i}})) {
-                                $('#{{$i}}').append('<p class="center" > <img src="{{url("/assets/img/bus_v_fondo1.png")}}" width="20px">&nbsp;'+economico+'</p>');
-                                const customIcon = L.icon({iconUrl: '{{url("/assets/img/bus_v_fondo1.png")}}', iconSize: [30, 30]});
-                                const userLocation = L.marker([lat, lon], {icon: customIcon}).addTo(map).bindPopup('Economico '+economico);
-                            }else {
-                                const customIconOut = L.icon({iconUrl: '{{url("/assets/img/bus_v_fondo1.png")}}', iconSize: [30, 30]});
-                                const userLocationOut = L.marker([lat, lon], {icon: customIconOut}).addTo(map).bindPopup('Economico '+economico + '');
+                        if (turf.booleanPointInPolygon(point, poly{{$i}})) {
+                            console.log(economico);
+                            $('#{{$i}}').append('<p class="center"><img src="{{url("/assets/img/bus_v_fondo1.png")}}" width="20px">&nbsp;' + economico + '</p>');
+                            const customIcon = L.icon({iconUrl: '{{url("/assets/img/bus_v_fondo1.png")}}', iconSize: [30, 30]});
+                            const userLocation = L.marker([lat, lon], {icon: customIcon}).addTo(map).bindPopup('Economico ' + economico);
+                            
+                            // Borrar el economico del objeto disponibles
+                            if (disponibles.hasOwnProperty(economico)) {
+                                delete disponibles[economico];
                             }
-                            @php $i++; @endphp
-                            @endforeach
-                        }, function(error) {
-                            console.log('Error al obtener la ubicación: ' + error.message);
-                        });
-                    })(response[index][0]['economico'], response[index][0]['lat'], response[index][0]['lon']);
-                }
+                        } else {
+                            const customIconOut = L.icon({iconUrl: '{{url("/assets/img/bus_v_fondo1.png")}}', iconSize: [30, 30]});
+                            const userLocationOut = L.marker([lat, lon], {icon: customIconOut}).addTo(map).bindPopup('Economico ' + economico);
+                        }
+                        @php $i++; @endphp
+                        @endforeach
+                    }, function(error) {
+                        console.log('Error al obtener la ubicación: ' + error.message);
+                    });
+                })(response[index][0]['economico'], response[index][0]['lat'], response[index][0]['lon']);
             }
-        },
-        error: function(xhr, status, error) {
-            console.log('Error en la solicitud: ' + error);
         }
-    });
+        
+        console.log('disponible final '+ disponibles);
+        for (var j = 0; j < disponibles.length; j++) {
+            console.log(disponibles[0]+' '+response[disponibles[0]][0]['lat']+' '+ response[disponibles[0]][0]['lon']+' '+ response[disponibles[0]][0]['economico']);
+            const customIconOut = L.icon({iconUrl: '{{url("/assets/img/bus_v_fondo1.png")}}', iconSize: [30, 30]});
+            const userLocationOut = L.marker([response[disponibles[0]][0]['lat'], response[disponibles[0]][0]['lon']], {icon: customIconOut}).addTo(map).bindPopup('Economico '+response[disponibles[0]][0]['economico'] + ' fuera');
+        }
+    },
+    error: function(xhr, status, error) {
+        console.log('Error en la solicitud: ' + error);
+    }
+});
+
+
 }
 
 

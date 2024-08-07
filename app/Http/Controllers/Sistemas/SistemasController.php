@@ -18,7 +18,7 @@ class SistemasController extends Controller
     public function AltaAccesoAlSistema()
     {
         
-        return view('Transmasivo.sistemas.Alta_Acceso_Al_Sistema');
+        return view('Transmasivo.Sistemas.Alta_Acceso_Al_Sistema');
     }
     public function Registro_de_acceso(Request $request)
     {
@@ -36,6 +36,12 @@ class SistemasController extends Controller
             
         ]);
         $mensaje="Se inserto correctamente!!";
-        return view('Transmasivo.sistemas.Alta_Acceso_Al_Sistema',compact('mensaje'));
+        return view('Transmasivo.Sistemas.Alta_Acceso_Al_Sistema',compact('mensaje'));
+    }
+
+    public function Revision_de_camaras()
+    {
+        
+        return view('Transmasivo.sistemas.Revision_de_camaras');
     }
 }

@@ -69,7 +69,7 @@
                     
                 <div class="form-group form-floating-label">
                     <input  id="password" name="password" type="password" class="form-control input-border-bottom" required>
-                    <label for="password" class="placeholder">Password</label>
+                    <label for="password" class="placeholder">Contraseña</label>
                     <div class="show-password">
                         <i class="flaticon-interface"></i>
                     </div>

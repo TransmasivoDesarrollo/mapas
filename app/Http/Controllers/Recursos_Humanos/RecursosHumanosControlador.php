@@ -366,6 +366,38 @@ class RecursosHumanosControlador extends Controller
         $c_empresas = DB::connection('mysql')->table('c_empresa')->get();
         return view('Transmasivo.rh.Renuncias',compact('c_empresas'));
     }
+    public function descargarRenuncia(Request $request)
+{
+    $Empresa = $request->input('Empresa');
+    $nombre = $request->input('nombre');
+    $inicio = Carbon::parse($request->input('inicio'))->locale('es')->translatedFormat('l, d \d\e F \d\e\l Y');
+    $fin = Carbon::parse($request->input('fin'))->locale('es')->translatedFormat('l, d \d\e F \d\e\l Y');
+    $elaboracion = Carbon::parse($request->input('elaboracion'))->locale('es')->translatedFormat('l, d \d\e F \d\e\l Y');
+    $Puesto = $request->input('Puesto');
+
+    $html = View::make('Transmasivo.rh.renunciasWord', compact('Empresa', 'nombre', 'inicio', 'fin', 'elaboracion', 'Puesto'))->render();
+
+    // Crear un nuevo documento de Word
+    $phpWord = new PhpWord();
+
+    // Configurar el tamaño de la página a carta (8.5 x 11 pulgadas)
+    $section = $phpWord->addSection([
+        'pageSizeW' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(8.5),
+        'pageSizeH' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(11)
+    ]);
+
+    // Agregar el HTML al documento de Word
+    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
+
+    // Guardar el documento
+    $filename = 'Renuncia ' . $nombre . '.docx';
+    $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+    $objWriter->save(public_path($filename));
+
+    // Descargar el documento
+    return response()->download(public_path($filename))->deleteFileAfterSend(true);
+}
+
 
     public function Encuesta_de_renuncia()
     {
