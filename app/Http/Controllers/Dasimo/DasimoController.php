@@ -64,14 +64,19 @@ class DasimoController extends Controller
         $inventario=DB::connection('mysql')->select('select * from  t_inventario_dasimo');
         return view('Transmasivo.Dasimo.DasimoConsultar_caja_herramienta',compact('inventario'));
     }
-    public function post_DasimoConsultar_caja_herramienta()
+    public function post_DasimoConsultar_caja_herramienta(Request $request)
     {
+        //dd($request->all());
+        DB::connection('mysql')->table('t_inventario_dasimo')
+            ->where('id_inventario_dasimo', $request->input('Inventario_hiden'))
+            ->update(['nombre' => $request->input('Inventario_m'),'cantidad' => $request->input('Cantidad_m'),'categoria' => $request->input('Categoria_m')]);
         $inventario=DB::connection('mysql')->select('select * from  t_inventario_dasimo');
 
         $mensaje="Se registro con exito!";
         $color="success";
         
-       return Excel::download(new inventario_dasimoExport, 'inventario.xlsx');
+        $inventario=DB::connection('mysql')->select('select * from  t_inventario_dasimo');
+        return view('Transmasivo.Dasimo.DasimoConsultar_caja_herramienta',compact('inventario'));
     }
     public function Solicitar_suministro()
     {
@@ -95,7 +100,10 @@ class DasimoController extends Controller
             t_inventario_dasimo.categoria, 
             t_inventario_dasimo.foto, 
             t_inventario_dasimo.fecha_creacion;");
-
+            
+        $user = auth()->user();
+        $user = $user['tipo_usuario'];
+        dd($user);
         return view('Transmasivo.Dasimo.Solicitar_suministro',compact('inventario'));
     }
     public function post_Solicitar_suministro(Request $request)

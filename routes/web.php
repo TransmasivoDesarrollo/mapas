@@ -308,6 +308,18 @@ Route::middleware('auth')->group(function () {
 
     
     
+    Route::get('/Agregar_capacitación', '\App\Http\Controllers\Capacitacion\CapacitacionController@Agregar_capacitación')->name('Agregar_capacitación');
+    Route::POST('/Agregar_capacitación', '\App\Http\Controllers\Capacitacion\CapacitacionController@post_Agregar_capacitación')->name('post_Agregar_capacitación');
+
+    
+    Route::get('/Agregar_personas_al_curso', '\App\Http\Controllers\Capacitacion\CapacitacionController@Agregar_personas_al_curso')->name('Agregar_personas_al_curso');
+    Route::POST('/Agregar_personas_al_curso', '\App\Http\Controllers\Capacitacion\CapacitacionController@post_Agregar_personas_al_curso')->name('post_Agregar_personas_al_curso');
+
+    
+    Route::get('/Validar_horas_de_curso', '\App\Http\Controllers\Capacitacion\CapacitacionController@Validar_horas_de_curso')->name('Validar_horas_de_curso');
+    Route::POST('/Validar_horas_de_curso', '\App\Http\Controllers\Capacitacion\CapacitacionController@post_Validar_horas_de_curso')->name('post_Validar_horas_de_curso');
+    
+    
     
 });
 

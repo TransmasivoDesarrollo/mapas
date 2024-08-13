@@ -774,8 +774,6 @@
 											<span class="sub-item">Desacargas de reporte de estado físico y funcionamiento</span>
 										</a>
 									</li>
-                                   
-									
 								</ul>
 							</div>
 					</li>
@@ -795,6 +793,32 @@
 									<li>
 										<a  href="{{url('/Revision_de_camaras')}}">
 											<span class="sub-item">Revisión de cámaras</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+					</li>
+					<li class="nav-item">
+							<a data-toggle="collapse" href="#Capacitación">
+								<i class="la la-book"></i>
+								<p>Capacitación </p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Capacitación">
+								<ul class="nav nav-collapse">
+									<li>
+										<a  href="{{url('/Agregar_capacitación')}}">
+											<span class="sub-item">Agregar capacitación</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Agregar_personas_al_curso')}}">
+											<span class="sub-item">Agregar personas al curso</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Validar_horas_de_curso')}}">
+											<span class="sub-item">Validar horas del curso</span>
 										</a>
 									</li>
 								</ul>
