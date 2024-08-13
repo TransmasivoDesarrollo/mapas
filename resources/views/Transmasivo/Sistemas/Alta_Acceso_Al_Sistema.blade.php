@@ -60,6 +60,8 @@
                                 <option value="Dasimo-empleado">Dasimo-empleado</option>
                                 <option value="Dasimo-supervisor">Dasimo-supervisor</option>
                                 <option value="Dasimo-Jefe">Dasimo-Jefe</option>
+                                <option value="Capacitación">Capacitación</option>
+								
 								
 								
                             </select>
