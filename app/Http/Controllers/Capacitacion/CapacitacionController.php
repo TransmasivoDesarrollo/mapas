@@ -100,19 +100,57 @@ class CapacitacionController extends Controller
             where t_inscripcion_capacitacion. id_t_curso=? '
             ,[ $Curso ]
             );
-        
+            //dd($consulta);
             $c_cursos = DB::connection('mysql')->table('t_curso_capacitacion')->get();
             return view('Transmasivo.Capacitacion.Validar_horas_de_curso')->with('consulta', $consulta)->with('c_cursos', $c_cursos);
         }
         if($request->has('Comprobante'))
         {
-            $html = view('Transmasivo.Capacitacion.pdf_diploma')->render();
+            $id_inscripcion_capacitacion = $request->input('id_inscripcion_capacitacion');
+            $consulta = DB::connection('mysql')->select('select t_inscripcion_capacitacion.*, t_curso_capacitacion.* from t_inscripcion_capacitacion 
+                inner join t_curso_capacitacion on t_curso_capacitacion.id_curso_capacitacion=t_inscripcion_capacitacion.id_t_curso
+            where t_inscripcion_capacitacion. id_inscripcion_capacitacion=? '
+            ,[ $id_inscripcion_capacitacion ]
+            );
+          //  dd($consulta);
+            $html = view('Transmasivo.Capacitacion.pdf_diploma',compact('consulta'))->render();
             $dompdf = new Dompdf();
             $dompdf->setPaper('Carta', 'landscape');
             $dompdf->loadHtml($html);
             $dompdf->render();
             return $dompdf->stream('pdf_diploma '.now().'.pdf');
         }
+        if($request->has('boton_agregar'))
+        {
+            //dd($request->all());
+            $id_inscripcion_capacitacion = $request->input('id_actualizar');
+            $horas_tomadas = $request->input('horas_tomadas');
+
+            $consulta = DB::connection('mysql')->select('update t_inscripcion_capacitacion set horas_tomadas = ? where id_inscripcion_capacitacion = ?'
+            ,[ $horas_tomadas,$id_inscripcion_capacitacion ]
+            );
+          
+            $c_cursos = DB::connection('mysql')->table('t_curso_capacitacion')->get();
+            $consulta ="";
+            return view('Transmasivo.Capacitacion.Validar_horas_de_curso')->with('c_cursos', $c_cursos)->with('consulta', $consulta);
+        }
+        if($request->has('boton_agregar_calificacion'))
+        {
+            //dd($request->all());
+            $id_inscripcion_capacitacion = $request->input('id_actualizar2');
+            $calificacion_tomadas = $request->input('calificacion_tomadas');
+
+            $consulta = DB::connection('mysql')->select('update t_inscripcion_capacitacion set calificacion_final = ? where id_inscripcion_capacitacion = ?'
+            ,[ $calificacion_tomadas,$id_inscripcion_capacitacion ]
+            );
+          
+            $c_cursos = DB::connection('mysql')->table('t_curso_capacitacion')->get();
+            $consulta ="";
+            return view('Transmasivo.Capacitacion.Validar_horas_de_curso')->with('c_cursos', $c_cursos)->with('consulta', $consulta);
+        }
+        
+        
+
         $Curso = $request->input('Curso');
         $participante = $request->input('participante');
         $area = $request->input('area');

@@ -38,7 +38,7 @@
 </head>
 <body>
     <?php
-        $nombreImagen = url('') . "/images/Cursos/diploma.png";
+        $nombreImagen = url('') . "/images/Cursos/diploma2.png";
         $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));
 
         $nombreImagen_2 = url('') . "/assets/img/transmasivo.png";
@@ -52,7 +52,7 @@
        
             <center>
                 <h2>Reconocimiento a la perseverancia<br>_____________________________________</h2>
-                <h5>Esta mención se concede a: </h5><h3 style="color: rgb(134,37,54);  text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Luis Enrique Camarena Serratos  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3><h5>como reconocimiento por completar el curso</h5><h4 style="color: rgb(134,37,54);  text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prueba del curso&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                <h5>Esta mención se concede a: </h5><h3 style="color: rgb(134,37,54);  text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$consulta[0]->participante}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3><h5>como reconocimiento por completar el curso</h5><h4 style="color: rgb(134,37,54);  text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{$consulta[0]->curso}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                 <p> <br><img src="<?php echo $imagenBase64_2; ?>" width="250px" style="position: 120px 0 0 120px ; "></p>
                 </center>
             
