@@ -117,12 +117,13 @@
                         <table class="table table-striped table-bordered" id="list_user2">
                             <thead>
                                 <tr>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Empleado</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 20%;"><center>Día</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 5%;"><center>Empleado</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Día</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Entrada oficina</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Salida oficina</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Tiempo de trabajo</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Retardo</center></th>
+                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Salida</center></th>
                                     <th class="bg-danger sorting" style="color:#ffffff; width: 20%;"><center>Todas las fechas del día</center></th>
                                 </tr>
                             </thead>
@@ -140,7 +141,20 @@
                                                 <td>{{$consul->inicio}}</td>
                                                 <td>{{$consul->fin}}</td>
                                                 <td>{{$consul->tiempo_trabajado}}</td>
-                                                <td>{{$consul->estado}}</td>
+                                                <td>
+                                                    @if($consul->estado == "Retardo")<b>{{$consul->dia[0]}}</b><br>
+                                                        <b style="color:orange">{{$consul->estado}}</b>
+                                                    @else<b>{{$consul->dia[0]}}</b><br>
+                                                        <b style="color:green">{{$consul->estado}}</b>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($consul->salida_estado == "Salió antes")<b>{{$consul->dia[0]}}</b><br>
+                                                        <b style="color:orange">{{$consul->salida_estado}}</b>
+                                                    @else<b>{{$consul->dia[0]}}</b><br>
+                                                        <b style="color:green">{{$consul->salida_estado}}</b>
+                                                    @endif
+                                                </td>
                                                 <td>{!! $consul->todas_las_fechas !!}</td>
                                             </tr>
                                         @php $i++; @endphp

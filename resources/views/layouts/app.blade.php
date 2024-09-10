@@ -165,7 +165,7 @@
                         </a>
                     </li>
                     @if(auth()->user()->tipo_usuario=='Recursos humanos')
-                    <li class="nav-item">
+					<li class="nav-item">
 							<a data-toggle="collapse" href="#forms">
 								<i class="la flaticon-add-user"></i>
 								<p>Recursos Humanos</p>
@@ -173,7 +173,7 @@
 							</a>
 							<div class="collapse" id="forms">
 								<ul class="nav nav-collapse">
-                                    {{--
+                                {{--
 									<li>
 										<a  href="{{url('/Alta_de_personal')}}">
 											<span class="sub-item">Alta de personal</span>
@@ -207,7 +207,17 @@
 									</li>
 									<li>
 										<a  href="{{url('/subir_biometrico')}}">
-											<span class="sub-item">Subir biométrico  </span>
+											<span class="sub-item">Subir biometrico </span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Gestion_de_horarios')}}">
+											<span class="sub-item">Gestión de horarios  </span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Enrolar_horarios')}}">
+											<span class="sub-item">Enrolar horarios  </span>
 										</a>
 									</li>
 									<li>
@@ -215,11 +225,12 @@
 											<span class="sub-item">Consultar biométrico  </span>
 										</a>
 									</li>
+									<li>
 										<a  href="{{url('/Contrato_Dasimo')}}">
 											<span class="sub-item">Contrato Dasimo </span>
 										</a>
 									</li>
-								
+									
 								</ul>
 							</div>
 					</li>
@@ -591,6 +602,16 @@
 										</a>
 									</li>
 									<li>
+										<a  href="{{url('/Gestion_de_horarios')}}">
+											<span class="sub-item">Gestión de horarios  </span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Enrolar_horarios')}}">
+											<span class="sub-item">Enrolar horarios  </span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/consultar_biometrico')}}">
 											<span class="sub-item">Consultar biométrico  </span>
 										</a>
@@ -762,7 +783,16 @@
 							</a>
 							<div class="collapse" id="Operaciones">
 								<ul class="nav nav-collapse">
-									
+									<li>
+										<a  href="{{url('/enrolar_horarios_conductores')}}">
+											<span class="sub-item">Enrolar horarios de conductores</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/bitacora_de_operaciones_2')}}">
+											<span class="sub-item">Bitácora de operaciones2</span>
+										</a>
+									</li>
 									<li>
 										<a  href="{{url('/Autorizacion_check_mantenimiento')}}">
 											<span class="sub-item">Autorización check mantenimiento</span>
@@ -773,6 +803,7 @@
 											<span class="sub-item">Bitácora de operaciones</span>
 										</a>
 									</li>
+									
                                     <li>
 										<a  href="{{url('/Alta_de_reporte')}}">
 											<span class="sub-item">Alta de reporte</span>

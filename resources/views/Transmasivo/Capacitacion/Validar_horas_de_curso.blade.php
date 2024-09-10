@@ -57,10 +57,9 @@
                                                 <td>{{$consul->horas_tomadas}} de {{$consul->horas}}</td>
                                                 <td>{{$consul->calificacion_final}}</td>
                                                 <td>{{$consul->fecha_creacion}}</td>
-                                            
                                                 <td>
                                                     <button class="btn btn-primary" @php if($consul->horas_tomadas == $consul->horas) { @endphp disabled @php } @endphp onclick="abrirModalvalidar_hora('{{$consul->id_inscripcion_capacitacion}}','{{$consul->participante}}','{{$consul->horas_tomadas}}','{{$consul->horas}}')">Validar horas</button>
-                                                    <hr>
+                                                    <hr >
                                                     <button class="btn btn-primary" @php if($consul->horas_tomadas == $consul->horas) { @endphp  @php }else{ @endphp disabled @php } @endphp onclick="abrirModal_calificaciones('{{$consul->id_inscripcion_capacitacion}}','{{$consul->participante}}','{{$consul->horas_tomadas}}','{{$consul->horas}}')">Registrar calificacion del curso</button>
                                                     <hr>
                                                     <form method="post" id="exampleValidation" action="{{url('/Validar_horas_de_curso')}}" enctype="multipart/form-data">

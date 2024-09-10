@@ -30,52 +30,79 @@
                         <div class="form-group row " >
                             
                             <div class="col-md-3">
+                                <label>Credencial <span class="required-label">*</span></label>
+                                <select required type="text" style="width:90%;" class="form-control input-with-border" id="credencial" name="credencial">
+                                    @foreach($credencial as $cred)
+                                        <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-2">
+                                <label>Día <span class="required-label">*</span></label>
+                                <input required type="date" class="form-control input-with-border" id="dia" name="dia" value="{{now()->format('Y-m-d')}}">
+                            </div>
+                            <div class="col-md-1">
+                                <label>&nbsp;<br><br><br></label>
+                                <button class="btn btn-primary btn-sm" id="buscar" class="buscar"><i class="la flaticon-search-2"></i></button>
+                            </div>
+                            <div class="col-md-3">
                                     <label>Terminal</label>
                                     <select required class="form-control input-with-border" id="terminal" name="terminal">
-                                        <option>-Selecciona-</option>
                                         @foreach($terminal as $term)
                                         <option value="{{$term->id_terminal}}">{{$term->terminal}}</option>
                                         @endforeach
                                     </select>
                             </div>
+                            <div class="col-md-3">
+                                <label>Servicio<span class="required-label">*</span></label>
+                                <select required class="form-control input-with-border" id="serv" name="serv">
+                                    <option value="TR1">TR1 - Ordinario Ojo de agua - Ciudad azteca</option>
+                                    <option value="TR3">TR3 - Express Ojo de agua - Ciudad azteca</option>
+                                    <option value="TR3-R">TR3-R - Express Ojo de agua - Ciudad azteca</option>
+                                    <option value="TR4">TR4 - Express Central de abastos - Ciudad azteca</option>
+                                </select>
+                            </div>
+
+                           
+                            
+                            
+                            
+                        </div>
+                        <div class="form-group row " >
+                            
                             <div class="col-md-2">
                                     <label>Hora de llegada  <span class="required-label">*</span></label>
                                     <input required type="time" class="form-control input-with-border" id="hora_llegada" name="hora_llegada">
-                            </div>
-                            
-                            <div class="col-md-3">
-                                <label>Servicio<span class="required-label">*</span></label>
-                                <input required type="text" class="form-control input-with-border" id="serv" name="serv">
-                            </div>
-                            <div class="col-md-3">
-                                <label>Jornada<span class="required-label">*</span></label>
-                                <input required type="text" class="form-control input-with-border" id="jorn" name="jorn">
-                            </div>
-                            </div>
-                            <div class="form-group row " >
-                            <div class="col-md-3">
-                                <label>Economico <span class="required-label">*</span></label>
-                                <input required type="text" class="form-control input-with-border" id="eco" name="eco">
-                            </div>
-                            <div class="col-md-2">
-                                <label>Credencial <span class="required-label">*</span></label>
-                                <input required type="text" class="form-control input-with-border" id="credencial" name="credencial">
-                            </div>
-                            <div class="col-md-2">
-                                <label>Kilometraje <span class="required-label">*</span></label>
-                                <input required type="number" class="form-control input-with-border" id="km" name="km">
                             </div>
                             <div class="col-md-2">
                                 <label>Hora de salida <span class="required-label">*</span></label>
                                 <input required type="time" class="form-control input-with-border" id="hora_salida" name="hora_salida">
                             </div> 
-                        </div>
-                            <div class="form-group row " >
-                            <div class="col-md-6">
+                           
+                            <div class="col-md-2">
+                                <label>Economico <span class="required-label">*</span></label>
+                                <input required type="text" class="form-control input-with-border" id="eco" name="eco">
+                            </div>
+                            <div class="col-md-4">
                                 <label>Comentario  <span class="required-label"></span></label>
                                 <textarea  type="text" class="form-control input-with-border" id="comentarios" name="comentarios"></textarea>
                             </div>
-                            
+                        </div>
+                        <div class="form-group row " >
+                            <div class="col-md-12">
+                                <div class="demo">
+									<div class="progress-card">
+										<div class="progress-status">
+											<span class="text-muted" id="progreso">Sin informacion</span>
+											<span id="ciclos_span" class="text-muted fw-bold">Ciclo 0 de 0 </span>
+										</div>
+										<div class="progress">
+											<div class="progress-bar progress-bar-striped bg-warning" role="progressbar" id="bar" style="width: 0%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="" data-original-title=""></div>
+										</div>
+									</div>
+								</div>
+                            </div>
                         </div>
                         <hr>
                         <div class="row">
@@ -108,10 +135,9 @@
                                             <tr>
                                             <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Hora de llegada</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Servicio</center></th>
-                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Jornada</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Economico</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Credencial</center></th>
-                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Km</center></th>
+                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Día</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Hora de salida</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 30%;"><center>Comentarios</center></th>
                                             </tr>
@@ -119,20 +145,15 @@
 
                                         <tbody id="llenaTabla">
                                         @if(null !== $consulta)
-                                        
-                                        
                                             @foreach($consulta as $fila)
-                                          
                                                 <tr >
-                                                    <td>{{$fila->hora_llegada}}</td>
-                                                    <td>{{$fila->Servicio}}</td>
-                                                    <td>{{$fila->Jornada}}</td>
-                                                    <td>{{$fila->eco}}</td>
-                                                    <td>{{$fila->credencial}}</td>
-                                                    <td>{{$fila->kilometraje}}</td>
-                                                    <td>{{$fila->hora_salida}}</td>
-                                                    <td>{{$fila->comentario}}</td>
-                                                    
+                                                    <td>{{$fila['hora_llegada']}}</td>
+                                                    <td>{{$fila['Servicio']}}</td>
+                                                    <td>{{$fila['eco']}}</td>
+                                                    <td>{{$fila['credencial']}}</td>
+                                                    <td>{{$fila['dia']}}</td>
+                                                    <td>{{$fila['hora_salida']}}</td>
+                                                    <td>{{$fila['comentario']}}</td>
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -149,6 +170,7 @@
         
 	@section('jscustom')
     <script type="text/javascript">
+        $('#credencial').select2();
         
         $(document).ready(function() {
             function actualizarFecha() {
@@ -158,9 +180,17 @@
                 var horaFormateada = fecha.getHours().toString().padStart(2, '0') + ':' + fecha.getMinutes().toString().padStart(2, '0') + ':' + fecha.getSeconds().toString().padStart(2, '0');
                 $('#fecha').text('Fecha y Hora: ' + fechaFormateada + ' ' + horaFormateada);
             }
+            function minutos() {
+                var now = new Date();
+                var hours = now.getHours().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
+                var minutes = now.getMinutes().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
+                var horaActual = hours + ':' + minutes;
+                $('#hora_salida').val(horaActual);
+            }
 
             // Actualizar la fecha cada segundo
             setInterval(actualizarFecha, 1000);
+            setInterval(minutos, 60000);
             var now = new Date();
             var hours = now.getHours().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
             var minutes = now.getMinutes().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
@@ -171,6 +201,95 @@
             $('#hora_salida').val(horaActual);
             
         });
+        $('#buscar').click(function() {
+            event.preventDefault();
+
+                // Realizar la solicitud AJAX
+                $.ajax({
+                    url: '{{url("/buscar_rol_operador")}}', // Reemplaza con la URL de tu endpoint
+                    type: 'GET', // Puedes cambiar a POST si es necesario
+                    data: {
+                        'credencial': $('#credencial').val(), // Envía los parámetros necesarios
+                        'dia': $('#dia').val(),
+                    },
+                    success: function(response) {
+                        var servicio = response['results'][0]['servicio'];
+                        var ciclos = response['results'][0]['ciclos'];
+                        var dia;
+                        if(response['dia']=='lunes')
+                        {
+                            dia=response['results'][0]['lunes'];
+                        }
+                        if(response['dia']=='martes')
+                        {
+                            dia=response['results'][0]['martes'];
+                        }
+                        if(response['dia']=='miércoles')
+                        {
+                            dia=response['results'][0]['miercoles'];
+                        }
+                        if(response['dia']=='jueves')
+                        {
+                            dia=response['results'][0]['jueves'];
+                        }
+                        if(response['dia']=='viernes')
+                        {
+                            dia=response['results'][0]['viernes'];
+                        }
+                        if(response['dia']=='sábado')
+                        {
+                            dia=response['results'][0]['sabado'];
+                        }
+                        if(response['dia']=='domingo')
+                        {
+                            dia=response['results'][0]['domingo'];
+                        }
+                        console.log(response);
+                        var cantidad_registros=response['registros_dia'].length;
+                        cantidad_registros = cantidad_registros/2;
+                        var ciclos_texto= cantidad_registros+' de '+ciclos+' ciclos';
+                        var ciclos_porcentaje=100/(ciclos);
+                         ciclos_porcentaje=cantidad_registros*ciclos_porcentaje;
+                         console.log(ciclos_texto);
+                        $('#bar').attr('data-original-title',ciclos_texto);
+                        $('#bar').attr('style','width: '+ ciclos_porcentaje +'%');
+
+                        if(servicio == 'TR1')
+                        {
+                            //39 MINUTOS MAS 
+                        }
+                        if(servicio == 'TR3')
+                        {
+                            //30 MINUTOS MAS 
+                        }
+                        if(servicio == 'TR3-R')
+                        {
+                            //30 MINUTOS MAS 
+                        }
+                        if(servicio == 'TR4')
+                        {
+                            //20 MINUTOS MAS 
+                        }
+                        
+                        $('#progreso').html('Progreso del conductor '+ response['results'][0]['name']);
+                        $('#ciclos_span').html(ciclos_texto);
+                        
+                        console.log('Respuesta recibida:', response['dia']);
+
+
+                        $('#serv option').removeAttr('selected');
+                        $('#serv option[value="' + servicio + '"]').attr('selected', 'selected');
+                    
+
+
+                        // Realiza alguna acción con la respuesta
+                    },
+                    error: function(xhr, status, error) {
+                        // Manejar errores
+                        console.error('Error en la solicitud:', error);
+                    }
+                });
+            });
         
     </script>
 	@endsection

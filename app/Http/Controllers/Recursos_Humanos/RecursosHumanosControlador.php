@@ -967,15 +967,49 @@ class RecursosHumanosControlador extends Controller
     {
         $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
         
-        $consulta=DB::connection('mysql')->select("SELECT id_elemento,DATE(fecha_hora) AS dia, MIN(fecha_hora) AS inicio,MAX(fecha_hora) AS fin,
-                                                        TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
-                                                        CASE 
-                                                            WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
-                                                            ELSE 'En tiempo'
-                                                        END AS estado,
-                                                        GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
-                                                    FROM 
-                                                        t_biometrico
+        $consulta=DB::connection('mysql')->select("SELECT 
+    id_elemento,
+    DATE(fecha_hora) AS dia, 
+    MIN(fecha_hora) AS inicio,
+    MAX(fecha_hora) AS fin,
+    TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+    CASE 
+        WHEN TIME(MIN(fecha_hora)) > (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Retardo'
+        ELSE 'En tiempo'
+    END AS estado,
+    CASE 
+        WHEN TIME(MAX(fecha_hora)) < (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Salió antes'
+        ELSE 'Salió bien'
+    END AS salida_estado,
+    GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+FROM 
+    t_biometrico
                                                     GROUP BY 
                                                         id_elemento, dia;");
         $id_ele="-Selecciona-";
@@ -994,14 +1028,49 @@ class RecursosHumanosControlador extends Controller
         $id_ele=$id_empleado;
         $consulta;
         $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
-        $consulta_sql="SELECT id_elemento,  DATE(fecha_hora) AS dia,   MIN(fecha_hora) AS inicio,  MAX(fecha_hora) AS fin, TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
-                CASE 
-                    WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
-                        ELSE 'En tiempo'
-                    END AS estado,
-                       GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
-                    FROM 
-            t_biometrico WHERE ";
+        $consulta_sql="SELECT 
+    id_elemento,
+    DATE(fecha_hora) AS dia, 
+    MIN(fecha_hora) AS inicio,
+    MAX(fecha_hora) AS fin,
+    TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+    CASE 
+        WHEN TIME(MIN(fecha_hora)) > (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Retardo'
+        ELSE 'En tiempo'
+    END AS estado,
+    CASE 
+        WHEN TIME(MAX(fecha_hora)) < (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Salió antes'
+        ELSE 'Salió bien'
+    END AS salida_estado,
+    GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+FROM 
+    t_biometrico WHERE ";
 
 
         if($id_empleado!="-Selecciona-" ){
@@ -1137,14 +1206,49 @@ class RecursosHumanosControlador extends Controller
             $qna=$request->input('Descargar');
             
             $consulta;
-            $consulta_sql="SELECT id_elemento,  DATE(fecha_hora) AS dia,   MIN(fecha_hora) AS inicio,  MAX(fecha_hora) AS fin, TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
-                    CASE 
-                        WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
-                            ELSE 'En tiempo'
-                        END AS estado,
-                           GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
-                        FROM 
-                t_biometrico WHERE ";
+            $consulta_sql="SELECT 
+    id_elemento,
+    DATE(fecha_hora) AS dia, 
+    MIN(fecha_hora) AS inicio,
+    MAX(fecha_hora) AS fin,
+    TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+    CASE 
+        WHEN TIME(MIN(fecha_hora)) > (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Retardo'
+        ELSE 'En tiempo'
+    END AS estado,
+    CASE 
+        WHEN TIME(MAX(fecha_hora)) < (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Salió antes'
+        ELSE 'Salió bien'
+    END AS salida_estado,
+    GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+FROM 
+    t_biometrico WHERE ";
                 $consulta_sql.=" id_elemento=".$id." and ";
                 if($qna!="-Selecciona-" ){
                     $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
@@ -1215,14 +1319,49 @@ class RecursosHumanosControlador extends Controller
             $qna=$request->input('qna');
             
             $consulta;
-            $consulta_sql="SELECT id_elemento,  DATE(fecha_hora) AS dia,   MIN(fecha_hora) AS inicio,  MAX(fecha_hora) AS fin, TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
-                    CASE 
-                        WHEN TIME(MIN(fecha_hora)) > '09:00:00' THEN 'Retardo'
-                            ELSE 'En tiempo'
-                        END AS estado,
-                           GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR '<hr> ') AS todas_las_fechas
-                        FROM 
-                t_biometrico WHERE ";
+            $consulta_sql="SELECT 
+    id_elemento,
+    DATE(fecha_hora) AS dia, 
+    MIN(fecha_hora) AS inicio,
+    MAX(fecha_hora) AS fin,
+    TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+    CASE 
+        WHEN TIME(MIN(fecha_hora)) > (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Retardo'
+        ELSE 'En tiempo'
+    END AS estado,
+    CASE 
+        WHEN TIME(MAX(fecha_hora)) < (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+        ) THEN 'Salió antes'
+        ELSE 'Salió bien'
+    END AS salida_estado,
+    GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+FROM 
+    t_biometrico WHERE ";
                 $consulta_sql.=" id_elemento=".$id." and ";
             if($qna!="-Selecciona-" ){
                 $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
@@ -1262,5 +1401,91 @@ class RecursosHumanosControlador extends Controller
         
     }
 
+    public function Enrolar_horarios()
+    {
+        $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
+        
+        $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal ORDER BY nombre_horario asc;');
+        $consulta_tabla = DB::connection('mysql')->select('SELECT * from t_horarios_enrolador_personal
+            INNER JOIN t_horarios_personal ON t_horarios_personal.id_t_horarios_personal=t_horarios_enrolador_personal.id_horario 
+            left JOIN users ON users.id=t_horarios_enrolador_personal.id_empleado 
+            WHERE t_horarios_enrolador_personal.estatus="Activo"');
+
+        $id_ele="";
+        return view('Transmasivo.rh.Enrolar_horarios',compact('elementos','id_ele','consulta','consulta_tabla'));
+    }
+    public function post_Enrolar_horarios(Request $request)
+    {
+        $id_empleado = $request->input('id_empleado');
+        $id_horarios = $request->input('id_horarios');
+        $id_operador = auth()->id();
+        date_default_timezone_set('America/Mexico_City');
+        $hora_actual = time();
+        $estatus='Activo';
+            
+        $hora_formateada = date('Y-m-d H:i:s', $hora_actual);
+        $valida = DB::connection('mysql')->select('select * from t_horarios_enrolador_personal where id_empleado=?', [
+            $id_empleado,
+          
+        ]);
+        if(count($valida)>0){
+            $update = DB::connection('mysql')->select('update t_horarios_enrolador_personal set estatus="Inactivo" where id_empleado=?', [
+                $id_empleado,
+            ]);
+        }
+
+        $insert = DB::connection('mysql')->insert('insert into t_horarios_enrolador_personal (id_empleado,id_horario,fecha_registro,id_operador,estatus) 
+        values (?,?,?,?,?); ', [
+            $id_empleado,
+            $id_horarios,
+            $hora_formateada,
+            $id_operador,
+            $estatus,
+        ]);
+        
+        $mensaje="Se enrolo el horario con éxito ";
+        $color="success";
+        
+        return redirect()->route('Enrolar_horarios')->with('mensaje', $mensaje)->with('color', $color);
+    }
+    public function Gestion_de_horarios()
+    {
+        $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal ;');
+        
+        return view('Transmasivo.rh.Gestion_de_horarios',compact('consulta'));
+    }
+    public function postGestion_de_horarios(Request $request)
+    {
+        
+        $nombre_h = $request->input('nombre_h');
+        $h_llegada = $request->input('h_llegada');
+        //dd($request->all());
+        $h_i_comida = $request->input('h_i_comida');
+        $h_f_comida = $request->input('h_f_comida');
+        $h_salida = $request->input('h_salida');
+        $id_operador = auth()->id();
+        date_default_timezone_set('America/Mexico_City');
+        $hora_actual = time();
+        $estatus='Activo';
+            
+        $hora_formateada = date('Y-m-d H:i:s', $hora_actual);
+
+        $insert = DB::connection('mysql')->insert('insert into t_horarios_personal (nombre_horario,hora_llegada,hora_inicio_comida,hora_fin_comida,hora_salida,fecha_registro,id_operador,estatus) 
+        values (?,?,?,?,?,?,?,?); ', [
+            $nombre_h,
+            $h_llegada,
+            $h_i_comida,
+            $h_f_comida,
+            $h_salida,
+            $hora_formateada,
+            $id_operador,
+            $estatus,
+        ]);
+        $mensaje="Se regristro el horario con éxito ";
+        $color="success";
+        
+        return redirect()->route('Gestion_de_horarios')->with('mensaje', $mensaje)->with('color', $color);
+    }
+    
 
 }

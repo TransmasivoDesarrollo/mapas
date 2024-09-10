@@ -9,6 +9,9 @@ use App\Models\t_bitacora_terminales;
 use App\Models\BitacoraLiberacionUnidades;
 use DB;
 use Dompdf\Dompdf;
+use Carbon\Carbon;
+use DateTime; // Añadir esta línea
+
 
 use Illuminate\Support\Facades\Auth; // Asegúrate de importar Auth
 
@@ -18,11 +21,1244 @@ class OperacionesController extends Controller
 
     public function Bitacora_de_operaciones()
     {
-        $consulta = t_bitacora_terminales::whereBetween('fecha_registro', [now()->format('Y-m-d').' 00:00:00', now()->format('Y-m-d').' 23:59:00'])->get();
-
+        $consulta = DB::connection('mysql')->select('SELECT * FROM t_bitacora_terminales WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00"');
+        $credenciales_registradas = DB::connection('mysql')->select('SELECT Servicio, credencial, COUNT(*) AS cantidad FROM t_bitacora_terminales WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00" GROUP BY credencial, Servicio');
+        $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
+        $terminal = DB::connection('mysql_produc')->select('SELECT * FROM c_terminal');
+        $consulta = json_decode(json_encode($consulta), true);
+        $credenciales_registradas = json_decode(json_encode($credenciales_registradas), true);
+    
+        $diasSemana = [
+            'Monday' => 'lunes',
+            'Tuesday' => 'martes',
+            'Wednesday' => 'miercoles',
+            'Thursday' => 'jueves',
+            'Friday' => 'viernes',
+            'Saturday' => 'sábado',
+            'Sunday' => 'domingo'
+        ];
         
-        $terminal = DB::connection('mysql_produc')->select('SELECT *from c_terminal');
-        return view('Transmasivo.Operaciones.Bitacora_de_operaciones',compact('terminal','consulta'));
+        $diaActualIngles = date('l'); // Día actual en inglés
+        $diaActualEspanol = $diasSemana[$diaActualIngles]; // Día actual traducido al español
+    
+        $recorridos = []; // Array para almacenar los recorridos por id_rol_operador
+    
+        foreach ($consulta as &$registro) {
+            foreach ($credenciales_registradas as $credencial_reg) {
+                if ($registro['credencial'] == $credencial_reg['credencial']) {
+                    // Obtener el id_rol_operadores
+                    $id_rol_operadores = DB::connection('mysql')->select('SELECT * FROM t_rol_semanal_conductor where id_conductor='.$credencial_reg['credencial'].' and "'.$registro['dia'].'" BETWEEN fecha_inicio and fecha_fin');
+                    
+                    if (empty($id_rol_operadores)) {
+                        continue; // Si no hay resultados, pasar a la siguiente iteración
+                    }
+                    
+                    $id_rol_operador = $id_rol_operadores[0]->id_rol_operadores;
+    
+                    // Obtener la hora de salida basada en el día
+                    $hora_salida_array = DB::connection('mysql')->select('SELECT * FROM t_rol_operadores where id_rol_operador='.$id_rol_operador);
+                    $hora_salida = '';
+                    if ($diaActualEspanol == 'lunes') {
+                        $hora_salida = $hora_salida_array[0]->lunes;
+                    } elseif ($diaActualEspanol == 'martes') {
+                        $hora_salida = $hora_salida_array[0]->martes;
+                    } elseif ($diaActualEspanol == 'miercoles') {
+                        $hora_salida = $hora_salida_array[0]->miercoles;
+                    } elseif ($diaActualEspanol == 'jueves') {
+                        $hora_salida = $hora_salida_array[0]->jueves;
+                    } elseif ($diaActualEspanol == 'viernes') {
+                        $hora_salida = $hora_salida_array[0]->viernes;
+                    } elseif ($diaActualEspanol == 'sabado') {
+                        $hora_salida = $hora_salida_array[0]->sabado;
+                    } elseif ($diaActualEspanol == 'domingo') {
+                        $hora_salida = $hora_salida_array[0]->domingo;
+                    }
+    
+                    // Incrementar el contador de recorridos para este id_rol_operador
+                    if (!isset($recorridos[$id_rol_operador])) {
+                        $recorridos[$id_rol_operador] = 1;
+                    } else {
+                        $recorridos[$id_rol_operador]++;
+                    }
+    
+                    // Añadir los datos al registro
+                    $registro['id_rol_operadores'] = $id_rol_operador;
+                    $registro['hora_salida_rol'] = $hora_salida;
+                    $registro['cantidad_recorrido'] = $recorridos[$id_rol_operador]; // Cantidad de recorridos para este id_rol_operador
+    
+                    // Calcular la hora de salida con el incremento
+                    $servicio = $credencial_reg['Servicio'];
+                    $minutos_a_sumar = 0;
+    
+                    // Determinar los minutos a sumar según el servicio
+                    if ($servicio == "TR1") {
+                        $minutos_a_sumar = 39;
+                    } elseif ($servicio == "TR3" || $servicio == "TR3-R") {
+                        $minutos_a_sumar = 30;
+                    } elseif ($servicio == "TR4") {
+                        $minutos_a_sumar = 40;
+                    }
+    
+                    // Sumar los minutos según la cantidad de recorrido
+                    $hora_salida_datetime = new DateTime($hora_salida);
+                    for ($i = 0; $i < ($registro['cantidad_recorrido'] - 1); $i++) {
+                        $hora_salida_datetime->modify("+$minutos_a_sumar minutes");
+                    }
+    
+                    // Asignar la nueva hora de salida al registro
+                    $registro['hora_salida_rol'] = $hora_salida_datetime->format('H:i:s');
+                    
+                    // Calcular hora_diferencia y estatus_hora
+                    $hora_salida_real = new DateTime($registro['hora_salida']); // Asumiendo que esta columna existe en la tabla
+                    $hora_diferencia = $hora_salida_datetime->diff($hora_salida_real);
+                    $registro['hora_diferencia'] = $hora_diferencia->format('%H:%I:%S');
+    
+                    // Determinar estatus_hora
+                    if ($hora_salida_real > $hora_salida_datetime) {
+                        $registro['estatus_hora'] = "retardo";
+                    } elseif ($hora_salida_real < $hora_salida_datetime) {
+                        $registro['estatus_hora'] = "sobretiempo";
+                    } else {
+                        $registro['estatus_hora'] = "en tiempo";
+                    }
+    
+                    break; // Salir del bucle interno si encuentras una coincidencia
+                }
+            }
+        }
+        
+        //dd($consulta); // Mostrar la consulta modificada
+        
+        // Devolver los resultados a la vista
+        return view('Transmasivo.Operaciones.Bitacora_de_operaciones', compact('terminal', 'consulta', 'credencial'));
+    }
+    
+
+    public function enrolar_horarios_conductores()
+    {
+        
+        $where="";
+        $currentYear = \Carbon\Carbon::now()->year;
+                $today = \Carbon\Carbon::today()->format('Y-m-d');
+                $semanas = [];
+                $j = 1;
+                $selectedSemana = '';
+                $semana_hoy = null; // Variable para almacenar la semana actual
+
+                for ($week = 1; $week <= 52; $week++) {
+                    $startOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->startOfWeek()->format('Y-m-d');
+                    $endOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->endOfWeek()->format('Y-m-d');
+                    $semanaValue = "'$startOfWeek 00:00:00' AND '$endOfWeek 23:59:59'";
+                    $semanas[] = [
+                        'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                        'value' => $semanaValue
+                    ];
+                    
+                    // Verificar si hoy está dentro de esta semana
+                    if ($today >= $startOfWeek && $today <= $endOfWeek) {
+                        $selectedSemana = $semanaValue;
+                        $semana_hoy = [
+                            'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                            'value' => $semanaValue
+                        ];
+                    }
+                    
+                    $j++;
+                }
+
+        $consulta=DB::connection('mysql')->select("SELECT t_rol_operadores.id_rol_operador,t_rol_operadores.servicio,t_rol_operadores.jornada,t_rol_operadores.turno,t_rol_operadores.ciclos,
+                t_rol_operadores.horas,t_rol_operadores.posicion, t_rol_operadores.lunes,t_rol_operadores.martes, t_rol_operadores.miercoles,t_rol_operadores.jueves,t_rol_operadores.viernes,
+                t_rol_operadores.sabado,t_rol_operadores.domingo,
+                 CASE
+                    WHEN servicio = 'esto es una pruebas' THEN null
+                    ELSE NULL
+                END AS id_conductor,
+                CASE
+                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                    ELSE NULL
+                END AS total_tiempo,
+                CASE 
+                    WHEN lunes = '02:02:02' THEN lunes
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS lunes_total,
+                CASE 
+                    WHEN martes = '02:02:02' THEN martes
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS martes_total,
+                CASE 
+                    WHEN miercoles = '02:02:02' THEN miercoles
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS miercoles_total,
+                CASE 
+                    WHEN jueves = '02:02:02' THEN jueves
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS jueves_total,
+                CASE 
+                WHEN viernes = '02:02:02' THEN viernes
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS viernes_total,
+            CASE 
+                WHEN sabado = '02:02:02' THEN sabado
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS sabado_total,
+            CASE 
+                WHEN domingo = '02:02:02' THEN domingo
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS domingo_total
+            FROM  t_rol_operadores 
+             ;");   
+            $consulta2 = DB::connection('mysql')->select('select * from t_rol_semanal_conductor 
+            inner join users on users.id=t_rol_semanal_conductor.id_conductor
+            where fecha_inicio  between '.$semana_hoy['value'].'');
+            foreach ($consulta as &$item) {
+                foreach ($consulta2 as $c2) {
+                    if ($item->id_rol_operador == $c2->id_rol_operadores) {
+                        $item->id_conductor = $c2->id . ' - ' . $c2->name;
+                        break;
+                    }
+                }
+            }
+            
+        $conductores = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
+            
+            foreach ($conductores as $key => $conductor) {
+                foreach ($consulta2 as $c2) {
+                    if ($conductor->id == $c2->id_conductor) {
+                        unset($conductores[$key]);
+                    }
+                }
+            }
+
+            $conductores = array_values($conductores);
+            $semana_seleccionada=$semana_hoy['value'];
+            $conductores_enrolados = count($consulta2);
+            $conductores_totales = count($conductores);
+        return view('Transmasivo.Operaciones.enrolar_horarios_conductores',compact('where','consulta','conductores','conductores_enrolados','conductores_totales','semana_seleccionada'));
+    }
+    public function post_enrolar_horarios_conductores(Request $request)
+    {
+        if($request->has('enrolar'))
+        {
+            
+
+            $id_rol_operador = $request->input('hidden_id_rol_operador');
+            $fecha_inicio = $request->input('semana_hidden');
+            $fecha_inicio_cortada = substr($fecha_inicio, 1, 10);
+            $fecha_fin = $request->input('semana_hidden');
+            $fecha_fin_cortada = substr($fecha_fin, 27, 10);
+            $id_conductor = $request->input('conductores');
+            $id_operador_registra = auth()->id();
+            date_default_timezone_set('America/Mexico_City');
+            $hora_actual = time();
+            $fecha_registro = date('Y-m-d H:i:s', $hora_actual);
+
+            $result = DB::connection('mysql')->select('insert into t_rol_semanal_conductor (id_rol_operadores,fecha_inicio,fecha_fin,id_conductor,id_operador_registra,fecha_registro) values(?,?,?,?,?,?)'
+            , [
+                $id_rol_operador,
+                $fecha_inicio_cortada,
+                $fecha_fin_cortada,
+                $id_conductor,
+                $id_operador_registra,
+                $fecha_registro,
+            ]);
+
+
+
+            $where="";
+            $currentYear = \Carbon\Carbon::now()->year;
+                    $today = \Carbon\Carbon::today()->format('Y-m-d');
+                    $semanas = [];
+                    $j = 1;
+                    $selectedSemana = '';
+                    $semana_hoy = null; // Variable para almacenar la semana actual
+    
+                    for ($week = 1; $week <= 52; $week++) {
+                        $startOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->startOfWeek()->format('Y-m-d');
+                        $endOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->endOfWeek()->format('Y-m-d');
+                        $semanaValue = "'$startOfWeek 00:00:00' AND '$endOfWeek 23:59:59'";
+                        $semanas[] = [
+                            'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                            'value' => $semanaValue
+                        ];
+                        
+                        // Verificar si hoy está dentro de esta semana
+                        if ($today >= $startOfWeek && $today <= $endOfWeek) {
+                            $selectedSemana = $semanaValue;
+                            $semana_hoy = [
+                                'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                                'value' => $semanaValue
+                            ];
+                        }
+                        
+                        $j++;
+                    }
+    
+            $consulta=DB::connection('mysql')->select("SELECT t_rol_operadores.id_rol_operador,t_rol_operadores.servicio,t_rol_operadores.jornada,t_rol_operadores.turno,t_rol_operadores.ciclos,
+                    t_rol_operadores.horas,t_rol_operadores.posicion, t_rol_operadores.lunes,t_rol_operadores.martes, t_rol_operadores.miercoles,t_rol_operadores.jueves,t_rol_operadores.viernes,
+                    t_rol_operadores.sabado,t_rol_operadores.domingo,
+                     CASE
+                        WHEN servicio = 'esto es una pruebas' THEN null
+                        ELSE NULL
+                    END AS id_conductor,
+                    CASE
+                        WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                        WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                        WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                        WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                        ELSE NULL
+                    END AS total_tiempo,
+                    CASE 
+                        WHEN lunes = '02:02:02' THEN lunes
+                        ELSE SEC_TO_TIME(
+                            CASE
+                                WHEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) > TIME_TO_SEC('23:59:59')
+                                THEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) - TIME_TO_SEC('24:00:00')
+                                ELSE TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END)
+                            END
+                        ) 
+                    END AS lunes_total,
+                    CASE 
+                        WHEN martes = '02:02:02' THEN martes
+                        ELSE SEC_TO_TIME(
+                            CASE
+                                WHEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) > TIME_TO_SEC('23:59:59')
+                                THEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) - TIME_TO_SEC('24:00:00')
+                                ELSE TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END)
+                            END
+                        ) 
+                    END AS martes_total,
+                    CASE 
+                        WHEN miercoles = '02:02:02' THEN miercoles
+                        ELSE SEC_TO_TIME(
+                            CASE
+                                WHEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) > TIME_TO_SEC('23:59:59')
+                                THEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) - TIME_TO_SEC('24:00:00')
+                                ELSE TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END)
+                            END
+                        ) 
+                    END AS miercoles_total,
+                    CASE 
+                        WHEN jueves = '02:02:02' THEN jueves
+                        ELSE SEC_TO_TIME(
+                            CASE
+                                WHEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) > TIME_TO_SEC('23:59:59')
+                                THEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END) - TIME_TO_SEC('24:00:00')
+                                ELSE TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                    ELSE '00:00:00'
+                                END)
+                            END
+                        ) 
+                    END AS jueves_total,
+                    CASE 
+                    WHEN viernes = '02:02:02' THEN viernes
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS viernes_total,
+                CASE 
+                    WHEN sabado = '02:02:02' THEN sabado
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS sabado_total,
+                CASE 
+                    WHEN domingo = '02:02:02' THEN domingo
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS domingo_total
+                FROM  t_rol_operadores 
+                 ;");   
+                $consulta2 = DB::connection('mysql')->select('select * from t_rol_semanal_conductor 
+                inner join users on users.id=t_rol_semanal_conductor.id_conductor
+                where fecha_inicio  between '. $fecha_inicio.'');
+                foreach ($consulta as &$item) {
+                    foreach ($consulta2 as $c2) {
+                        if ($item->id_rol_operador == $c2->id_rol_operadores) {
+                            $item->id_conductor = $c2->id . ' - ' . $c2->name;
+                            break;
+                        }
+                    }
+                }
+                
+            $conductores = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
+                
+                foreach ($conductores as $key => $conductor) {
+                    foreach ($consulta2 as $c2) {
+                        if ($conductor->id == $c2->id_conductor) {
+                            unset($conductores[$key]);
+                        }
+                    }
+                }
+    
+                $conductores = array_values($conductores);
+                $semana_seleccionada=$fecha_inicio;
+                $conductores_enrolados = count($consulta2);
+                $conductores_totales = count($conductores);
+                $mensaje="Conductor enrolado";
+                $color="success";
+
+                return redirect()->route('enrolar_horarios_conductores')->with('where', $where)->with('consulta', $consulta)->with('conductores_enrolados', $conductores_enrolados)
+                ->with('conductores_totales', $conductores_totales)->with('semana_seleccionada', $semana_seleccionada)->with('mensaje', $mensaje)->with('color', $color);
+
+
+
+
+        }
+        if($request->has('Buscar')){
+            
+            $where="";
+            $semana_seleccionada=$request->input('semana');
+        $currentYear = \Carbon\Carbon::now()->year;
+                $today = \Carbon\Carbon::today()->format('Y-m-d');
+                $semanas = [];
+                $j = 1;
+                $selectedSemana = '';
+                $semana_hoy = null; // Variable para almacenar la semana actual
+
+                for ($week = 1; $week <= 52; $week++) {
+                    $startOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->startOfWeek()->format('Y-m-d');
+                    $endOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->endOfWeek()->format('Y-m-d');
+                    $semanaValue = "'$startOfWeek 00:00:00' AND '$endOfWeek 23:59:59'";
+                    $semanas[] = [
+                        'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                        'value' => $semanaValue
+                    ];
+                    
+                    // Verificar si hoy está dentro de esta semana
+                    if ($today >= $startOfWeek && $today <= $endOfWeek) {
+                        $selectedSemana = $semanaValue;
+                        $semana_hoy = [
+                            'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                            'value' => $semanaValue
+                        ];
+                    }
+                    
+                    $j++;
+                }
+
+        $consulta=DB::connection('mysql')->select("SELECT t_rol_operadores.id_rol_operador,t_rol_operadores.servicio,t_rol_operadores.jornada,t_rol_operadores.turno,t_rol_operadores.ciclos,
+                t_rol_operadores.horas,t_rol_operadores.posicion, t_rol_operadores.lunes,t_rol_operadores.martes, t_rol_operadores.miercoles,t_rol_operadores.jueves,t_rol_operadores.viernes,
+                t_rol_operadores.sabado,t_rol_operadores.domingo,
+
+                CASE
+                    WHEN servicio = 'esto es una pruebas' THEN null
+                    ELSE NULL
+                END AS id_conductor,
+                CASE
+                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                    ELSE NULL
+                END AS total_tiempo,
+                CASE 
+                    WHEN lunes = '02:02:02' THEN lunes
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS lunes_total,
+                CASE 
+                    WHEN martes = '02:02:02' THEN martes
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS martes_total,
+                CASE 
+                    WHEN miercoles = '02:02:02' THEN miercoles
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS miercoles_total,
+                CASE 
+                    WHEN jueves = '02:02:02' THEN jueves
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS jueves_total,
+                CASE 
+                WHEN viernes = '02:02:02' THEN viernes
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS viernes_total,
+            CASE 
+                WHEN sabado = '02:02:02' THEN sabado
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS sabado_total,
+            CASE 
+                WHEN domingo = '02:02:02' THEN domingo
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS domingo_total
+            FROM  t_rol_operadores 	 ;");   
+
+            $consulta2 = DB::connection('mysql')->select('select * from t_rol_semanal_conductor 
+            inner join users on users.id=t_rol_semanal_conductor.id_conductor
+            where fecha_inicio  between '.$semana_seleccionada.'');
+
+                //dd($consulta);
+            foreach ($consulta as &$item) {
+                foreach ($consulta2 as $c2) {
+                    if ($item->id_rol_operador == $c2->id_rol_operadores) {
+                        $item->id_conductor = $c2->id . ' - ' . $c2->name;
+                        break;
+                    }
+                }
+            }
+            
+                $conductores = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
+            
+            foreach ($conductores as $key => $conductor) {
+                foreach ($consulta2 as $c2) {
+                    if ($conductor->id == $c2->id_conductor) {
+                        unset($conductores[$key]);
+                    }
+                }
+            }
+            $conductores = array_values($conductores);
+            
+            $conductores_enrolados = count($consulta2);
+            $conductores_totales = count($conductores);
+
+        return view('Transmasivo.Operaciones.enrolar_horarios_conductores',compact('where','consulta','conductores_enrolados','conductores_totales','conductores','semana_seleccionada'));
+        }
+    }
+
+    public function bitacora_de_operaciones_2(Request $request)
+    {
+        $where="";
+        $currentYear = \Carbon\Carbon::now()->year;
+                $today = \Carbon\Carbon::today()->format('Y-m-d');
+                $semanas = [];
+                $j = 1;
+                $selectedSemana = '';
+                $semana_hoy = null; // Variable para almacenar la semana actual
+
+                for ($week = 1; $week <= 52; $week++) {
+                    $startOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->startOfWeek()->format('Y-m-d');
+                    $endOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->endOfWeek()->format('Y-m-d');
+                    $semanaValue = "'$startOfWeek 00:00:00' AND '$endOfWeek 23:59:59'";
+                    $semanas[] = [
+                        'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                        'value' => $semanaValue
+                    ];
+                    
+                    // Verificar si hoy está dentro de esta semana
+                    if ($today >= $startOfWeek && $today <= $endOfWeek) {
+                        $selectedSemana = $semanaValue;
+                        $semana_hoy = [
+                            'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
+                            'value' => $semanaValue
+                        ];
+                    }
+                    
+                    $j++;
+                }
+
+        $consulta=DB::connection('mysql')->select("SELECT t_rol_operadores.id_rol_operador,t_rol_operadores.servicio,t_rol_operadores.jornada,t_rol_operadores.turno,t_rol_operadores.ciclos,
+                t_rol_operadores.horas,t_rol_operadores.posicion, t_rol_operadores.lunes,t_rol_operadores.martes, t_rol_operadores.miercoles,t_rol_operadores.jueves,t_rol_operadores.viernes,
+                t_rol_operadores.sabado,t_rol_operadores.domingo,
+                 CASE
+                    WHEN servicio = 'esto es una pruebas' THEN null
+                    ELSE NULL
+                END AS id_conductor,
+                CASE
+                    WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                    WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                    WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                    WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                    ELSE NULL
+                END AS total_tiempo,
+                CASE 
+                    WHEN lunes = '02:02:02' THEN lunes
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(lunes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS lunes_total,
+                CASE 
+                    WHEN martes = '02:02:02' THEN martes
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(martes) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS martes_total,
+                CASE 
+                    WHEN miercoles = '02:02:02' THEN miercoles
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(miercoles) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS miercoles_total,
+                CASE 
+                    WHEN jueves = '02:02:02' THEN jueves
+                    ELSE SEC_TO_TIME(
+                        CASE
+                            WHEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) > TIME_TO_SEC('23:59:59')
+                            THEN TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END) - TIME_TO_SEC('24:00:00')
+                            ELSE TIME_TO_SEC(jueves) + TIME_TO_SEC(CASE
+                                WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                                WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                                WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                                ELSE '00:00:00'
+                            END)
+                        END
+                    ) 
+                END AS jueves_total,
+                CASE 
+                WHEN viernes = '02:02:02' THEN viernes
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(viernes) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS viernes_total,
+            CASE 
+                WHEN sabado = '02:02:02' THEN sabado
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(sabado) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS sabado_total,
+            CASE 
+                WHEN domingo = '02:02:02' THEN domingo
+                ELSE SEC_TO_TIME(
+                    CASE
+                        WHEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) > TIME_TO_SEC('23:59:59')
+                        THEN TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END) - TIME_TO_SEC('24:00:00')
+                        ELSE TIME_TO_SEC(domingo) + TIME_TO_SEC(CASE
+                            WHEN servicio = 'TR1' THEN SEC_TO_TIME(TIME_TO_SEC('00:39:00') * (ciclos*2))
+                            WHEN servicio = 'TR3' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR3-R' THEN SEC_TO_TIME(TIME_TO_SEC('00:30:00') * (ciclos*2))
+                            WHEN servicio = 'TR4' THEN SEC_TO_TIME(TIME_TO_SEC('00:20:00') * (ciclos*2))
+                            ELSE '00:00:00'
+                        END)
+                    END
+                ) 
+            END AS domingo_total
+            FROM  t_rol_operadores 
+             ;");   
+            $consulta2 = DB::connection('mysql')->select('select * from t_rol_semanal_conductor 
+            inner join users on users.id=t_rol_semanal_conductor.id_conductor
+            where fecha_inicio  between '.$semana_hoy['value'].'');
+            foreach ($consulta as &$item) {
+                foreach ($consulta2 as $c2) {
+                    if ($item->id_rol_operador == $c2->id_rol_operadores) {
+                        $item->id_conductor = $c2->id . ' - ' . $c2->name;
+                        break;
+                    }
+                }
+            }
+            
+        $conductores = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
+            
+            foreach ($conductores as $key => $conductor) {
+                foreach ($consulta2 as $c2) {
+                    if ($conductor->id == $c2->id_conductor) {
+                        unset($conductores[$key]);
+                    }
+                }
+            }
+
+            $conductores = array_values($conductores);
+            $semana_seleccionada=$semana_hoy['value'];
+            $conductores_enrolados = count($consulta2);
+            $conductores_totales = count($conductores);
+        return view('Transmasivo.Operaciones.bitacora_de_operaciones_2',compact('where','consulta','conductores','conductores_enrolados','conductores_totales','semana_seleccionada'));
     }
     
     public function Registro_bitacora_terminal(Request $request)
@@ -39,23 +1275,20 @@ class OperacionesController extends Controller
             $credencial=$request->input('credencial');
             $km=$request->input('km');
             $hora_salida=$request->input('hora_salida');
+            $dia=$request->input('dia');
             $comentarios=$request->input('comentarios');
-
             date_default_timezone_set('America/Mexico_City');
             $hora_actual = time();
-
             $hora_una_hora_atras = $hora_actual - 3600;
-
             $hora_formateada = date('Y-m-d H:i:s', $hora_una_hora_atras);
 
             $bitacora = new t_bitacora_terminales();
             $bitacora->terminal = $terminal;
             $bitacora->hora_llegada = $hora_llegada;
             $bitacora->Servicio = $serv; // Ajusta el nombre del campo según corresponda en tu tabla
-            $bitacora->Jornada = $jorn; // Ajusta el nombre del campo según corresponda en tu tabla
             $bitacora->eco = $eco;
+            $bitacora->dia = $dia;
             $bitacora->credencial = $credencial;
-            $bitacora->kilometraje = $km;
             $bitacora->hora_salida = $hora_salida;
             $bitacora->comentario = $comentarios;
             $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
@@ -70,6 +1303,36 @@ class OperacionesController extends Controller
         }
         
     }
+
+    public function buscar_rol_operador(Request $request)
+        {
+            $credencial = $request->input('credencial');
+            $dia = $request->input('dia');
+            
+            $results = DB::connection('mysql')->select(
+                'SELECT *,users.name FROM t_rol_semanal_conductor 
+                INNER JOIN t_rol_operadores 
+                ON t_rol_operadores.id_rol_operador = t_rol_semanal_conductor.id_rol_operadores 
+                INNER JOIN users 
+                ON users.id = t_rol_semanal_conductor.id_conductor 
+                WHERE id_conductor = ? 
+                AND ? BETWEEN fecha_inicio AND fecha_fin', [$credencial, $dia]
+            );
+            $nombreDiaSemana = Carbon::parse($dia)->locale('es')->isoFormat('dddd');
+            $registros_dia= DB::connection('mysql')->select(
+                'SELECT * FROM t_bitacora_terminales 
+                
+                WHERE credencial = ? 
+                AND dia = ? ', [$credencial, $dia]
+            );
+            return [
+                'results' => $results,
+                'dia' => $nombreDiaSemana,
+                'registros_dia' => $registros_dia,
+            ];
+        }
+
+
     public function generarPDF()
     {
         $html = view('Transmasivo.Operaciones.reporte_bitacora_terminal')->render();

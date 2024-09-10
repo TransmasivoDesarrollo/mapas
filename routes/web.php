@@ -96,8 +96,12 @@ Route::middleware('auth')->group(function () {
 
     //recursos humanos
     Route::get('/check-location', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@checkLocation');
+
     Route::get('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Contratos');
     Route::POST('/Contratos', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@generarContratos');
+    
+    Route::get('/Gestion_de_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Gestion_de_horarios')->name('Gestion_de_horarios');
+    Route::POST('/Gestion_de_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postGestion_de_horarios')->name('postGestion_de_horarios');
 
     Route::get('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Renuncias');
     Route::POST('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@descargarRenuncia');
@@ -318,6 +322,19 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/Validar_horas_de_curso', '\App\Http\Controllers\Capacitacion\CapacitacionController@Validar_horas_de_curso')->name('Validar_horas_de_curso');
     Route::POST('/Validar_horas_de_curso', '\App\Http\Controllers\Capacitacion\CapacitacionController@post_Validar_horas_de_curso')->name('post_Validar_horas_de_curso');
+    
+    
+    Route::get('/Enrolar_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Enrolar_horarios')->name('Enrolar_horarios');
+    Route::POST('/Enrolar_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_Enrolar_horarios')->name('post_Enrolar_horarios');
+    
+    Route::get('/enrolar_horarios_conductores', '\App\Http\Controllers\Operaciones\OperacionesController@enrolar_horarios_conductores')->name('enrolar_horarios_conductores');
+    Route::POST('/enrolar_horarios_conductores', '\App\Http\Controllers\Operaciones\OperacionesController@post_enrolar_horarios_conductores')->name('post_enrolar_horarios_conductores');
+
+    Route::get('/bitacora_de_operaciones_2', '\App\Http\Controllers\Operaciones\OperacionesController@bitacora_de_operaciones_2')->name('bitacora_de_operaciones_2');
+    Route::POST('/bitacora_de_operaciones_2', '\App\Http\Controllers\Operaciones\OperacionesController@post_bitacora_de_operaciones_2')->name('post_bitacora_de_operaciones_2');
+
+    
+    Route::get('/buscar_rol_operador', '\App\Http\Controllers\Operaciones\OperacionesController@buscar_rol_operador')->name('buscar_rol_operador');
     
     
     
