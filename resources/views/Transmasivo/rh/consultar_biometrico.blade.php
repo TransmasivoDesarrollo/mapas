@@ -142,17 +142,27 @@
                                                 <td>{{$consul->fin}}</td>
                                                 <td>{{$consul->tiempo_trabajado}}</td>
                                                 <td>
-                                                    @if($consul->estado == "Retardo")<b>{{$consul->dia[0]}}</b><br>
+                                                    @if($consul->estado == "Retardo")
                                                         <b style="color:orange">{{$consul->estado}}</b>
-                                                    @else<b>{{$consul->dia[0]}}</b><br>
+                                                        <br><b>{{$consul->dia[0]}}</b>
+                                                    @elseif($consul->estado == "En tiempo")
                                                         <b style="color:green">{{$consul->estado}}</b>
+                                                        <br><b>{{$consul->dia[0]}}</b>
+                                                    @else
+                                                        <b style="color:red">Sin horario asignado</b>
+                                                        <br><b>{{$consul->dia[0]}}</b>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($consul->salida_estado == "Salió antes")<b>{{$consul->dia[0]}}</b><br>
+                                                    @if($consul->salida_estado == "Salió antes")
                                                         <b style="color:orange">{{$consul->salida_estado}}</b>
-                                                    @else<b>{{$consul->dia[0]}}</b><br>
+                                                        <br><b>{{$consul->dia[0]}}</b>
+                                                    @elseif($consul->salida_estado == "Salió bien")
                                                         <b style="color:green">{{$consul->salida_estado}}</b>
+                                                        <br><b>{{$consul->dia[0]}}</b>
+                                                    @else
+                                                        <b style="color:red">Sin horario asignado</b>
+                                                        <br><b>{{$consul->dia[0]}}</b>
                                                     @endif
                                                 </td>
                                                 <td>{!! $consul->todas_las_fechas !!}</td>

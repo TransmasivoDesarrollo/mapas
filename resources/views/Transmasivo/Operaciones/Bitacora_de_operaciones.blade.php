@@ -130,15 +130,18 @@
                     <input type="submit" class="btn btn-danger" value="PDF" name="pdf" id="pdf">
             </form>
             <div class="table-responsive" >
-                                    <table class="table table-bordered  " id="list_user">
+                                    <table class="table table-bordered  " id="list_user2">
                                         <thead>
                                             <tr>
                                             <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Hora de llegada</center></th>
-                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Servicio</center></th>
-                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Economico</center></th>
+                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Serv.</center></th>
+                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Eco.</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Credencial</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Día</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Hora de salida</center></th>
+                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Hora llegada rol</center></th>
+                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Difernecia</center></th>
+                                                <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Estatus</center></th>
                                                 <th class="bg-danger sorting" style="color:#ffffff; width: 30%;"><center>Comentarios</center></th>
                                             </tr>
                                         </thead>
@@ -153,6 +156,9 @@
                                                     <td>{{$fila['credencial']}}</td>
                                                     <td>{{$fila['dia']}}</td>
                                                     <td>{{$fila['hora_salida']}}</td>
+                                                    <td>{{$fila['hora_salida_rol']}}</td>
+                                                    <td>@if($fila['estatus_hora']=="sobretiempo") + @elseif($fila['estatus_hora']=="retardo") - @endif {{$fila['hora_diferencia']}}</td>
+                                                    <td>{{$fila['estatus_hora']}}</td>
                                                     <td>{{$fila['comentario']}}</td>
                                                 </tr>
                                             @endforeach
@@ -171,6 +177,29 @@
 	@section('jscustom')
     <script type="text/javascript">
         $('#credencial').select2();
+        $('#list_user2').DataTable({
+            scrollX: false,
+            scrollCollapse: true,
+            filter: true,
+            lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
+            iDisplayLength: 15,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ datos",
+                "zeroRecords": "No existe el dato introducido",
+                "info": "Página _PAGE_ de _PAGES_ ",
+                "infoEmpty": "Sin datos disponibles",
+                "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "search": "Buscar",
+                "processing": "Buscando...",
+                "loadingRecords": "Cargando..."
+            }
+        });
         
         $(document).ready(function() {
             function actualizarFecha() {

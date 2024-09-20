@@ -931,8 +931,14 @@
 								<p>Consultar biometrico</p>
 							</a>
 					</li>
+					<li class="nav-item">
+						<a href="{{url('/Generador_qr')}}">
+							<i class="la la-qrcode"></i>
+							<p>Generador de QR</p>
+						</a>
+					</li>
                     @endif
-					
+                    
                 </ul>
             </div>
         </div>

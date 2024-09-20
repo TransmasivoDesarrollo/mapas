@@ -10,6 +10,7 @@ use App\Models\BitacoraLiberacionUnidades;
 use DB;
 use Dompdf\Dompdf;
 use Carbon\Carbon;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use DateTime; // Añadir esta línea
 
 
@@ -24,7 +25,7 @@ class OperacionesController extends Controller
         $consulta = DB::connection('mysql')->select('SELECT * FROM t_bitacora_terminales WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00"');
         $credenciales_registradas = DB::connection('mysql')->select('SELECT Servicio, credencial, COUNT(*) AS cantidad FROM t_bitacora_terminales WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00" GROUP BY credencial, Servicio');
         $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
-        $terminal = DB::connection('mysql_produc')->select('SELECT * FROM c_terminal');
+        $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
         $consulta = json_decode(json_encode($consulta), true);
         $credenciales_registradas = json_decode(json_encode($credenciales_registradas), true);
     
@@ -127,7 +128,7 @@ class OperacionesController extends Controller
             }
         }
         
-        //dd($consulta); // Mostrar la consulta modificada
+       // dd($consulta); // Mostrar la consulta modificada
         
         // Devolver los resultados a la vista
         return view('Transmasivo.Operaciones.Bitacora_de_operaciones', compact('terminal', 'consulta', 'credencial'));
@@ -2104,6 +2105,9 @@ class OperacionesController extends Controller
     {
         return view('errors.419');
     }
+
+
+
 
     public function Autorizacion_check_mantenimiento($mensaje="",$color="")
     {

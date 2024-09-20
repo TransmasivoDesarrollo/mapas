@@ -974,6 +974,20 @@ class RecursosHumanosControlador extends Controller
     MAX(fecha_hora) AS fin,
     TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MIN(fecha_hora)) > (
             SELECT 
                 thp.hora_llegada 
@@ -986,11 +1000,25 @@ class RecursosHumanosControlador extends Controller
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Retardo'
         ELSE 'En tiempo'
     END AS estado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MAX(fecha_hora)) < (
             SELECT 
                 thp.hora_salida 
@@ -1003,7 +1031,7 @@ class RecursosHumanosControlador extends Controller
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Salió antes'
         ELSE 'Salió bien'
     END AS salida_estado,
@@ -1035,6 +1063,20 @@ FROM
     MAX(fecha_hora) AS fin,
     TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MIN(fecha_hora)) > (
             SELECT 
                 thp.hora_llegada 
@@ -1047,11 +1089,25 @@ FROM
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Retardo'
         ELSE 'En tiempo'
     END AS estado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MAX(fecha_hora)) < (
             SELECT 
                 thp.hora_salida 
@@ -1064,7 +1120,7 @@ FROM
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Salió antes'
         ELSE 'Salió bien'
     END AS salida_estado,
@@ -1114,7 +1170,7 @@ FROM
             $consul->dia = $fechas_formateadas;
         }
         
-        //dd($consulta[0]);
+       // dd($consulta[0]);
         $fecha_inicio=$request->input('fecha_inicio');
         $fecha_fin=$request->input('fecha_fin');
         return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
@@ -1213,6 +1269,20 @@ FROM
     MAX(fecha_hora) AS fin,
     TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MIN(fecha_hora)) > (
             SELECT 
                 thp.hora_llegada 
@@ -1225,11 +1295,25 @@ FROM
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Retardo'
         ELSE 'En tiempo'
     END AS estado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MAX(fecha_hora)) < (
             SELECT 
                 thp.hora_salida 
@@ -1242,7 +1326,7 @@ FROM
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Salió antes'
         ELSE 'Salió bien'
     END AS salida_estado,
@@ -1326,6 +1410,20 @@ FROM
     MAX(fecha_hora) AS fin,
     TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_llegada 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MIN(fecha_hora)) > (
             SELECT 
                 thp.hora_llegada 
@@ -1338,11 +1436,25 @@ FROM
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Retardo'
         ELSE 'En tiempo'
     END AS estado,
     CASE 
+        WHEN (
+            SELECT 
+                thp.hora_salida 
+            FROM 
+                t_horarios_enrolador_personal tehp
+            INNER JOIN 
+                t_horarios_personal thp 
+            ON 
+                thp.id_t_horarios_personal = tehp.id_horario 
+            WHERE 
+                tehp.id_empleado = id_elemento 
+                AND tehp.estatus = 'Activo'
+            LIMIT 1
+        ) IS NULL THEN 'Usuario sin horario'
         WHEN TIME(MAX(fecha_hora)) < (
             SELECT 
                 thp.hora_salida 
@@ -1355,7 +1467,7 @@ FROM
             WHERE 
                 tehp.id_empleado = id_elemento 
                 AND tehp.estatus = 'Activo'
-            LIMIT 1  -- Asumiendo que solo hay un horario activo por empleado
+            LIMIT 1
         ) THEN 'Salió antes'
         ELSE 'Salió bien'
     END AS salida_estado,
