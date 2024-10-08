@@ -346,12 +346,16 @@
 							</a>
 							<div class="collapse" id="Operaciones">
 								<ul class="nav nav-collapse">
-                                    <!--
-                                    <li>
-										<a  href="{{url('/Alta_de_unidades')}}">
-											<span class="sub-item">Alta de unidades</span>
+									<li>
+										<a  href="{{url('/enrolar_horarios_conductores_2')}}">
+											<span class="sub-item">Enrolar horarios de conductores</span>
 										</a>
-									</li>-->
+									</li>
+									<li>
+										<a  href="{{url('/bitacora_de_operaciones_2')}}">
+											<span class="sub-item">Bitácora de operaciones2</span>
+										</a>
+									</li>
 									<li>
 										<a  href="{{url('/Autorizacion_check_mantenimiento')}}">
 											<span class="sub-item">Autorización check mantenimiento</span>
@@ -362,6 +366,7 @@
 											<span class="sub-item">Bitácora de operaciones</span>
 										</a>
 									</li>
+									
                                     <li>
 										<a  href="{{url('/Alta_de_reporte')}}">
 											<span class="sub-item">Alta de reporte</span>
@@ -392,9 +397,6 @@
 											<span class="sub-item">Desacargas de reporte de estado físico y funcionamiento</span>
 										</a>
 									</li>
-									
-                                   
-									
 								</ul>
 							</div>
 					</li>
@@ -784,7 +786,7 @@
 							<div class="collapse" id="Operaciones">
 								<ul class="nav nav-collapse">
 									<li>
-										<a  href="{{url('/enrolar_horarios_conductores')}}">
+										<a  href="{{url('/enrolar_horarios_conductores_2')}}">
 											<span class="sub-item">Enrolar horarios de conductores</span>
 										</a>
 									</li>
@@ -934,7 +936,7 @@
 					<li class="nav-item">
 						<a href="{{url('/Generador_qr')}}">
 							<i class="la la-qrcode"></i>
-							<p>Generador de QR</p>
+							<p>Generador de QR.</p>
 						</a>
 					</li>
                     @endif

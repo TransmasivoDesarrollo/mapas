@@ -176,6 +176,7 @@ Route::middleware('auth')->group(function () {
 
     //operaciones
     
+    
     Route::get('/recorrido', '\App\Http\Controllers\Operaciones\OperacionesController@recorrido')->name('recorrido');
     Route::get('/geodata', '\App\Http\Controllers\Operaciones\OperacionesController@geodata')->name('geodata');
     
@@ -275,6 +276,13 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/enrolar_horarios_conductores', '\App\Http\Controllers\Operaciones\OperacionesController@enrolar_horarios_conductores')->name('enrolar_horarios_conductores');
     Route::POST('/enrolar_horarios_conductores', '\App\Http\Controllers\Operaciones\OperacionesController@post_enrolar_horarios_conductores')->name('post_enrolar_horarios_conductores');
+    
+    Route::get('/buscar_horario_completo', '\App\Http\Controllers\Operaciones\OperacionesController@buscar_horario_completo')->name('buscar_horario_completo');
+    
+
+
+    Route::get('/enrolar_horarios_conductores_2', '\App\Http\Controllers\Operaciones\OperacionesController@enrolar_horarios_conductores_2')->name('enrolar_horarios_conductores_2');
+    Route::POST('/enrolar_horarios_conductores_2', '\App\Http\Controllers\Operaciones\OperacionesController@post_enrolar_horarios_conductores_2')->name('post_enrolar_horarios_conductores_2');
 
     Route::get('/bitacora_de_operaciones_2', '\App\Http\Controllers\Operaciones\OperacionesController@bitacora_de_operaciones_2')->name('bitacora_de_operaciones_2');
     Route::POST('/bitacora_de_operaciones_2', '\App\Http\Controllers\Operaciones\OperacionesController@post_bitacora_de_operaciones_2')->name('post_bitacora_de_operaciones_2');
