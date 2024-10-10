@@ -110,6 +110,8 @@
                                     <input type="hidden" id="hidden_dia_servicio" name="hidden_dia_servicio">
                                     <input type="hidden" id="hidden_turno" name="hidden_turno">
                                     <input type="hidden" id="hidden_jornada" name="hidden_jornada">
+                                    <input type="hidden" id="hidden_id_jornada_pk" name="hidden_id_jornada_pk">
+                                    
                                     <input type="hidden" id="semana_hidden" name="semana_hidden">
                                     <input type="hidden" id="dia_inicio_lv" name="dia_inicio_lv" value="{{$dia_inicio}}">
                                     <input type="hidden" id="dia_fin_lv" name="dia_fin_lv" value="{{$dia_fin}}">
@@ -154,6 +156,8 @@
                                     <input type="hidden" id="hidden_turno_s" name="hidden_turno_s">
                                     <input type="hidden" id="hidden_jornada_s" name="hidden_jornada_s">
                                     <input type="hidden" id="semana_hidden_s" name="semana_hidden_s">
+                                    
+                                    <input type="hidden" id="hidden_id_jornada_pk_s" name="hidden_id_jornada_pk_s">
                                     <input type="hidden" id="dia_inicio_s" name="dia_inicio_s" value="{{$dia_inicio}}">
                                     <input type="hidden" id="dia_fin_s" name="dia_fin_s" value="{{$dia_fin}}">
                                     
@@ -192,6 +196,7 @@
                                     <input type="hidden" id="hidden_dia_servicio_d" name="hidden_dia_servicio_d">
                                     <input type="hidden" id="hidden_turno_d" name="hidden_turno_d">
                                     <input type="hidden" id="hidden_jornada_d" name="hidden_jornada_d">
+                                    <input type="hidden" id="hidden_id_jornada_pk_d" name="hidden_id_jornada_pk_d">
                                     <input type="hidden" id="semana_hidden_d" name="semana_hidden_d">
                                     <input type="hidden" id="dia_inicio_d" name="dia_inicio_d" value="{{$dia_inicio}}">
                                     <input type="hidden" id="dia_fin_d" name="dia_fin_d" value="{{$dia_fin}}">
@@ -258,62 +263,6 @@
 
 
                 
-                        <!--
-                            <table class="table table-bordered  " id="list_user2">
-                                <thead>
-                                    <tr>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 3%;"><center>#</center></th>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 24%;"><center>Conductor</center></th>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 8%;"><center>Servicio</center></th>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 8%;"><center>Jornada</center></th>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Turno</center></th>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 8%;"><center>Total de ciclos</center></th>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 17%;"><center>Día de servicio</center></th>
-                                        <th class="bg-danger sorting" style="color:#ffffff; width: 22%;"><center>Horario</center></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="llenaTabla">
-                                    @php $contador=1; @endphp
-                                    @foreach($jornadas_m as $cons)
-                                    @if($cons->servicio=="TR1-R")
-                                         <tr style="background-color: rgba(228, 0, 124,.3);">
-                                    @endif
-                                    @if($cons->servicio=="TR3")
-                                         <tr style="background-color: rgba(0, 128, 0,.2);">
-                                    @endif
-                                    @if($cons->servicio=="TR1")
-                                         <tr style="background-color: rgba(255, 255, 0,.2);">
-                                    @endif
-                                    @if($cons->servicio=="TR4")
-                                         <tr style="background-color: rgba(255, 102, 0,.2);">
-                                    @endif
-                                            <td>
-                                              {{$contador}}
-                                              @php $contador ++ ;@endphp
-                                            </td>
-                                            
-                                            <td>
-                                                <center>
-                                                    <button type="button" class="btn btn-primary" onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal">
-                                                        Asignar conductor
-                                                    </button>
-                                                </center>
-                                            </td>
-                                            <td><center>{{$cons->servicio}}</center></td>
-                                            <td >{{$cons->jornada}}</td>
-                                            <td>{{$cons->turno}}</td>
-                                            <td>
-                                                <center>{{$cons->total_ciclos}}</center>
-                                            </td>
-                                            <td>{{$cons->dia_servicio}}</td>
-                                            <td style="cursor: pointer;" onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</td>
-
-                                            
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        -->
 
                     <div class="col-md-12">
 							
@@ -386,7 +335,7 @@
                                                                 <td >
                                                                     @if($cons->conductor=="Sin conductor")
                                                                         <center>
-                                                                            <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                            <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                             class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center><hr>
                                                                     @else
@@ -414,7 +363,7 @@
                                                                             </center>
                                                                     @if($cons->conductor=="Sin conductor")
                                                                     <hr><center>
-                                                                    <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                    <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                             class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
@@ -431,7 +380,7 @@
                                                                     <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                     @if($cons->conductor=="Sin conductor")
                                                                     <hr><center>
-                                                                            <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                            <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                             class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
@@ -476,7 +425,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                                <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -504,7 +453,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                        <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -521,7 +470,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                                <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -565,7 +514,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                                <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -593,7 +542,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                        <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -610,7 +559,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                                <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -654,7 +603,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                                <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -682,7 +631,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                        <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -699,7 +648,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
+                                                                                <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -744,7 +693,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -772,7 +721,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -789,7 +738,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -834,7 +783,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -862,7 +811,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -879,7 +828,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -924,7 +873,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -952,7 +901,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -969,7 +918,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1014,7 +963,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -1042,7 +991,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1059,7 +1008,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                                <button  onclick="abrirModal_s('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
+                                                                                <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1104,7 +1053,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                                <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                                <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -1132,7 +1081,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1149,7 +1098,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                         class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1194,7 +1143,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                            <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                            <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                             class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -1222,7 +1171,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1239,7 +1188,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                         class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1284,7 +1233,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                            <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                            <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                             class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -1312,7 +1261,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                         class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1329,7 +1278,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                         class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1374,7 +1323,7 @@
                                                                     <td >
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
-                                                                            <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                            <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                             class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
@@ -1402,7 +1351,7 @@
                                                                                 </center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                                 class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1419,7 +1368,7 @@
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b><br></center>
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
-                                                                        <button  onclick="abrirModal_d('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
+                                                                        <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
                                                                         class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
@@ -1487,7 +1436,7 @@
             dropdownParent: $('#exampleModal_d'), 
             width: '100%' 
         });
-        function abrirModal(servicio, dia_servicio, turno, jornada)
+        function abrirModal(id_jornada_pk,servicio, dia_servicio, turno, jornada)
         {
             console.log(servicio);
             console.log(dia_servicio);
@@ -1497,13 +1446,14 @@
             $('#hidden_dia_servicio').val(dia_servicio);
             $('#hidden_turno').val(turno);
             $('#hidden_jornada').val(jornada);
+            $('#hidden_id_jornada_pk').val(id_jornada_pk);
             var semana = $('#semana').val();
             $('#semana_hidden').val(semana);
             
             $('#modal_conductores').modal('show');
         }
 
-        function abrirModal_s(servicio, dia_servicio, turno, jornada)
+        function abrirModal_s(id_jornada_pk,servicio, dia_servicio, turno, jornada)
         {
             console.log(servicio);
             console.log(dia_servicio);
@@ -1513,12 +1463,13 @@
             $('#hidden_dia_servicio_s').val(dia_servicio);
             $('#hidden_turno_s').val(turno);
             $('#hidden_jornada_s').val(jornada);
+            $('#hidden_id_jornada_pk_s').val(id_jornada_pk);
             var semana = $('#semana').val();
             $('#semana_hidden_s').val(semana);
             
             $('#exampleModal_s').modal('show');
         }
-        function abrirModal_d(servicio, dia_servicio, turno, jornada)
+        function abrirModal_d(id_jornada_pk,servicio, dia_servicio, turno, jornada)
         {
             console.log(servicio);
             console.log(dia_servicio);
@@ -1528,6 +1479,7 @@
             $('#hidden_dia_servicio_d').val(dia_servicio);
             $('#hidden_turno_d').val(turno);
             $('#hidden_jornada_d').val(jornada);
+            $('#hidden_id_jornada_pk_d').val(id_jornada_pk);
             var semana = $('#semana').val();
             $('#semana_hidden_d').val(semana);
             

@@ -109,7 +109,7 @@
                             <div class="row">
                                     <div class="col-md-12">
                                         <center>
-                                            <input  type="submit" class="btn btn-success" value="Registrar" >
+                                            <input  type="submit" class="btn btn-success" id="boton_registra" disabled="true" class="boton_registra" value="Registrar" >
                                         </center>
                                     </div>
                                 </div>
@@ -128,18 +128,128 @@
                 <div class="card-body">
                 <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
                     @csrf
-                    <input type="submit" class="btn btn-danger" value="PDF" name="pdf" id="pdf">
-                    <input type="submit" class="btn btn-success" value="Excel" name="Excel" id="Excel">
-                        
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <div class=" card-stats">
+								<div class="card-body" style="border-right:1px black solid;">
+									
+									<div class="row">
+										<div class="col-5">
+											<div class="icon-big text-center icon-warning" style="background-color: #e5be01;">
+												<i class=" la la-bus text-warning"></i>
+											</div>
+										</div>
+										<div class="col-7 col-stats">
+											<div class="numbers">
+												<p class="card-category">Ciclos TR1</p>
+												<h4 class="card-title">{{$tr1_registro}}/{{$tr1_ciclos[0]->conteo}}</h4>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class=" card-stats">
+								<div class="card-body" style="border-right:1px black solid;">
+									
+									<div class="row">
+										<div class="col-5">
+											<div class="icon-big text-center icon-warning" style="background-color: #FF0080;">
+												<i class="la la-bus text-warning"></i>
+											</div>
+										</div>
+										<div class="col-7 col-stats">
+											<div class="numbers">
+												<p class="card-category">Ciclos TR1-R</p>
+												<h4 class="card-title">{{$tr1_r_registro}}/{{$tr1_r_ciclos[0]->conteo}}</h4>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class=" card-stats">
+								<div class="card-body" style="border-right:1px black solid;" >
+									
+									<div class="row">
+										<div class="col-5">
+											<div class="icon-big text-center icon-warning" style="background-color: #008f39;">
+												<i class="la la-bus text-warning"></i>
+											</div>
+										</div>
+										<div class="col-7 col-stats">
+											<div class="numbers">
+												<p class="card-category">Ciclos TR3</p>
+												<h4 class="card-title">{{$tr3_registro}}/{{$tr3_ciclos[0]->conteo}}</h4>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class=" card-stats">
+								<div class="card-body" style="border-right:1px black solid;">
+									
+									<div class="row">
+										<div class="col-5">
+											<div class="icon-big text-center icon-warning" style="background-color: #0000ff;">
+												<i class="la la-bus text-warning"></i>
+											</div>
+										</div>
+										<div class="col-7 col-stats">
+											<div class="numbers">
+												<p class="card-category">Ciclos TR4</p>
+												<h4 class="card-title">{{$tr4_registro}}/{{$tr4_ciclos[0]->conteo}}</h4>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+                        </div>
+                        <div class="col-md-2">
+                            
+                            <div class=" card-stats">
+								<div class="card-body" style="border-right:1px black solid;">
+									
+									<div class="row">
+										<div class="col-5">
+											<div class="icon-big text-center icon-warning" style="background-color: rgb(135, 38, 55);">
+												<i class="la la-bus text-warning"></i>
+											</div>
+										</div>
+										<div class="col-7 col-stats">
+											<div class="numbers">
+												<p class="card-category">Ciclos totales</p>
+												<h4 class="card-title">{{$total_registros}}/{{$total_ciclos}}</h4>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" class="btn btn-danger" value="PDF" name="pdf" id="pdf">
+                            <input type="submit" class="btn btn-success" value="Excel" name="Excel" id="Excel">
+                        </div>
+                    </div>
                 </form>
                 <br>
                     <div class="table-responsive" >
-                        <table class="table table-hover table-striped table-bordered "  id="list_user2">
+                        <table class="table table-hover table-striped table-bordered display  "  id="list_user2">
                             <thead>
                                 <tr>
-                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 12%;"><center>Día</center></th>
-                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 7%;"><center>Eco.</center></th>
-                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 7%;"><center>Serv.</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 11%;"><center>Día</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 5%;"><center>Eco.</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 5%;"><center>Serv.</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 5%;"><center>Credencial</center></th>
                                     <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 37%;"><center>Salida</center></th>
                                     <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 37%;"><center>Llegada mitad de recorrido</center></th>
                                 </tr>
@@ -167,14 +277,14 @@
                                                                     
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['hora_llegada']}} hrs.</span>
                                                                     </div>    
                                                                     </center>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['hora_salida']}} hrs.</span>
@@ -182,7 +292,7 @@
                                                                     </center> 
                                                                      
                                                                 </div>
-                                                                <div class="col-md-4"> 
+                                                                <div class="col-md-3"> 
                                                                     <div class="card-body">
                                                                     <center>
                                                                         @if($fila['hora_salida_rol']=="Fuera de jornada")
@@ -193,7 +303,7 @@
                                                                         </center>
                                                                     </div>    
                                                                 </div>
-                                                                <div class="col-md-6">    
+                                                                <div class="col-md-3">    
                                                                     <div class="card-body">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -205,7 +315,7 @@
                                                                     </div>    
                                                                      
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-3">
                                                                     <center>
                                                                     <div class="card-body" >
                                                                         @if($fila['estatus']=="Retardo")
@@ -218,13 +328,19 @@
                                                                     </div>  
                                                                     </center>
                                                                 </div>
-                                                                    @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
+                                                                @if($fila['comentario'] != null)
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
                                                                             {{$fila['comentario']}}
                                                                         </div>  
                                                                     </div>
-                                                                    @endif  
+                                                                @else
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
+                                                                            Sin Observaciones
+                                                                        </div>  
+                                                                    </div>
+                                                                @endif 
                                                                 
                                                             </div>
                                                     </td>
@@ -289,6 +405,13 @@
                                                             </td>
                                                             @endif
                                                             <td>
+                                                                <center>
+                                                                    <span class="" style=" color: black; font-size:12px;">
+                                                                        Cred. {{$fila['credencial']}}
+                                                                    </span>
+                                                                </center>
+                                                            </td>
+                                                            <td>
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="card-sub">
@@ -298,14 +421,14 @@
                                                                     
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-2">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['hora_llegada']}} hrs.</span>
                                                                     </div>    
                                                                     </center>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-2">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['hora_salida']}} hrs.</span>
@@ -313,7 +436,7 @@
                                                                     </center> 
                                                                      
                                                                 </div>
-                                                                <div class="col-md-4"> 
+                                                                <div class="col-md-3"> 
                                                                     <div class="card-body">
                                                                     <center>
                                                                         @if($fila['hora_salida_rol']=="Fuera de jornada")
@@ -324,7 +447,7 @@
                                                                         </center>
                                                                     </div>    
                                                                 </div>
-                                                                <div class="col-md-6">    
+                                                                <div class="col-md-3">    
                                                                     <div class="card-body">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -336,7 +459,7 @@
                                                                     </div>    
                                                                      
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-3">
                                                                     <center>
                                                                     <div class="card-body" >
                                                                         @if($fila['estatus']=="Retardo")
@@ -351,12 +474,18 @@
                                                                     
                                                                 </div>
                                                                 @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
                                                                             {{$fila['comentario']}}
                                                                         </div>  
                                                                     </div>
-                                                                    @endif  
+                                                                @else
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
+                                                                            Sin Observaciones
+                                                                        </div>  
+                                                                    </div>
+                                                                @endif  
                                                             </div>
                                                     </td>
                                                           
@@ -401,6 +530,13 @@
                                                                 </center>
                                                             </td>
                                                             @endif
+                                                            <td>
+                                                                <center>
+                                                                    <span class="" style=" color: black; font-size:12px;">
+                                                                        Cred. {{$fila['credencial']}}
+                                                                    </span>
+                                                                </center>
+                                                            </td>
                                                                 <td>
                                                             <div class="row">
                                                                 <div class="col-md-12">
@@ -411,14 +547,14 @@
                                                                     
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['hora_llegada']}} hrs.</span>
                                                                     </div>    
                                                                     </center>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['hora_salida']}} hrs.</span>
@@ -426,7 +562,7 @@
                                                                     </center> 
                                                                      
                                                                 </div>
-                                                                <div class="col-md-4"> 
+                                                                <div class="col-md-3"> 
                                                                     <div class="card-body">
                                                                     <center>
                                                                         @if($fila['hora_salida_rol']=="Fuera de jornada")
@@ -437,7 +573,7 @@
                                                                         </center>
                                                                     </div>    
                                                                 </div>
-                                                                <div class="col-md-6">    
+                                                                <div class="col-md-3">    
                                                                     <div class="card-body">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -449,7 +585,7 @@
                                                                     </div>    
                                                                      
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-3">
                                                                     <center>
                                                                     <div class="card-body" >
                                                                         @if($fila['estatus']=="Retardo")
@@ -464,12 +600,18 @@
                                                                    
                                                                 </div>
                                                                 @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
                                                                             {{$fila['comentario']}}
                                                                         </div>  
                                                                     </div>
-                                                                    @endif  
+                                                                @else
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
+                                                                            Sin Observaciones
+                                                                        </div>  
+                                                                    </div>
+                                                                @endif 
                                                             </div>
                                                     </td>
                                                                 @php $naranja=0 @endphp
@@ -515,6 +657,13 @@
                                                                 </center>
                                                             </td>
                                                             @endif
+                                                            <td>
+                                                                <center>
+                                                                    <span class="" style=" color: black; font-size:12px;">
+                                                                        Cred. {{$fila['credencial']}}
+                                                                    </span>
+                                                                </center>
+                                                            </td>
                                                                 <td>
                                                             <div class="row">
                                                                 <div class="col-md-12">
@@ -525,14 +674,14 @@
                                                                     
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['hora_llegada']}} hrs.</span>
                                                                     </div>    
                                                                     </center>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['hora_salida']}} hrs.</span>
@@ -540,7 +689,7 @@
                                                                     </center> 
                                                                      
                                                                 </div>
-                                                                <div class="col-md-4"> 
+                                                                <div class="col-md-3"> 
                                                                     <div class="card-body">
                                                                     <center>
                                                                         @if($fila['hora_salida_rol']=="Fuera de jornada")
@@ -551,7 +700,7 @@
                                                                         </center>
                                                                     </div>    
                                                                 </div>
-                                                                <div class="col-md-6">    
+                                                                <div class="col-md-3">    
                                                                     <div class="card-body">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -563,7 +712,7 @@
                                                                     </div>    
                                                                      
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-3">
                                                                     <center>
                                                                     <div class="card-body" >
                                                                         @if($fila['estatus']=="Retardo")
@@ -578,12 +727,18 @@
                                                                    
                                                                 </div>
                                                                 @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
                                                                             {{$fila['comentario']}}
                                                                         </div>  
                                                                     </div>
-                                                                    @endif  
+                                                                @else
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
+                                                                            Sin Observaciones
+                                                                        </div>  
+                                                                    </div>
+                                                                @endif 
                                                             </div>
                                                     </td>
                                                                 @php $naranja=1 @endphp
@@ -633,6 +788,13 @@
                                                                 </center>
                                                             </td>
                                                             @endif
+                                                            <td>
+                                                                <center>
+                                                                    <span class="" style=" color: black; font-size:12px;">
+                                                                        Cred. {{$fila['credencial']}}
+                                                                    </span>
+                                                                </center>
+                                                            </td>
                                                         <td>
                                                             <div class="row">
                                                                 <div class="col-md-12">
@@ -643,14 +805,14 @@
                                                                     
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['hora_llegada']}} hrs.</span>
                                                                     </div>    
                                                                     </center>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-3">
                                                                 <center>
                                                                     <div class="card-body">
                                                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['hora_salida']}} hrs.</span>
@@ -658,7 +820,7 @@
                                                                     </center> 
                                                                      
                                                                 </div>
-                                                                <div class="col-md-4"> 
+                                                                <div class="col-md-3"> 
                                                                     <div class="card-body">
                                                                     <center>
                                                                         @if($fila['hora_salida_rol']=="Fuera de jornada")
@@ -669,7 +831,7 @@
                                                                         </center>
                                                                     </div>    
                                                                 </div>
-                                                                <div class="col-md-6">    
+                                                                <div class="col-md-3">    
                                                                     <div class="card-body">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -681,7 +843,7 @@
                                                                     </div>    
                                                                      
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-3">
                                                                     <center>
                                                                     <div class="card-body" >
                                                                         @if($fila['estatus']=="Retardo")
@@ -696,12 +858,18 @@
                                                                    
                                                                 </div>
                                                                 @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
                                                                             {{$fila['comentario']}}
                                                                         </div>  
                                                                     </div>
-                                                                    @endif  
+                                                                @else
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-sub">
+                                                                            Sin Observaciones
+                                                                        </div>  
+                                                                    </div>
+                                                                @endif  
                                                             </div>
                                                     </td>
                                                         
@@ -755,7 +923,26 @@
                     "search": "Buscar",
                     "processing": "Buscando...",
                     "loadingRecords": "Cargando..."
-                }
+                },initComplete: function () {
+					this.api().columns().every( function () {
+						var column = this;
+						var select = $('<select class="form-control"><option value=""></option></select>')
+						.appendTo( $(column.footer()).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+							column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+						} );
+
+						column.data().unique().sort().each( function ( d, j ) {
+							select.append( '<option value="'+d+'">'+d+'</option>' )
+						} );
+					} );
+				}
             });
             
             $(document).ready(function() {
@@ -787,6 +974,29 @@
                 $('#hora_salida').val(horaActual);
                 
             });
+            $('#credencial').on('change', function() {
+                // Código que se ejecutará cuando cambie el valor del elemento
+                var valorCredencial = $(this).val();
+                console.log("El valor ha cambiado: " + valorCredencial);
+                $('#boton_registra').attr('disabled','true');
+                            console.log('nada');
+                            var conteo_jornada_total ;
+                            var conteo_jornada_hecha ;
+                            conteo_jornada_total = conteo_jornada_total/2;
+                            conteo_jornada_hecha = conteo_jornada_hecha/2;
+                            var Nombre ;
+                            var servicio ;
+                            var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                            var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                            ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                            
+                            $('#bar').attr('data-original-title', ciclos_texto);
+                            $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                            $('#ciclos_span').html(ciclos_texto);
+                            $('#progreso').html('Sin asignar');
+                            $('#serv').val(servicio); 
+                // Aquí puedes agregar más lógica para manejar el nuevo valor
+            });
             $('#buscar').click(function(event) {
                 event.preventDefault();
 
@@ -799,21 +1009,47 @@
                         'dia': $('#dia').val(),
                     },
                     success: function(response) {
-                        var conteo_jornada_total = response['conteo_jornada_total'];
-                        var conteo_jornada_hecha = response['conteo_jornada_hecha'];
-                        var Nombre = response['Nombre'];
-                        var servicio = response['servicio'];
-                        var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
-                        var ciclos_porcentaje = 100 / (conteo_jornada_total);
-                        ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                        console.log(response['error'] );
+                        console.log(response['conteo_jornada_total'] );
+                        if(response['conteo_jornada_total']){
+                            $('#boton_registra').removeAttr('disabled');
+                            console.log('tiene');
+                            var conteo_jornada_total = response['conteo_jornada_total'];
+                            var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                            conteo_jornada_total = conteo_jornada_total/2;
+                            conteo_jornada_hecha = conteo_jornada_hecha/2;
+                            var Nombre = response['Nombre'];
+                            var servicio = response['servicio'];
+                            var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                            var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                            ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                            
+                            $('#bar').attr('data-original-title', ciclos_texto);
+                            $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                            $('#ciclos_span').html(ciclos_texto);
+                            $('#progreso').html(Nombre);
+                            $('#serv').val(servicio); 
+                        } else if(response['error']) {
+                            $('#boton_registra').attr('disabled','true');
+                            console.log('nada');
+                            var conteo_jornada_total = response['conteo_jornada_total'];
+                            var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                            conteo_jornada_total = conteo_jornada_total/2;
+                            conteo_jornada_hecha = conteo_jornada_hecha/2;
+                            var Nombre = response['Nombre'];
+                            var servicio = response['servicio'];
+                            var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                            var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                            ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                            
+                            $('#bar').attr('data-original-title', ciclos_texto);
+                            $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                            $('#ciclos_span').html(ciclos_texto);
+                            $('#progreso').html('Sin asignar');
+                            $('#serv').val(servicio); 
+                        }
+
                         
-                        $('#bar').attr('data-original-title', ciclos_texto);
-                        $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
-                        $('#ciclos_span').html(ciclos_texto);
-                        $('#progreso').html(Nombre);
-                        
-                        // Actualiza la selección del servicio
-                        $('#serv').val(servicio); // Selecciona la opción correcta basado en el valor del servicio
                     },
                     error: function(xhr, status, error) {
                         console.error('Error en la solicitud:', error);

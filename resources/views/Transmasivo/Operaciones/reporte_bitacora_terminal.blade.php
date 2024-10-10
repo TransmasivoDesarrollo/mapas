@@ -95,8 +95,6 @@
                                                                             @endif
                                                                             </center> 
                                                                         </td>
-                                                                    </tr>
-                                                                    <tr>
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -106,6 +104,9 @@
                                                                             @endif
                                                                         </center>
                                                                         </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                         <div class="card-body" >
@@ -119,16 +120,19 @@
                                                                         </div>  
                                                                         </center>
                                                                         </td>
-                                                                        <td style="border: 1px #ffffff solid;"></td>
+                                                                        <td rowspan="3" style="border: 1px #ffffff solid;">
+
+                                                                        @if($fila['comentario'] != null)
+                                                                            <div class="col-md-12">
+                                                                                <div class="card-body">
+                                                                                    Observación: {{$fila['comentario']}}
+                                                                                </div>  
+                                                                            </div>
+                                                                        @endif  
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
-                                                                @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
-                                                                            Observación: {{$fila['comentario']}}
-                                                                        </div>  
-                                                                    </div>
-                                                                @endif  
+                                                                
                                                             </div>
                                                     </td>
                                                             
@@ -226,8 +230,6 @@
                                                                             @endif
                                                                             </center> 
                                                                         </td>
-                                                                    </tr>
-                                                                    <tr>
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -237,7 +239,10 @@
                                                                             @endif
                                                                         </center>
                                                                         </td>
-                                                                        <td style="border: 1px #ffffff solid;">
+                                                                    </tr>
+                                                                    <tr>
+                                                                        
+                                                                        <td  style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                         <div class="card-body" >
                                                                             @if($fila['estatus']=="Retardo")
@@ -250,16 +255,18 @@
                                                                         </div>  
                                                                         </center>
                                                                         </td>
-                                                                        <td style="border: 1px #ffffff solid;"></td>
+                                                                        <td rowspan="3" style="border: 1px #ffffff solid;">
+                                                                        @if($fila['comentario'] != null)
+                                                                            <div class="col-md-12">
+                                                                                <div class="card-body">
+                                                                                    Observación: {{$fila['comentario']}}
+                                                                                </div>  
+                                                                            </div>
+                                                                        @endif  
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
-                                                                @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
-                                                                            Observación: {{$fila['comentario']}}
-                                                                        </div>  
-                                                                    </div>
-                                                                @endif  
+                                                                
                                                             </div>
                                                     </td>
                                                           
@@ -339,8 +346,6 @@
                                                                             @endif
                                                                             </center> 
                                                                         </td>
-                                                                    </tr>
-                                                                    <tr>
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -350,6 +355,9 @@
                                                                             @endif
                                                                         </center>
                                                                         </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                         <div class="card-body" >
@@ -363,16 +371,18 @@
                                                                         </div>  
                                                                         </center>
                                                                         </td>
-                                                                        <td style="border: 1px #ffffff solid;"></td>
+                                                                        <td rowspan="3" style="border: 1px #ffffff solid;">
+                                                                            @if($fila['comentario'] != null)
+                                                                                <div class="col-md-12">
+                                                                                    <div class="card-body">
+                                                                                        Observación: {{$fila['comentario']}}
+                                                                                    </div>  
+                                                                                </div>
+                                                                            @endif  
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
-                                                                @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
-                                                                            Observación: {{$fila['comentario']}}
-                                                                        </div>  
-                                                                    </div>
-                                                                @endif  
+                                                                
                                                             </div>
                                                     </td>
                                                                 @php $naranja=0 @endphp
@@ -453,8 +463,6 @@
                                                                             @endif
                                                                             </center> 
                                                                         </td>
-                                                                    </tr>
-                                                                    <tr>
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -464,6 +472,9 @@
                                                                             @endif
                                                                         </center>
                                                                         </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                         <div class="card-body" >
@@ -477,16 +488,19 @@
                                                                         </div>  
                                                                         </center>
                                                                         </td>
-                                                                        <td style="border: 1px #ffffff solid;"></td>
+                                                                        <td rowspan="3" style="border: 1px #ffffff solid;">
+                                                                        @if($fila['comentario'] != null)
+                                                                            <div class="col-md-12">
+                                                                                <div class="card-body">
+                                                                                    Observación: {{$fila['comentario']}}
+                                                                                </div>  
+                                                                            </div>
+                                                                        @endif  
+
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
-                                                                @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
-                                                                            Observación: {{$fila['comentario']}}
-                                                                        </div>  
-                                                                    </div>
-                                                                @endif  
+                                                                
                                                             </div>
                                                     </td>
                                                                 @php $naranja=1 @endphp
@@ -571,8 +585,6 @@
                                                                             @endif
                                                                             </center> 
                                                                         </td>
-                                                                    </tr>
-                                                                    <tr>
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -582,6 +594,9 @@
                                                                             @endif
                                                                         </center>
                                                                         </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       
                                                                         <td style="border: 1px #ffffff solid;">
                                                                         <center>
                                                                         <div class="card-body" >
@@ -595,16 +610,18 @@
                                                                         </div>  
                                                                         </center>
                                                                         </td>
-                                                                        <td style="border: 1px #ffffff solid;"></td>
+                                                                        <td rowspan="3" style="border: 1px #ffffff solid;">
+                                                                        @if($fila['comentario'] != null)
+                                                                            <div class="col-md-12">
+                                                                                <div class="card-body">
+                                                                                    Observación: {{$fila['comentario']}}
+                                                                                </div>  
+                                                                            </div>
+                                                                        @endif  
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
-                                                                @if($fila['comentario'] != null)
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
-                                                                            Observación: {{$fila['comentario']}}
-                                                                        </div>  
-                                                                    </div>
-                                                                @endif  
+                                                                
                                                             </div>
                                                     </td>
                                                         
