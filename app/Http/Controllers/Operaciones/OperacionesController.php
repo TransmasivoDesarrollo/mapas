@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Operaciones;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use App\Exports\BitacoraConductores;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\t_bitacora_terminales;
 use App\Models\BitacoraLiberacionUnidades;
@@ -1818,16 +1820,20 @@ $conductores_enrolados = count($consulta2);
 $conductores_totales = count($conductores);
 return view('Transmasivo.Operaciones.bitacora_de_operaciones_2',compact('where','consulta','conductores','conductores_enrolados','conductores_totales','semana_seleccionada'));
 }
-
+public function Bitacora_de_operaciones_pdf(Request $request)
+{
+    
+    $this->generarPDF();
+}
 public function Registro_bitacora_terminal(Request $request)
 {
     if($request->has("pdf"))
     {
-        $this->generarPDF();
+        return $this->generarPDF();
     }
     if($request->has("Excel"))
     {
-        $this->generarExcel();
+        return $this->generarExcel();
     }else{
         $terminal=$request->input('terminal');
         $hora_llegada=$request->input('hora_llegada');
@@ -1838,37 +1844,31 @@ public function Registro_bitacora_terminal(Request $request)
         $km=$request->input('km');
         $hora_salida=$request->input('hora_salida');
         $dia=$request->input('dia');
+        $id_jornada_sem=$request->input('id_jornada_sem');
+        $llegada_salida=$request->input('llegada_salida');
+        
         $comentarios=$request->input('comentarios');
         date_default_timezone_set('America/Mexico_City');
         $hora_actual = time();
         $hora_una_hora_atras = $hora_actual - 3600;
         $hora_formateada = date('Y-m-d H:i:s', $hora_una_hora_atras);
-
-
-
-
-
-        
-
         $bitacora = new t_bitacora_terminales();
         $bitacora->terminal = $terminal;
         $bitacora->hora_llegada = $hora_llegada;
-            $bitacora->Servicio = $serv; // Ajusta el nombre del campo según corresponda en tu tabla
-            $bitacora->eco = $eco;
-            $bitacora->dia = $dia;
-            $bitacora->credencial = $credencial;
-            $bitacora->hora_salida = $hora_salida;
-            $bitacora->comentario = $comentarios;
-            $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
-            $bitacora->id_usuario = Auth::id();
-            
-            // Guardar el registro en la base de datos
-            $bitacora->save();
-            
-            $mensaje="Se registro con exito!";
-            $color="success";
-            return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color);
-        }
+        $bitacora->Servicio = $serv; // Ajusta el nombre del campo según corresponda en tu tabla
+        $bitacora->eco = $eco;
+        $bitacora->dia = $dia;
+        $bitacora->credencial = $credencial;
+        $bitacora->hora_salida = $hora_salida;
+        $bitacora->id_jornada_sem = $id_jornada_sem;
+        $bitacora->comentario = $comentarios;
+        $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
+        $bitacora->id_usuario = Auth::id();
+        $bitacora->save();        
+        $mensaje="Se registro con exito!";
+        $color="success";
+        return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color);
+    }
         
     }
 
@@ -1933,12 +1933,14 @@ public function Registro_bitacora_terminal(Request $request)
             [$dia, $credencial]
         );
         $conteo_jornada_total = count($jornada) * 2;
+        $id_jornada = $jornada[0]->id_jornada_pk;
         $conteo_jornada_hecha = count($t_bitacora_terminales);
         $nombre = $id_rol_operadores[0]->name;
         $servicio=$id_rol_operadores[0]->servicio;
         return [
             'conteo_jornada_total' => $conteo_jornada_total,
             'conteo_jornada_hecha' => $conteo_jornada_hecha,
+            'id_jornada' => $id_jornada,
             'Nombre' => $nombre,
             'servicio' => $servicio,
             'dia_actual_espanol' => $diaActualEspanol, 
@@ -1949,13 +1951,47 @@ public function Registro_bitacora_terminal(Request $request)
 
     public function generarExcel()
     {
-        $consulta = DB::connection('mysql')->select('SELECT * FROM t_bitacora_terminales inner join c_terminal on c_terminal.id_terminal=t_bitacora_terminales.terminal WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00"');
-        $credenciales_registradas = DB::connection('mysql')->select('SELECT Servicio, credencial, COUNT(*) AS cantidad FROM t_bitacora_terminales WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00" GROUP BY credencial, Servicio');
+        
+        $consulta = DB::connection('mysql')->select('
+            SELECT t_bitacora_terminales.Servicio,t_jornada_conductores.Jornada as jorna,t_bitacora_terminales.Servicio,
+            t_bitacora_terminales.hora_llegada,t_bitacora_terminales.hora_salida,
+           t_bitacora_terminales.dia,t_bitacora_terminales.id_usuario ,t_bitacora_terminales.credencial,
+             t_jornada_conductores.jornada as jorna ,users.name,(SELECT COUNT(*)  FROM t_bitacora_terminales t2
+                    WHERE t2.credencial = t_bitacora_terminales.credencial and dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" 
+                        AND "' . now()->format('Y-m-d') . ' 23:59:59"
+                    AND t2.id_bitacora_terminales <= t_bitacora_terminales.id_bitacora_terminales ) AS posicion
+            FROM t_bitacora_terminales INNER JOIN c_terminal   ON c_terminal.id_terminal = t_bitacora_terminales.terminal
+            INNER JOIN users   ON users.id = t_bitacora_terminales.credencial
+            INNER JOIN t_jornada_conductores   ON t_jornada_conductores.id_jornada_fk = t_bitacora_terminales.id_jornada_sem
+            WHERE t_bitacora_terminales.dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" 
+                        AND "' . now()->format('Y-m-d') . ' 23:59:59"
+               and  "' . now()->format('Y-m-d') . '"  BETWEEN  t_jornada_conductores.dia_inicio and t_jornada_conductores.dia_fin
+            ORDER BY credencial, posicion,  CASE   WHEN TIME(hora_salida) >= "03:00:00" THEN 0    ELSE 1  END,   hora_salida ASC
+        ');
+        $tr1_registro =DB::connection('mysql')->select('
+        select count(*) as conteo from t_bitacora_terminales  
+        WHERE Servicio="TR1" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+        ');
+        $tr1_r_registro =DB::connection('mysql')->select('
+        select count(*) as conteo from t_bitacora_terminales  
+        WHERE Servicio="TR1-R" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+        ');
+        $tr3_registro =DB::connection('mysql')->select('
+        select count(*) as conteo from t_bitacora_terminales  
+        WHERE Servicio="TR3" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+        ');
+        $tr4_registro =DB::connection('mysql')->select('
+        select count(*) as conteo from t_bitacora_terminales  
+        WHERE Servicio="TR4" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+        ');
+        
+        $credenciales_registradas = DB::connection('mysql')->select('SELECT Servicio, credencial, COUNT(*) AS cantidad 
+        FROM t_bitacora_terminales 
+        WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00" GROUP BY credencial, Servicio');
         $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
         $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
         $consulta = json_decode(json_encode($consulta), true);
         $credenciales_registradas = json_decode(json_encode($credenciales_registradas), true);
-        
         $diasSemana = [
             'Monday' => 'lunes',
             'Tuesday' => 'martes',
@@ -1965,112 +2001,149 @@ public function Registro_bitacora_terminal(Request $request)
             'Saturday' => 'sábado',
             'Sunday' => 'domingo'
         ];
-        
         $diaActualIngles = date('l'); // Día actual en inglés
         $diaActualEspanol = $diasSemana[$diaActualIngles]; // Día actual traducido al español
-        
-        $recorridos = []; // Array para almacenar los recorridos por id_rol_operador
-        
-        foreach ($consulta as &$registro) {
-            foreach ($credenciales_registradas as $credencial_reg) {
-                if ($registro['credencial'] == $credencial_reg['credencial']) {
-                    // Obtener el id_rol_operadores
-                    $id_rol_operadores = DB::connection('mysql')->select('SELECT * FROM t_rol_semanal_conductor where id_conductor='.$credencial_reg['credencial'].' and "'.$registro['dia'].'" BETWEEN fecha_inicio and fecha_fin');
-                    
-                    if (empty($id_rol_operadores)) {
-                        continue; // Si no hay resultados, pasar a la siguiente iteración
-                    }
-                    
-                    $id_rol_operador = $id_rol_operadores[0]->id_rol_operadores;
-                    
-                    // Obtener la hora de salida basada en el día
-                    $hora_salida_array = DB::connection('mysql')->select('SELECT * FROM t_rol_operadores where id_rol_operador='.$id_rol_operador);
-                    $hora_salida = '';
-                    if ($diaActualEspanol == 'lunes') {
-                        $hora_salida = $hora_salida_array[0]->lunes;
-                    } elseif ($diaActualEspanol == 'martes') {
-                        $hora_salida = $hora_salida_array[0]->martes;
-                    } elseif ($diaActualEspanol == 'miercoles') {
-                        $hora_salida = $hora_salida_array[0]->miercoles;
-                    } elseif ($diaActualEspanol == 'jueves') {
-                        $hora_salida = $hora_salida_array[0]->jueves;
-                    } elseif ($diaActualEspanol == 'viernes') {
-                        $hora_salida = $hora_salida_array[0]->viernes;
-                    } elseif ($diaActualEspanol == 'sabado') {
-                        $hora_salida = $hora_salida_array[0]->sabado;
-                    } elseif ($diaActualEspanol == 'domingo') {
-                        $hora_salida = $hora_salida_array[0]->domingo;
-                    }
-                    
-                    // Incrementar el contador de recorridos para este id_rol_operador
-                    if (!isset($recorridos[$id_rol_operador])) {
-                        $recorridos[$id_rol_operador] = 1;
-                    } else {
-                        $recorridos[$id_rol_operador]++;
-                    }
-                    
-                    // Añadir los datos al registro
-                    $registro['id_rol_operadores'] = $id_rol_operador;
-                    $registro['hora_salida_rol'] = $hora_salida;
-                    $registro['cantidad_recorrido'] = $recorridos[$id_rol_operador]; // Cantidad de recorridos para este id_rol_operador
-                    
-                    // Calcular la hora de salida con el incremento
-                    $servicio = $credencial_reg['Servicio'];
-                    $minutos_a_sumar = 0;
-                    
-                    // Determinar los minutos a sumar según el servicio
-                    if ($servicio == "TR1") {
-                        $minutos_a_sumar = 39;
-                        //nuevo 
-                        //$minutos_a_sumar = 46;
-                    } elseif ($servicio == "TR1-R") {
-                        
-                        //nuevo 
-                        //$minutos_a_sumar = 46;
-                        $minutos_a_sumar = 30;
-                    }  elseif ($servicio == "TR3" ) {
-                        
-                        //nuevo 
-                        //$minutos_a_sumar = 36;
-                        $minutos_a_sumar = 30;
-                    } elseif ($servicio == "TR4") {
-                        //nuevo 
-                        //$minutos_a_sumar = 23;
-                        $minutos_a_sumar = 40;
-                    }
-                    
-                    // Sumar los minutos según la cantidad de recorrido
-                    $hora_salida_datetime = new DateTime($hora_salida);
-                    for ($i = 0; $i < ($registro['cantidad_recorrido'] - 1); $i++) {
-                        $hora_salida_datetime->modify("+$minutos_a_sumar minutes");
-                    }
-                    // Asignar la nueva hora de salida al registro
-                    $registro['hora_salida_rol'] = $hora_salida_datetime->format('H:i:s');
-                    // Calcular hora_diferencia y estatus_hora
-                    $hora_salida_real = new DateTime($registro['hora_salida']); // Asumiendo que esta columna existe en la tabla
-                    $hora_diferencia = $hora_salida_datetime->diff($hora_salida_real);
-                    $registro['hora_diferencia'] = $hora_diferencia->format('%H:%I:%S');
-                    // Determinar estatus_hora
-                    if ($hora_salida_real > $hora_salida_datetime) {
-                        $registro['estatus_hora'] = "retardo";
-                    } elseif ($hora_salida_real < $hora_salida_datetime) {
-                        $registro['estatus_hora'] = "sobretiempo";
-                    } else {
-                        $registro['estatus_hora'] = "en tiempo";
-                    }
-                    
-                    break; // Salir del bucle interno si encuentras una coincidencia
-                }
-            }
+        $tr1_ciclos;
+        $tr1_r_ciclos;
+        $tr3_ciclos;
+        $tr4_ciclos;
+        $total_ciclos;
+
+       
+        //dd($consulta);
+        if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
+        {
+            
+            $tr1_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR1" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+            $tr1_r_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR1-R" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+            $tr3_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR3" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+           
+            $tr4_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR4" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
         }
-        $html = view('Transmasivo.Operaciones.reporte_bitacora_terminal',compact('consulta'))->render();
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-        return $dompdf->stream('Bitacora de terminales .pdf');
-        
-        
+        if( $diaActualEspanol=='sábado'  )
+        {
+            $tr1_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR1" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+            $tr1_r_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR1-R" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+            $tr3_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR3" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+            $tr4_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR4" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        }
+        if( $diaActualEspanol=='domingo'  )
+        {
+            $tr1_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR1" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+            $tr1_r_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR1-R" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');;
+            $tr3_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR3" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+            $tr4_ciclos = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR4" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        }
+
+
+        $total_ciclos = $tr1_ciclos[0]->conteo + $tr1_r_ciclos[0]->conteo + $tr3_ciclos[0]->conteo + $tr4_ciclos[0]->conteo ; 
+        $recorridos = []; // Array para almacenar los recorridos por id_rol_operador
+        //dd($consulta);
+        foreach ($consulta as &$registro) {
+            $id_rol_operadores;
+                    if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
+                    {
+                        
+                        $id_rol_operadores = DB::connection('mysql')->select(
+                            'SELECT * FROM t_jornada_conductores 
+                            where id_conductor='.$registro['credencial'].' and 
+                            "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin  and dia_servicio="Lunes a Viernes"');
+                            
+                    }
+                    if( $diaActualEspanol=='sábado'  )
+                    {
+                        $id_rol_operadores = DB::connection('mysql')->select(
+                            'SELECT * FROM t_jornada_conductores 
+                            where id_conductor='.$registro['credencial'].' and 
+                            "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin  and dia_servicio="Sábado"');
+                    }
+                    if( $diaActualEspanol=='domingo'  )
+                    {
+                        $id_rol_operadores = DB::connection('mysql')->select(
+                            'SELECT * FROM t_jornada_conductores 
+                            where id_conductor='.$registro['credencial'].' and 
+                            "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin and dia_servicio="Domingo"');
+                    }
+                    $jornada  = DB::connection('mysql')->select(
+                        'SELECT * FROM t_jornada_completa_operacion_2 
+                        where servicio="'.$id_rol_operadores[0]->servicio.'" and jornada="'.$id_rol_operadores[0]->jornada.'"  
+                        and dia_servicio="'.$id_rol_operadores[0]->dia_servicio.'" and turno="'.$id_rol_operadores[0]->turno.'" ');
+                    $hora_jornada_lista;
+                    $cont=0;
+                    foreach($jornada as $jor){
+                        $hora_jornada_lista[$cont] = $jor->salida_base;
+                        $cont++;
+                        $hora_jornada_lista[$cont] = $jor->salida_mitad_recorrido;
+                        $cont++;
+                    }
+                    
+                    $posicion = $registro['posicion'] - 1;
+                    
+                    if (count($hora_jornada_lista) < ($posicion + 1)) {
+                        $hora_salida_jornada = 'Fuera de jornada';
+                    } else {
+                        $hora_salida_jornada = $hora_jornada_lista[$posicion];
+                    }
+                    $hora_salida_bitacora = $registro['hora_salida'];
+                    $registro['hora_salida_rol'] = $hora_salida_jornada;
+                    $timestamp_jornada = strtotime($hora_salida_jornada);//menor
+                    $timestamp_bitacora = strtotime($hora_salida_bitacora);//mayor
+                    if ($timestamp_jornada < strtotime('03:00:00') && $timestamp_bitacora > strtotime('03:00:00')) {
+                        $timestamp_jornada += 86400; // 86400 seconds = 1 day
+                    }
+                    $diferencia_segundos = $timestamp_bitacora - $timestamp_jornada;
+                    $hora_diferencia = gmdate('H:i:s', abs($diferencia_segundos));
+                    if ($diferencia_segundos < 0) {
+                        $hora_diferencia = '+' . $hora_diferencia;
+                        $registro['estatus'] = 'Sobretiempo';
+                    } else if ($diferencia_segundos > 0){
+                        $hora_diferencia = '-' . $hora_diferencia;
+                        $registro['estatus'] = 'Retardo';
+                    }else if($diferencia_segundos == 0)
+                    {
+                        $hora_diferencia = '+' . $hora_diferencia;
+                        $registro['estatus'] = 'En tiempo';
+                    }
+                    if (count($hora_jornada_lista) < ($posicion + 1)) {
+                        $registro['hora_diferencia'] = 'Fuera de jornada';
+                        $registro['estatus'] = 'Fuera de jornada';
+                    } else {
+                        $registro['hora_diferencia'] = $hora_diferencia;
+                    }
+        }
+        $tr1_registro = $tr1_registro[0]->conteo/2;
+        $tr1_r_registro = $tr1_r_registro[0]->conteo/2;
+        $tr3_registro = $tr3_registro[0]->conteo/2;
+        $tr4_registro = $tr4_registro[0]->conteo/2;
+        $total_registros = $tr1_registro +$tr1_r_registro +$tr3_registro +$tr4_registro ;
+        //dd($consulta);
+        return Excel::download(new BitacoraConductores($consulta), 'Bitacora_de_terminales'.now().'.xlsx');
     }
+
     public function generarPDF()
     {
         
@@ -2085,7 +2158,7 @@ public function Registro_bitacora_terminal(Request $request)
                         AND "' . now()->format('Y-m-d') . ' 23:59:59"
             ORDER BY credencial, posicion,  CASE   WHEN TIME(hora_salida) >= "03:00:00" THEN 0    ELSE 1  END,   hora_salida ASC
         ');
-        //dd($consulta);
+       // dd($consulta);
         $credenciales_registradas = DB::connection('mysql')->select('SELECT Servicio, credencial, COUNT(*) AS cantidad 
         FROM t_bitacora_terminales 
         WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00" GROUP BY credencial, Servicio');

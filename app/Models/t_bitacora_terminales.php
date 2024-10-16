@@ -25,6 +25,8 @@ class t_bitacora_terminales extends Model
         'comentario',
         'fecha_registro',
         'id_usuario',
+        'id_jornada_sem',
+        
     ];
 
     // Si no se van a utilizar los campos created_at y updated_at, ajusta las siguientes propiedades:

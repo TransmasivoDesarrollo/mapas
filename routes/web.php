@@ -182,6 +182,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/Bitacora_de_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones')->name('Bitacora_de_operaciones');
     Route::POST('/Bitacora_de_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@Registro_bitacora_terminal')->name('Registro_bitacora_terminal');
+    Route::POST('/Bitacora_de_operaciones_pdf', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones_pdf')->name('Bitacora_de_operaciones_pdf');
+    
     Route::get('/Alta_de_reporte', '\App\Http\Controllers\Operaciones\OperacionesController@Alta_de_reporte')->name('Alta_de_reporte');
     Route::get('/Alta_de_reporte/subgrupo', '\App\Http\Controllers\Operaciones\OperacionesController@catalogo_subgrupo')->name('catalogo_subgrupo');
     Route::get('/Bitacora_De_Liberacion_De_Unidades/km', '\App\Http\Controllers\Mantenimiento\MantenimientoController@consultakm')->name('consultakm');
