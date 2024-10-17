@@ -22,6 +22,8 @@ class t_bitacora_terminales extends Model
         'credencial',
         'kilometraje',
         'hora_salida',
+        'salida_entrada',
+        'ciclo',
         'comentario',
         'fecha_registro',
         'id_usuario',
