@@ -341,7 +341,7 @@ class OperacionesController extends Controller
         $tr3_registro = $tr3_registro[0]->conteo/2;
         $tr4_registro = $tr4_registro[0]->conteo/2;
         $total_registros = $tr1_registro +$tr1_r_registro +$tr3_registro +$tr4_registro ;
-        //dd($tr1_r_ciclos);
+        //dd($consulta);
         return view('Transmasivo.Operaciones.Bitacora_de_operaciones', 
         compact('terminal','total_registros', 'consulta', 'credencial','tr1_ciclos','tr1_r_ciclos','tr3_ciclos','tr4_ciclos','total_ciclos','tr1_registro','tr1_r_registro','tr3_registro','tr4_registro'));
     }
