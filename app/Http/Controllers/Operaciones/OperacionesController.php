@@ -57,7 +57,7 @@ class OperacionesController extends Controller
             c_terminal ON c_terminal.id_terminal = t1.terminal
 
         WHERE 
-            t1.dia BETWEEN "2024-10-17 00:00:00" AND "2024-10-17 23:59:59"
+            t1.dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:59"
         GROUP BY 
             t1.credencial,
             t1.ciclo,

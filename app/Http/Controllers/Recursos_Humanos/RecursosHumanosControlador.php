@@ -10,6 +10,7 @@ use App\Models\TPersonal;
 use App\Models\t_entrevista_salida;
 use App\Imports\importarBiometrico;
 
+use App\Exports\BiometricoExport;
 use Dompdf\Dompdf;
 use PhpOffice\PhpWord\PhpWord;
 use Illuminate\Support\Facades\View;
@@ -1044,136 +1045,277 @@ FROM
         $consulta="";
         $fecha_fin=null;
         $fecha_inicio=null;
-        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
+        $qna=null;
+        return view('Transmasivo.rh.consultar_biometrico',compact('qna','consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
     }
     public function post_consultar_biometrico(Request $request)
     {
-        $id_empleado=$request->input('id_empleado');
-        $qna=$request->input('qna');
-        $fecha_inicio=$request->input('fecha_inicio').' 00:00:00';
-        $fecha_fin=$request->input('fecha_fin').' 23:59:59';
+
+        if($request->has('Consultar'))
+        {
+            $id_empleado=$request->input('id_empleado');
+            $qna=$request->input('qna');
+            $fecha_inicio=$request->input('fecha_inicio').' 00:00:00';
+            $fecha_fin=$request->input('fecha_fin').' 23:59:59';
+            
+            $id_ele=$id_empleado;
+            $consulta;
+            $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
+            $consulta_sql="SELECT 
+                id_elemento,
+                DATE(fecha_hora) AS dia, 
+                MIN(fecha_hora) AS inicio,
+                MAX(fecha_hora) AS fin,
+                TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                CASE 
+                    WHEN (
+                        SELECT 
+                            thp.hora_llegada 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) IS NULL THEN 'Usuario sin horario'
+                    WHEN TIME(MIN(fecha_hora)) > (
+                        SELECT 
+                            thp.hora_llegada 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) THEN 'Retardo'
+                    ELSE 'En tiempo'
+                END AS estado,
+                CASE 
+                    WHEN (
+                        SELECT 
+                            thp.hora_salida 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) IS NULL THEN 'Usuario sin horario'
+                    WHEN TIME(MAX(fecha_hora)) < (
+                        SELECT 
+                            thp.hora_salida 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) THEN 'Salió antes'
+                    ELSE 'Salió bien'
+                END AS salida_estado,
+                GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+            FROM 
+                t_biometrico WHERE ";
+
+
+            if($id_empleado!="-Selecciona-" ){
+                $consulta_sql.=" id_elemento=".$id_empleado." and ";
+            }
+            if($request->input('fecha_inicio') != null && $request->input('fecha_fin') != null ){
+                $consulta_sql.=" fecha_hora BETWEEN  '".$fecha_inicio."' AND '".$fecha_fin."' and ";
+            }
+            if($qna!="-Selecciona-" ){
+                $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
+            }
+            $consulta_sql.=" id_elemento > 0 ";
+
+            $consulta_sql.="GROUP BY id_elemento, dia;";
+
+
+            Carbon::setLocale('es');
+            $consulta = DB::connection('mysql')->select($consulta_sql);
+        // dd();
+
+        // Suponiendo que $consulta es tu colección de datos
+            foreach($consulta as $consul) {
+                $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+                }, $fechas_unicas);
+                $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
+            }
+            foreach($consulta as $consul) {
+                $fechas_html =  $consul->dia;
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y ');
+                }, $fechas_unicas);
+                $consul->dia = $fechas_formateadas;
+            }
+            
+        // dd($consulta[0]);
+            $fecha_inicio=$request->input('fecha_inicio');
+            $fecha_fin=$request->input('fecha_fin');
+            return view('Transmasivo.rh.consultar_biometrico',compact('qna','consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
+        }else if($request->has('Excel')){
+            $id_empleado=$request->input('id_empleado');
+            $qna=$request->input('qna');
+            $fecha_inicio=$request->input('fecha_inicio').' 00:00:00';
+            $fecha_fin=$request->input('fecha_fin').' 23:59:59';
+            
+            $id_ele=$id_empleado;
+            $consulta;
+            $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
+            $consulta_sql="SELECT 
+                id_elemento,
+                DATE(fecha_hora) AS dia, 
+                MIN(fecha_hora) AS inicio,
+                MAX(fecha_hora) AS fin,
+                TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
+                CASE 
+                    WHEN (
+                        SELECT 
+                            thp.hora_llegada 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) IS NULL THEN 'Usuario sin horario'
+                    WHEN TIME(MIN(fecha_hora)) > (
+                        SELECT 
+                            thp.hora_llegada 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) THEN 'Retardo'
+                    ELSE 'En tiempo'
+                END AS estado,
+                CASE 
+                    WHEN (
+                        SELECT 
+                            thp.hora_salida 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) IS NULL THEN 'Usuario sin horario'
+                    WHEN TIME(MAX(fecha_hora)) < (
+                        SELECT 
+                            thp.hora_salida 
+                        FROM 
+                            t_horarios_enrolador_personal tehp
+                        INNER JOIN 
+                            t_horarios_personal thp 
+                        ON 
+                            thp.id_t_horarios_personal = tehp.id_horario 
+                        WHERE 
+                            tehp.id_empleado = id_elemento 
+                            AND tehp.estatus = 'Activo'
+                        LIMIT 1
+                    ) THEN 'Salió antes'
+                    ELSE 'Salió bien'
+                END AS salida_estado,
+                GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
+            FROM 
+                t_biometrico WHERE ";
+
+                        $nombre_id="";
+                        $fechas_nombre="";
+                        $fecha_nombre="";
+            if($id_empleado!="-Selecciona-" ){
+                $consulta_sql.=" id_elemento=".$id_empleado." and ";
+                $nombre_id=$id_empleado;
+            }
+            if($request->input('fecha_inicio') != null && $request->input('fecha_fin') != null ){
+                $consulta_sql.=" fecha_hora BETWEEN  '".$fecha_inicio."' AND '".$fecha_fin."' and ";
+                $fechas_nombre=$fecha_inicio.' y '.$fecha_fin;
+            }
+            if($qna!="-Selecciona-" ){
+                $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
+                $fecha_nombre=$qna;
+            }
+            $consulta_sql.=" id_elemento > 0 ";
+
+            $consulta_sql.="GROUP BY id_elemento, dia;";
+
+
+            Carbon::setLocale('es');
+            $consulta = DB::connection('mysql')->select($consulta_sql);
+        // dd();
+
+        // Suponiendo que $consulta es tu colección de datos
+            foreach($consulta as $consul) {
+                $fechas_html = str_replace('<br>', ',', $consul->todas_las_fechas);
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
+                }, $fechas_unicas);
+                $consul->todas_las_fechas = implode('<br>', $fechas_formateadas);
+            }
+            foreach($consulta as $consul) {
+                $fechas_html =  $consul->dia;
+                $fechas = explode(',', $fechas_html);
+                $fechas = array_map('trim', $fechas);
+                $fechas_unicas = array_unique($fechas);
+                $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
+                $fechas_formateadas = array_map(function($fecha) {
+                    return Carbon::parse($fecha)->translatedFormat(' D d  M  Y ');
+                }, $fechas_unicas);
+                $consul->dia = $fechas_formateadas;
+            }
+            
+        // dd($consulta[0]);
+            $fecha_inicio=$request->input('fecha_inicio');
+            $fecha_fin=$request->input('fecha_fin');
+            return Excel::download(new BiometricoExport($consulta), 'biometrico '.$nombre_id.'_'.$fechas_nombre.'_'.$fecha_nombre.'.xlsx');
+            
+        }
         
-        $id_ele=$id_empleado;
-        $consulta;
-        $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
-        $consulta_sql="SELECT 
-    id_elemento,
-    DATE(fecha_hora) AS dia, 
-    MIN(fecha_hora) AS inicio,
-    MAX(fecha_hora) AS fin,
-    TIMEDIFF(MAX(fecha_hora), MIN(fecha_hora)) AS tiempo_trabajado,
-    CASE 
-        WHEN (
-            SELECT 
-                thp.hora_llegada 
-            FROM 
-                t_horarios_enrolador_personal tehp
-            INNER JOIN 
-                t_horarios_personal thp 
-            ON 
-                thp.id_t_horarios_personal = tehp.id_horario 
-            WHERE 
-                tehp.id_empleado = id_elemento 
-                AND tehp.estatus = 'Activo'
-            LIMIT 1
-        ) IS NULL THEN 'Usuario sin horario'
-        WHEN TIME(MIN(fecha_hora)) > (
-            SELECT 
-                thp.hora_llegada 
-            FROM 
-                t_horarios_enrolador_personal tehp
-            INNER JOIN 
-                t_horarios_personal thp 
-            ON 
-                thp.id_t_horarios_personal = tehp.id_horario 
-            WHERE 
-                tehp.id_empleado = id_elemento 
-                AND tehp.estatus = 'Activo'
-            LIMIT 1
-        ) THEN 'Retardo'
-        ELSE 'En tiempo'
-    END AS estado,
-    CASE 
-        WHEN (
-            SELECT 
-                thp.hora_salida 
-            FROM 
-                t_horarios_enrolador_personal tehp
-            INNER JOIN 
-                t_horarios_personal thp 
-            ON 
-                thp.id_t_horarios_personal = tehp.id_horario 
-            WHERE 
-                tehp.id_empleado = id_elemento 
-                AND tehp.estatus = 'Activo'
-            LIMIT 1
-        ) IS NULL THEN 'Usuario sin horario'
-        WHEN TIME(MAX(fecha_hora)) < (
-            SELECT 
-                thp.hora_salida 
-            FROM 
-                t_horarios_enrolador_personal tehp
-            INNER JOIN 
-                t_horarios_personal thp 
-            ON 
-                thp.id_t_horarios_personal = tehp.id_horario 
-            WHERE 
-                tehp.id_empleado = id_elemento 
-                AND tehp.estatus = 'Activo'
-            LIMIT 1
-        ) THEN 'Salió antes'
-        ELSE 'Salió bien'
-    END AS salida_estado,
-    GROUP_CONCAT(fecha_hora ORDER BY fecha_hora ASC SEPARATOR ', ') AS todas_las_fechas
-FROM 
-    t_biometrico WHERE ";
-
-
-        if($id_empleado!="-Selecciona-" ){
-            $consulta_sql.=" id_elemento=".$id_empleado." and ";
-        }
-        if($request->input('fecha_inicio') != null && $request->input('fecha_fin') != null ){
-            $consulta_sql.=" fecha_hora BETWEEN  '".$fecha_inicio."' AND '".$fecha_fin."' and ";
-        }
-        if($qna!="-Selecciona-" ){
-            $consulta_sql.=" fecha_hora BETWEEN  ".$qna."  and ";
-        }
-        $consulta_sql.=" id_elemento > 0 ";
-
-        $consulta_sql.="GROUP BY id_elemento, dia;";
-
-
-        Carbon::setLocale('es');
-        $consulta = DB::connection('mysql')->select($consulta_sql);
-
-       // Suponiendo que $consulta es tu colección de datos
-        foreach($consulta as $consul) {
-            $fechas_html = str_replace('<hr>', ',', $consul->todas_las_fechas);
-            $fechas = explode(',', $fechas_html);
-            $fechas = array_map('trim', $fechas);
-            $fechas_unicas = array_unique($fechas);
-            $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
-            $fechas_formateadas = array_map(function($fecha) {
-                return Carbon::parse($fecha)->translatedFormat(' D d  M  Y H:i:s');
-            }, $fechas_unicas);
-            $consul->todas_las_fechas = implode('<hr>', $fechas_formateadas);
-        }
-        foreach($consulta as $consul) {
-            $fechas_html =  $consul->dia;
-            $fechas = explode(',', $fechas_html);
-            $fechas = array_map('trim', $fechas);
-            $fechas_unicas = array_unique($fechas);
-            $fechas_unicas = array_filter($fechas_unicas, fn($fecha) => !empty($fecha));
-            $fechas_formateadas = array_map(function($fecha) {
-                return Carbon::parse($fecha)->translatedFormat(' D d  M  Y ');
-            }, $fechas_unicas);
-            $consul->dia = $fechas_formateadas;
-        }
-        
-       // dd($consulta[0]);
-        $fecha_inicio=$request->input('fecha_inicio');
-        $fecha_fin=$request->input('fecha_fin');
-        return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
     }
     
     public function Solicitar_herramienta()

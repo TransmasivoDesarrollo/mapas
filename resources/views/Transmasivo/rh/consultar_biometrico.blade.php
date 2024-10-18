@@ -52,7 +52,6 @@
                             $quincenas = [];
                             $j = 1;
                             $selectedQna = '';
-
                             // Generar todas las quincenas del año
                             for ($month = 1; $month <= 12; $month++) {
                                 // Primera quincena del mes
@@ -67,7 +66,6 @@
                                     $selectedQna = $quincenaValueFirstHalf;
                                 }
                                 $j++;
-                                
                                 // Segunda quincena del mes
                                 $startSecondHalf = \Carbon\Carbon::create($currentYear, $month, 16)->format('Y-m-d');
                                 $endSecondHalf = \Carbon\Carbon::create($currentYear, $month, 1)->endOfMonth()->format('Y-m-d');
@@ -82,60 +80,56 @@
                                 $j++;
                             }
                         @endphp
-
                         <div class="col-md-5">
                             <label><br>Qna <span class="required-label"></span></label>
                             <select style="border:1px black solid;" class="form-control" id="qna" name="qna">
-                                
                             <option value="-Selecciona-">-Selecciona-</option>
-                                
                             </option>
                                 @foreach ($quincenas as $quincena)
-                                    <option value="{{ $quincena['value'] }}" @if($quincena['value'] == $selectedQna) style="background-color:green; color:#fff;" @endif>
+                                    <option value="{{ $quincena['value'] }}" @if($qna == $quincena['value']) selected @endif @if($quincena['value'] == $selectedQna) style="background-color:green; color:#fff;" @endif>
                                         {{ $quincena['label'] }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-
-
-
-
-
                         <div class="col-md-12">
                             <center>
                                 <br>
                                 <input type="submit" value="Consultar" class="btn btn-primary" id="Consultar_gif" name="Consultar">
                             </center>
                         </div>
+                        <div class="col-md-10">
+                           
+                        </div>
+                        <div class="col-md-2">
+                            <center>
+                                <br>
+                                <input type="submit" value="Excel" class="btn btn-success" id="Excel" name="Excel">
+                            </center>
+                        </div>
                     </div>
                 </form>
                 <div class="form-group row " >
-                    
                     <div class="col-md-12">
                         <div class="table-responsive" style="overflow-x: auto;">
-                        <table class="table table-striped table-bordered" id="list_user2">
+                        <table class="table table-hover table-striped table-bordered display dataTable no-footer" id="list_user2">
                             <thead>
                                 <tr>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 5%;"><center>Empleado</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Día</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Entrada oficina</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 15%;"><center>Salida oficina</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Tiempo de trabajo</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Retardo</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 10%;"><center>Salida</center></th>
-                                    <th class="bg-danger sorting" style="color:#ffffff; width: 20%;"><center>Todas las fechas del día</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 5%;"><center>Empleado</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 15%;"><center>Día</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 15%;"><center>Entrada oficina</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 15%;"><center>Salida oficina</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 10%;"><center>Tiempo de trabajo</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 10%;"><center>Retardo</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 10%;"><center>Salida</center></th>
+                                    <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 20%;"><center>Todas las fechas del día</center></th>
                                 </tr>
                             </thead>
                             <tbody id="llenaTabla">
                                 @php $i = 1; @endphp
                                 @if($consulta !== "")
                                     @foreach($consulta as $consul)
-                                        @if($i % 2 == 0)
-                                            <tr style="background-color: rgba(237,28,36,.1);">
-                                        @else
-                                            <tr style="background-color: #fff;">
-                                        @endif
+                                            <tr >
                                                 <td>{{$consul->id_elemento}}</td>
                                                 <td><b>{{$consul->dia[0]}}</b></td>
                                                 <td>{{$consul->inicio}}</td>
@@ -172,7 +166,6 @@
                                 @endif
                             </tbody>
                         </table>
-
 					    </div>
                     </div>
 				</div>
@@ -197,28 +190,47 @@
             $(this).html( '<b>'+fechaFormateada+'</b>');
         });
         $('#list_user2').DataTable({
-            scrollX: false,
-            scrollCollapse: true,
-            filter: true,
-            lengthMenu: [[8,16 , 24, 32, 40, -1], [8, 16, 24, 32, 40, "Todos"]],
-            iDisplayLength: 8,
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ datos",
-                "zeroRecords": "No existe el dato introducido",
-                "info": "Página _PAGE_ de _PAGES_ ",
-                "infoEmpty": "Sin datos disponibles",
-                "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-                "search": "Buscar",
-                "processing": "Buscando...",
-                "loadingRecords": "Cargando..."
-            }
-        });
+        scrollX: false,
+        scrollCollapse: true,
+        filter: true,
+        lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
+        iDisplayLength: 15,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ datos",
+            "zeroRecords": "No existe el dato introducido",
+            "info": "Página _PAGE_ de _PAGES_ ",
+            "infoEmpty": "Sin datos disponibles",
+            "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "search": "Buscar",
+            "processing": "Buscando...",
+            "loadingRecords": "Cargando..."
+        },initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select class="form-control"><option value=""></option></select>')
+                .appendTo( $(column.footer()).empty() )
+                .on( 'change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex(
+                        $(this).val()
+                        );
+
+                    column
+                    .search( val ? '^'+val+'$' : '', true, false )
+                    .draw();
+                } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+    });
     }); 
 
 </script>
