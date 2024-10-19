@@ -1283,7 +1283,6 @@ FROM
 
             Carbon::setLocale('es');
             $consulta = DB::connection('mysql')->select($consulta_sql);
-        // dd();
 
         // Suponiendo que $consulta es tu colección de datos
             foreach($consulta as $consul) {

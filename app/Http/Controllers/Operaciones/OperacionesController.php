@@ -2151,21 +2151,51 @@ public function Registro_bitacora_terminal(Request $request)
     {
         
         $consulta = DB::connection('mysql')->select('
-            SELECT t_bitacora_terminales.Servicio,t_jornada_conductores.Jornada as jorna,t_bitacora_terminales.Servicio,
-            t_bitacora_terminales.hora_llegada,t_bitacora_terminales.hora_salida,
-           t_bitacora_terminales.dia,t_bitacora_terminales.id_usuario ,t_bitacora_terminales.credencial,
-             t_jornada_conductores.jornada as jorna ,users.name,(SELECT COUNT(*)  FROM t_bitacora_terminales t2
-                    WHERE t2.credencial = t_bitacora_terminales.credencial and dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" 
-                        AND "' . now()->format('Y-m-d') . ' 23:59:59"
-                    AND t2.id_bitacora_terminales <= t_bitacora_terminales.id_bitacora_terminales ) AS posicion
-            FROM t_bitacora_terminales INNER JOIN c_terminal   ON c_terminal.id_terminal = t_bitacora_terminales.terminal
-            INNER JOIN users   ON users.id = t_bitacora_terminales.credencial
-            INNER JOIN t_jornada_conductores   ON t_jornada_conductores.id_jornada_fk = t_bitacora_terminales.id_jornada_sem
-            WHERE t_bitacora_terminales.dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" 
-                        AND "' . now()->format('Y-m-d') . ' 23:59:59"
-               and  "' . now()->format('Y-m-d') . '"  BETWEEN  t_jornada_conductores.dia_inicio and t_jornada_conductores.dia_fin
-            ORDER BY credencial, posicion,  CASE   WHEN TIME(hora_salida) >= "03:00:00" THEN 0    ELSE 1  END,   hora_salida ASC
+            SELECT 
+            t1.credencial,
+            users.name AS conductor,
+            t1.Servicio,
+            t1.ciclo,
+            t1.dia,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.hora_salida END), "Sin datos") AS salida_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.comentario END), "Sin comentario") AS salida_1_com,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.eco END), "Sin economico") AS salida_1_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.eco END), "Sin economico") AS salida_2_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.eco END), "Sin economico") AS salida_3_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco
+
+        FROM 
+            t_bitacora_terminales t1
+        INNER JOIN 
+            users ON users.id = t1.credencial
+        INNER JOIN 
+            c_terminal ON c_terminal.id_terminal = t1.terminal
+
+        WHERE 
+            t1.dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:59"
+        GROUP BY 
+            t1.credencial,
+            t1.ciclo,
+            t1.Servicio,
+            t1.dia,
+            users.name
+        ORDER BY 
+            t1.credencial, 
+            t1.ciclo,
+            t1.dia;
+
         ');
+        
         $tr1_registro =DB::connection('mysql')->select('
         select count(*) as conteo from t_bitacora_terminales  
         WHERE Servicio="TR1" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
@@ -2208,7 +2238,6 @@ public function Registro_bitacora_terminal(Request $request)
         $total_ciclos;
 
        
-        //dd($consulta);
         if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
         {
             
@@ -2260,6 +2289,7 @@ public function Registro_bitacora_terminal(Request $request)
 
         $total_ciclos = $tr1_ciclos[0]->conteo + $tr1_r_ciclos[0]->conteo + $tr3_ciclos[0]->conteo + $tr4_ciclos[0]->conteo ; 
         $recorridos = []; // Array para almacenar los recorridos por id_rol_operador
+        
         //dd($consulta);
         foreach ($consulta as &$registro) {
             $id_rol_operadores;
@@ -2286,59 +2316,160 @@ public function Registro_bitacora_terminal(Request $request)
                             where id_conductor='.$registro['credencial'].' and 
                             "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin and dia_servicio="Domingo"');
                     }
+                    
                     $jornada  = DB::connection('mysql')->select(
                         'SELECT * FROM t_jornada_completa_operacion_2 
-                        where servicio="'.$id_rol_operadores[0]->servicio.'" and jornada="'.$id_rol_operadores[0]->jornada.'"  
-                        and dia_servicio="'.$id_rol_operadores[0]->dia_servicio.'" and turno="'.$id_rol_operadores[0]->turno.'" ');
-                    $hora_jornada_lista;
+                        where id_jornada_pk="'.$id_rol_operadores[0]->id_jornada_fk.'"  ');
+                        //dd($jornada);
+                    $hora_jornada_lista = [];  // Limpia el arreglo para dejarlo vacío
+                    $hora_jornada_lista_mitad = [];  // Limpia el arreglo para dejarlo vacío
                     $cont=0;
+                    $cont_mitad=0;
                     foreach($jornada as $jor){
-                        $hora_jornada_lista[$cont] = $jor->salida_base;
+                        $hora_jornada_lista[] = $jor->salida_base;
                         $cont++;
-                        $hora_jornada_lista[$cont] = $jor->salida_mitad_recorrido;
                         $cont++;
+                    }
+                    foreach($jornada as $jor){
+                        $cont_mitad++;
+                        $hora_jornada_lista_mitad[] = $jor->salida_mitad_recorrido;
+                        $cont_mitad++;
                     }
                     
-                    $posicion = $registro['posicion'] - 1;
+                    if($registro['salida_1_ter']=="Sin terminal"){
+                        $registro['terminal1'] = 'Sin terminal';
+                    }else{
+                        $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_1_ter'].' ');
+                        $registro['terminal1'] = $c_terminale_1[0]->terminal;
+                    }
+                    if($registro['salida_2_ter']=="Sin terminal"){
+                        $registro['terminal2'] = 'Sin terminal';
+                    }else{
+                        $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_2_ter'].' ');
+                        $registro['terminal2'] = $c_terminale_1[0]->terminal;
+                    }
+                    if($registro['salida_3_ter']=="Sin terminal"){
+                        $registro['terminal3'] = 'Sin terminal';
+                    }else{
+                        $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_3_ter'].' ');
+                        $registro['terminal3'] = $c_terminale_1[0]->terminal;
+                    }
+                    if($registro['salida_4_ter']=="Sin terminal"){
+                        $registro['terminal4'] = 'Sin terminal';
+                    }else{
+                        $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_4_ter'].' ');
+                        $registro['terminal4'] = $c_terminale_1[0]->terminal;
+                    }
                     
-                    if (count($hora_jornada_lista) < ($posicion + 1)) {
-                        $hora_salida_jornada = 'Fuera de jornada';
-                    } else {
-                        $hora_salida_jornada = $hora_jornada_lista[$posicion];
+
+                    $posicion = $registro['ciclo'] - 1;
+                    $posicion2 = $registro['ciclo'] - 1;
+                    
+                    if(count($hora_jornada_lista) < $registro['ciclo']){
+                        
+                            $registro['hora_salida_rol'] ="Fuera de jornada";
+                            $registro['estatus'] ="Fuera de jornada";
+                            $registro['hora_diferencia'] ="Fuera de jornada";
+                            $registro['hora_salida_rol_2'] ="Fuera de jornada";
+                            $registro['estatus_2'] ="Fuera de jornada";
+                            $registro['hora_diferencia_2'] ="Fuera de jornada";
+                    }else{
+                        if($registro['salida_1']!="Sin datos" )
+                        {
+                            if (count($hora_jornada_lista) < ($posicion + 1)) {
+                                $hora_salida_jornada = 'Fuera de jornada';
+                            } else {
+                                $hora_salida_jornada = $hora_jornada_lista[$posicion];
+                            }
+                            $hora_salida_bitacora = $registro['salida_1'];
+                            $registro['hora_salida_rol'] = $hora_salida_jornada;
+                            $timestamp_jornada = strtotime($hora_salida_jornada);//menor
+                            $timestamp_bitacora = strtotime($hora_salida_bitacora);//mayor
+                            if ($timestamp_jornada < strtotime('03:00:00') && $timestamp_bitacora > strtotime('03:00:00')) {
+                                $timestamp_jornada += 86400; // 86400 seconds = 1 day
+                            }
+                            $diferencia_segundos = $timestamp_bitacora - $timestamp_jornada;
+                            $hora_diferencia = gmdate('H:i:s', abs($diferencia_segundos));
+                            if ($diferencia_segundos < 0) {
+                                $hora_diferencia = '+' . $hora_diferencia;
+                                $registro['estatus'] = 'Sobretiempo';
+                            } else if ($diferencia_segundos > 0){
+                                $hora_diferencia = '-' . $hora_diferencia;
+                                $registro['estatus'] = 'Retardo';
+                            }else if($diferencia_segundos == 0)
+                            {
+                                $hora_diferencia = '+' . $hora_diferencia;
+                                $registro['estatus'] = 'En tiempo';
+                            }
+                            if (count($hora_jornada_lista) < ($posicion + 1)) {
+                                $registro['hora_diferencia'] = 'Fuera de jornada';
+                                $registro['estatus'] = 'Fuera de jornada';
+                            } else {
+                                $registro['hora_diferencia'] = $hora_diferencia;
+                            }
+
+
+                        } else{
+                            $registro['hora_salida_rol'] ="No aplica";
+                            $registro['estatus'] ="No aplica";
+                            $registro['hora_diferencia'] ="No aplica";
+                        }
+                        
+                        if($registro['salida_2']!="Sin datos" )
+                        {
+                            if (count($hora_jornada_lista_mitad) < ($posicion2 + 1)) {
+                                $hora_salida_jornada = 'Fuera de jornada';
+                            } else {
+                                $hora_salida_jornada = $hora_jornada_lista_mitad[$posicion2];
+                            }
+                            $hora_salida_bitacora = $registro['salida_2'];
+                            $registro['hora_salida_rol_2'] = $hora_salida_jornada;
+                            $timestamp_jornada = strtotime($hora_salida_jornada);//menor
+                            $timestamp_bitacora = strtotime($hora_salida_bitacora);//mayor
+                            if ($timestamp_jornada < strtotime('03:00:00') && $timestamp_bitacora > strtotime('03:00:00')) {
+                                $timestamp_jornada += 86400; // 86400 seconds = 1 day
+                            }
+                            $diferencia_segundos = $timestamp_bitacora - $timestamp_jornada;
+                            $hora_diferencia = gmdate('H:i:s', abs($diferencia_segundos));
+                            if ($diferencia_segundos < 0) {
+                                $hora_diferencia = '+' . $hora_diferencia;
+                                $registro['estatus_2'] = 'Sobretiempo';
+                            } else if ($diferencia_segundos > 0){
+                                $hora_diferencia = '-' . $hora_diferencia;
+                                $registro['estatus_2'] = 'Retardo';
+                            }else if($diferencia_segundos == 0)
+                            {
+                                $hora_diferencia = '+' . $hora_diferencia;
+                                $registro['estatus_2'] = 'En tiempo';
+                            }
+                            if (count($hora_jornada_lista_mitad) < ($posicion2 + 1)) {
+                                $registro['hora_diferencia_2'] = 'Fuera de jornada';
+                                $registro['estatus_2'] = 'Fuera de jornada';
+                            } else {
+                                $registro['hora_diferencia_2'] = $hora_diferencia;
+                            }
+
+
+                        } else{
+                            $registro['hora_salida_rol_2'] ="No aplica";
+                            $registro['estatus_2'] ="No aplica";
+                            $registro['hora_diferencia_2'] ="No aplica";
+                        }
                     }
-                    $hora_salida_bitacora = $registro['hora_salida'];
-                    $registro['hora_salida_rol'] = $hora_salida_jornada;
-                    $timestamp_jornada = strtotime($hora_salida_jornada);//menor
-                    $timestamp_bitacora = strtotime($hora_salida_bitacora);//mayor
-                    if ($timestamp_jornada < strtotime('03:00:00') && $timestamp_bitacora > strtotime('03:00:00')) {
-                        $timestamp_jornada += 86400; // 86400 seconds = 1 day
-                    }
-                    $diferencia_segundos = $timestamp_bitacora - $timestamp_jornada;
-                    $hora_diferencia = gmdate('H:i:s', abs($diferencia_segundos));
-                    if ($diferencia_segundos < 0) {
-                        $hora_diferencia = '+' . $hora_diferencia;
-                        $registro['estatus'] = 'Sobretiempo';
-                    } else if ($diferencia_segundos > 0){
-                        $hora_diferencia = '-' . $hora_diferencia;
-                        $registro['estatus'] = 'Retardo';
-                    }else if($diferencia_segundos == 0)
-                    {
-                        $hora_diferencia = '+' . $hora_diferencia;
-                        $registro['estatus'] = 'En tiempo';
-                    }
-                    if (count($hora_jornada_lista) < ($posicion + 1)) {
-                        $registro['hora_diferencia'] = 'Fuera de jornada';
-                        $registro['estatus'] = 'Fuera de jornada';
-                    } else {
-                        $registro['hora_diferencia'] = $hora_diferencia;
-                    }
+                    //dd($hora_jornada_lista);
+                    
+                    
         }
+        
         $tr1_registro = $tr1_registro[0]->conteo/2;
         $tr1_r_registro = $tr1_r_registro[0]->conteo/2;
         $tr3_registro = $tr3_registro[0]->conteo/2;
         $tr4_registro = $tr4_registro[0]->conteo/2;
         $total_registros = $tr1_registro +$tr1_r_registro +$tr3_registro +$tr4_registro ;
-        //dd($consulta);
+       // dd($consulta);
+       // return view('Transmasivo.Operaciones.Bitacora_de_operaciones', 
+        //compact('terminal','total_registros', 'consulta', 'credencial','tr1_ciclos','tr1_r_ciclos','tr3_ciclos','tr4_ciclos','total_ciclos','tr1_registro','tr1_r_registro','tr3_registro','tr4_registro'));
+    
         return Excel::download(new BitacoraConductores($consulta), 'Bitacora_de_terminales'.now().'.xlsx');
     }
 
@@ -2346,129 +2477,325 @@ public function Registro_bitacora_terminal(Request $request)
     {
         
         $consulta = DB::connection('mysql')->select('
-            SELECT *,(SELECT COUNT(*)  FROM t_bitacora_terminales t2
-                    WHERE t2.credencial = t_bitacora_terminales.credencial and dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" 
-                        AND "' . now()->format('Y-m-d') . ' 23:59:59"
-                    AND t2.id_bitacora_terminales <= t_bitacora_terminales.id_bitacora_terminales ) AS posicion
-            FROM t_bitacora_terminales INNER JOIN c_terminal   ON c_terminal.id_terminal = t_bitacora_terminales.terminal
-            INNER JOIN users   ON users.id = t_bitacora_terminales.credencial
-            WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" 
-                        AND "' . now()->format('Y-m-d') . ' 23:59:59"
-            ORDER BY credencial, posicion,  CASE   WHEN TIME(hora_salida) >= "03:00:00" THEN 0    ELSE 1  END,   hora_salida ASC
-        ');
-       // dd($consulta);
-        $credenciales_registradas = DB::connection('mysql')->select('SELECT Servicio, credencial, COUNT(*) AS cantidad 
-        FROM t_bitacora_terminales 
-        WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00" GROUP BY credencial, Servicio');
-        $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
-        $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
-        $consulta = json_decode(json_encode($consulta), true);
-        $credenciales_registradas = json_decode(json_encode($credenciales_registradas), true);
-        $diasSemana = [
-            'Monday' => 'lunes',
-            'Tuesday' => 'martes',
-            'Wednesday' => 'miercoles',
-            'Thursday' => 'jueves',
-            'Friday' => 'viernes',
-            'Saturday' => 'sábado',
-            'Sunday' => 'domingo'
-        ];
-        $diaActualIngles = date('l'); // Día actual en inglés
-        $diaActualEspanol = $diasSemana[$diaActualIngles]; // Día actual traducido al español
-        $recorridos = []; // Array para almacenar los recorridos por id_rol_operador
-        foreach ($consulta as &$registro) {
-            $id_rol_operadores;
-                    if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
-                    {
-                        $id_rol_operadores = DB::connection('mysql')->select(
-                            'SELECT * FROM t_jornada_conductores 
-                            where id_conductor='.$registro['credencial'].' and 
-                            "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin  and dia_servicio="Lunes a Viernes"');
-                    }
-                    if( $diaActualEspanol=='sábado'  )
-                    {
-                        $id_rol_operadores = DB::connection('mysql')->select(
-                            'SELECT * FROM t_jornada_conductores 
-                            where id_conductor='.$registro['credencial'].' and 
-                            "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin  and dia_servicio="Sábado"');
-                    }
-                    if( $diaActualEspanol=='domingo'  )
-                    {
-                        $id_rol_operadores = DB::connection('mysql')->select(
-                            'SELECT * FROM t_jornada_conductores 
-                            where id_conductor='.$registro['credencial'].' and 
-                            "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin and dia_servicio="Domingo"');
-                    }
-                    $jornada  = DB::connection('mysql')->select(
-                        'SELECT * FROM t_jornada_completa_operacion_2 
-                        where servicio="'.$id_rol_operadores[0]->servicio.'" and jornada="'.$id_rol_operadores[0]->jornada.'"  
-                        and dia_servicio="'.$id_rol_operadores[0]->dia_servicio.'" and turno="'.$id_rol_operadores[0]->turno.'" ');
-                    $hora_jornada_lista;
-                    $cont=0;
-                    foreach($jornada as $jor){
-                        $hora_jornada_lista[$cont] = $jor->salida_base;
-                        $cont++;
-                        $hora_jornada_lista[$cont] = $jor->salida_mitad_recorrido;
-                        $cont++;
-                    }
-                    
-                    $posicion = $registro['posicion'] - 1;
-                    
-                    if (count($hora_jornada_lista) < ($posicion + 1)) {
-                        $hora_salida_jornada = 'Fuera de jornada';
-                    } else {
-                        $hora_salida_jornada = $hora_jornada_lista[$posicion];
-                    }
-                    
-                    $hora_salida_bitacora = $registro['hora_salida'];
-                    $registro['hora_salida_rol'] = $hora_salida_jornada;
-                    
-                    // Convertir las horas a timestamps
-                    $timestamp_jornada = strtotime($hora_salida_jornada);//menor
-                    $timestamp_bitacora = strtotime($hora_salida_bitacora);//mayor
+        SELECT 
+        t1.credencial,
+        users.name AS conductor,
+        t1.Servicio,
+        t1.ciclo,
+        t1.dia,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.hora_salida END), "Sin datos") AS salida_1,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.comentario END), "Sin comentario") AS salida_1_com,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.eco END), "Sin economico") AS salida_1_eco,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.eco END), "Sin economico") AS salida_2_eco,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.eco END), "Sin economico") AS salida_3_eco,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco
 
-                    // Adjust for midnight cases
-                    if ($timestamp_jornada < strtotime('03:00:00') && $timestamp_bitacora > strtotime('03:00:00')) {
-                        // Add one day to the timestamp_jornada if it's before 03:00 and the bitacora time is later in the day
-                        $timestamp_jornada += 86400; // 86400 seconds = 1 day
-                    }
+    FROM 
+        t_bitacora_terminales t1
+    INNER JOIN 
+        users ON users.id = t1.credencial
+    INNER JOIN 
+        c_terminal ON c_terminal.id_terminal = t1.terminal
 
-                    // Calculate the difference
-                    $diferencia_segundos = $timestamp_bitacora - $timestamp_jornada;
-                    
-                    //dd($diferencia_segundos);
-                    if($registro['hora_llegada']=='09:08:00'){
-                // if($registro['hora_llegada']=='14:57:00'){
-                        //dd($hora_salida_bitacora);
-                    }
-                    $hora_diferencia = gmdate('H:i:s', abs($diferencia_segundos));
-                    if ($diferencia_segundos < 0) {
-                       
-                        $hora_diferencia = '+' . $hora_diferencia;
-                        $registro['estatus'] = 'Sobretiempo';
-                    } else if ($diferencia_segundos > 0){
-                        //dd($diferencia_segundos);
-                        
-                        $hora_diferencia = '-' . $hora_diferencia;
-                        $registro['estatus'] = 'Retardo';
-                    }else if($diferencia_segundos == 0)
-                    {
-                        $hora_diferencia = '+' . $hora_diferencia;
-                        $registro['estatus'] = 'En tiempo';
-                    }
-                    
-                    // Handle 'Fuera de jornada'
-                    if (count($hora_jornada_lista) < ($posicion + 1)) {
-                        $registro['hora_diferencia'] = 'Fuera de jornada';
-                        $registro['estatus'] = 'Fuera de jornada';
-                    } else {
-                        $registro['hora_diferencia'] = $hora_diferencia;
-                    }
+    WHERE 
+        t1.dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:59"
+    GROUP BY 
+        t1.credencial,
+        t1.ciclo,
+        t1.Servicio,
+        t1.dia,
+        users.name
+    ORDER BY 
+        t1.credencial, 
+        t1.ciclo,
+        t1.dia;
 
-                    
-        }
+    ');
+    
+    $tr1_registro =DB::connection('mysql')->select('
+    select count(*) as conteo from t_bitacora_terminales  
+    WHERE Servicio="TR1" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+    ');
+    $tr1_r_registro =DB::connection('mysql')->select('
+    select count(*) as conteo from t_bitacora_terminales  
+    WHERE Servicio="TR1-R" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+    ');
+    $tr3_registro =DB::connection('mysql')->select('
+    select count(*) as conteo from t_bitacora_terminales  
+    WHERE Servicio="TR3" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+    ');
+    $tr4_registro =DB::connection('mysql')->select('
+    select count(*) as conteo from t_bitacora_terminales  
+    WHERE Servicio="TR4" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
+    ');
+    
+    $credenciales_registradas = DB::connection('mysql')->select('SELECT Servicio, credencial, COUNT(*) AS cantidad 
+    FROM t_bitacora_terminales 
+    WHERE dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:00" GROUP BY credencial, Servicio');
+    $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
+    $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
+    $consulta = json_decode(json_encode($consulta), true);
+    $credenciales_registradas = json_decode(json_encode($credenciales_registradas), true);
+    $diasSemana = [
+        'Monday' => 'lunes',
+        'Tuesday' => 'martes',
+        'Wednesday' => 'miercoles',
+        'Thursday' => 'jueves',
+        'Friday' => 'viernes',
+        'Saturday' => 'sábado',
+        'Sunday' => 'domingo'
+    ];
+    $diaActualIngles = date('l'); // Día actual en inglés
+    $diaActualEspanol = $diasSemana[$diaActualIngles]; // Día actual traducido al español
+    $tr1_ciclos;
+    $tr1_r_ciclos;
+    $tr3_ciclos;
+    $tr4_ciclos;
+    $total_ciclos;
 
+   
+    if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
+    {
         
+        $tr1_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR1" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        $tr1_r_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR1-R" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        $tr3_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR3" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+       
+        $tr4_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR4" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+    }
+    if( $diaActualEspanol=='sábado'  )
+    {
+        $tr1_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR1" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        $tr1_r_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR1-R" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        $tr3_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR3" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        $tr4_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR4" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Sábado" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+    }
+    if( $diaActualEspanol=='domingo'  )
+    {
+        $tr1_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR1" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        $tr1_r_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR1-R" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');;
+        $tr3_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR3" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+        $tr4_ciclos = DB::connection('mysql')->select('
+        SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR4" and id_jornada_pk in
+        (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Domingo" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
+    }
+
+
+    $total_ciclos = $tr1_ciclos[0]->conteo + $tr1_r_ciclos[0]->conteo + $tr3_ciclos[0]->conteo + $tr4_ciclos[0]->conteo ; 
+    $recorridos = []; // Array para almacenar los recorridos por id_rol_operador
+    
+    //dd($consulta);
+    foreach ($consulta as &$registro) {
+        $id_rol_operadores;
+                if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
+                {
+                    
+                    $id_rol_operadores = DB::connection('mysql')->select(
+                        'SELECT * FROM t_jornada_conductores 
+                        where id_conductor='.$registro['credencial'].' and 
+                        "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin  and dia_servicio="Lunes a Viernes"');
+                        
+                }
+                if( $diaActualEspanol=='sábado'  )
+                {
+                    $id_rol_operadores = DB::connection('mysql')->select(
+                        'SELECT * FROM t_jornada_conductores 
+                        where id_conductor='.$registro['credencial'].' and 
+                        "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin  and dia_servicio="Sábado"');
+                }
+                if( $diaActualEspanol=='domingo'  )
+                {
+                    $id_rol_operadores = DB::connection('mysql')->select(
+                        'SELECT * FROM t_jornada_conductores 
+                        where id_conductor='.$registro['credencial'].' and 
+                        "'.$registro['dia'].'" BETWEEN dia_inicio and dia_fin and dia_servicio="Domingo"');
+                }
+                
+                $jornada  = DB::connection('mysql')->select(
+                    'SELECT * FROM t_jornada_completa_operacion_2 
+                    where id_jornada_pk="'.$id_rol_operadores[0]->id_jornada_fk.'"  ');
+                    //dd($jornada);
+                $hora_jornada_lista = [];  // Limpia el arreglo para dejarlo vacío
+                $hora_jornada_lista_mitad = [];  // Limpia el arreglo para dejarlo vacío
+                $cont=0;
+                $cont_mitad=0;
+                foreach($jornada as $jor){
+                    $hora_jornada_lista[] = $jor->salida_base;
+                    $cont++;
+                    $cont++;
+                }
+                foreach($jornada as $jor){
+                    $cont_mitad++;
+                    $hora_jornada_lista_mitad[] = $jor->salida_mitad_recorrido;
+                    $cont_mitad++;
+                }
+                
+                if($registro['salida_1_ter']=="Sin terminal"){
+                    $registro['terminal1'] = 'Sin terminal';
+                }else{
+                    $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_1_ter'].' ');
+                    $registro['terminal1'] = $c_terminale_1[0]->terminal;
+                }
+                if($registro['salida_2_ter']=="Sin terminal"){
+                    $registro['terminal2'] = 'Sin terminal';
+                }else{
+                    $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_2_ter'].' ');
+                    $registro['terminal2'] = $c_terminale_1[0]->terminal;
+                }
+                if($registro['salida_3_ter']=="Sin terminal"){
+                    $registro['terminal3'] = 'Sin terminal';
+                }else{
+                    $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_3_ter'].' ');
+                    $registro['terminal3'] = $c_terminale_1[0]->terminal;
+                }
+                if($registro['salida_4_ter']=="Sin terminal"){
+                    $registro['terminal4'] = 'Sin terminal';
+                }else{
+                    $c_terminale_1 = DB::connection('mysql')->select('SELECT terminal FROM c_terminal where id_terminal='.$registro['salida_4_ter'].' ');
+                    $registro['terminal4'] = $c_terminale_1[0]->terminal;
+                }
+                
+
+                $posicion = $registro['ciclo'] - 1;
+                $posicion2 = $registro['ciclo'] - 1;
+                
+                if(count($hora_jornada_lista) < $registro['ciclo']){
+                    
+                        $registro['hora_salida_rol'] ="Fuera de jornada";
+                        $registro['estatus'] ="Fuera de jornada";
+                        $registro['hora_diferencia'] ="Fuera de jornada";
+                        $registro['hora_salida_rol_2'] ="Fuera de jornada";
+                        $registro['estatus_2'] ="Fuera de jornada";
+                        $registro['hora_diferencia_2'] ="Fuera de jornada";
+                }else{
+                    if($registro['salida_1']!="Sin datos" )
+                    {
+                        if (count($hora_jornada_lista) < ($posicion + 1)) {
+                            $hora_salida_jornada = 'Fuera de jornada';
+                        } else {
+                            $hora_salida_jornada = $hora_jornada_lista[$posicion];
+                        }
+                        $hora_salida_bitacora = $registro['salida_1'];
+                        $registro['hora_salida_rol'] = $hora_salida_jornada;
+                        $timestamp_jornada = strtotime($hora_salida_jornada);//menor
+                        $timestamp_bitacora = strtotime($hora_salida_bitacora);//mayor
+                        if ($timestamp_jornada < strtotime('03:00:00') && $timestamp_bitacora > strtotime('03:00:00')) {
+                            $timestamp_jornada += 86400; // 86400 seconds = 1 day
+                        }
+                        $diferencia_segundos = $timestamp_bitacora - $timestamp_jornada;
+                        $hora_diferencia = gmdate('H:i:s', abs($diferencia_segundos));
+                        if ($diferencia_segundos < 0) {
+                            $hora_diferencia = '+' . $hora_diferencia;
+                            $registro['estatus'] = 'Sobretiempo';
+                        } else if ($diferencia_segundos > 0){
+                            $hora_diferencia = '-' . $hora_diferencia;
+                            $registro['estatus'] = 'Retardo';
+                        }else if($diferencia_segundos == 0)
+                        {
+                            $hora_diferencia = '+' . $hora_diferencia;
+                            $registro['estatus'] = 'En tiempo';
+                        }
+                        if (count($hora_jornada_lista) < ($posicion + 1)) {
+                            $registro['hora_diferencia'] = 'Fuera de jornada';
+                            $registro['estatus'] = 'Fuera de jornada';
+                        } else {
+                            $registro['hora_diferencia'] = $hora_diferencia;
+                        }
+
+
+                    } else{
+                        $registro['hora_salida_rol'] ="No aplica";
+                        $registro['estatus'] ="No aplica";
+                        $registro['hora_diferencia'] ="No aplica";
+                    }
+                    
+                    if($registro['salida_2']!="Sin datos" )
+                    {
+                        if (count($hora_jornada_lista_mitad) < ($posicion2 + 1)) {
+                            $hora_salida_jornada = 'Fuera de jornada';
+                        } else {
+                            $hora_salida_jornada = $hora_jornada_lista_mitad[$posicion2];
+                        }
+                        $hora_salida_bitacora = $registro['salida_2'];
+                        $registro['hora_salida_rol_2'] = $hora_salida_jornada;
+                        $timestamp_jornada = strtotime($hora_salida_jornada);//menor
+                        $timestamp_bitacora = strtotime($hora_salida_bitacora);//mayor
+                        if ($timestamp_jornada < strtotime('03:00:00') && $timestamp_bitacora > strtotime('03:00:00')) {
+                            $timestamp_jornada += 86400; // 86400 seconds = 1 day
+                        }
+                        $diferencia_segundos = $timestamp_bitacora - $timestamp_jornada;
+                        $hora_diferencia = gmdate('H:i:s', abs($diferencia_segundos));
+                        if ($diferencia_segundos < 0) {
+                            $hora_diferencia = '+' . $hora_diferencia;
+                            $registro['estatus_2'] = 'Sobretiempo';
+                        } else if ($diferencia_segundos > 0){
+                            $hora_diferencia = '-' . $hora_diferencia;
+                            $registro['estatus_2'] = 'Retardo';
+                        }else if($diferencia_segundos == 0)
+                        {
+                            $hora_diferencia = '+' . $hora_diferencia;
+                            $registro['estatus_2'] = 'En tiempo';
+                        }
+                        if (count($hora_jornada_lista_mitad) < ($posicion2 + 1)) {
+                            $registro['hora_diferencia_2'] = 'Fuera de jornada';
+                            $registro['estatus_2'] = 'Fuera de jornada';
+                        } else {
+                            $registro['hora_diferencia_2'] = $hora_diferencia;
+                        }
+
+
+                    } else{
+                        $registro['hora_salida_rol_2'] ="No aplica";
+                        $registro['estatus_2'] ="No aplica";
+                        $registro['hora_diferencia_2'] ="No aplica";
+                    }
+                }
+                //dd($hora_jornada_lista);
+                
+                
+    }
+    
+    $tr1_registro = $tr1_registro[0]->conteo/2;
+    $tr1_r_registro = $tr1_r_registro[0]->conteo/2;
+    $tr3_registro = $tr3_registro[0]->conteo/2;
+    $tr4_registro = $tr4_registro[0]->conteo/2;
+    $total_registros = $tr1_registro +$tr1_r_registro +$tr3_registro +$tr4_registro ;
+    //dd($consulta);
+    //return view('Transmasivo.Operaciones.Bitacora_de_operaciones', 
+    //compact('terminal','total_registros', 'consulta', 'credencial','tr1_ciclos','tr1_r_ciclos','tr3_ciclos','tr4_ciclos','total_ciclos','tr1_registro','tr1_r_registro','tr3_registro','tr4_registro'));
+
 
         $html = view('Transmasivo.Operaciones.reporte_bitacora_terminal', compact('terminal', 'consulta', 'credencial'))->render();
         $dompdf = new Dompdf();
