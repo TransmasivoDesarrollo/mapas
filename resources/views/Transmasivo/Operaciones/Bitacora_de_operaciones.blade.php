@@ -23,12 +23,10 @@
                                     {{ session('mensaje') }}.
                                 </div>
                                 @endif
-                                
                                 <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
                                     @csrf
                                     {{-- inicio del row --}}
                                     <div class="form-group row " >
-                                        
                                         <div class="col-md-2">
                                             <label>Día <span class="required-label">*</span></label>
                                             <input required type="date" class="form-control input-with-border" id="dia" name="dia" value="{{now()->format('Y-m-d')}}">
@@ -47,7 +45,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label>Terminal</label>
-                                            <select required class="form-control input-with-border" id="terminal_c" name="terminal_c">
+                                            <select required class="form-control input-with-border" id="terminal_c" name="terminal">
                                                 @foreach($terminal as $term)
                                                 <option value="{{$term->id_terminal}}">{{$term->terminal}}</option>
                                                 @endforeach
@@ -55,8 +53,6 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label>Servicio<span class="required-label">*</span></label>
-                                            
-                                            
                                             <input type="hidden" name="id_jornada_sem" id="id_jornada_sem">
                                             <select required class="form-control input-with-border" id="serv" name="serv">
                                                 <option value="TR1">TR1 - Ordinario Ojo de agua - Ciudad azteca</option>
@@ -507,7 +503,6 @@
                                         </div>   
                                     </center> 
                                 </div>
-                                
                                 <div class="col-md-12">
                                     <div class="card-sub">
                                         {{$fila['salida_2_com']}}
@@ -516,13 +511,11 @@
                             </div>
                         </td> 
                         @endif
-
                         @if($fila['salida_2']=="Sin datos")
                         <td>
                             <center> Sin datos</center>
                         </td>
                         @else
-
                         @if($fila['salida_3_ter']==1)  @php $salida_2 = $Ojo_De_Agua_2; @endphp
                         @elseif($fila['salida_3_ter']==2)  @php $salida_2 = $Central_De_Abastos_2; @endphp
                         @elseif($fila['salida_3_ter']==3)  @php $salida_2 = $Ciudad_Azteca_2 @endphp
@@ -548,7 +541,6 @@
                         @elseif($fila['salida_3_ter']==23)  @php $salida_2 = $Josefa_Ortiz_De_Dominguez_2; @endphp
                         @elseif($fila['salida_3_ter']==24)  @php $salida_2 = $Quinto_Sol_2; @endphp
                         @endif
-
                         <td>
                             <div class="row">
                                 <div class="col-md-12">
@@ -682,12 +674,8 @@
     </div>
 </div>
 </div>
-
-
-
 @section('jscustom')
 <script type="text/javascript">
-    $('#terminal_c').select2();
     $(document).ready(function() {
         function actualizarFecha() {
             var fecha = new Date();
@@ -704,19 +692,16 @@
                     $('#hora_salida').val(horaActual);
                 }
                 setInterval(actualizarFecha, 1000);
-                setInterval(minutos, 60000);
+                
                 var now = new Date();
                 var hours = now.getHours().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
                 var minutes = now.getMinutes().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
                 var horaActual = hours + ':' + minutes;
-
-                // Establecer la hora actual en el campo de entrada
                 $('#hora_llegada').val(horaActual);
                 $('#hora_salida').val(horaActual);
                 
             });
     $('#credencial').on('change', function() {
-                // Código que se ejecutará cuando cambie el valor del elemento
         var valorCredencial = $(this).val();
         $('#boton_registra').attr('disabled','true');
         var conteo_jornada_total ;
@@ -734,7 +719,51 @@
         $('#ciclos_span').html(ciclos_texto);
         $('#progreso').html('Sin asignar');
         $('#serv').val(servicio); 
-                // Aquí puedes agregar más lógica para manejar el nuevo valor
+    });
+
+    $('#llegada_salida').on('change', function() {
+        var llegada_salida = $(this).val();
+        var serv = $('#serv').val();
+       if(serv == "TR1")
+       {
+            if(llegada_salida == "1" || llegada_salida == "4")
+            {
+                $('#terminal_c').val('1'); 
+            }else{
+                $('#terminal_c').val('3'); 
+            }
+       }
+       if(serv == "TR1-R")
+       {
+            if(llegada_salida == "1" || llegada_salida == "4")
+            {
+                $('#terminal_c').val('1'); 
+            }else{
+                $('#terminal_c').val('3'); 
+            }
+
+       }
+       if(serv == "TR3")
+       {
+            if(llegada_salida == "1" || llegada_salida == "4")
+            {
+                $('#terminal_c').val('1'); 
+            }else{
+                $('#terminal_c').val('3'); 
+            }
+
+       }
+       if(serv == "TR4")
+       {
+            if(llegada_salida == "1" || llegada_salida == "4")
+            {
+                $('#terminal_c').val('2'); 
+            }else{
+                $('#terminal_c').val('3'); 
+            }
+
+       }
+        
     });
     
     $('#buscar').click(function(event) {
@@ -765,6 +794,47 @@
                             $('#progreso').html(Nombre);
                             $('#serv').val(servicio); 
                             $('#id_jornada_sem').val(response['id_jornada']); 
+                            var llegada_salida = $('#llegada_salida').val();
+                                var serv = $('#serv').val();
+                            if(serv == "TR1")
+                            {
+                                    if(llegada_salida == "1" || llegada_salida == "4")
+                                    {
+                                        $('#terminal_c').val('1'); 
+                                    }else{
+                                        $('#terminal_c').val('3'); 
+                                    }
+                            }
+                            if(serv == "TR1-R")
+                            {
+                                    if(llegada_salida == "1" || llegada_salida == "4")
+                                    {
+                                        $('#terminal_c').val('1'); 
+                                    }else{
+                                        $('#terminal_c').val('3'); 
+                                    }
+
+                            }
+                            if(serv == "TR3")
+                            {
+                                    if(llegada_salida == "1" || llegada_salida == "4")
+                                    {
+                                        $('#terminal_c').val('1'); 
+                                    }else{
+                                        $('#terminal_c').val('3'); 
+                                    }
+
+                            }
+                            if(serv == "TR4")
+                            {
+                                    if(llegada_salida == "1" || llegada_salida == "4")
+                                    {
+                                        $('#terminal_c').val('2'); 
+                                    }else{
+                                        $('#terminal_c').val('3'); 
+                                    }
+
+                            }
                         } else if(response['error']) {
                             $('#boton_registra').attr('disabled','true');
                             var conteo_jornada_total = response['conteo_jornada_total'];
