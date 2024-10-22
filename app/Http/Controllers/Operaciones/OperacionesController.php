@@ -36,18 +36,25 @@ class OperacionesController extends Controller
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.comentario END), "Sin comentario") AS salida_1_com,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.eco END), "Sin economico") AS salida_1_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_1_eco,
+
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.eco END), "Sin economico") AS salida_2_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_2_eco,
+
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.eco END), "Sin economico") AS salida_3_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_3_eco,
+            
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter,
-            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_4_eco
 
         FROM 
             t_bitacora_terminales t1
@@ -1968,7 +1975,35 @@ public function Registro_bitacora_terminal(Request $request)
     if($request->has("Excel"))
     {
         return $this->generarExcel();
-    }else{
+    }
+    if($request->has("Eliminar"))
+    {
+        $Eliminar=$request->input('modal_Eliminar');
+        $id_rol_operadores = DB::connection('mysql')->select(
+            'delete from t_bitacora_terminales where id_bitacora_terminales=?', [$Eliminar]
+         );
+         
+        $mensaje="Se elimino con exito!";
+        $color="success";
+        return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color);
+    }
+    if($request->has("Modificar"))
+    {
+        $hora_registrada=$request->input('hora_registrada');
+        $Conductor=$request->input('Conductor');
+        $Economico=$request->input('Economico');
+        $modal_Modificar=$request->input('modal_Modificar');
+
+        //dd($hora_registrada);
+        $id_rol_operadores = DB::connection('mysql')->select(
+            'update t_bitacora_terminales set hora_salida=? , credencial=? , eco=?  where id_bitacora_terminales=?', [$hora_registrada,$Conductor,$Economico,$modal_Modificar]
+         );
+         
+        $mensaje="Se modifico con exito!";
+        $color="success";
+        return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color);
+    }
+    else{
         $terminal=$request->input('terminal');
         $serv=$request->input('serv');
         $jorn=$request->input('jorn');
@@ -2049,20 +2084,57 @@ public function Registro_bitacora_terminal(Request $request)
         $hora_actual = time();
         $hora_una_hora_atras = $hora_actual - 3600;
         $hora_formateada = date('Y-m-d H:i:s', $hora_una_hora_atras);
-        $bitacora = new t_bitacora_terminales();
-        $bitacora->terminal = $terminal;
-        $bitacora->Servicio = $serv; // Ajusta el nombre del campo según corresponda en tu tabla
-        $bitacora->eco = $eco;
-        $bitacora->dia = $dia;
-        $bitacora->salida_entrada = $llegada_salida;
-        $bitacora->credencial = $credencial;
-        $bitacora->hora_salida = $hora_salida;
-        $bitacora->id_jornada_sem = $id_jornada_sem;
-        $bitacora->comentario = $comentarios;
-        $bitacora->ciclo = $ciclo;
-        $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
-        $bitacora->id_usuario = Auth::id();
-        $bitacora->save();        
+        if($llegada_salida == 2){
+
+            $hora_ll=$request->input('hora_ll');
+            $hora_s=$request->input('hora_s');
+
+            $bitacora = new t_bitacora_terminales();
+            $bitacora->terminal = $terminal;
+            $bitacora->Servicio = $serv; // Ajusta el nombre del campo según corresponda en tu tabla
+            $bitacora->eco = $eco;
+            $bitacora->dia = $dia;
+            $bitacora->salida_entrada = '2';
+            $bitacora->credencial = $credencial;
+            $bitacora->hora_salida = $hora_ll;
+            $bitacora->id_jornada_sem = $id_jornada_sem;
+            $bitacora->comentario = $comentarios;
+            $bitacora->ciclo = $ciclo;
+            $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
+            $bitacora->id_usuario = Auth::id();
+            $bitacora->save(); 
+
+            $bitacora2 = new t_bitacora_terminales();
+            $bitacora2->terminal = $terminal;
+            $bitacora2->Servicio = $serv; // Ajusta el nombre del campo según corresponda en tu tabla
+            $bitacora2->eco = $eco;
+            $bitacora2->dia = $dia;
+            $bitacora2->salida_entrada = '3';
+            $bitacora2->credencial = $credencial;
+            $bitacora2->hora_salida = $hora_s;
+            $bitacora2->id_jornada_sem = $id_jornada_sem;
+            $bitacora2->comentario = $comentarios;
+            $bitacora2->ciclo = $ciclo;
+            $bitacora2->fecha_registro = $hora_formateada; // Fecha de registro actual
+            $bitacora2->id_usuario = Auth::id();
+            $bitacora2->save();    
+        }else{
+            $bitacora = new t_bitacora_terminales();
+            $bitacora->terminal = $terminal;
+            $bitacora->Servicio = $serv; // Ajusta el nombre del campo según corresponda en tu tabla
+            $bitacora->eco = $eco;
+            $bitacora->dia = $dia;
+            $bitacora->salida_entrada = $llegada_salida;
+            $bitacora->credencial = $credencial;
+            $bitacora->hora_salida = $hora_salida;
+            $bitacora->id_jornada_sem = $id_jornada_sem;
+            $bitacora->comentario = $comentarios;
+            $bitacora->ciclo = $ciclo;
+            $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
+            $bitacora->id_usuario = Auth::id();
+            $bitacora->save();    
+        }
+            
         $mensaje="Se registro con exito!";
         $color="success";
         return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color);

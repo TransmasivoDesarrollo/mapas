@@ -71,14 +71,21 @@
                                             <label>Llegada/Salida  <span class="required-label">*</span></label>
                                             <select required class="form-control input-with-border" id="llegada_salida" name="llegada_salida">
                                                 <option value="1">Salida 1</option>
-                                                <option value="2">Llegada 1</option>
-                                                <option value="3">Salida 2</option>
+                                                <option value="2">Llegada 1 / Salida 2</option>
                                                 <option value="4">Llegada 2</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2" id="valida_completo">
                                             <label>Hora  <span class="required-label">*</span></label>
                                             <input required type="time" class="form-control input-with-border" id="hora_salida" name="hora_salida">
+                                        </div> 
+                                        <div class="col-md-2" id="valida_mitad_1" hidden >
+                                            <label>Hora llegada <span class="required-label">*</span></label>
+                                            <input required type="time" class="form-control input-with-border" id="hora_ll" name="hora_ll">
+                                        </div> 
+                                        <div class="col-md-2" id="valida_mitad_2" hidden>
+                                            <label>Hora salida <span class="required-label">*</span></label>
+                                            <input required type="time" class="form-control input-with-border" id="hora_s" name="hora_s">
                                         </div> 
                                         <div class="col-md-4">
                                             <label>Comentario  <span class="required-label"></span></label>
@@ -109,6 +116,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+
                             </form>
                         </div>
                     </div>
@@ -225,6 +234,62 @@
                     <div class="card-body" >
                         <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
                             @csrf
+                                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Seguro que desea eliminar este registro?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <input type="hidden"  id="modal_Eliminar" name="modal_Eliminar" >
+                                                <input type="submit" class="btn btn-danger" id="Eliminar" name="Eliminar" value="Eliminar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Modificar</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row form-group">
+                                                    <div class="col-md-6">
+                                                        <label >Hora registrada</label>
+                                                        <input type="time" class="form-control" id="hora_registrada" name="hora_registrada">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label >Conductor</label>
+                                                        <input type="text" class="form-control" id="Conductor" name="Conductor">
+                                                    </div>
+                                                </div> 
+                                                <div class="row form-group">
+                                                    <div class="col-md-6">
+                                                        <label >Economico</label>
+                                                        <input type="text" class="form-control" id="Economico" name="Economico">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <input type="hidden"  id="modal_Modificar" name="modal_Modificar" >
+                                                <input type="submit" class="btn btn-success" id="Modificar" name="Modificar" value="Modificar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             <div class="row">
                                 <button type="submit" style="border:1px #fff solid; backgroud-color:#fff; " class="col-6" name="pdf" id="pdf">
                                     <div class="icon-big text-center icon-warning" style="background-color: red; cursor: pointer;">
@@ -372,12 +437,35 @@
                         <td>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card-sub">
-                                        <center>{{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}<br>
-                                            <div class="icon-preview"><i class="la flaticon-user">{{$fila['credencial']}} - {{$fila['conductor']}}</i></div>
-                                            <div class="icon-preview"><i class="la la-bus ">{{$fila['salida_1_eco']}}</i> - Terminal: {{$fila['terminal1']}}</div>
-                                        </center> 
+                                <div class="card-sub" style="position: relative;">
+                                    <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+                                        {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
+                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar({{$fila['id_bitacora_terminales_1_eco']}})" title="Eliminar">
+                                            <i class="la la-trash" style="font-size:  1.1em;"></i>
+                                        </button>
+                                        @php
+                                            $eco = $fila['salida_1_eco'];
+                                            $usuario = $fila['credencial'];
+                                            $hora = $fila['salida_1'];
+                                            $id = $fila['id_bitacora_terminales_1_eco'];
+                                        @endphp
+                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
+                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
+                                        title="Modificar">
+                                            <i class="la la-edit" style="font-size:  1.1em;"></i>
+                                        </button>
                                     </div>
+                                    <center>
+                                        <br>
+                                        <div class="icon-preview" style="margin:5px;">
+                                            <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                        </div>
+                                        <div class="icon-preview">
+                                            <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_1_eco']}} - Terminal: {{$fila['terminal1']}}
+                                        </div>
+                                    </center>
+                                </div>
+
                                 </div>
                                 <div class="col-md-6">
                                     <center>
@@ -489,12 +577,34 @@
                         <td>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card-sub">
-                                        <center>{{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}<br>
-                                            <div class="icon-preview"><i class="la flaticon-user">{{$fila['credencial']}} - {{$fila['conductor']}}</i></div>
-                                            <div class="icon-preview"><i class="la la-bus ">{{$fila['salida_2_eco']}}</i> - Terminal: {{$fila['terminal2']}}</div>
-                                        </center> 
+                                <div class="card-sub" style="position: relative;">
+                                    <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+                                        {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
+                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar({{$fila['id_bitacora_terminales_2_eco']}})" title="Eliminar">
+                                            <i class="la la-trash" style="font-size: 1.1em;"></i>
+                                        </button>
+                                        @php
+                                            $eco = $fila['salida_2_eco'];
+                                            $usuario = $fila['credencial'];
+                                            $hora = $fila['llegada_1'];
+                                            $id = $fila['id_bitacora_terminales_2_eco'];
+                                        @endphp
+                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
+                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
+                                        title="Modificar">
+                                            <i class="la la-edit" style="font-size: 1.1em;"></i>
+                                        </button>
                                     </div>
+                                    <center>
+                                        <br>
+                                        <div class="icon-preview"  style="margin:5px;">
+                                            <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                        </div>
+                                        <div class="icon-preview">
+                                            <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_2_eco']}} - Terminal: {{$fila['terminal2']}}
+                                        </div>
+                                    </center>
+                                </div>
                                 </div>
                                 <div class="col-md-12">
                                     <center>
@@ -544,11 +654,33 @@
                         <td>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card-sub">
-                                        <center>{{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}<br>
-                                            <div class="icon-preview"><i class="la flaticon-user">{{$fila['credencial']}} - {{$fila['conductor']}}</i></div>
-                                            <div class="icon-preview"><i class="la la-bus ">{{$fila['salida_3_eco']}}</i> - Terminal: {{$fila['terminal3']}} </div>
-                                        </center> 
+                                    <div class="card-sub" style="position: relative;">
+                                        <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+                                            {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
+                                            <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar({{$fila['id_bitacora_terminales_3_eco']}})" title="Eliminar">
+                                            <i class="la la-trash" style="font-size:  1.1em;"></i>
+                                        </button>
+                                        @php
+                                            $eco = $fila['salida_3_eco'];
+                                            $usuario = $fila['credencial'];
+                                            $hora = $fila['salida_2'];
+                                            $id = $fila['id_bitacora_terminales_3_eco'];
+                                        @endphp
+                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
+                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
+                                        title="Modificar">
+                                            <i class="la la-edit" style="font-size:  1.1em;"></i>
+                                        </button>
+                                        </div>
+                                        <center>
+                                            <br>
+                                            <div class="icon-preview"  style="margin:5px;">
+                                                <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                            </div>
+                                            <div class="icon-preview">
+                                                <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_3_eco']}} - Terminal: {{$fila['terminal3']}}
+                                            </div>
+                                        </center>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -637,11 +769,33 @@
                      <td>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="card-sub">
-                                    <center>{{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}<br>
-                                        <div class="icon-preview"><i class="la flaticon-user">{{$fila['credencial']}} - {{$fila['conductor']}}</i></div>
-                                        <div class="icon-preview"><i class="la la-bus ">{{$fila['salida_4_eco']}}</i> - Terminal: {{$fila['terminal4']}}</div>
-                                    </center> 
+                            <div class="card-sub" style="position: relative;">
+                                    <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+                                        {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
+                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar( {{$fila['id_bitacora_terminales_4_eco']}} )" title="Eliminar">
+                                            <i class="la la-trash" style="font-size:  1.1em;"></i>
+                                        </button>
+                                        @php
+                                            $eco = $fila['salida_4_eco'];
+                                            $usuario = $fila['credencial'];
+                                            $hora = $fila['llegada_2'];
+                                            $id = $fila['id_bitacora_terminales_4_eco'];
+                                        @endphp
+                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
+                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
+                                        title="Modificar">
+                                            <i class="la la-edit" style="font-size:  1.1em;"></i>
+                                        </button>
+                                    </div>
+                                    <center>
+                                        <br>
+                                        <div class="icon-preview"  style="margin:5px;">
+                                            <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                        </div>
+                                        <div class="icon-preview">
+                                            <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_4_eco']}} - Terminal: {{$fila['terminal4']}}
+                                        </div>
+                                    </center>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -691,7 +845,7 @@
                     var horaActual = hours + ':' + minutes;
                     $('#hora_salida').val(horaActual);
                 }
-                setInterval(actualizarFecha, 1000);
+                setInterval(actualizarFecha, 500);
                 
                 var now = new Date();
                 var hours = now.getHours().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
@@ -699,209 +853,251 @@
                 var horaActual = hours + ':' + minutes;
                 $('#hora_llegada').val(horaActual);
                 $('#hora_salida').val(horaActual);
+                $('#hora_ll').val(horaActual);
+                $('#hora_s').val(horaActual);
                 
             });
-    $('#credencial').on('change', function() {
-        var valorCredencial = $(this).val();
-        $('#boton_registra').attr('disabled','true');
-        var conteo_jornada_total ;
-        var conteo_jornada_hecha ;
-        conteo_jornada_total = conteo_jornada_total/2;
-        conteo_jornada_hecha = conteo_jornada_hecha/2;
-        var Nombre ;
-        var servicio ;
-        var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
-        var ciclos_porcentaje = 100 / (conteo_jornada_total);
-        ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
-        
-        $('#bar').attr('data-original-title', ciclos_texto);
-        $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
-        $('#ciclos_span').html(ciclos_texto);
-        $('#progreso').html('Sin asignar');
-        $('#serv').val(servicio); 
-    });
+        $('#credencial').on('change', function() {
+            var valorCredencial = $(this).val();
+            $('#boton_registra').attr('disabled','true');
+            var conteo_jornada_total ;
+            var conteo_jornada_hecha ;
+            conteo_jornada_total = conteo_jornada_total/2;
+            conteo_jornada_hecha = conteo_jornada_hecha/2;
+            var Nombre ;
+            var servicio ;
+            var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+            var ciclos_porcentaje = 100 / (conteo_jornada_total);
+            ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+            
+            $('#bar').attr('data-original-title', ciclos_texto);
+            $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+            $('#ciclos_span').html(ciclos_texto);
+            $('#progreso').html('Sin asignar');
+            $('#serv').val(servicio); 
+        });
 
-    $('#llegada_salida').on('change', function() {
-        var llegada_salida = $(this).val();
-        var serv = $('#serv').val();
-       if(serv == "TR1")
-       {
-            if(llegada_salida == "1" || llegada_salida == "4")
+        $('#llegada_salida').on('change', function() {
+            var llegada_salida = $(this).val();
+            var serv = $('#serv').val();
+            if(llegada_salida == "2")
             {
-                $('#terminal_c').val('1'); 
-            }else{
-                $('#terminal_c').val('3'); 
+                $('#valida_mitad_1').removeAttr('hidden');
+                $('#valida_mitad_2').removeAttr('hidden');
+                $('#valida_completo').attr('hidden', true);
+
             }
-       }
-       if(serv == "TR1-R")
-       {
-            if(llegada_salida == "1" || llegada_salida == "4")
-            {
-                $('#terminal_c').val('1'); 
-            }else{
-                $('#terminal_c').val('3'); 
+            else{
+                $('#valida_completo').removeAttr('hidden');
+                $('#valida_mitad_2').attr('hidden', true);
+                $('#valida_mitad_1').attr('hidden', true);
+                
             }
-
-       }
-       if(serv == "TR3")
-       {
-            if(llegada_salida == "1" || llegada_salida == "4")
-            {
-                $('#terminal_c').val('1'); 
-            }else{
-                $('#terminal_c').val('3'); 
-            }
-
-       }
-       if(serv == "TR4")
-       {
-            if(llegada_salida == "1" || llegada_salida == "4")
-            {
-                $('#terminal_c').val('2'); 
-            }else{
-                $('#terminal_c').val('3'); 
-            }
-
-       }
-        
-    });
-    
-    $('#buscar').click(function(event) {
-        event.preventDefault();
-        $.ajax({
-                    url: '{{url("/buscar_rol_operador")}}', // Reemplaza con la URL de tu endpoint
-                    type: 'GET', // Puedes cambiar a POST si es necesario
-                    data: {
-                        'credencial': $('#credencial').val(), // Envía los parámetros necesarios
-                        'dia': $('#dia').val(),
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if(response['conteo_jornada_total']){
-                            $('#boton_registra').removeAttr('disabled');
-                            var conteo_jornada_total = response['conteo_jornada_total'];
-                            var conteo_jornada_hecha = response['conteo_jornada_hecha'];
-                            conteo_jornada_total = conteo_jornada_total/2;
-                            conteo_jornada_hecha = conteo_jornada_hecha/4;
-                            var Nombre = response['Nombre'];
-                            var servicio = response['servicio'];
-                            var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
-                            var ciclos_porcentaje = 100 / (conteo_jornada_total);
-                            ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
-                            $('#bar').attr('data-original-title', ciclos_texto);
-                            $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
-                            $('#ciclos_span').html(ciclos_texto);
-                            $('#progreso').html(Nombre);
-                            $('#serv').val(servicio); 
-                            $('#id_jornada_sem').val(response['id_jornada']); 
-                            var llegada_salida = $('#llegada_salida').val();
-                                var serv = $('#serv').val();
-                            if(serv == "TR1")
-                            {
-                                    if(llegada_salida == "1" || llegada_salida == "4")
-                                    {
-                                        $('#terminal_c').val('1'); 
-                                    }else{
-                                        $('#terminal_c').val('3'); 
-                                    }
-                            }
-                            if(serv == "TR1-R")
-                            {
-                                    if(llegada_salida == "1" || llegada_salida == "4")
-                                    {
-                                        $('#terminal_c').val('1'); 
-                                    }else{
-                                        $('#terminal_c').val('3'); 
-                                    }
-
-                            }
-                            if(serv == "TR3")
-                            {
-                                    if(llegada_salida == "1" || llegada_salida == "4")
-                                    {
-                                        $('#terminal_c').val('1'); 
-                                    }else{
-                                        $('#terminal_c').val('3'); 
-                                    }
-
-                            }
-                            if(serv == "TR4")
-                            {
-                                    if(llegada_salida == "1" || llegada_salida == "4")
-                                    {
-                                        $('#terminal_c').val('2'); 
-                                    }else{
-                                        $('#terminal_c').val('3'); 
-                                    }
-
-                            }
-                        } else if(response['error']) {
-                            $('#boton_registra').attr('disabled','true');
-                            var conteo_jornada_total = response['conteo_jornada_total'];
-                            var conteo_jornada_hecha = response['conteo_jornada_hecha'];
-                            conteo_jornada_total = conteo_jornada_total/2;
-                            conteo_jornada_hecha = conteo_jornada_hecha/4;
-                            var Nombre = response['Nombre'];
-                            var servicio = response['servicio'];
-                            var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
-                            var ciclos_porcentaje = 100 / (conteo_jornada_total);
-                            ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
-                            
-                            $('#bar').attr('data-original-title', ciclos_texto);
-                            $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
-                            $('#ciclos_span').html(ciclos_texto);
-                            $('#progreso').html('Sin asignar');
-                            $('#serv').val(servicio); 
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error en la solicitud:', error);
-                    }
-                });
-    });
-    $('#credencial').select2();
-    $('#list_user2').DataTable({
-        scrollX: false,
-        scrollCollapse: true,
-        filter: true,
-        lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
-        iDisplayLength: 15,
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ datos",
-            "zeroRecords": "No existe el dato introducido",
-            "info": "Página _PAGE_ de _PAGES_ ",
-            "infoEmpty": "Sin datos disponibles",
-            "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "search": "Buscar",
-            "processing": "Buscando...",
-            "loadingRecords": "Cargando..."
-        },initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select class="form-control"><option value=""></option></select>')
-                .appendTo( $(column.footer()).empty() )
-                .on( 'change', function () {
-                    var val = $.fn.dataTable.util.escapeRegex(
-                        $(this).val()
-                        );
-
-                    column
-                    .search( val ? '^'+val+'$' : '', true, false )
-                    .draw();
-                } );
-
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
+        if(serv == "TR1")
+        {
+                if(llegada_salida == "1" || llegada_salida == "4")
+                {
+                    $('#terminal_c').val('1'); 
+                }else{
+                    $('#terminal_c').val('3'); 
+                }
         }
-    });
+        if(serv == "TR1-R")
+        {
+                if(llegada_salida == "1" || llegada_salida == "4")
+                {
+                    $('#terminal_c').val('1'); 
+                }else{
+                    $('#terminal_c').val('3'); 
+                }
+
+        }
+        if(serv == "TR3")
+        {
+                if(llegada_salida == "1" || llegada_salida == "4")
+                {
+                    $('#terminal_c').val('1'); 
+                }else{
+                    $('#terminal_c').val('3'); 
+                }
+
+        }
+        if(serv == "TR4")
+        {
+                if(llegada_salida == "1" || llegada_salida == "4")
+                {
+                    $('#terminal_c').val('2'); 
+                }else{
+                    $('#terminal_c').val('3'); 
+                }
+
+        }
+            
+        });
+    
+        $('#buscar').click(function(event) {
+            event.preventDefault();
+            $.ajax({
+                        url: '{{url("/buscar_rol_operador")}}', // Reemplaza con la URL de tu endpoint
+                        type: 'GET', // Puedes cambiar a POST si es necesario
+                        data: {
+                            'credencial': $('#credencial').val(), // Envía los parámetros necesarios
+                            'dia': $('#dia').val(),
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            if(response['conteo_jornada_total']){
+                                $('#boton_registra').removeAttr('disabled');
+                                var conteo_jornada_total = response['conteo_jornada_total'];
+                                var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                                conteo_jornada_total = conteo_jornada_total/2;
+                                conteo_jornada_hecha = conteo_jornada_hecha/4;
+                                var Nombre = response['Nombre'];
+                                var servicio = response['servicio'];
+                                var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                                var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                                ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                                $('#bar').attr('data-original-title', ciclos_texto);
+                                $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                                $('#ciclos_span').html(ciclos_texto);
+                                $('#progreso').html(Nombre);
+                                $('#serv').val(servicio); 
+                                $('#id_jornada_sem').val(response['id_jornada']); 
+                                var llegada_salida = $('#llegada_salida').val();
+                                    var serv = $('#serv').val();
+                                    if(llegada_salida == "2")
+                                    {
+                                        $('#valida_mitad_1').removeAttr('hidden');
+                                        $('#valida_mitad_2').removeAttr('hidden');
+                                        $('#valida_completo').attr('hidden', true);
+
+                                    }
+                                    else{
+                                        $('#valida_completo').removeAttr('hidden');
+                                        $('#valida_mitad_2').attr('hidden', true);
+                                        $('#valida_mitad_1').attr('hidden', true);
+                                        
+                                    }
+                                if(serv == "TR1")
+                                {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('1'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                }
+                                if(serv == "TR1-R")
+                                {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('1'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                }
+                                if(serv == "TR3")
+                                {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('1'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                }
+                                if(serv == "TR4")
+                                {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('2'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                }
+                            } else if(response['error']) {
+                                $('#boton_registra').attr('disabled','true');
+                                var conteo_jornada_total = response['conteo_jornada_total'];
+                                var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                                conteo_jornada_total = conteo_jornada_total/2;
+                                conteo_jornada_hecha = conteo_jornada_hecha/4;
+                                var Nombre = response['Nombre'];
+                                var servicio = response['servicio'];
+                                var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                                var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                                ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                                
+                                $('#bar').attr('data-original-title', ciclos_texto);
+                                $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                                $('#ciclos_span').html(ciclos_texto);
+                                $('#progreso').html('Sin asignar');
+                                $('#serv').val(servicio); 
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error en la solicitud:', error);
+                        }
+                    });
+        });
+        $('#credencial').select2();
+        $('#list_user2').DataTable({
+            scrollX: false,
+            scrollCollapse: true,
+            filter: true,
+            lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
+            iDisplayLength: 15,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ datos",
+                "zeroRecords": "No existe el dato introducido",
+                "info": "Página _PAGE_ de _PAGES_ ",
+                "infoEmpty": "Sin datos disponibles",
+                "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "search": "Buscar",
+                "processing": "Buscando...",
+                "loadingRecords": "Cargando..."
+            },initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                            );
+
+                        column
+                        .search( val ? '^'+val+'$' : '', true, false )
+                        .draw();
+                    } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        });
+
+        function modalEliminar(id)
+        {
+            
+            $('#confirmDeleteModal').modal('show');
+            $('#modal_Eliminar').val(id);
+        }
+
+        function modalUpdate(id,economico,usuario,hora)
+        {
+
+            $('#modal_Modificar').val(id);
+            $('#hora_registrada').val(hora);
+            $('#Conductor').val(usuario);
+            $('#Economico').val(economico);
+            $('#confirmUpdateModal').modal('show');
+        }
 </script>
 @endsection
 </x-app-layout>
