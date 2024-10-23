@@ -28,6 +28,7 @@ class t_bitacora_terminales extends Model
         'fecha_registro',
         'id_usuario',
         'id_jornada_sem',
+        'credencial_apoyo',
         
     ];
 

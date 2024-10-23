@@ -91,6 +91,16 @@
                                             <label>Comentario  <span class="required-label"></span></label>
                                             <textarea  type="text" class="form-control input-with-border" id="comentarios" name="comentarios"></textarea>
                                         </div>
+                                        
+                                        <div class="col-md-3">
+                                            <label>Oper. apoyo <span class="required-label">*</span></label>
+                                            <select required type="text" style=" width:90%;" class="form-control input-with-border" id="credencial_apoyo" name="credencial_apoyo">
+                                                <option value="0">Sin apoyo</option>
+                                                @foreach($credencial as $cred)
+                                                <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="form-group row " >
                                         <div class="col-md-12">
@@ -247,9 +257,9 @@
                                                 ¿Seguro que desea eliminar este registro?
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                                 <input type="hidden"  id="modal_Eliminar" name="modal_Eliminar" >
-                                                <input type="submit" class="btn btn-danger" id="Eliminar" name="Eliminar" value="Eliminar">
+                                                <input type="submit" class="btn btn-success" id="Eliminar" name="Eliminar" value="Eliminar">
                                             </div>
                                         </div>
                                     </div>
@@ -283,7 +293,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                                 <input type="hidden"  id="modal_Modificar" name="modal_Modificar" >
                                                 <input type="submit" class="btn btn-success" id="Modificar" name="Modificar" value="Modificar">
                                             </div>
@@ -436,29 +446,34 @@
                         </td>
                         <td>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-xl-12">
                                 <div class="card-sub" style="position: relative;">
                                     <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
                                         {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
-                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar({{$fila['id_bitacora_terminales_1_eco']}})" title="Eliminar">
-                                            <i class="la la-trash" style="font-size:  1.1em;"></i>
+                                        <button type="button" class="btn btn-sm" style="background-color: #ff6961; border:1px black solid; width: 25px; height: 25px; padding: 1px;" 
+                                        onclick="modalEliminar({{$fila['id_bitacora_terminales_1_eco']}})" title="Eliminar">
+                                            <i class="la la-trash" style="font-size: 1.8em;"></i>
                                         </button>
+
                                         @php
                                             $eco = $fila['salida_1_eco'];
                                             $usuario = $fila['credencial'];
                                             $hora = $fila['salida_1'];
                                             $id = $fila['id_bitacora_terminales_1_eco'];
                                         @endphp
-                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
-                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
-                                        title="Modificar">
-                                            <i class="la la-edit" style="font-size:  1.1em;"></i>
+                                        <button type="button" class="btn btn-sm" style="background-color: #fdfd96; border:1px black solid;   width: 25px; height: 25px; padding: 1px;" 
+                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')" title="Modificar">
+                                            <i class="la la-edit" style="font-size:  1.8em;"></i>
                                         </button>
+
                                     </div>
-                                    <center>
+                                    <center >
                                         <br>
-                                        <div class="icon-preview" style="margin:5px;">
+                                        <div class="icon-preview" style="margin:15px;">
                                             <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                            @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
+                                            Apoyo: {{$fila['apoyo_1']}}
+                                            @endif
                                         </div>
                                         <div class="icon-preview">
                                             <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_1_eco']}} - Terminal: {{$fila['terminal1']}}
@@ -467,14 +482,14 @@
                                 </div>
 
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-6">
                                     <center>
                                         <div class="card-body">
                                             <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['salida_1']}} hrs.</span>
                                         </div>   
                                     </center> 
                                 </div>
-                                <div class="col-md-6"> 
+                                <div class="col-xl-6"> 
                                     <div class="card-body">
                                         <center>
                                             @if($fila['hora_salida_rol']=="Fuera de jornada")
@@ -485,7 +500,7 @@
                                         </center>
                                     </div>    
                                 </div>
-                                <div class="col-md-6">    
+                                <div class="col-xl-6">    
                                     <div class="card-body">
                                         <center>
                                             @if($fila['hora_diferencia']=="Fuera de jornada")
@@ -496,7 +511,7 @@
                                         </center>
                                     </div>    
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-6">
                                     <center>
                                         <div class="card-body" >
                                             @if($fila['estatus']=="Retardo")
@@ -509,7 +524,7 @@
                                         </div>  
                                     </center>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-xl-12">
                                     <div class="card-sub">
                                         {{$fila['salida_1_com']}}
                                     </div>  
@@ -576,12 +591,12 @@
                         @endif
                         <td>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-xl-12">
                                 <div class="card-sub" style="position: relative;">
                                     <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
                                         {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
-                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar({{$fila['id_bitacora_terminales_2_eco']}})" title="Eliminar">
-                                            <i class="la la-trash" style="font-size: 1.1em;"></i>
+                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961; border:1px black solid;   width: 25px; height: 25px; padding: 1px;" onclick="modalEliminar({{$fila['id_bitacora_terminales_2_eco']}})" title="Eliminar">
+                                            <i class="la la-trash" style="font-size: 1.8em;"></i>
                                         </button>
                                         @php
                                             $eco = $fila['salida_2_eco'];
@@ -589,16 +604,19 @@
                                             $hora = $fila['llegada_1'];
                                             $id = $fila['id_bitacora_terminales_2_eco'];
                                         @endphp
-                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
+                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
                                         onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
                                         title="Modificar">
-                                            <i class="la la-edit" style="font-size: 1.1em;"></i>
+                                            <i class="la la-edit" style="font-size: 1.8em;"></i>
                                         </button>
                                     </div>
                                     <center>
                                         <br>
-                                        <div class="icon-preview"  style="margin:5px;">
+                                        <div class="icon-preview"  style="margin:15px;">
                                             <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                            @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
+                                            Apoyo: {{$fila['apoyo_1']}}
+                                            @endif
                                         </div>
                                         <div class="icon-preview">
                                             <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_2_eco']}} - Terminal: {{$fila['terminal2']}}
@@ -606,14 +624,14 @@
                                     </center>
                                 </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-xl-12">
                                     <center>
                                         <div class="card-body">
                                             <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['llegada_1']}} hrs.</span>
                                         </div>   
                                     </center> 
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-xl-12">
                                     <div class="card-sub">
                                         {{$fila['salida_2_com']}}
                                     </div>  
@@ -653,12 +671,12 @@
                         @endif
                         <td>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-xl-12">
                                     <div class="card-sub" style="position: relative;">
                                         <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
                                             {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
-                                            <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar({{$fila['id_bitacora_terminales_3_eco']}})" title="Eliminar">
-                                            <i class="la la-trash" style="font-size:  1.1em;"></i>
+                                            <button type="button" class="btn  btn-sm" style="background-color: #ff6961;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" onclick="modalEliminar({{$fila['id_bitacora_terminales_3_eco']}})" title="Eliminar">
+                                            <i class="la la-trash" style="font-size:  1.8em;"></i>
                                         </button>
                                         @php
                                             $eco = $fila['salida_3_eco'];
@@ -666,16 +684,19 @@
                                             $hora = $fila['salida_2'];
                                             $id = $fila['id_bitacora_terminales_3_eco'];
                                         @endphp
-                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
+                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
                                         onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
                                         title="Modificar">
-                                            <i class="la la-edit" style="font-size:  1.1em;"></i>
+                                            <i class="la la-edit" style="font-size:  1.8em;"></i>
                                         </button>
                                         </div>
                                         <center>
                                             <br>
-                                            <div class="icon-preview"  style="margin:5px;">
+                                            <div class="icon-preview"  style="margin:15px;">
                                                 <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                                @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
+                                                Apoyo: {{$fila['apoyo_1']}}
+                                                @endif
                                             </div>
                                             <div class="icon-preview">
                                                 <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_3_eco']}} - Terminal: {{$fila['terminal3']}}
@@ -683,14 +704,14 @@
                                         </center>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-6">
                                     <center>
                                         <div class="card-body">
                                             <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['salida_2']}} hrs.</span>
                                         </div>   
                                     </center> 
                                 </div>
-                                <div class="col-md-6"> 
+                                <div class="col-xl-6"> 
                                     <div class="card-body">
                                         <center>
                                             @if($fila['hora_salida_rol_2']=="Fuera de jornada")
@@ -701,7 +722,7 @@
                                         </center>
                                     </div>    
                                 </div>
-                                <div class="col-md-6">    
+                                <div class="col-xl-6">    
                                     <div class="card-body">
                                         <center>
                                             @if($fila['hora_diferencia_2']=="Fuera de jornada")
@@ -712,7 +733,7 @@
                                         </center>
                                     </div>    
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-6">
                                     <center>
                                         <div class="card-body" >
                                             @if($fila['estatus_2']=="Retardo")
@@ -725,7 +746,7 @@
                                         </div>  
                                     </center>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-xl-12">
                                     <div class="card-sub">
                                         {{$fila['salida_3_com']}}
                                     </div>  
@@ -768,12 +789,12 @@
 
                      <td>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-xl-12">
                             <div class="card-sub" style="position: relative;">
-                                    <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+                                    <div class="btn-group" style="padding: 1px; position: absolute; top: 10px; right: 10px;">
                                         {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
-                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;" onclick="modalEliminar( {{$fila['id_bitacora_terminales_4_eco']}} )" title="Eliminar">
-                                            <i class="la la-trash" style="font-size:  1.1em;"></i>
+                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;"  onclick="modalEliminar( {{$fila['id_bitacora_terminales_4_eco']}} )" title="Eliminar">
+                                            <i class="la la-trash" style="font-size:  1.8em;"></i>
                                         </button>
                                         @php
                                             $eco = $fila['salida_4_eco'];
@@ -781,16 +802,19 @@
                                             $hora = $fila['llegada_2'];
                                             $id = $fila['id_bitacora_terminales_4_eco'];
                                         @endphp
-                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;" 
+                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
                                         onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
                                         title="Modificar">
-                                            <i class="la la-edit" style="font-size:  1.1em;"></i>
+                                            <i class="la la-edit" style="font-size:  1.8em;"></i>
                                         </button>
                                     </div>
-                                    <center>
+                                    <center >
                                         <br>
-                                        <div class="icon-preview"  style="margin:5px;">
+                                        <div class="icon-preview"  style="margin:15px;">
                                             <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                            @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
+                                                Apoyo: {{$fila['apoyo_1']}}
+                                            @endif
                                         </div>
                                         <div class="icon-preview">
                                             <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_4_eco']}} - Terminal: {{$fila['terminal4']}}
@@ -798,14 +822,14 @@
                                     </center>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-xl-12">
                                 <center>
                                     <div class="card-body">
                                         <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['llegada_2']}} hrs.</span>
                                     </div>   
                                 </center> 
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-xl-12">
                                 <div class="card-sub">
                                     {{$fila['salida_4_com']}}
                                 </div>  

@@ -28,7 +28,7 @@ class OperacionesController extends Controller
         $consulta = DB::connection('mysql')->select('
             SELECT 
             t1.credencial,
-            users.name AS conductor,
+            u.name AS conductor,
             t1.Servicio,
             t1.ciclo,
             t1.dia,
@@ -37,32 +37,41 @@ class OperacionesController extends Controller
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.eco END), "Sin economico") AS salida_1_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_1_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.credencial_apoyo END), "Sin Apoyo") AS apoyo_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN u2.name END), "Sin Apoyo") AS apoyo_1,
 
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.eco END), "Sin economico") AS salida_2_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_2_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.credencial_apoyo END), "Sin Apoyo") AS apoyo_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN u2.name END), "Sin Apoyo") AS apoyo_2,
 
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.eco END), "Sin economico") AS salida_3_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_3_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.credencial_apoyo END), "Sin Apoyo") AS apoyo_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN u2.name END), "Sin Apoyo") AS apoyo_3,
             
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco,
-            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_4_eco
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_4_eco,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.credencial_apoyo END), "Sin Apoyo") AS apoyo_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4
 
         FROM 
             t_bitacora_terminales t1
         INNER JOIN 
-            users ON users.id = t1.credencial
+            users as u ON u.id = t1.credencial 
+        left JOIN 
+            users as u2 ON u2.id = t1.credencial_apoyo 
         INNER JOIN 
             c_terminal ON c_terminal.id_terminal = t1.terminal
-
         WHERE 
             t1.dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:59"
         GROUP BY 
@@ -70,14 +79,15 @@ class OperacionesController extends Controller
             t1.ciclo,
             t1.Servicio,
             t1.dia,
-            users.name
+            u.name
         ORDER BY 
+        
             t1.credencial, 
             t1.ciclo,
             t1.dia;
 
         ');
-        
+       // dd($consulta);
         $tr1_registro =DB::connection('mysql')->select('
         select count(*) as conteo from t_bitacora_terminales  
         WHERE Servicio="TR1" AND dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00"  AND "' . now()->format('Y-m-d') . ' 23:59:59"
@@ -747,22 +757,32 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             $conductores4[$key] = $conductor;
         }
         $jornadas_combinadas = [];
+        
         foreach ($jornadas_m as $jornada) {
             $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
             if (isset($conductores[$key])) {
                 $jornada->conductor = $conductores[$key]->name. " - ". $conductores[$key]->id;
+                $jornada->id_conductor_descanso = $conductores[$key]->id_conductor_descanso ;
+                $jornada->dia_descanso = $conductores[$key]->dia_descanso ;
             } else {
                 $jornada->conductor = 'Sin conductor';
+                $jornada->id_conductor_descanso = 'Sin conductor' ;
+                $jornada->dia_descanso = 'Sin descanso' ;
             }
             $jornadas_combinadas[] = $jornada;
         }
+        //dd($jornadas_m);
         $jornadas_combinadas3 = [];
         foreach ($jornadas_s as $jornada) {
             $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
             if (isset($conductores3[$key])) {
-                $jornada->conductor = $conductores3[$key]->name. " - ". $conductores3[$key]->id;
+                $jornada->conductor = $conductores3[$key]->name. " - ". $conductores3[$key]->id; 
+                $jornada->id_conductor_descanso = $conductores3[$key]->id_conductor_descanso ;
+                $jornada->dia_descanso = $conductores3[$key]->dia_descanso ;
             } else {
                 $jornada->conductor = 'Sin conductor';
+                $jornada->id_conductor_descanso = 'Sin conductor' ;
+                $jornada->dia_descanso = 'Sin descanso' ;
             }
             $jornadas_combinadas3[] = $jornada;
         }
@@ -771,8 +791,12 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
             if (isset($conductores4[$key])) {
                 $jornada->conductor = $conductores4[$key]->name. " - ". $conductores4[$key]->id;
+                $jornada->id_conductor_descanso = $conductores4[$key]->id_conductor_descanso ;
+                $jornada->dia_descanso = $conductores4[$key]->dia_descanso ;
             } else {
                 $jornada->conductor = 'Sin conductor';
+                $jornada->id_conductor_descanso = 'Sin conductor' ;
+                $jornada->dia_descanso = 'Sin descanso' ;
             }
             $jornadas_combinadas4[] = $jornada;
         }
@@ -810,14 +834,19 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
 
         $conductores_d = array_values($conductores_d);
 
+        $conductores_descanso = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
+        
+
+        $conductores_descanso = array_values($conductores_descanso);
+
 
         $semana_seleccionada=$semana_hoy['value'];
         
         
         $conductores_totales = count($conductores);
-       // dd($jornadas_m);
+        //dd($jornadas_m);
         return view('Transmasivo.Operaciones.enrolar_horarios_conductores_2',
-            compact('where','dia_inicio','dia_fin','jornadas_m','jornadas_s','jornadas_d','conductores','conductores_s','conductores_d','conductores_totales','semana_seleccionada'));
+            compact('conductores_descanso','where','dia_inicio','dia_fin','jornadas_m','jornadas_s','jornadas_d','conductores','conductores_s','conductores_d','conductores_totales','semana_seleccionada'));
     }
 
     public function post_enrolar_horarios_conductores_2(Request $request)
@@ -929,31 +958,55 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $key = $conductor->servicio . '-' . $conductor->jornada . '-' . $conductor->turno . '-' . $conductor->dia_servicio;
                 $conductores[$key] = $conductor;
             }
+            $conductores3 = [];
+            foreach ($consulta3 as $conductor) {
+                $key = $conductor->servicio . '-' . $conductor->jornada . '-' . $conductor->turno . '-' . $conductor->dia_servicio;
+                $conductores3[$key] = $conductor;
+            }
+            $conductores4 = [];
+            foreach ($consulta4 as $conductor) {
+                $key = $conductor->servicio . '-' . $conductor->jornada . '-' . $conductor->turno . '-' . $conductor->dia_servicio;
+                $conductores4[$key] = $conductor;
+            }
             $jornadas_combinadas = [];
             foreach ($jornadas_m as $jornada) {
                 $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
                 if (isset($conductores[$key])) {
                     $jornada->conductor = $conductores[$key]->name. " - ". $conductores[$key]->id;
+                    $jornada->id_conductor_descanso = $conductores[$key]->id_conductor_descanso ;
+                    $jornada->dia_descanso = $conductores[$key]->dia_descanso ;
                 } else {
                     $jornada->conductor = 'Sin conductor';
+                    $jornada->id_conductor_descanso = 'Sin conductor' ;
+                    $jornada->dia_descanso = 'Sin descanso' ;
                 }
                 $jornadas_combinadas[] = $jornada;
             }
+            //dd($jornadas_m);
             foreach ($jornadas_s as $jornada) {
                 $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
-                if (isset($conductores[$key])) {
-                    $jornada->conductor = $conductores[$key]->name. " - ". $conductores[$key]->id;
+                if (isset($conductores3[$key])) {
+                    $jornada->conductor = $conductores3[$key]->name. " - ". $conductores[$key]->id;
+                    $jornada->id_conductor_descanso = $conductores3[$key]->id_conductor_descanso ;
+                    $jornada->dia_descanso = $conductores3[$key]->dia_descanso ;
                 } else {
                     $jornada->conductor = 'Sin conductor';
+                    $jornada->id_conductor_descanso = 'Sin conductor' ;
+                    $jornada->dia_descanso = 'Sin descanso' ;
                 }
                 $jornadas_combinadas[] = $jornada;
             }
             foreach ($jornadas_d as $jornada) {
                 $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
-                if (isset($conductores[$key])) {
-                    $jornada->conductor = $conductores[$key]->name. " - ". $conductores[$key]->id;
+                if (isset($conductores4[$key])) {
+                    
+                    $jornada->conductor = $conductores4[$key]->name. " - ". $conductores[$key]->id;
+                    $jornada->id_conductor_descanso = $conductores4[$key]->id_conductor_descanso ;
+                    $jornada->dia_descanso = $conductores4[$key]->dia_descanso ;
                 } else {
                     $jornada->conductor = 'Sin conductor';
+                    $jornada->id_conductor_descanso = 'Sin conductor' ;
+                    $jornada->dia_descanso = 'Sin descanso' ;
                 }
                 $jornadas_combinadas[] = $jornada;
             }
@@ -1081,9 +1134,59 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             );
             $mensaje="Se registro con exito!!";
             $color="success";
-            
             $semana_seleccionada=$request->input('semana');
+            return redirect()->route('enrolar_horarios_conductores_2',compact('semana_seleccionada'))->with('mensaje', $mensaje)->with('color', $color)->
+            with('semana_seleccionada', $semana_seleccionada)->with('hidden_servicio', $hidden_servicio)->with('hidden_dia_servicio_d', $hidden_dia_servicio);
+        }
+        if($request->has('enrolar_descanso'))
+        {
+            //dd($request->all());
+            
+            $hidden_id_jornada_pk_descanso = $request->input('hidden_id_jornada_pk_descanso');
+            $dia_inicio_lv_descanso = $request->input('dia_inicio_lv_descanso');
+            $dia_fin_lv_descanso = $request->input('dia_fin_lv_descanso');
+            $dia_descanso_l_v = $request->input('dia_descanso_l_v');
+            $conductores_descanso = $request->input('conductores_descanso');
+
+            $conductores = DB::connection('mysql')->update(
+                'update t_jornada_conductores set id_conductor_descanso=?,dia_descanso=?  where id_jornada_fk=? and dia_inicio=? and dia_fin=? ',
+                [
+                    $conductores_descanso ,
+                    $dia_descanso_l_v ,
+                    $hidden_id_jornada_pk_descanso ,
+                    $dia_inicio_lv_descanso ,
+                    $dia_fin_lv_descanso ,
+                    
+                ]
+            );
+            $mensaje="Se modifico con exito!!";
+            $color="success";
+            
+            $semana_seleccionada=$request->input('semana_hidden_descanso');
             return redirect()->route('enrolar_horarios_conductores_2',compact('semana_seleccionada'))->with('mensaje', $mensaje)->with('color', $color)->with('semana_seleccionada', $semana_seleccionada);
+        
+        }if($request->has('desenrolar_jornada'))
+        {
+            //dd($request->all());
+            
+            $hidden_id_jornada_pk_descanso = $request->input('hidden_id_jornada_pk_desenrolar');
+            $dia_inicio_lv_descanso = $request->input('dia_inicio_lv_desenrolar');
+            $dia_fin_lv_descanso = $request->input('dia_fin_lv_desenrolar');
+
+            $conductores = DB::connection('mysql')->update(
+                'delete from t_jornada_conductores  where id_jornada_fk=? and dia_inicio=? and dia_fin=? ',
+                [
+                    $hidden_id_jornada_pk_descanso ,
+                    $dia_inicio_lv_descanso ,
+                    $dia_fin_lv_descanso ,
+                ]
+            );
+            $mensaje="Se elimino con exito!!";
+            $color="success";
+            
+            $semana_seleccionada=$request->input('semana_hidden_desenrolar');
+            return redirect()->route('enrolar_horarios_conductores_2',compact('semana_seleccionada'))->with('mensaje', $mensaje)->with('color', $color)->with('semana_seleccionada', $semana_seleccionada);
+        
         }
         
     }
@@ -2015,6 +2118,8 @@ public function Registro_bitacora_terminal(Request $request)
         $id_jornada_sem=$request->input('id_jornada_sem');
         $llegada_salida=$request->input('llegada_salida');
         $comentarios=$request->input('comentarios');
+        $credencial_apoyo=$request->input('credencial_apoyo');
+        
 
 
         $diasSemana = [
@@ -2101,6 +2206,7 @@ public function Registro_bitacora_terminal(Request $request)
             $bitacora->comentario = $comentarios;
             $bitacora->ciclo = $ciclo;
             $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
+            $bitacora->credencial_apoyo = $credencial_apoyo; 
             $bitacora->id_usuario = Auth::id();
             $bitacora->save(); 
 
@@ -2115,6 +2221,7 @@ public function Registro_bitacora_terminal(Request $request)
             $bitacora2->id_jornada_sem = $id_jornada_sem;
             $bitacora2->comentario = $comentarios;
             $bitacora2->ciclo = $ciclo;
+            $bitacora2->credencial_apoyo = $credencial_apoyo; 
             $bitacora2->fecha_registro = $hora_formateada; // Fecha de registro actual
             $bitacora2->id_usuario = Auth::id();
             $bitacora2->save();    
@@ -2129,6 +2236,7 @@ public function Registro_bitacora_terminal(Request $request)
             $bitacora->hora_salida = $hora_salida;
             $bitacora->id_jornada_sem = $id_jornada_sem;
             $bitacora->comentario = $comentarios;
+            $bitacora->credencial_apoyo = $credencial_apoyo; 
             $bitacora->ciclo = $ciclo;
             $bitacora->fecha_registro = $hora_formateada; // Fecha de registro actual
             $bitacora->id_usuario = Auth::id();

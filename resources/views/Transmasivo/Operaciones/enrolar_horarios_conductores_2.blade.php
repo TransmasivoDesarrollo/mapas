@@ -94,6 +94,140 @@
                         <input type="submit" value="Buscar" id="Buscar" name="Buscar" class="btn btn-primary" >
                     </div>
                 </form>
+                
+                <div class="modal fade" id="modal_conductores_desenrolar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_desenrolar" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method="post" id="contratoForm" action="{{url('/enrolar_horarios_conductores_2')}}">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel_desenrolar">Desenrolar conductor</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="hidden_servicio_desenrolar" name="hidden_servicio_desenrolar">
+                                    <input type="hidden" id="hidden_dia_servicio_desenrolar" name="hidden_dia_servicio_desenrolar">
+                                    <input type="hidden" id="hidden_turno_desenrolar" name="hidden_turno_desenrolar">
+                                    <input type="hidden" id="hidden_jornada_desenrolar" name="hidden_jornada_desenrolar">
+                                    <input type="hidden" id="hidden_id_jornada_pk_desenrolar" name="hidden_id_jornada_pk_desenrolar">
+                                    
+                                    <input type="hidden" id="semana_hidden_desenrolar" name="semana_hidden_desenrolar">
+                                    <input type="hidden" id="dia_inicio_lv_desenrolar" name="dia_inicio_lv_desenrolar" value="{{$dia_inicio}}">
+                                    <input type="hidden" id="dia_fin_lv_desenrolar" name="dia_fin_lv_desenrolar" value="{{$dia_fin}}">
+                                    
+                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>¿Seguro de querer desenrolar? </label>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" name="desenrolar_jornada" id="desenrolar_jornada" class="btn btn-primary">Desenrolar al conductor</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal fade" id="modal_conductores_descanso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_descanso" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method="post" id="contratoForm" action="{{url('/enrolar_horarios_conductores_2')}}">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel_descanso">Descanso conductor (Lunes a Viernes)</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="hidden_servicio_descanso" name="hidden_servicio_descanso">
+                                    <input type="hidden" id="hidden_dia_servicio_descanso" name="hidden_dia_servicio_descanso">
+                                    <input type="hidden" id="hidden_turno_descanso" name="hidden_turno_descanso">
+                                    <input type="hidden" id="hidden_jornada_descanso" name="hidden_jornada_descanso">
+                                    <input type="hidden" id="hidden_id_jornada_pk_descanso" name="hidden_id_jornada_pk_descanso">
+                                    
+                                    <input type="hidden" id="semana_hidden_descanso" name="semana_hidden_descanso">
+                                    <input type="hidden" id="dia_inicio_lv_descanso" name="dia_inicio_lv_descanso" value="{{$dia_inicio}}">
+                                    <input type="hidden" id="dia_fin_lv_descanso" name="dia_fin_lv_descanso" value="{{$dia_fin}}">
+                                    
+                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>¿Qué día descansara?</label>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Lunes <span class="required-label"></span></label>
+                                                    <input type="radio" required id="dia_descanso_l_v" name="dia_descanso_l_v" value="Lunes">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Martes <span class="required-label"></span></label>
+                                                    <input type="radio"  required id="dia_descanso_l_v" name="dia_descanso_l_v" value="Martes">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Miércoles <span class="required-label"></span></label>
+                                                    <input type="radio"  required id="dia_descanso_l_v" name="dia_descanso_l_v" value="Miércoles">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Jueves <span class="required-label"></span></label>
+                                                    <input type="radio"  required id="dia_descanso_l_v" name="dia_descanso_l_v" value="Jueves">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Viernes <span class="required-label"></span></label>
+                                                    <input type="radio"  required id="dia_descanso_l_v" name="dia_descanso_l_v" value="Viernes">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Sábado <span class="required-label"></span></label>
+                                                    <input type="radio"  required id="dia_descanso_l_v" name="dia_descanso_l_v" value="Sábado">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Domingo <span class="required-label"></span></label>
+                                                    <input type="radio"  required id="dia_descanso_l_v" name="dia_descanso_l_v" value="Domingo">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Conductor que cubre el día <span class="required-label"></span></label>
+                                            <div class="select2-input">
+                                                <select id="conductores_descanso" required name="conductores_descanso" class="form-control">
+                                                    @foreach ($conductores_descanso as $conductor)
+                                                    <option value="{{ $conductor->id }}"  >
+                                                        {{ $conductor->id }} - {{ $conductor->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" name="enrolar_descanso" id="enrolar_descanso" class="btn btn-primary">Guardar cambios</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -336,13 +470,30 @@
                                                                     @if($cons->conductor=="Sin conductor")
                                                                         <center>
                                                                             <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                            class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                            class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center><hr>
+                                                                        
                                                                     @else
                                                                         <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" ><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else<br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center><hr>
                                                                     @endif
                                                                     <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                    <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                    <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                     <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                     </center>
                                                                 </td>
@@ -364,10 +515,27 @@
                                                                     @if($cons->conductor=="Sin conductor")
                                                                     <hr><center>
                                                                     <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                            class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                            class="btn btn-default btn-border" type="button" style="padding: 4px; font-size: 1.5em;"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
                                                                     <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else<br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center><hr>
                                                                     @endif
                                                                 </td>
                                                                 @php 
@@ -381,10 +549,27 @@
                                                                     @if($cons->conductor=="Sin conductor")
                                                                     <hr><center>
                                                                             <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                            class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                            class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
                                                                     <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else<br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                     @endif
                                                                 </td>
                                                                 @endif
@@ -426,13 +611,29 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
                                                                             <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center><hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -454,10 +655,27 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
                                                                         <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -471,10 +689,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -515,13 +749,29 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
                                                                             <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center><hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -543,10 +793,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -560,10 +826,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -604,13 +886,29 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
                                                                             <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center><hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -632,10 +930,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -649,10 +963,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" data-target="#exampleModal"
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -694,13 +1024,30 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
                                                                             <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center><hr>
+                                                                            
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -722,10 +1069,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -739,10 +1102,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -784,13 +1163,30 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
                                                                             <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
+                                                                            <hr>
                                                                         @endif
-                                                                        <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <center style="cursor: pointer; "  class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -812,10 +1208,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -829,10 +1241,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -874,13 +1302,30 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
                                                                             <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
+                                                                            <hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -902,10 +1347,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -919,10 +1380,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -964,13 +1441,30 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
                                                                             <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
+                                                                            <hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -992,10 +1486,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -1009,10 +1519,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                                 <button  onclick="abrirModal_s('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -1054,13 +1580,31 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                                 <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
+                                                                            <hr>
+                                                                            
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -1082,10 +1626,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -1099,10 +1659,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                        class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                        class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -1144,13 +1720,30 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                             <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                            class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                            class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
+                                                                            <hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -1172,10 +1765,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -1189,10 +1798,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                        class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                        class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -1234,13 +1859,30 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                             <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                            class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                            class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
+                                                                            <hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -1262,10 +1904,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                        class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                        class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -1279,10 +1937,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                        class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                        class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -1324,13 +1998,30 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                             <center>
                                                                             <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                            class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                            class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
+                                                                            <hr>
                                                                         @endif
                                                                         <center style="cursor: pointer; " class="texto-hover"  onclick="ver_jornadacompleta('{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')">
-                                                                        <br><b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
+                                                                        <b class="texto-hover">{{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->primera_salida_base)->format('h:i A') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $cons->ultima_salida_base)->format('h:i A') }}</b>
                                                                         <hr><b class="texto-hover">Ciclos {{$cons->total_ciclos}}</b>
                                                                         </center>
                                                                     </td>
@@ -1352,10 +2043,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                                class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                                class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @php 
@@ -1369,10 +2076,26 @@
                                                                         @if($cons->conductor=="Sin conductor")
                                                                         <hr><center>
                                                                         <button  onclick="abrirModal_d('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}','{{$cons->turno}}','{{$cons->jornada}}')" data-toggle="modal" 
-                                                                        class="btn btn-default btn-border" type="button"><i class="la flaticon-add-user"></i></button>
+                                                                        class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                    <center>
+                                                                                <button  onclick="
+                                                                                abrirModalDescanso('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button"><i class="la la-battery-3">Descanso</i></button>
+                                                                                <button  onclick="
+                                                                                abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
+                                                                                ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
+                                                                                class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
+                                                                                
+                                                                                @if($cons->dia_descanso == null)
+                                                                                <br>Sin descanso
+                                                                                @else  <br>
+                                                                                {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
+                                                                                @endif
+                                                                            </center>
                                                                         @endif
                                                                     </td>
                                                                     @endif
@@ -1424,6 +2147,9 @@
             },
             
         });
+        
+        
+        
         $('#conductores').select2({
             dropdownParent: $('#exampleModal'), 
             width: '100%' 
@@ -1451,6 +2177,38 @@
             $('#semana_hidden').val(semana);
             
             $('#modal_conductores').modal('show');
+        }
+
+        function abrirModalDescanso(id_jornada_pk,servicio, dia_servicio, turno, jornada, id_conductor_descanso, dia_descanso)
+        {
+            
+            $('#hidden_servicio_descanso').val(servicio);
+            $('#hidden_dia_servicio_descanso').val(dia_servicio);
+            $('#hidden_turno_descanso').val(turno);
+            $('#dia_descanso_l_v[value="'+dia_descanso+'"]').prop('checked', true);
+            $('#conductores_descanso').val(id_conductor_descanso);
+            $('#hidden_jornada_descanso').val(jornada);
+            $('#hidden_id_jornada_pk_descanso').val(id_jornada_pk);
+            var semana = $('#semana').val();
+            $('#semana_hidden_descanso').val(semana);
+            
+            $('#modal_conductores_descanso').modal('show');
+        }
+
+        function abrirModalDesenrolar(id_jornada_pk,servicio, dia_servicio, turno, jornada, id_conductor_descanso, dia_descanso)
+        {
+            
+            $('#hidden_servicio_desenrolar').val(servicio);
+            $('#hidden_dia_servicio_desenrolar').val(dia_servicio);
+            $('#hidden_turno_desenrolar').val(turno);
+            $('#dia_desenrolar_l_v[value="'+dia_descanso+'"]').prop('checked', true);
+            $('#conductores_desenrolar').val(id_conductor_descanso);
+            $('#hidden_jornada_desenrolar').val(jornada);
+            $('#hidden_id_jornada_pk_desenrolar').val(id_jornada_pk);
+            var semana = $('#semana').val();
+            $('#semana_hidden_desenrolar').val(semana);
+            
+            $('#modal_conductores_desenrolar').modal('show');
         }
 
         function abrirModal_s(id_jornada_pk,servicio, dia_servicio, turno, jornada)
@@ -1485,6 +2243,44 @@
             
             $('#exampleModal_d').modal('show');
         }
+        @if (session('hidden_servicio'))
+            @if(session('hidden_servicio') == 'TR1' && session('hidden_dia_servicio_d') == 'Lunes a Viernes' )
+                $('#pills-home-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR1-R' && session('hidden_dia_servicio_d') == 'Lunes a Viernes' )
+                $('#pills-profile-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR3' && session('hidden_dia_servicio_d') == 'Lunes a Viernes' )
+                $('#pills-contact-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR4' && session('hidden_dia_servicio_d') == 'Lunes a Viernes' )
+                $('#pills-TR4-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR1' && session('hidden_dia_servicio_d') == 'Sábado' )
+                $('#pills-TR1-S-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR1-R' && session('hidden_dia_servicio_d') == 'Sábado' )
+                $('#pills-TR1-R-S-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR3' && session('hidden_dia_servicio_d') == 'Sábado' )
+                $('#pills-TR3-S-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR4' && session('hidden_dia_servicio_d') == 'Sábado' )
+                $('#pills-TR4-S-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR1' && session('hidden_dia_servicio_d') == 'Domingo' )
+                $('#pills-TR1-D-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR1-R' && session('hidden_dia_servicio_d') == 'Domingo')
+                $('#pills-TR1-R-D-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR3' && session('hidden_dia_servicio_d') == 'Domingo')
+                $('#pills-TR3-D-tab-nobd').click();
+            @endif
+            @if(session('hidden_servicio')  == 'TR4' && session('hidden_dia_servicio_d') == 'Domingo')
+                $('#pills-TR4-D-tab-nobd').click();
+            @endif
+        @endif
 
         function ver_jornadacompleta(servicio, dia_servicio, turno, jornada)
         {
