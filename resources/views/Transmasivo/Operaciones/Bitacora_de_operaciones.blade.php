@@ -1,249 +1,292 @@
 <x-app-layout>
-    <style>
-        .input-with-border {
-            border: 1px solid black;
-        }
-    </style>
-    <div class="col-12 col-md-12">
-        <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade active show" id="v-pills-home-icons" role="tabpanel" aria-labelledby="v-pills-home-tab-icons">
-                <div class="accordion accordion-secondary">
-                    <div class="card" style="background-color: #fff;">
-                        <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="button">
-                            <div class="card-title" style="display: inline-block;">Consulta bitacora de operaciones</div>
-                            
-                            <div class="span-mode" style="color:#000000;" id="fecha" ></div>
-                        </div>
-
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
+        <style>
+            .input-with-border {
+                border: 1px solid black;
+            }
+        </style>
+        <div class="col-12 col-md-12">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade active show" id="v-pills-home-icons" role="tabpanel" aria-labelledby="v-pills-home-tab-icons">
+                    <div class="accordion accordion-secondary">
+                        <div class="card" style="background-color: #fff;">
+                            <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="button">
+                                <div class="card-title" style="display: inline-block;">Consulta bitacora de operaciones</div>
                                 
-                                @if (session('mensaje'))
-                                <div class="alert alert-{{ session('color') }} alert-dismissible" data-dismiss="alert">
-                                    {{ session('mensaje') }}.
-                                </div>
-                                @endif
-                                <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
-                                    @csrf
-                                    {{-- inicio del row --}}
-                                    <div class="form-group row " >
-                                        <div class="col-md-2">
-                                            <label>Día <span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="dia" name="dia" value="{{now()->format('Y-m-d')}}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label>Credencial <span class="required-label">*</span></label>
-                                            <select required type="text" style=" width:90%;" class="form-control input-with-border" id="credencial" name="credencial">
-                                                @foreach($credencial as $cred)
-                                                <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <label>&nbsp;<br><br><br></label>
-                                            <button class="btn btn-primary btn-sm" id="buscar" onclick=""><i class="la flaticon-search-2"></i></button>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label>Terminal</label>
-                                            <select required class="form-control input-with-border" id="terminal_c" name="terminal">
-                                                @foreach($terminal as $term)
-                                                <option value="{{$term->id_terminal}}">{{$term->terminal}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label>Servicio<span class="required-label">*</span></label>
-                                            <input type="hidden" name="id_jornada_sem" id="id_jornada_sem">
-                                            <select required class="form-control input-with-border" id="serv" name="serv">
-                                                <option value="TR1">TR1 - Ordinario Ojo de agua - Ciudad azteca</option>
-                                                <option value="TR1-R">TR1-R - Ordinario Ojo de agua - Ciudad azteca</option>
-                                                <option value="TR3">TR3 - Express Ojo de agua - Ciudad azteca</option>
-                                                <option value="TR4">TR4 - Express Central de abastos - Ciudad azteca</option>
-                                            </select>
-                                        </div>
+                                <div class="span-mode" style="color:#000000;" id="fecha" ></div>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    
+                                    @if (session('mensaje'))
+                                    <div class="alert alert-{{ session('color') }} alert-dismissible" data-dismiss="alert">
+                                        {{ session('mensaje') }}.
                                     </div>
-                                    <div class="form-group row " >
-                                        <div class="col-md-2">
-                                            <label>Economico <span class="required-label">*</span></label>
-                                            <input required type="text" class="form-control input-with-border" id="eco" name="eco">
+                                    @endif
+                                    <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
+                                        @csrf
+                                        {{-- inicio del row --}}
+                                        <div class="form-group row " >
+                                            <div class="col-md-2">
+                                                <label>Día <span class="required-label">*</span></label>
+                                                <input required type="date" class="form-control input-with-border" id="dia" name="dia" value="{{now()->format('Y-m-d')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Credencial <span class="required-label">*</span></label>
+                                                <select required type="text" style=" width:90%;" class="form-control input-with-border" id="credencial" name="credencial">
+                                                    @foreach($credencial as $cred)
+                                                    <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <label>&nbsp;<br><br><br></label>
+                                                <button class="btn btn-primary btn-sm" id="buscar" onclick=""><i class="la flaticon-search-2"></i></button>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Terminal</label>
+                                                <select required  disabled="true" class="form-control input-with-border" id="terminal_c" name="terminal">
+                                                    @foreach($terminal as $term)
+                                                    <option value="{{$term->id_terminal}}">{{$term->terminal}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Servicio<span class="required-label">*</span></label>
+                                                <input type="hidden"  name="id_jornada_sem" id="id_jornada_sem">
+                                                <select required  disabled="true"  class="form-control input-with-border" id="serv" name="serv">
+                                                    <option value="TR1">TR1 - Ordinario Ojo de agua - Ciudad azteca</option>
+                                                    <option value="TR1-R">TR1-R - Ordinario Ojo de agua - Ciudad azteca</option>
+                                                    <option value="TR3">TR3 - Express Ojo de agua - Ciudad azteca</option>
+                                                    <option value="TR4">TR4 - Express Central de abastos - Ciudad azteca</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <label>Llegada/Salida  <span class="required-label">*</span></label>
-                                            <select required class="form-control input-with-border" id="llegada_salida" name="llegada_salida">
-                                                <option value="1">Salida 1</option>
-                                                <option value="2">Llegada 1 / Salida 2</option>
-                                                <option value="4">Llegada 2</option>
-                                            </select>
+                                        <div class="form-group row " >
+                                            <div class="col-md-2">
+                                                <label>Economico <span class="required-label">*</span></label>
+                                                <input required type="text"  disabled="true" class="form-control input-with-border" id="eco" name="eco">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Llegada/Salida  <span class="required-label">*</span></label>
+                                                <select required disabled="true"  class="form-control input-with-border" id="llegada_salida" name="llegada_salida">
+                                                    <option value="1">Salida 1</option>
+                                                    <option value="2">Llegada 1 / Salida 2</option>
+                                                    <option value="4">Llegada 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2" id="valida_completo">
+                                                <label>Hora  <span class="required-label">*</span></label>
+                                                <input required  disabled="true" type="time" class="form-control input-with-border" id="hora_salida" name="hora_salida">
+                                            </div> 
+                                            <div class="col-md-2" id="valida_mitad_1" hidden >
+                                                <label>Hora llegada <span class="required-label">*</span></label>
+                                                <input required type="time" class="form-control input-with-border" id="hora_ll" name="hora_ll">
+                                            </div> 
+                                            <div class="col-md-2" id="valida_mitad_2" hidden>
+                                                <label>Hora salida <span class="required-label">*</span></label>
+                                                <input required type="time" class="form-control input-with-border" id="hora_s" name="hora_s">
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <label>Comentario  <span class="required-label"></span></label>
+                                                <textarea  disabled="true"  type="text" class="form-control input-with-border" id="comentarios" name="comentarios"></textarea>
+                                            </div>
+                                            
+                                            <div class="col-md-3">
+                                                <label>Oper. apoyo <span class="required-label">*</span></label>
+                                                <select required type="text" disabled="true"  style=" width:90%;" class="form-control input-with-border" id="credencial_apoyo" name="credencial_apoyo">
+                                                    <option value="0">Sin apoyo</option>
+                                                    @foreach($credencial as $cred)
+                                                    <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-md-2" id="valida_completo">
-                                            <label>Hora  <span class="required-label">*</span></label>
-                                            <input required type="time" class="form-control input-with-border" id="hora_salida" name="hora_salida">
-                                        </div> 
-                                        <div class="col-md-2" id="valida_mitad_1" hidden >
-                                            <label>Hora llegada <span class="required-label">*</span></label>
-                                            <input required type="time" class="form-control input-with-border" id="hora_ll" name="hora_ll">
-                                        </div> 
-                                        <div class="col-md-2" id="valida_mitad_2" hidden>
-                                            <label>Hora salida <span class="required-label">*</span></label>
-                                            <input required type="time" class="form-control input-with-border" id="hora_s" name="hora_s">
-                                        </div> 
-                                        <div class="col-md-4">
-                                            <label>Comentario  <span class="required-label"></span></label>
-                                            <textarea  type="text" class="form-control input-with-border" id="comentarios" name="comentarios"></textarea>
-                                        </div>
-                                        
-                                        <div class="col-md-3">
-                                            <label>Oper. apoyo <span class="required-label">*</span></label>
-                                            <select required type="text" style=" width:90%;" class="form-control input-with-border" id="credencial_apoyo" name="credencial_apoyo">
-                                                <option value="0">Sin apoyo</option>
-                                                @foreach($credencial as $cred)
-                                                <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row " >
-                                        <div class="col-md-12">
-                                            <div class="demo">
-                                                <div class="progress-card">
-                                                    <div class="progress-status">
-                                                        <span class="text-muted" id="progreso">Sin informacion</span>
-                                                        <span id="ciclos_span" class="text-muted fw-bold">Ciclo 0 de 0 </span>
-                                                    </div>
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" id="bar" style="width: 0%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="" data-original-title=""></div>
+                                        <div class="form-group row " >
+                                            <div class="col-md-12">
+                                                <div class="demo">
+                                                    <div class="progress-card">
+                                                        <div class="progress-status">
+                                                            <span class="text-muted" id="progreso">Sin informacion</span>
+                                                            <span id="ciclos_span" class="text-muted fw-bold">Ciclo 0 de 0 </span>
+                                                        </div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" id="bar" style="width: 0%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="" data-original-title=""></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <center>
-                                                <input  type="submit" class="btn btn-success" id="boton_registra" disabled="true" class="boton_registra" value="Registrar" >
-                                            </center>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <center>
+                                                    <input  type="submit" class="btn btn-success" id="boton_registra" disabled="true" class="boton_registra" value="Registrar" >
+                                                </center>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                
+                                    
 
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="card">
-    <div class="card-header">
-        <div class="card-title" style="display: inline-block;">Consulta bitacora de operaciones</div>
-        <div class="card-title" id="fecha" style="display: inline-block; float: right;"></div>
-    </div>
-    <div class="card-body">
-        <div class="row form-group">
-            <div class="col-sm-3 col-md-2">
-                <div class=" card-stats">
-                    <div class="card-body" style="border-right:1px black solid;">
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center icon-warning" style="background-color: #e5be01;">
-                                    <i class=" la la-bus text-warning"></i>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title" style="display: inline-block;">Bitacora de operaciones</div>
+            <div class="card-title" id="fecha" style="display: inline-block; float: right;"></div>
+        </div>
+        <div class="card-body">
+            <div class="row form-group">
+                <div class="col-sm-3 col-md-2">
+                    <div class=" card-stats">
+                        <div class="card-body" style="border-right:1px black solid;">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center icon-warning" style="background-color: #e5be01;">
+                                        <i class=" la la-bus text-warning"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-7 col-stats">
-                                <div class="numbers">
-                                    <p class="card-category">Ciclos TR1</p>
-                                    <h4 class="card-title">{{$tr1_registro / 2}}/{{$tr1_ciclos[0]->conteo}} </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3 col-md-2">
-                <div class=" card-stats">
-                    <div class="card-body" style="border-right:1px black solid;">
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center icon-warning" style="background-color: #FF0080;">
-                                    <i class="la la-bus text-warning"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 col-stats">
-                                <div class="numbers">
-                                    <p class="card-category">Ciclos TR1-R</p>
-                                    <h4 class="card-title">{{$tr1_r_registro / 2 }}/{{$tr1_r_ciclos[0]->conteo }}</h4>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Ciclos TR1</p>
+                                        <h4 class="card-title">{{$tr1_registro / 2}}/{{$tr1_ciclos[0]->conteo}} </h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-3 col-md-2">
-                <div class=" card-stats">
-                    <div class="card-body" style="border-right:1px black solid;" >
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center icon-warning" style="background-color: #008f39;">
-                                    <i class="la la-bus text-warning"></i>
+                <div class="col-sm-3 col-md-2">
+                    <div class=" card-stats">
+                        <div class="card-body" style="border-right:1px black solid;">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center icon-warning" style="background-color: #FF0080;">
+                                        <i class="la la-bus text-warning"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-7 col-stats">
-                                <div class="numbers">
-                                    <p class="card-category">Ciclos TR3</p>
-                                    <h4 class="card-title">{{$tr3_registro / 2 }}/{{$tr3_ciclos[0]->conteo}}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3 col-md-2">
-                <div class=" card-stats">
-                    <div class="card-body" style="border-right:1px black solid;">
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center icon-warning" style="background-color: #0000ff;">
-                                    <i class="la la-bus text-warning"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 col-stats">
-                                <div class="numbers">
-                                    <p class="card-category">Ciclos TR4</p>
-                                    <h4 class="card-title">{{$tr4_registro / 2}}/{{$tr4_ciclos[0]->conteo}}</h4>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Ciclos TR1-R</p>
+                                        <h4 class="card-title">{{$tr1_r_registro / 2 }}/{{$tr1_r_ciclos[0]->conteo }}</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-3 col-md-2">
-                <div class=" card-stats">
-                    <div class="card-body" style="border-right:1px black solid;">
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center icon-warning" style="background-color: rgb(135, 38, 55);">
-                                    <i class="la la-bus text-warning"></i>
+                <div class="col-sm-3 col-md-2">
+                    <div class=" card-stats">
+                        <div class="card-body" style="border-right:1px black solid;" >
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center icon-warning" style="background-color: #008f39;">
+                                        <i class="la la-bus text-warning"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-7 col-stats">
-                                <div class="numbers">
-                                    <p class="card-category">Ciclos totales</p>
-                                    <h4 class="card-title">{{$total_registros / 2}}/{{$tr4_ciclos[0]->conteo + $tr3_ciclos[0]->conteo + $tr1_r_ciclos[0]->conteo + $tr1_ciclos[0]->conteo}}</h4>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Ciclos TR3</p>
+                                        <h4 class="card-title">{{$tr3_registro / 2 }}/{{$tr3_ciclos[0]->conteo}}</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-3 col-md-2">
+                    <div class=" card-stats">
+                        <div class="card-body" style="border-right:1px black solid;">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center icon-warning" style="background-color: #0000ff;">
+                                        <i class="la la-bus text-warning"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Ciclos TR4</p>
+                                        <h4 class="card-title">{{$tr4_registro / 2}}/{{$tr4_ciclos[0]->conteo}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <div class=" card-stats">
+                        <div class="card-body" style="border-right:1px black solid;">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center icon-warning" style="background-color: rgb(135, 38, 55);">
+                                        <i class="la la-bus text-warning"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Ciclos totales</p>
+                                        <h4 class="card-title">{{$total_registros / 2}}/{{$tr4_ciclos[0]->conteo + $tr3_ciclos[0]->conteo + $tr1_r_ciclos[0]->conteo + $tr1_ciclos[0]->conteo}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-sm-3 col-md-2">
+                    <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
+                        @csrf
+                        <div class=" card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" style="border:1px #fff solid; backgroud-color:#fff; " class="col-12" name="pdf" id="pdf">
+                                            <div class="icon-big text-center icon-warning" style="background-color: red; cursor: pointer;">
+                                                <i class="la la-file-pdf-o text-warning"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="submit" style="border:1px #fff solid; backgroud-color:#fff;  " class="col-12" name="Excel" id="Excel">
+                                            <div class="icon-big text-center icon-warning" style="background-color: #2d572c; cursor: pointer;">
+                                                <i class="la la-file-excel-o text-warning"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
             </div>
-            <input type="hidden" name="pdf" value="pdf" id="pdf-input">
-            <div class="col-sm-3 col-md-2">
-                <div class=" card-stats">
-                    <div class="card-body" >
-                        <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
-                            @csrf
+            <hr>
+            <div class="row form-group">
+                        <div class="col-xl-2">
+                            <label>Fecha </label>
+                            <input type="date" class="form-control" id="fecha_busqueda" name="fecha_busqueda" 
+                            @if(isset($fecha_busqueda))
+                            value="{{$fecha_busqueda}}">
+                            @else
+                            value="{{now()->format('Y-m-d')}}">
+                            @endif
+                        </div>
+                        
+                        <div class="col-xl-12">
+                            <center>
+                                <label><br></label>
+                                <input type="submit" id="buscar_filtro" name="buscar_filtro" value="Buscar" class="btn btn-success">
+                            </center>   
+                        </div>
+                </form>
+            </div>
+                <input type="hidden" name="pdf" value="pdf" id="pdf-input">
+                            <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
+                                @csrf
                                 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -264,6 +307,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </form>
+                            <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
+                                @csrf
                                 <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -277,17 +323,21 @@
                                                 <div class="row form-group">
                                                     <div class="col-md-6">
                                                         <label >Hora registrada</label>
-                                                        <input type="time" class="form-control" id="hora_registrada" name="hora_registrada">
+                                                        <input type="time" class="form-control" required id="hora_registrada" name="hora_registrada">
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label >Conductor</label>
-                                                        <input type="text" class="form-control" id="Conductor" name="Conductor">
-                                                    </div>
-                                                </div> 
-                                                <div class="row form-group">
+                                                    {{-- <div class="col-md-6"> --}}
+                                                        {{-- <label >Conductor</label> --}}
+                                                        <input type="hidden" class="form-control" required id="Conductor" name="Conductor"> 
+                                                    {{-- </div> --}}
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
                                                     <div class="col-md-6">
                                                         <label >Economico</label>
-                                                        <input type="text" class="form-control" id="Economico" name="Economico">
+                                                        <input type="text" class="form-control" required id="Economico" name="Economico">
                                                     </div>
                                                     
                                                 </div>
@@ -300,169 +350,159 @@
                                         </div>
                                     </div>
                                 </div>
-                            <div class="row">
-                                <button type="submit" style="border:1px #fff solid; backgroud-color:#fff; " class="col-6" name="pdf" id="pdf">
-                                    <div class="icon-big text-center icon-warning" style="background-color: red; cursor: pointer;">
-                                        <i class="la la-file-pdf-o text-warning"></i>
-                                    </div>
-                                </button>
-                                <button type="submit" style="border:1px #fff solid; backgroud-color:#fff;  " class="col-6" name="Excel" id="Excel">
-                                    <div class="icon-big text-center icon-warning" style="background-color: #2d572c; cursor: pointer;">
-                                        <i class="la la-file-excel-o text-warning"></i>
-                                    </div>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="table-responsive" >
-            <table class="table table-hover table-striped table-bordered display  "  id="list_user2">
-                <thead>
-                    <tr>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 6%;"><center>Serv.</center></th>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 6%;"><center>Credencial</center></th>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 4%;"><center>Ciclo</center></th>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Salida 1</center></th>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 20%;"><center>Llegada 1</center></th>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Salida 2</center></th>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 20%;"><center>Llegada 2</center></th>
-                        <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 2%;"><center>Km circuito</center></th>
-                    </tr>
-                </thead>
-                <tbody id="llenaTabla" >
-                    @php $contador = 0; @endphp
-                    @php $anterior_ciclo = 0; @endphp
-                    @php $anterior_credencial = 0; @endphp
-                    @php $repetido = 0; @endphp
-                    @php $naranja = 0; @endphp
+                                
+                                    
+                                </form>
+            <div class="table-responsive" >
+                <table class="table table-hover table-striped table-bordered display  "  id="list_user2">
+                    <thead>
+                        <tr>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 6%;"><center>Serv.</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 6%;"><center>Credencial</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 4%;"><center>Ciclo</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Salida 1</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 20%;"><center>Llegada 1</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Salida 2</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 20%;"><center>Llegada 2</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 2%;"><center>Km circuito</center></th>
+                        </tr>
+                    </thead>
+                    <tbody id="llenaTabla" >
+                        @php $contador = 0; @endphp
+                        @php $anterior_ciclo = 0; @endphp
+                        @php $anterior_credencial = 0; @endphp
+                        @php $repetido = 0; @endphp
+                        @php $naranja = 0; @endphp
 
-                    
-                    @php $Ojo_De_Agua_1 = 0; @endphp
-                    @php $Esmeralda_1 = 1.47; @endphp
-                    @php $Cuauhtemoc_Norte_1 = 2; @endphp
-                    @php $Cuauhtemoc_Sur_1 = 3.05; @endphp
-                    @php $Hidalgo_1 = 3.58; @endphp
-                    @php $Insurgentes_1 = 4.39; @endphp
-                    @php $Central_De_Abastos_1 = 5.3; @endphp
-                    @php $e_19_De_Septiembre_1 = 6.62; @endphp
-                    @php $Palomas_1 = 7.6; @endphp
-                    @php $Jardines_De_Morelos_1 = 8; @endphp
-                    @php $Aquiles_Serdan_1 = 8.26; @endphp
-                    @php $Hospital_1 = 8.77; @endphp
-                    @php $e_1ro_De_Mayo_1 = 9.6; @endphp
-                    @php $Las_Americas_1 = 10.55; @endphp
-                    @php $Valle_De_Ecatepec_1 = 11.64; @endphp
-                    @php $Vocacional_3_1 = 12.4; @endphp
-                    @php $Adolfo_Lopez_Mateos_1 = 12.5; @endphp
-                    @php $Zodiaco_1 = 13; @endphp
-                    @php $Alfredo_Torres_1 = 13.58; @endphp
-                    @php $Unitec_1 = 14.02; @endphp
-                    @php $Estacion_Industrial_1 = 14.5; @endphp
-                    @php $Josefa_Ortiz_De_Dominguez_1 = 15; @endphp
-                    @php $Quinto_Sol_1 = 15.83; @endphp
-                    @php $Ciudad_Azteca_1 = 16.5; @endphp
+                        
+                        @php $Ojo_De_Agua_1 = 0; @endphp
+                        @php $Esmeralda_1 = 1.47; @endphp
+                        @php $Cuauhtemoc_Norte_1 = 2; @endphp
+                        @php $Cuauhtemoc_Sur_1 = 3.05; @endphp
+                        @php $Hidalgo_1 = 3.58; @endphp
+                        @php $Insurgentes_1 = 4.39; @endphp
+                        @php $Central_De_Abastos_1 = 5.3; @endphp
+                        @php $e_19_De_Septiembre_1 = 6.62; @endphp
+                        @php $Palomas_1 = 7.6; @endphp
+                        @php $Jardines_De_Morelos_1 = 8; @endphp
+                        @php $Aquiles_Serdan_1 = 8.26; @endphp
+                        @php $Hospital_1 = 8.77; @endphp
+                        @php $e_1ro_De_Mayo_1 = 9.6; @endphp
+                        @php $Las_Americas_1 = 10.55; @endphp
+                        @php $Valle_De_Ecatepec_1 = 11.64; @endphp
+                        @php $Vocacional_3_1 = 12.4; @endphp
+                        @php $Adolfo_Lopez_Mateos_1 = 12.5; @endphp
+                        @php $Zodiaco_1 = 13; @endphp
+                        @php $Alfredo_Torres_1 = 13.58; @endphp
+                        @php $Unitec_1 = 14.02; @endphp
+                        @php $Estacion_Industrial_1 = 14.5; @endphp
+                        @php $Josefa_Ortiz_De_Dominguez_1 = 15; @endphp
+                        @php $Quinto_Sol_1 = 15.83; @endphp
+                        @php $Ciudad_Azteca_1 = 16.5; @endphp
 
-                    @php $Ojo_De_Agua_2 = 17.1; @endphp
-                    @php $Esmeralda_2 = 15; @endphp
-                    @php $Cuauhtemoc_Norte_2 = 14.5; @endphp
-                    @php $Cuauhtemoc_Sur_2 = 13.47; @endphp
-                    @php $Hidalgo_2 = 12.9; @endphp
-                    @php $Insurgentes_2 = 12.04; @endphp
-                    @php $Central_De_Abastos_2 = 11.3; @endphp
-                    @php $e_19_De_Septiembre_2 = 9.8; @endphp
-                    @php $Palomas_2 = 9.39; @endphp
-                    @php $Jardines_De_Morelos_2 = 8.45; @endphp
-                    @php $Aquiles_Serdan_2 = 8.18; @endphp
-                    @php $Hospital_2 = 7.66; @endphp
-                    @php $e_1ro_De_Mayo_2 = 6.73; @endphp
-                    @php $Las_Americas_2 = 5.88; @endphp
-                    @php $Valle_De_Ecatepec_2 = 4.8; @endphp
-                    @php $Vocacional_3_2 = 4.31; @endphp
-                    @php $Adolfo_Lopez_Mateos_2 = 3.93; @endphp
-                    @php $Zodiaco_2 = 3.45; @endphp
-                    @php $Alfredo_Torres_2 = 2.86; @endphp
-                    @php $Unitec_2 = 2.34; @endphp
-                    @php $Estacion_Industrial_2 = 1.86; @endphp
-                    @php $Josefa_Ortiz_De_Dominguez_2 = 1.41; @endphp
-                    @php $Quinto_Sol_2 = 0.6; @endphp
-                    @php $Ciudad_Azteca_2 = 0; @endphp
+                        @php $Ojo_De_Agua_2 = 17.1; @endphp
+                        @php $Esmeralda_2 = 15; @endphp
+                        @php $Cuauhtemoc_Norte_2 = 14.5; @endphp
+                        @php $Cuauhtemoc_Sur_2 = 13.47; @endphp
+                        @php $Hidalgo_2 = 12.9; @endphp
+                        @php $Insurgentes_2 = 12.04; @endphp
+                        @php $Central_De_Abastos_2 = 11.3; @endphp
+                        @php $e_19_De_Septiembre_2 = 9.8; @endphp
+                        @php $Palomas_2 = 9.39; @endphp
+                        @php $Jardines_De_Morelos_2 = 8.45; @endphp
+                        @php $Aquiles_Serdan_2 = 8.18; @endphp
+                        @php $Hospital_2 = 7.66; @endphp
+                        @php $e_1ro_De_Mayo_2 = 6.73; @endphp
+                        @php $Las_Americas_2 = 5.88; @endphp
+                        @php $Valle_De_Ecatepec_2 = 4.8; @endphp
+                        @php $Vocacional_3_2 = 4.31; @endphp
+                        @php $Adolfo_Lopez_Mateos_2 = 3.93; @endphp
+                        @php $Zodiaco_2 = 3.45; @endphp
+                        @php $Alfredo_Torres_2 = 2.86; @endphp
+                        @php $Unitec_2 = 2.34; @endphp
+                        @php $Estacion_Industrial_2 = 1.86; @endphp
+                        @php $Josefa_Ortiz_De_Dominguez_2 = 1.41; @endphp
+                        @php $Quinto_Sol_2 = 0.6; @endphp
+                        @php $Ciudad_Azteca_2 = 0; @endphp
 
-                    @if(null !== $consulta)
-                    @foreach($consulta as $fila)
-                    @php $salida_1=0; @endphp
-                    @php $llegada_1=0; @endphp
-                    @php $salida_2=0; @endphp
-                    @php $llegada_2=0; @endphp
-                    <tr>
-                        @if($fila['Servicio']=="TR1")
-                        <td>
-                            <center>
-                                <span class="badge" style="background-color: #e5be01; color:black; font-size:12px;">
-                                    {{$fila['Servicio']}}
-                                </span>
-                            </center>
-                        </td>
-                        @elseif($fila['Servicio']=="TR1-R")
-                        <td>
-                            <center>
-                                <span class="badge" style="background-color: #FF0080; color:#fff; font-size:12px;">
-                                    {{$fila['Servicio']}}
-                                </span>
-                            </center>
-                        </td>
-                        @elseif($fila['Servicio']=="TR3")
-                        <td>
-                            <center>
-                                <span class="badge" style="background-color: #008f39; color:#fff; font-size:12px;">
-                                    {{$fila['Servicio']}}
-                                </span>
-                            </center>
-                        </td>
-                        @elseif($fila['Servicio']=="TR4")
-                        <td>
-                            <center>
-                                <span class="badge" style="background-color: #0000ff; color:#fff; font-size:12px;">
-                                    {{$fila['Servicio']}}
-                                </span>
-                            </center>
-                        </td>
-                        @endif
-                        <td>
-                            <center>
-                                <span class="" style=" color: black; font-size:12px;">
-                                    Cred. {{$fila['credencial']}}
-                                </span>
-                            </center>
-                        </td>
-                        <td>
-                            <center>
-                                <span class="" style=" color: black; font-size:12px;">
-                                    Ciclo {{$fila['ciclo']}}
-                                </span>
-                            </center>
-                        </td>
-                        <td>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                <div class="card-sub" style="position: relative;">
-                                    <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
-                                        {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
-                                        <button type="button" class="btn btn-sm" style="background-color: #ff6961; border:1px black solid; width: 25px; height: 25px; padding: 1px;" 
-                                        onclick="modalEliminar({{$fila['id_bitacora_terminales_1_eco']}})" title="Eliminar">
-                                            <i class="la la-trash" style="font-size: 1.8em;"></i>
-                                        </button>
+                        @if(null !== $consulta)
+                        @foreach($consulta as $fila)
+                        @php $salida_1=0; @endphp
+                        @php $llegada_1=0; @endphp
+                        @php $salida_2=0; @endphp
+                        @php $llegada_2=0; @endphp
+                        <tr>
+                            @if($fila['Servicio']=="TR1")
+                            <td>
+                                <center>
+                                    <span class="badge" style="background-color: #e5be01; color:black; font-size:12px;">
+                                        {{$fila['Servicio']}}
+                                    </span>
+                                </center>
+                            </td>
+                            @elseif($fila['Servicio']=="TR1-R")
+                            <td>
+                                <center>
+                                    <span class="badge" style="background-color: #FF0080; color:#fff; font-size:12px;">
+                                        {{$fila['Servicio']}}
+                                    </span>
+                                </center>
+                            </td>
+                            @elseif($fila['Servicio']=="TR3")
+                            <td>
+                                <center>
+                                    <span class="badge" style="background-color: #008f39; color:#fff; font-size:12px;">
+                                        {{$fila['Servicio']}}
+                                    </span>
+                                </center>
+                            </td>
+                            @elseif($fila['Servicio']=="TR4")
+                            <td>
+                                <center>
+                                    <span class="badge" style="background-color: #0000ff; color:#fff; font-size:12px;">
+                                        {{$fila['Servicio']}}
+                                    </span>
+                                </center>
+                            </td>
+                            @endif
+                            <td>
+                                <center>
+                                    <span class="" style=" color: black; font-size:12px;">
+                                        Cred. {{$fila['credencial']}}
+                                    </span>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <span class="" style=" color: black; font-size:12px;">
+                                        Ciclo {{$fila['ciclo']}}
+                                    </span>
+                                </center>
+                            </td>
+                            @if($fila['salida_1']=="Sin datos")
+                            <td>
+                                <center> Sin datos</center>
+                            </td>
+                            @else
+                            <td>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card-sub" style="position: relative;">
+                                            <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+                                                {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
+                                                <button type="button" class="btn btn-sm" style="background-color: #ff6961; border:1px black solid; width: 25px; height: 25px; padding: 1px;" 
+                                                onclick="modalEliminar({{$fila['id_bitacora_terminales_1_eco']}})" title="Eliminar">
+                                                <i class="la la-trash" style="font-size: 1.8em;"></i>
+                                            </button>
 
-                                        @php
+                                            @php
                                             $eco = $fila['salida_1_eco'];
                                             $usuario = $fila['credencial'];
                                             $hora = $fila['salida_1'];
                                             $id = $fila['id_bitacora_terminales_1_eco'];
-                                        @endphp
-                                        <button type="button" class="btn btn-sm" style="background-color: #fdfd96; border:1px black solid;   width: 25px; height: 25px; padding: 1px;" 
-                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')" title="Modificar">
+                                            @endphp
+                                            <button type="button" class="btn btn-sm" style="background-color: #fdfd96; border:1px black solid;   width: 25px; height: 25px; padding: 1px;" 
+                                            onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')" title="Modificar">
                                             <i class="la la-edit" style="font-size:  1.8em;"></i>
                                         </button>
 
@@ -481,117 +521,117 @@
                                     </center>
                                 </div>
 
-                                </div>
-                                <div class="col-xl-6">
-                                    <center>
-                                        <div class="card-body">
-                                            <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['salida_1']}} hrs.</span>
-                                        </div>   
-                                    </center> 
-                                </div>
-                                <div class="col-xl-6"> 
-                                    <div class="card-body">
-                                        <center>
-                                            @if($fila['hora_salida_rol']=="Fuera de jornada")
-                                            <span class="badge" style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_salida_rol']}}</span>
-                                            @else
-                                            <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida rol<br> {{$fila['hora_salida_rol']}} hrs.</span>
-                                            @endif
-                                        </center>
-                                    </div>    
-                                </div>
-                                <div class="col-xl-6">    
-                                    <div class="card-body">
-                                        <center>
-                                            @if($fila['hora_diferencia']=="Fuera de jornada")
-                                            <span class="badge "  style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_diferencia']}}</span>
-                                            @else
-                                            <span class="badge badge-success"  style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Dif. <br>{{$fila['hora_diferencia']}} hrs.</span>
-                                            @endif
-                                        </center>
-                                    </div>    
-                                </div>
-                                <div class="col-xl-6">
-                                    <center>
-                                        <div class="card-body" >
-                                            @if($fila['estatus']=="Retardo")
-                                            <span class="badge "  style="background-color: #fffeba; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
-                                            @elseif($fila['estatus']=="Sobretiempo")
-                                            <span class="badge "  style="background-color: #c4dafa; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
-                                            @elseif($fila['estatus']=="En tiempo")
-                                            <span class="badge "  style="background-color: #92fd70; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
-                                            @endif
-                                        </div>  
-                                    </center>
-                                </div>
-                                <div class="col-xl-12">
-                                    <div class="card-sub">
-                                        {{$fila['salida_1_com']}}
-                                    </div>  
-                                </div>
                             </div>
-                        </td> 
-                        @if($fila['salida_1_ter']==1)  @php $salida_1 = $Ojo_De_Agua_1; @endphp
-                        @elseif($fila['salida_1_ter']==2)  @php $salida_1 = $Central_De_Abastos_1; @endphp
-                        @elseif($fila['salida_1_ter']==3)  @php $salida_1 = $Ciudad_Azteca_1 @endphp
-                        @elseif($fila['salida_1_ter']==4)  @php $salida_1 = $Esmeralda_1; @endphp
-                        @elseif($fila['salida_1_ter']==5)  @php $salida_1 = $Cuauhtemoc_Norte_1; @endphp
-                        @elseif($fila['salida_1_ter']==6)  @php $salida_1 = $Cuauhtemoc_Sur_1; @endphp
-                        @elseif($fila['salida_1_ter']==7)  @php $salida_1 = $Hidalgo_1; @endphp
-                        @elseif($fila['salida_1_ter']==8)  @php $salida_1 = $Insurgentes_1; @endphp
-                        @elseif($fila['salida_1_ter']==9)  @php $salida_1 = $e_19_De_Septiembre_1; @endphp
-                        @elseif($fila['salida_1_ter']==10)  @php $salida_1 = $Palomas_1; @endphp
-                        @elseif($fila['salida_1_ter']==11)  @php $salida_1 = $Jardines_De_Morelos_1; @endphp
-                        @elseif($fila['salida_1_ter']==12)  @php $salida_1 = $Aquiles_Serdan_1; @endphp
-                        @elseif($fila['salida_1_ter']==13)  @php $salida_1 = $Hospital_1; @endphp
-                        @elseif($fila['salida_1_ter']==14)  @php $salida_1 = $e_1ro_De_Mayo_1; @endphp
-                        @elseif($fila['salida_1_ter']==15)  @php $salida_1 = $Las_Americas_1; @endphp
-                        @elseif($fila['salida_1_ter']==16)  @php $salida_1 = $Valle_De_Ecatepec_1; @endphp
-                        @elseif($fila['salida_1_ter']==17)  @php $salida_1 = $Vocacional_3_1; @endphp
-                        @elseif($fila['salida_1_ter']==18)  @php $salida_1 = $Adolfo_Lopez_Mateos_1; @endphp
-                        @elseif($fila['salida_1_ter']==19)  @php $salida_1 = $Zodiaco_1; @endphp
-                        @elseif($fila['salida_1_ter']==20)  @php $salida_1 = $Alfredo_Torres_1; @endphp
-                        @elseif($fila['salida_1_ter']==21)  @php $salida_1 = $Unitec_1 ; @endphp
-                        @elseif($fila['salida_1_ter']==22)  @php $salida_1 = $Estacion_Industrial_1; @endphp
-                        @elseif($fila['salida_1_ter']==23)  @php $salida_1 = $Josefa_Ortiz_De_Dominguez_1; @endphp
-                        @elseif($fila['salida_1_ter']==24)  @php $salida_1 = $Quinto_Sol_1; @endphp
-                        @endif
+                            <div class="col-xl-6">
+                                <center>
+                                    <div class="card-body">
+                                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['salida_1']}} hrs.</span>
+                                    </div>   
+                                </center> 
+                            </div>
+                            <div class="col-xl-6"> 
+                                <div class="card-body">
+                                    <center>
+                                        @if($fila['hora_salida_rol']=="Fuera de jornada")
+                                        <span class="badge" style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_salida_rol']}}</span>
+                                        @else
+                                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida rol<br> {{$fila['hora_salida_rol']}} hrs.</span>
+                                        @endif
+                                    </center>
+                                </div>    
+                            </div>
+                            <div class="col-xl-6">    
+                                <div class="card-body">
+                                    <center>
+                                        @if($fila['hora_diferencia']=="Fuera de jornada")
+                                        <span class="badge "  style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_diferencia']}}</span>
+                                        @else
+                                        <span class="badge badge-success"  style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Dif. <br>{{$fila['hora_diferencia']}} hrs.</span>
+                                        @endif
+                                    </center>
+                                </div>    
+                            </div>
+                            <div class="col-xl-6">
+                                <center>
+                                    <div class="card-body" >
+                                        @if($fila['estatus']=="Retardo")
+                                        <span class="badge "  style="background-color: #fffeba; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
+                                        @elseif($fila['estatus']=="Sobretiempo")
+                                        <span class="badge "  style="background-color: #c4dafa; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
+                                        @elseif($fila['estatus']=="En tiempo")
+                                        <span class="badge "  style="background-color: #92fd70; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
+                                        @endif
+                                    </div>  
+                                </center>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="card-sub">
+                                    {{$fila['salida_1_com']}}
+                                </div>  
+                            </div>
+                        </div>
+                    </td> 
+                    @if($fila['salida_1_ter']==1)  @php $salida_1 = $Ojo_De_Agua_1; @endphp
+                    @elseif($fila['salida_1_ter']==2)  @php $salida_1 = $Central_De_Abastos_1; @endphp
+                    @elseif($fila['salida_1_ter']==3)  @php $salida_1 = $Ciudad_Azteca_1 @endphp
+                    @elseif($fila['salida_1_ter']==4)  @php $salida_1 = $Esmeralda_1; @endphp
+                    @elseif($fila['salida_1_ter']==5)  @php $salida_1 = $Cuauhtemoc_Norte_1; @endphp
+                    @elseif($fila['salida_1_ter']==6)  @php $salida_1 = $Cuauhtemoc_Sur_1; @endphp
+                    @elseif($fila['salida_1_ter']==7)  @php $salida_1 = $Hidalgo_1; @endphp
+                    @elseif($fila['salida_1_ter']==8)  @php $salida_1 = $Insurgentes_1; @endphp
+                    @elseif($fila['salida_1_ter']==9)  @php $salida_1 = $e_19_De_Septiembre_1; @endphp
+                    @elseif($fila['salida_1_ter']==10)  @php $salida_1 = $Palomas_1; @endphp
+                    @elseif($fila['salida_1_ter']==11)  @php $salida_1 = $Jardines_De_Morelos_1; @endphp
+                    @elseif($fila['salida_1_ter']==12)  @php $salida_1 = $Aquiles_Serdan_1; @endphp
+                    @elseif($fila['salida_1_ter']==13)  @php $salida_1 = $Hospital_1; @endphp
+                    @elseif($fila['salida_1_ter']==14)  @php $salida_1 = $e_1ro_De_Mayo_1; @endphp
+                    @elseif($fila['salida_1_ter']==15)  @php $salida_1 = $Las_Americas_1; @endphp
+                    @elseif($fila['salida_1_ter']==16)  @php $salida_1 = $Valle_De_Ecatepec_1; @endphp
+                    @elseif($fila['salida_1_ter']==17)  @php $salida_1 = $Vocacional_3_1; @endphp
+                    @elseif($fila['salida_1_ter']==18)  @php $salida_1 = $Adolfo_Lopez_Mateos_1; @endphp
+                    @elseif($fila['salida_1_ter']==19)  @php $salida_1 = $Zodiaco_1; @endphp
+                    @elseif($fila['salida_1_ter']==20)  @php $salida_1 = $Alfredo_Torres_1; @endphp
+                    @elseif($fila['salida_1_ter']==21)  @php $salida_1 = $Unitec_1 ; @endphp
+                    @elseif($fila['salida_1_ter']==22)  @php $salida_1 = $Estacion_Industrial_1; @endphp
+                    @elseif($fila['salida_1_ter']==23)  @php $salida_1 = $Josefa_Ortiz_De_Dominguez_1; @endphp
+                    @elseif($fila['salida_1_ter']==24)  @php $salida_1 = $Quinto_Sol_1; @endphp
+                    @endif
+                    @endif
 
-
-                        @if($fila['llegada_1']=="Sin datos")
-                        <td>
-                            <center> Sin datos</center>
-                        </td>
-                        @else
-                        
-                        @if($fila['salida_2_ter']==1)  @php $llegada_1 = $Ojo_De_Agua_1; @endphp
-                        @elseif($fila['salida_2_ter']==2)  @php $llegada_1 = $Central_De_Abastos_1; @endphp
-                        @elseif($fila['salida_2_ter']==3)  @php $llegada_1 = $Ciudad_Azteca_1 @endphp
-                        @elseif($fila['salida_2_ter']==4)  @php $llegada_1 = $Esmeralda_1; @endphp
-                        @elseif($fila['salida_2_ter']==5)  @php $llegada_1 = $Cuauhtemoc_Norte_1; @endphp
-                        @elseif($fila['salida_2_ter']==6)  @php $llegada_1 = $Cuauhtemoc_Sur_1; @endphp
-                        @elseif($fila['salida_2_ter']==7)  @php $llegada_1 = $Hidalgo_1; @endphp
-                        @elseif($fila['salida_2_ter']==8)  @php $llegada_1 = $Insurgentes_1; @endphp
-                        @elseif($fila['salida_2_ter']==9)  @php $llegada_1 = $e_19_De_Septiembre_1; @endphp
-                        @elseif($fila['salida_2_ter']==10)  @php $llegada_1 = $Palomas_1; @endphp
-                        @elseif($fila['salida_2_ter']==11)  @php $llegada_1 = $Jardines_De_Morelos_1; @endphp
-                        @elseif($fila['salida_2_ter']==12)  @php $llegada_1 = $Aquiles_Serdan_1; @endphp
-                        @elseif($fila['salida_2_ter']==13)  @php $llegada_1 = $Hospital_1; @endphp
-                        @elseif($fila['salida_2_ter']==14)  @php $llegada_1 = $e_1ro_De_Mayo_1; @endphp
-                        @elseif($fila['salida_2_ter']==15)  @php $llegada_1 = $Las_Americas_1; @endphp
-                        @elseif($fila['salida_2_ter']==16)  @php $llegada_1 = $Valle_De_Ecatepec_1; @endphp
-                        @elseif($fila['salida_2_ter']==17)  @php $llegada_1 = $Vocacional_3_1; @endphp
-                        @elseif($fila['salida_2_ter']==18)  @php $llegada_1 = $Adolfo_Lopez_Mateos_1; @endphp
-                        @elseif($fila['salida_2_ter']==19)  @php $llegada_1 = $Zodiaco_1; @endphp
-                        @elseif($fila['salida_2_ter']==20)  @php $llegada_1 = $Alfredo_Torres_1; @endphp
-                        @elseif($fila['salida_2_ter']==21)  @php $llegada_1 = $Unitec_1 ; @endphp
-                        @elseif($fila['salida_2_ter']==22)  @php $llegada_1 = $Estacion_Industrial_1; @endphp
-                        @elseif($fila['salida_2_ter']==23)  @php $llegada_1 = $Josefa_Ortiz_De_Dominguez_1; @endphp
-                        @elseif($fila['salida_2_ter']==24)  @php $llegada_1 = $Quinto_Sol_1; @endphp
-                        @endif
-                        <td>
-                            <div class="row">
-                                <div class="col-xl-12">
+                    @if($fila['llegada_1']=="Sin datos")
+                    <td>
+                        <center> Sin datos</center>
+                    </td>
+                    @else
+                    
+                    @if($fila['salida_2_ter']==1)  @php $llegada_1 = $Ojo_De_Agua_1; @endphp
+                    @elseif($fila['salida_2_ter']==2)  @php $llegada_1 = $Central_De_Abastos_1; @endphp
+                    @elseif($fila['salida_2_ter']==3)  @php $llegada_1 = $Ciudad_Azteca_1 @endphp
+                    @elseif($fila['salida_2_ter']==4)  @php $llegada_1 = $Esmeralda_1; @endphp
+                    @elseif($fila['salida_2_ter']==5)  @php $llegada_1 = $Cuauhtemoc_Norte_1; @endphp
+                    @elseif($fila['salida_2_ter']==6)  @php $llegada_1 = $Cuauhtemoc_Sur_1; @endphp
+                    @elseif($fila['salida_2_ter']==7)  @php $llegada_1 = $Hidalgo_1; @endphp
+                    @elseif($fila['salida_2_ter']==8)  @php $llegada_1 = $Insurgentes_1; @endphp
+                    @elseif($fila['salida_2_ter']==9)  @php $llegada_1 = $e_19_De_Septiembre_1; @endphp
+                    @elseif($fila['salida_2_ter']==10)  @php $llegada_1 = $Palomas_1; @endphp
+                    @elseif($fila['salida_2_ter']==11)  @php $llegada_1 = $Jardines_De_Morelos_1; @endphp
+                    @elseif($fila['salida_2_ter']==12)  @php $llegada_1 = $Aquiles_Serdan_1; @endphp
+                    @elseif($fila['salida_2_ter']==13)  @php $llegada_1 = $Hospital_1; @endphp
+                    @elseif($fila['salida_2_ter']==14)  @php $llegada_1 = $e_1ro_De_Mayo_1; @endphp
+                    @elseif($fila['salida_2_ter']==15)  @php $llegada_1 = $Las_Americas_1; @endphp
+                    @elseif($fila['salida_2_ter']==16)  @php $llegada_1 = $Valle_De_Ecatepec_1; @endphp
+                    @elseif($fila['salida_2_ter']==17)  @php $llegada_1 = $Vocacional_3_1; @endphp
+                    @elseif($fila['salida_2_ter']==18)  @php $llegada_1 = $Adolfo_Lopez_Mateos_1; @endphp
+                    @elseif($fila['salida_2_ter']==19)  @php $llegada_1 = $Zodiaco_1; @endphp
+                    @elseif($fila['salida_2_ter']==20)  @php $llegada_1 = $Alfredo_Torres_1; @endphp
+                    @elseif($fila['salida_2_ter']==21)  @php $llegada_1 = $Unitec_1 ; @endphp
+                    @elseif($fila['salida_2_ter']==22)  @php $llegada_1 = $Estacion_Industrial_1; @endphp
+                    @elseif($fila['salida_2_ter']==23)  @php $llegada_1 = $Josefa_Ortiz_De_Dominguez_1; @endphp
+                    @elseif($fila['salida_2_ter']==24)  @php $llegada_1 = $Quinto_Sol_1; @endphp
+                    @endif
+                    <td>
+                        <div class="row">
+                            <div class="col-xl-12">
                                 <div class="card-sub" style="position: relative;">
                                     <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
                                         {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
@@ -599,291 +639,299 @@
                                             <i class="la la-trash" style="font-size: 1.8em;"></i>
                                         </button>
                                         @php
-                                            $eco = $fila['salida_2_eco'];
-                                            $usuario = $fila['credencial'];
-                                            $hora = $fila['llegada_1'];
-                                            $id = $fila['id_bitacora_terminales_2_eco'];
+                                        $eco = $fila['salida_2_eco'];
+                                        $usuario = $fila['credencial'];
+                                        $hora = $fila['llegada_1'];
+                                        $id = $fila['id_bitacora_terminales_2_eco'];
                                         @endphp
                                         <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
                                         onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
                                         title="Modificar">
-                                            <i class="la la-edit" style="font-size: 1.8em;"></i>
-                                        </button>
-                                    </div>
-                                    <center>
-                                        <br>
-                                        <div class="icon-preview"  style="margin:15px;">
-                                            <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
-                                            @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
-                                            Apoyo: {{$fila['apoyo_1']}}
-                                            @endif
-                                        </div>
-                                        <div class="icon-preview">
-                                            <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_2_eco']}} - Terminal: {{$fila['terminal2']}}
-                                        </div>
-                                    </center>
+                                        <i class="la la-edit" style="font-size: 1.8em;"></i>
+                                    </button>
                                 </div>
-                                </div>
-                                <div class="col-xl-12">
-                                    <center>
-                                        <div class="card-body">
-                                            <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['llegada_1']}} hrs.</span>
-                                        </div>   
-                                    </center> 
-                                </div>
-                                <div class="col-xl-12">
-                                    <div class="card-sub">
-                                        {{$fila['salida_2_com']}}
-                                    </div>  
-                                </div>
-                            </div>
-                        </td> 
-                        @endif
-                        @if($fila['salida_2']=="Sin datos")
-                        <td>
-                            <center> Sin datos</center>
-                        </td>
-                        @else
-                        @if($fila['salida_3_ter']==1)  @php $salida_2 = $Ojo_De_Agua_2; @endphp
-                        @elseif($fila['salida_3_ter']==2)  @php $salida_2 = $Central_De_Abastos_2; @endphp
-                        @elseif($fila['salida_3_ter']==3)  @php $salida_2 = $Ciudad_Azteca_2 @endphp
-                        @elseif($fila['salida_3_ter']==4)  @php $salida_2 = $Esmeralda_2; @endphp
-                        @elseif($fila['salida_3_ter']==5)  @php $salida_2 = $Cuauhtemoc_Norte_2; @endphp
-                        @elseif($fila['salida_3_ter']==6)  @php $salida_2 = $Cuauhtemoc_Sur_2; @endphp
-                        @elseif($fila['salida_3_ter']==7)  @php $salida_2 = $Hidalgo_2; @endphp
-                        @elseif($fila['salida_3_ter']==8)  @php $salida_2 = $Insurgentes_2; @endphp
-                        @elseif($fila['salida_3_ter']==9)  @php $salida_2 = $e_19_De_Septiembre_2; @endphp
-                        @elseif($fila['salida_3_ter']==10)  @php $salida_2 = $Palomas_2; @endphp
-                        @elseif($fila['salida_3_ter']==11)  @php $salida_2 = $Jardines_De_Morelos_2; @endphp
-                        @elseif($fila['salida_3_ter']==12)  @php $salida_2 = $Aquiles_Serdan_2; @endphp
-                        @elseif($fila['salida_3_ter']==13)  @php $salida_2 = $Hospital_2; @endphp
-                        @elseif($fila['salida_3_ter']==14)  @php $salida_2 = $e_1ro_De_Mayo_2; @endphp
-                        @elseif($fila['salida_3_ter']==15)  @php $salida_2 = $Las_Americas_2; @endphp
-                        @elseif($fila['salida_3_ter']==16)  @php $salida_2 = $Valle_De_Ecatepec_2; @endphp
-                        @elseif($fila['salida_3_ter']==17)  @php $salida_2 = $Vocacional_3_2; @endphp
-                        @elseif($fila['salida_3_ter']==18)  @php $salida_2 = $Adolfo_Lopez_Mateos_2; @endphp
-                        @elseif($fila['salida_3_ter']==19)  @php $salida_2 = $Zodiaco_2; @endphp
-                        @elseif($fila['salida_3_ter']==20)  @php $salida_2 = $Alfredo_Torres_2; @endphp
-                        @elseif($fila['salida_3_ter']==21)  @php $salida_2 = $Unitec_2 ; @endphp
-                        @elseif($fila['salida_3_ter']==22)  @php $salida_2 = $Estacion_Industrial_2; @endphp
-                        @elseif($fila['salida_3_ter']==23)  @php $salida_2 = $Josefa_Ortiz_De_Dominguez_2; @endphp
-                        @elseif($fila['salida_3_ter']==24)  @php $salida_2 = $Quinto_Sol_2; @endphp
-                        @endif
-                        <td>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card-sub" style="position: relative;">
-                                        <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
-                                            {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
-                                            <button type="button" class="btn  btn-sm" style="background-color: #ff6961;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" onclick="modalEliminar({{$fila['id_bitacora_terminales_3_eco']}})" title="Eliminar">
-                                            <i class="la la-trash" style="font-size:  1.8em;"></i>
-                                        </button>
-                                        @php
-                                            $eco = $fila['salida_3_eco'];
-                                            $usuario = $fila['credencial'];
-                                            $hora = $fila['salida_2'];
-                                            $id = $fila['id_bitacora_terminales_3_eco'];
-                                        @endphp
-                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
-                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
-                                        title="Modificar">
-                                            <i class="la la-edit" style="font-size:  1.8em;"></i>
-                                        </button>
-                                        </div>
-                                        <center>
-                                            <br>
-                                            <div class="icon-preview"  style="margin:15px;">
-                                                <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
-                                                @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
-                                                Apoyo: {{$fila['apoyo_1']}}
-                                                @endif
-                                            </div>
-                                            <div class="icon-preview">
-                                                <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_3_eco']}} - Terminal: {{$fila['terminal3']}}
-                                            </div>
-                                        </center>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <center>
-                                        <div class="card-body">
-                                            <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['salida_2']}} hrs.</span>
-                                        </div>   
-                                    </center> 
-                                </div>
-                                <div class="col-xl-6"> 
-                                    <div class="card-body">
-                                        <center>
-                                            @if($fila['hora_salida_rol_2']=="Fuera de jornada")
-                                            <span class="badge" style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_salida_rol_2']}}</span>
-                                            @else
-                                            <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida rol<br> {{$fila['hora_salida_rol_2']}} hrs.</span>
-                                            @endif
-                                        </center>
-                                    </div>    
-                                </div>
-                                <div class="col-xl-6">    
-                                    <div class="card-body">
-                                        <center>
-                                            @if($fila['hora_diferencia_2']=="Fuera de jornada")
-                                            <span class="badge "  style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_diferencia_2']}}</span>
-                                            @else
-                                            <span class="badge badge-success"  style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Dif. <br>{{$fila['hora_diferencia_2']}} hrs.</span>
-                                            @endif
-                                        </center>
-                                    </div>    
-                                </div>
-                                <div class="col-xl-6">
-                                    <center>
-                                        <div class="card-body" >
-                                            @if($fila['estatus_2']=="Retardo")
-                                            <span class="badge "  style="background-color: #fffeba; color:black; font-size:14px;"> {{$fila['estatus_2']}}</span>
-                                            @elseif($fila['estatus_2']=="Sobretiempo")
-                                            <span class="badge "  style="background-color: #c4dafa; color:black; font-size:14px;"> {{$fila['estatus_2']}}</span>
-                                            @elseif($fila['estatus_2']=="En tiempo")
-                                            <span class="badge "  style="background-color: #92fd70; color:black; font-size:14px;"> {{$fila['estatus_2']}}</span>
-                                            @endif
-                                        </div>  
-                                    </center>
-                                </div>
-                                <div class="col-xl-12">
-                                    <div class="card-sub">
-                                        {{$fila['salida_3_com']}}
-                                    </div>  
-                                </div>
-                            </div>
-                        </td> 
-                        @endif
-                        @if($fila['llegada_2']=="Sin datos")
-                        <td>
-                         <center> Sin datos</center>
-                     </td>
-                     @else
-
-
-                     @if($fila['salida_4_ter']==1)  @php $llegada_2 = $Ojo_De_Agua_2; @endphp
-                     @elseif($fila['salida_4_ter']==2)  @php $llegada_2 = $Central_De_Abastos_2; @endphp
-                     @elseif($fila['salida_4_ter']==3)  @php $llegada_2 = $Ciudad_Azteca_2 @endphp
-                     @elseif($fila['salida_4_ter']==4)  @php $llegada_2 = $Esmeralda_2; @endphp
-                     @elseif($fila['salida_4_ter']==5)  @php $llegada_2 = $Cuauhtemoc_Norte_2; @endphp
-                     @elseif($fila['salida_4_ter']==6)  @php $llegada_2 = $Cuauhtemoc_Sur_2; @endphp
-                     @elseif($fila['salida_4_ter']==7)  @php $llegada_2 = $Hidalgo_2; @endphp
-                     @elseif($fila['salida_4_ter']==8)  @php $llegada_2 = $Insurgentes_2; @endphp
-                     @elseif($fila['salida_4_ter']==9)  @php $llegada_2 = $e_19_De_Septiembre_2; @endphp
-                     @elseif($fila['salida_4_ter']==10)  @php $llegada_2 = $Palomas_2; @endphp
-                     @elseif($fila['salida_4_ter']==11)  @php $llegada_2 = $Jardines_De_Morelos_2; @endphp
-                     @elseif($fila['salida_4_ter']==12)  @php $llegada_2 = $Aquiles_Serdan_2; @endphp
-                     @elseif($fila['salida_4_ter']==13)  @php $llegada_2 = $Hospital_2; @endphp
-                     @elseif($fila['salida_4_ter']==14)  @php $llegada_2 = $e_1ro_De_Mayo_2; @endphp
-                     @elseif($fila['salida_4_ter']==15)  @php $llegada_2 = $Las_Americas_2; @endphp
-                     @elseif($fila['salida_4_ter']==16)  @php $llegada_2 = $Valle_De_Ecatepec_2; @endphp
-                     @elseif($fila['salida_4_ter']==17)  @php $llegada_2 = $Vocacional_3_2; @endphp
-                     @elseif($fila['salida_4_ter']==18)  @php $llegada_2 = $Adolfo_Lopez_Mateos_2; @endphp
-                     @elseif($fila['salida_4_ter']==19)  @php $llegada_2 = $Zodiaco_2; @endphp
-                     @elseif($fila['salida_4_ter']==20)  @php $llegada_2 = $Alfredo_Torres_2; @endphp
-                     @elseif($fila['salida_4_ter']==21)  @php $llegada_2 = $Unitec_2 ; @endphp
-                     @elseif($fila['salida_4_ter']==22)  @php $llegada_2 = $Estacion_Industrial_2; @endphp
-                     @elseif($fila['salida_4_ter']==23)  @php $llegada_2 = $Josefa_Ortiz_De_Dominguez_2; @endphp
-                     @elseif($fila['salida_4_ter']==24)  @php $llegada_2 = $Quinto_Sol_2; @endphp
-                     @endif
-
-                     <td>
-                        <div class="row">
-                            <div class="col-xl-12">
-                            <div class="card-sub" style="position: relative;">
-                                    <div class="btn-group" style="padding: 1px; position: absolute; top: 10px; right: 10px;">
-                                        {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
-                                        <button type="button" class="btn  btn-sm" style="background-color: #ff6961;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;"  onclick="modalEliminar( {{$fila['id_bitacora_terminales_4_eco']}} )" title="Eliminar">
-                                            <i class="la la-trash" style="font-size:  1.8em;"></i>
-                                        </button>
-                                        @php
-                                            $eco = $fila['salida_4_eco'];
-                                            $usuario = $fila['credencial'];
-                                            $hora = $fila['llegada_2'];
-                                            $id = $fila['id_bitacora_terminales_4_eco'];
-                                        @endphp
-                                        <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
-                                        onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
-                                        title="Modificar">
-                                            <i class="la la-edit" style="font-size:  1.8em;"></i>
-                                        </button>
-                                    </div>
-                                    <center >
-                                        <br>
-                                        <div class="icon-preview"  style="margin:15px;">
-                                            <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
-                                            @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
-                                                Apoyo: {{$fila['apoyo_1']}}
-                                            @endif
-                                        </div>
-                                        <div class="icon-preview">
-                                            <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_4_eco']}} - Terminal: {{$fila['terminal4']}}
-                                        </div>
-                                    </center>
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
                                 <center>
-                                    <div class="card-body">
-                                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['llegada_2']}} hrs.</span>
-                                    </div>   
-                                </center> 
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="card-sub">
-                                    {{$fila['salida_4_com']}}
-                                </div>  
+                                    <br>
+                                    <div class="icon-preview"  style="margin:15px;">
+                                        <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                        @if($fila['apoyo_2'] != 'Sin Apoyo')<br>
+                                        Apoyo: {{$fila['apoyo_2']}}
+                                        @endif
+                                    </div>
+                                    <div class="icon-preview">
+                                        <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_2_eco']}} - Terminal: {{$fila['terminal2']}}
+                                    </div>
+                                </center>
                             </div>
                         </div>
-                    </td> 
-                    @endif
-                    <td>
+                        <div class="col-xl-12">
+                            <center>
+                                <div class="card-body">
+                                    <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['llegada_1']}} hrs.</span>
+                                </div>   
+                            </center> 
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="card-sub">
+                                {{$fila['salida_2_com']}}
+                            </div>  
+                        </div>
+                    </div>
+                </td> 
+                @endif
+                @if($fila['salida_2']=="Sin datos")
+                <td>
+                    <center> Sin datos</center>
+                </td>
+                @else
+                @if($fila['salida_3_ter']==1)  @php $salida_2 = $Ojo_De_Agua_2; @endphp
+                @elseif($fila['salida_3_ter']==2)  @php $salida_2 = $Central_De_Abastos_2; @endphp
+                @elseif($fila['salida_3_ter']==3)  @php $salida_2 = $Ciudad_Azteca_2 @endphp
+                @elseif($fila['salida_3_ter']==4)  @php $salida_2 = $Esmeralda_2; @endphp
+                @elseif($fila['salida_3_ter']==5)  @php $salida_2 = $Cuauhtemoc_Norte_2; @endphp
+                @elseif($fila['salida_3_ter']==6)  @php $salida_2 = $Cuauhtemoc_Sur_2; @endphp
+                @elseif($fila['salida_3_ter']==7)  @php $salida_2 = $Hidalgo_2; @endphp
+                @elseif($fila['salida_3_ter']==8)  @php $salida_2 = $Insurgentes_2; @endphp
+                @elseif($fila['salida_3_ter']==9)  @php $salida_2 = $e_19_De_Septiembre_2; @endphp
+                @elseif($fila['salida_3_ter']==10)  @php $salida_2 = $Palomas_2; @endphp
+                @elseif($fila['salida_3_ter']==11)  @php $salida_2 = $Jardines_De_Morelos_2; @endphp
+                @elseif($fila['salida_3_ter']==12)  @php $salida_2 = $Aquiles_Serdan_2; @endphp
+                @elseif($fila['salida_3_ter']==13)  @php $salida_2 = $Hospital_2; @endphp
+                @elseif($fila['salida_3_ter']==14)  @php $salida_2 = $e_1ro_De_Mayo_2; @endphp
+                @elseif($fila['salida_3_ter']==15)  @php $salida_2 = $Las_Americas_2; @endphp
+                @elseif($fila['salida_3_ter']==16)  @php $salida_2 = $Valle_De_Ecatepec_2; @endphp
+                @elseif($fila['salida_3_ter']==17)  @php $salida_2 = $Vocacional_3_2; @endphp
+                @elseif($fila['salida_3_ter']==18)  @php $salida_2 = $Adolfo_Lopez_Mateos_2; @endphp
+                @elseif($fila['salida_3_ter']==19)  @php $salida_2 = $Zodiaco_2; @endphp
+                @elseif($fila['salida_3_ter']==20)  @php $salida_2 = $Alfredo_Torres_2; @endphp
+                @elseif($fila['salida_3_ter']==21)  @php $salida_2 = $Unitec_2 ; @endphp
+                @elseif($fila['salida_3_ter']==22)  @php $salida_2 = $Estacion_Industrial_2; @endphp
+                @elseif($fila['salida_3_ter']==23)  @php $salida_2 = $Josefa_Ortiz_De_Dominguez_2; @endphp
+                @elseif($fila['salida_3_ter']==24)  @php $salida_2 = $Quinto_Sol_2; @endphp
+                @endif
+                <td>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card-sub" style="position: relative;">
+                                <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+                                    {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
+                                    <button type="button" class="btn  btn-sm" style="background-color: #ff6961;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" onclick="modalEliminar({{$fila['id_bitacora_terminales_3_eco']}})" title="Eliminar">
+                                        <i class="la la-trash" style="font-size:  1.8em;"></i>
+                                    </button>
+                                    @php
+                                    $eco = $fila['salida_3_eco'];
+                                    $usuario = $fila['credencial'];
+                                    $hora = $fila['salida_2'];
+                                    $id = $fila['id_bitacora_terminales_3_eco'];
+                                    @endphp
+                                    <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
+                                    onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
+                                    title="Modificar">
+                                    <i class="la la-edit" style="font-size:  1.8em;"></i>
+                                </button>
+                            </div>
+                            <center>
+                                <br>
+                                <div class="icon-preview"  style="margin:15px;">
+                                    <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                                    @if($fila['apoyo_3'] != 'Sin Apoyo')<br>
+                                    Apoyo: {{$fila['apoyo_3']}}
+                                    @endif
+                                </div>
+                                <div class="icon-preview">
+                                    <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_3_eco']}} - Terminal: {{$fila['terminal3']}}
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <center>
+                            <div class="card-body">
+                                <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['salida_2']}} hrs.</span>
+                            </div>   
+                        </center> 
+                    </div>
+                    <div class="col-xl-6"> 
+                        <div class="card-body">
+                            <center>
+                                @if($fila['hora_salida_rol_2']=="Fuera de jornada")
+                                <span class="badge" style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_salida_rol_2']}}</span>
+                                @else
+                                <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida rol<br> {{$fila['hora_salida_rol_2']}} hrs.</span>
+                                @endif
+                            </center>
+                        </div>    
+                    </div>
+                    <div class="col-xl-6">    
+                        <div class="card-body">
+                            <center>
+                                @if($fila['hora_diferencia_2']=="Fuera de jornada")
+                                <span class="badge "  style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_diferencia_2']}}</span>
+                                @else
+                                <span class="badge badge-success"  style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Dif. <br>{{$fila['hora_diferencia_2']}} hrs.</span>
+                                @endif
+                            </center>
+                        </div>    
+                    </div>
+                    <div class="col-xl-6">
+                        <center>
+                            <div class="card-body" >
+                                @if($fila['estatus_2']=="Retardo")
+                                <span class="badge "  style="background-color: #fffeba; color:black; font-size:14px;"> {{$fila['estatus_2']}}</span>
+                                @elseif($fila['estatus_2']=="Sobretiempo")
+                                <span class="badge "  style="background-color: #c4dafa; color:black; font-size:14px;"> {{$fila['estatus_2']}}</span>
+                                @elseif($fila['estatus_2']=="En tiempo")
+                                <span class="badge "  style="background-color: #92fd70; color:black; font-size:14px;"> {{$fila['estatus_2']}}</span>
+                                @endif
+                            </div>  
+                        </center>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="card-sub">
+                            {{$fila['salida_3_com']}}
+                        </div>  
+                    </div>
+                </div>
+            </td> 
+            @endif
+            @if($fila['llegada_2']=="Sin datos")
+            <td>
+               <center> Sin datos</center>
+           </td>
+           @else
 
-                        @php $km_1 = $llegada_1 - $salida_1; @endphp
-                        @php $km_2 = $llegada_2 - $salida_2; @endphp
-                        @php $km_t = $km_1 + $km_2; @endphp
-                        {{$km_t}}
-                    </td>
-                    @endforeach
-                    @endif
-                </tbody>
-            </table>
+
+           @if($fila['salida_4_ter']==1)  @php $llegada_2 = $Ojo_De_Agua_2; @endphp
+           @elseif($fila['salida_4_ter']==2)  @php $llegada_2 = $Central_De_Abastos_2; @endphp
+           @elseif($fila['salida_4_ter']==3)  @php $llegada_2 = $Ciudad_Azteca_2 @endphp
+           @elseif($fila['salida_4_ter']==4)  @php $llegada_2 = $Esmeralda_2; @endphp
+           @elseif($fila['salida_4_ter']==5)  @php $llegada_2 = $Cuauhtemoc_Norte_2; @endphp
+           @elseif($fila['salida_4_ter']==6)  @php $llegada_2 = $Cuauhtemoc_Sur_2; @endphp
+           @elseif($fila['salida_4_ter']==7)  @php $llegada_2 = $Hidalgo_2; @endphp
+           @elseif($fila['salida_4_ter']==8)  @php $llegada_2 = $Insurgentes_2; @endphp
+           @elseif($fila['salida_4_ter']==9)  @php $llegada_2 = $e_19_De_Septiembre_2; @endphp
+           @elseif($fila['salida_4_ter']==10)  @php $llegada_2 = $Palomas_2; @endphp
+           @elseif($fila['salida_4_ter']==11)  @php $llegada_2 = $Jardines_De_Morelos_2; @endphp
+           @elseif($fila['salida_4_ter']==12)  @php $llegada_2 = $Aquiles_Serdan_2; @endphp
+           @elseif($fila['salida_4_ter']==13)  @php $llegada_2 = $Hospital_2; @endphp
+           @elseif($fila['salida_4_ter']==14)  @php $llegada_2 = $e_1ro_De_Mayo_2; @endphp
+           @elseif($fila['salida_4_ter']==15)  @php $llegada_2 = $Las_Americas_2; @endphp
+           @elseif($fila['salida_4_ter']==16)  @php $llegada_2 = $Valle_De_Ecatepec_2; @endphp
+           @elseif($fila['salida_4_ter']==17)  @php $llegada_2 = $Vocacional_3_2; @endphp
+           @elseif($fila['salida_4_ter']==18)  @php $llegada_2 = $Adolfo_Lopez_Mateos_2; @endphp
+           @elseif($fila['salida_4_ter']==19)  @php $llegada_2 = $Zodiaco_2; @endphp
+           @elseif($fila['salida_4_ter']==20)  @php $llegada_2 = $Alfredo_Torres_2; @endphp
+           @elseif($fila['salida_4_ter']==21)  @php $llegada_2 = $Unitec_2 ; @endphp
+           @elseif($fila['salida_4_ter']==22)  @php $llegada_2 = $Estacion_Industrial_2; @endphp
+           @elseif($fila['salida_4_ter']==23)  @php $llegada_2 = $Josefa_Ortiz_De_Dominguez_2; @endphp
+           @elseif($fila['salida_4_ter']==24)  @php $llegada_2 = $Quinto_Sol_2; @endphp
+           @endif
+
+           <td>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card-sub" style="position: relative;">
+                        <div class="btn-group" style="padding: 1px; position: absolute; top: 10px; right: 10px;">
+                            {{ \Carbon\Carbon::parse($fila['dia'])->translatedFormat('l, d F Y') }}&nbsp;&nbsp;
+                            <button type="button" class="btn  btn-sm" style="background-color: #ff6961;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;"  onclick="modalEliminar( {{$fila['id_bitacora_terminales_4_eco']}} )" title="Eliminar">
+                                <i class="la la-trash" style="font-size:  1.8em;"></i>
+                            </button>
+                            @php
+                            $eco = $fila['salida_4_eco'];
+                            $usuario = $fila['credencial'];
+                            $hora = $fila['llegada_2'];
+                            $id = $fila['id_bitacora_terminales_4_eco'];
+                            @endphp
+                            <button type="button" class="btn  btn-sm" style="background-color: #fdfd96;  border:1px black solid;  width: 25px; height: 25px; padding: 1px;" 
+                            onclick="modalUpdate('{{$id}}','{{$eco}}','{{$usuario}}','{{$hora}}')"
+                            title="Modificar">
+                            <i class="la la-edit" style="font-size:  1.8em;"></i>
+                        </button>
+                    </div>
+                    <center >
+                        <br>
+                        <div class="icon-preview"  style="margin:15px;">
+                            <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
+                            @if($fila['apoyo_4'] != 'Sin Apoyo')<br>
+                            Apoyo: {{$fila['apoyo_4']}}
+                            @endif
+                        </div>
+                        <div class="icon-preview">
+                            <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_4_eco']}} - Terminal: {{$fila['terminal4']}}
+                        </div>
+                    </center>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <center>
+                    <div class="card-body">
+                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Llegada<br> {{$fila['llegada_2']}} hrs.</span>
+                    </div>   
+                </center> 
+            </div>
+            <div class="col-xl-12">
+                <div class="card-sub">
+                    {{$fila['salida_4_com']}}
+                </div>  
+            </div>
         </div>
+    </td> 
+    @endif
+    <td>
+
+        @php $km_1 = $llegada_1 - $salida_1; @endphp
+        @php $km_2 = $llegada_2 - $salida_2; @endphp
+        @php $km_t = $km_1 + $km_2; @endphp
+        {{$km_t}}
+    </td>
+    @endforeach
+    @endif
+    </tbody>
+    </table>
     </div>
-</div>
-</div>
-@section('jscustom')
-<script type="text/javascript">
-    $(document).ready(function() {
-        function actualizarFecha() {
-            var fecha = new Date();
-            var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-            var fechaFormateada = fecha.getDate().toString().padStart(2, '0') + ' ' + meses[fecha.getMonth()] + ' ' + fecha.getFullYear();
-            var horaFormateada = fecha.getHours().toString().padStart(2, '0') + ':' + fecha.getMinutes().toString().padStart(2, '0') + ':' + fecha.getSeconds().toString().padStart(2, '0');
-            $('#fecha').html('&nbsp;&nbsp;&nbsp; Fecha y Hora: ' + fechaFormateada + ' ' + horaFormateada);
-        }
-        function minutos() {
-            var now = new Date();
+    </div>
+    </div>
+    </div>
+    @section('jscustom')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function actualizarFecha() {
+                var fecha = new Date();
+                var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                var fechaFormateada = fecha.getDate().toString().padStart(2, '0') + ' ' + meses[fecha.getMonth()] + ' ' + fecha.getFullYear();
+                var horaFormateada = fecha.getHours().toString().padStart(2, '0') + ':' + fecha.getMinutes().toString().padStart(2, '0') + ':' + fecha.getSeconds().toString().padStart(2, '0');
+                $('#fecha').html('&nbsp;&nbsp;&nbsp; Fecha y Hora: ' + fechaFormateada + ' ' + horaFormateada);
+            }
+            function minutos() {
+                var now = new Date();
+                        var hours = now.getHours().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
+                        var minutes = now.getMinutes().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
+                        var horaActual = hours + ':' + minutes;
+                        $('#hora_salida').val(horaActual);
+                    }
+                    setInterval(actualizarFecha, 500);
+                    
+                    var now = new Date();
                     var hours = now.getHours().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
                     var minutes = now.getMinutes().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
                     var horaActual = hours + ':' + minutes;
+                    $('#hora_llegada').val(horaActual);
                     $('#hora_salida').val(horaActual);
-                }
-                setInterval(actualizarFecha, 500);
-                
-                var now = new Date();
-                var hours = now.getHours().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
-                var minutes = now.getMinutes().toString().padStart(2, '0'); // Agregar un 0 delante si es necesario
-                var horaActual = hours + ':' + minutes;
-                $('#hora_llegada').val(horaActual);
-                $('#hora_salida').val(horaActual);
-                $('#hora_ll').val(horaActual);
-                $('#hora_s').val(horaActual);
-                
-            });
+                    $('#hora_ll').val(horaActual);
+                    $('#hora_s').val(horaActual);
+                    
+                });
         $('#credencial').on('change', function() {
             var valorCredencial = $(this).val();
             $('#boton_registra').attr('disabled','true');
+            
+            $('#comentarios').attr('disabled','true');
+            $('#terminal_c').attr('disabled','true');
+            $('#serv').attr('disabled','true');
+            $('#eco').attr('disabled','true');
+            $('#llegada_salida').attr('disabled','true');
+            $('#hora_salida').attr('disabled','true');
+            $('#credencial_apoyo').attr('disabled','true');
             var conteo_jornada_total ;
             var conteo_jornada_hecha ;
             conteo_jornada_total = conteo_jornada_total/2;
@@ -917,27 +965,17 @@
                 $('#valida_mitad_1').attr('hidden', true);
                 
             }
-        if(serv == "TR1")
-        {
+            if(serv == "TR1")
+            {
                 if(llegada_salida == "1" || llegada_salida == "4")
                 {
                     $('#terminal_c').val('1'); 
                 }else{
                     $('#terminal_c').val('3'); 
                 }
-        }
-        if(serv == "TR1-R")
-        {
-                if(llegada_salida == "1" || llegada_salida == "4")
-                {
-                    $('#terminal_c').val('1'); 
-                }else{
-                    $('#terminal_c').val('3'); 
-                }
-
-        }
-        if(serv == "TR3")
-        {
+            }
+            if(serv == "TR1-R")
+            {
                 if(llegada_salida == "1" || llegada_salida == "4")
                 {
                     $('#terminal_c').val('1'); 
@@ -945,9 +983,19 @@
                     $('#terminal_c').val('3'); 
                 }
 
-        }
-        if(serv == "TR4")
-        {
+            }
+            if(serv == "TR3")
+            {
+                if(llegada_salida == "1" || llegada_salida == "4")
+                {
+                    $('#terminal_c').val('1'); 
+                }else{
+                    $('#terminal_c').val('3'); 
+                }
+
+            }
+            if(serv == "TR4")
+            {
                 if(llegada_salida == "1" || llegada_salida == "4")
                 {
                     $('#terminal_c').val('2'); 
@@ -955,39 +1003,47 @@
                     $('#terminal_c').val('3'); 
                 }
 
-        }
+            }
             
         });
-    
+        
         $('#buscar').click(function(event) {
             event.preventDefault();
             $.ajax({
-                        url: '{{url("/buscar_rol_operador")}}', // Reemplaza con la URL de tu endpoint
-                        type: 'GET', // Puedes cambiar a POST si es necesario
-                        data: {
-                            'credencial': $('#credencial').val(), // Envía los parámetros necesarios
-                            'dia': $('#dia').val(),
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            if(response['conteo_jornada_total']){
-                                $('#boton_registra').removeAttr('disabled');
-                                var conteo_jornada_total = response['conteo_jornada_total'];
-                                var conteo_jornada_hecha = response['conteo_jornada_hecha'];
-                                conteo_jornada_total = conteo_jornada_total/2;
-                                conteo_jornada_hecha = conteo_jornada_hecha/4;
-                                var Nombre = response['Nombre'];
-                                var servicio = response['servicio'];
-                                var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
-                                var ciclos_porcentaje = 100 / (conteo_jornada_total);
-                                ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
-                                $('#bar').attr('data-original-title', ciclos_texto);
-                                $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
-                                $('#ciclos_span').html(ciclos_texto);
-                                $('#progreso').html(Nombre);
-                                $('#serv').val(servicio); 
-                                $('#id_jornada_sem').val(response['id_jornada']); 
-                                var llegada_salida = $('#llegada_salida').val();
+                            url: '{{url("/buscar_rol_operador")}}', // Reemplaza con la URL de tu endpoint
+                            type: 'GET', // Puedes cambiar a POST si es necesario
+                            data: {
+                                'credencial': $('#credencial').val(), // Envía los parámetros necesarios
+                                'dia': $('#dia').val(),
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if(response['conteo_jornada_total']){
+                                    $('#boton_registra').removeAttr('disabled');
+                                    $('#terminal_c').removeAttr('disabled');
+                                    $('#serv').removeAttr('disabled');
+                                    $('#eco').removeAttr('disabled');
+                                    $('#llegada_salida').removeAttr('disabled');
+                                    $('#hora_salida').removeAttr('disabled');
+                                    $('#credencial_apoyo').removeAttr('disabled');
+                                    
+                                    $('#comentarios').removeAttr('disabled');
+                                    var conteo_jornada_total = response['conteo_jornada_total'];
+                                    var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                                    conteo_jornada_total = conteo_jornada_total/2;
+                                    conteo_jornada_hecha = conteo_jornada_hecha/4;
+                                    var Nombre = response['Nombre'];
+                                    var servicio = response['servicio'];
+                                    var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                                    var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                                    ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                                    $('#bar').attr('data-original-title', ciclos_texto);
+                                    $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                                    $('#ciclos_span').html(ciclos_texto);
+                                    $('#progreso').html(Nombre);
+                                    $('#serv').val(servicio); 
+                                    $('#id_jornada_sem').val(response['id_jornada']); 
+                                    var llegada_salida = $('#llegada_salida').val();
                                     var serv = $('#serv').val();
                                     if(llegada_salida == "2")
                                     {
@@ -1002,126 +1058,135 @@
                                         $('#valida_mitad_1').attr('hidden', true);
                                         
                                     }
-                                if(serv == "TR1")
-                                {
+                                    if(serv == "TR1")
+                                    {
                                         if(llegada_salida == "1" || llegada_salida == "4")
                                         {
                                             $('#terminal_c').val('1'); 
                                         }else{
                                             $('#terminal_c').val('3'); 
                                         }
-                                }
-                                if(serv == "TR1-R")
-                                {
+                                    }
+                                    if(serv == "TR1-R")
+                                    {
                                         if(llegada_salida == "1" || llegada_salida == "4")
                                         {
                                             $('#terminal_c').val('1'); 
                                         }else{
                                             $('#terminal_c').val('3'); 
                                         }
-                                }
-                                if(serv == "TR3")
-                                {
+                                    }
+                                    if(serv == "TR3")
+                                    {
                                         if(llegada_salida == "1" || llegada_salida == "4")
                                         {
                                             $('#terminal_c').val('1'); 
                                         }else{
                                             $('#terminal_c').val('3'); 
                                         }
-                                }
-                                if(serv == "TR4")
-                                {
+                                    }
+                                    if(serv == "TR4")
+                                    {
                                         if(llegada_salida == "1" || llegada_salida == "4")
                                         {
                                             $('#terminal_c').val('2'); 
                                         }else{
                                             $('#terminal_c').val('3'); 
                                         }
+                                    }
+                                } else if(response['error']) {
+                                    $('#boton_registra').attr('disabled','true');
+                                    $('#terminal_c').attr('disabled','true');
+                                    $('#serv').attr('disabled','true');
+                                    $('#eco').attr('disabled','true');
+                                    $('#llegada_salida').attr('disabled','true');
+                                    $('#hora_salida').attr('disabled','true');
+                                    $('#credencial_apoyo').attr('disabled','true');
+                                    $('#comentarios').attr('disabled','true');
+                                    
+                                    
+                                    var conteo_jornada_total = response['conteo_jornada_total'];
+                                    var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                                    conteo_jornada_total = conteo_jornada_total/2;
+                                    conteo_jornada_hecha = conteo_jornada_hecha/4;
+                                    var Nombre = response['Nombre'];
+                                    var servicio = response['servicio'];
+                                    var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                                    var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                                    ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                                    
+                                    $('#bar').attr('data-original-title', ciclos_texto);
+                                    $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                                    $('#ciclos_span').html(ciclos_texto);
+                                    $('#progreso').html('Sin asignar');
+                                    $('#serv').val(servicio); 
                                 }
-                            } else if(response['error']) {
-                                $('#boton_registra').attr('disabled','true');
-                                var conteo_jornada_total = response['conteo_jornada_total'];
-                                var conteo_jornada_hecha = response['conteo_jornada_hecha'];
-                                conteo_jornada_total = conteo_jornada_total/2;
-                                conteo_jornada_hecha = conteo_jornada_hecha/4;
-                                var Nombre = response['Nombre'];
-                                var servicio = response['servicio'];
-                                var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
-                                var ciclos_porcentaje = 100 / (conteo_jornada_total);
-                                ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
-                                
-                                $('#bar').attr('data-original-title', ciclos_texto);
-                                $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
-                                $('#ciclos_span').html(ciclos_texto);
-                                $('#progreso').html('Sin asignar');
-                                $('#serv').val(servicio); 
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error en la solicitud:', error);
                             }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error en la solicitud:', error);
-                        }
-                    });
-        });
-        $('#credencial').select2();
-        $('#list_user2').DataTable({
-            scrollX: false,
-            scrollCollapse: true,
-            filter: true,
-            lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
-            iDisplayLength: 15,
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ datos",
-                "zeroRecords": "No existe el dato introducido",
-                "info": "Página _PAGE_ de _PAGES_ ",
-                "infoEmpty": "Sin datos disponibles",
-                "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-                "search": "Buscar",
-                "processing": "Buscando...",
-                "loadingRecords": "Cargando..."
-            },initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select class="form-control"><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                            );
+                        });
+    });
+    $('#credencial').select2();
+    $('#list_user2').DataTable({
+        scrollX: false,
+        scrollCollapse: true,
+        filter: true,
+        lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
+        iDisplayLength: 15,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ datos",
+            "zeroRecords": "No existe el dato introducido",
+            "info": "Página _PAGE_ de _PAGES_ ",
+            "infoEmpty": "Sin datos disponibles",
+            "infoFiltered": "(mostrando los datos filtrados: _MAX_)",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "search": "Buscar",
+            "processing": "Buscando...",
+            "loadingRecords": "Cargando..."
+        },initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select class="form-control"><option value=""></option></select>')
+                .appendTo( $(column.footer()).empty() )
+                .on( 'change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex(
+                        $(this).val()
+                        );
 
-                        column
-                        .search( val ? '^'+val+'$' : '', true, false )
-                        .draw();
-                    } );
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
+                    column
+                    .search( val ? '^'+val+'$' : '', true, false )
+                    .draw();
                 } );
-            }
-        });
 
-        function modalEliminar(id)
-        {
-            
-            $('#confirmDeleteModal').modal('show');
-            $('#modal_Eliminar').val(id);
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
         }
+    });
 
-        function modalUpdate(id,economico,usuario,hora)
-        {
+    function modalEliminar(id)
+    {
+        
+        $('#confirmDeleteModal').modal('show');
+        $('#modal_Eliminar').val(id);
+    }
 
-            $('#modal_Modificar').val(id);
-            $('#hora_registrada').val(hora);
-            $('#Conductor').val(usuario);
-            $('#Economico').val(economico);
-            $('#confirmUpdateModal').modal('show');
-        }
-</script>
-@endsection
-</x-app-layout>
+    function modalUpdate(id,economico,usuario,hora)
+    {
+
+        $('#modal_Modificar').val(id);
+        $('#hora_registrada').val(hora);
+        $('#Conductor').val(usuario);
+        $('#Economico').val(economico);
+        $('#confirmUpdateModal').modal('show');
+    }
+    </script>
+    @endsection
+    </x-app-layout>
