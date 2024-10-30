@@ -71,6 +71,29 @@
                 </div>
                 
                 <div class="card-footer">
+                <div class="modal" tabindex="-1" role="dialog" id="modal_eliminar">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Eliminar horario</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro de querer eliminar el horario?</p>
+                        </div>
+                        <div class="modal-footer">
+                        <form method="post" id="contratoForm" action="{{url('/Gestion_de_horarios')}}">
+                        @csrf
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" id="Eliminar_horario" name="Eliminar_horario" class="btn btn-primary">Eliminar</button>
+                            <input type="hidden" id="id_hidden" name="id_hidden">
+                        </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
                     <div class="col-md-12">
                         <div class="table-responsive" style="overflow-x: auto;">
                             <table class="table table-bordered  " id="list_user">
@@ -83,6 +106,7 @@
                                         <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Hora de fin comida</center></th>
                                         <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Hora de salida</center></th>
                                         <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Estatus</center></th>
+                                        <th class="bg-danger sorting" style="color:#ffffff; width: 6%;"><center>Eliminar</center></th>
                                     </tr>
                                 </thead>
                                 <tbody id="llenaTabla">
@@ -97,6 +121,7 @@
                                             <td>{{$consul->hora_fin_comida}}</td>
                                             <td>{{$consul->hora_salida}}</td>
                                             <td>{{$consul->estatus}}</td>
+                                            <td><input type="submit" onclick="modalEliminar({{$consul->id_t_horarios_personal}})" class="btn btn-danger" value="Eliminar "></td>
                                             
                                         </tr>
                                         
@@ -109,20 +134,18 @@
                     </div>
                 </div>
             </div>
-           
         </div>
-        
-        
     </div>
-
-	
-
-
 
 @section('jscustom')
 <script type="text/javascript">
     
-    
+    function modalEliminar(id)
+    {
+        
+        $('#id_hidden').val(id);
+        $('#modal_eliminar').modal('show');
+    }
 	
 </script>
 @endsection

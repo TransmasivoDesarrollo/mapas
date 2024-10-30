@@ -245,15 +245,15 @@
                         <div class=" card-stats">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
-                                        <button type="submit" style="border:1px #fff solid; backgroud-color:#fff; " class="col-12" name="pdf" id="pdf">
+                                    <div class="col-xl-6">
+                                        <button type="submit" style="border:1px #fff solid; backgroud-color:#fff; "  name="pdf" id="pdf">
                                             <div class="icon-big text-center icon-warning" style="background-color: red; cursor: pointer;">
                                                 <i class="la la-file-pdf-o text-warning"></i>
                                             </div>
                                         </button>
                                     </div>
-                                    <div class="col-6">
-                                        <button type="submit" style="border:1px #fff solid; backgroud-color:#fff;  " class="col-12" name="Excel" id="Excel">
+                                    <div class="col-xl-6">
+                                        <button type="submit" style="border:1px #fff solid; backgroud-color:#fff;  "  name="Excel" id="Excel">
                                             <div class="icon-big text-center icon-warning" style="background-color: #2d572c; cursor: pointer;">
                                                 <i class="la la-file-excel-o text-warning"></i>
                                             </div>
@@ -357,13 +357,12 @@
                 <table class="table table-hover table-striped table-bordered display  "  id="list_user2">
                     <thead>
                         <tr>
-                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 6%;"><center>Serv.</center></th>
-                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 6%;"><center>Credencial</center></th>
-                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 4%;"><center>Ciclo</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 6%;"><center>Datos de serv.</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 4%;"><center>Cred.</center></th>
                             <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Salida 1</center></th>
-                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 20%;"><center>Llegada 1</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Llegada 1</center></th>
                             <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Salida 2</center></th>
-                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 20%;"><center>Llegada 2</center></th>
+                            <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 22%;"><center>Llegada 2</center></th>
                             <th class=" sorting" style="color:#ffffff; background-color:#872637; width: 2%;"><center>Km circuito</center></th>
                         </tr>
                     </thead>
@@ -437,7 +436,10 @@
                                 <center>
                                     <span class="badge" style="background-color: #e5be01; color:black; font-size:12px;">
                                         {{$fila['Servicio']}}
-                                    </span>
+                                    </span><hr>
+                                        Turno: {{$fila['turno']}}<hr>
+                                        Jornada: {{$fila['jornada']}}<hr>
+                                        Ciclo: {{$fila['ciclo']}}
                                 </center>
                             </td>
                             @elseif($fila['Servicio']=="TR1-R")
@@ -445,7 +447,10 @@
                                 <center>
                                     <span class="badge" style="background-color: #FF0080; color:#fff; font-size:12px;">
                                         {{$fila['Servicio']}}
-                                    </span>
+                                    </span><hr>
+                                        Turno: {{$fila['turno']}}<hr>
+                                        Jornada: {{$fila['jornada']}}<hr>
+                                        Ciclo: {{$fila['ciclo']}}
                                 </center>
                             </td>
                             @elseif($fila['Servicio']=="TR3")
@@ -453,7 +458,10 @@
                                 <center>
                                     <span class="badge" style="background-color: #008f39; color:#fff; font-size:12px;">
                                         {{$fila['Servicio']}}
-                                    </span>
+                                    </span><hr>
+                                        Turno: {{$fila['turno']}}<hr>
+                                        Jornada: {{$fila['jornada']}}<hr>
+                                        Ciclo: {{$fila['ciclo']}}
                                 </center>
                             </td>
                             @elseif($fila['Servicio']=="TR4")
@@ -461,7 +469,10 @@
                                 <center>
                                     <span class="badge" style="background-color: #0000ff; color:#fff; font-size:12px;">
                                         {{$fila['Servicio']}}
-                                    </span>
+                                    </span><hr>
+                                        Turno: {{$fila['turno']}}<hr>
+                                        Jornada: {{$fila['jornada']}}<hr>
+                                        Ciclo: {{$fila['ciclo']}}
                                 </center>
                             </td>
                             @endif
@@ -472,13 +483,7 @@
                                     </span>
                                 </center>
                             </td>
-                            <td>
-                                <center>
-                                    <span class="" style=" color: black; font-size:12px;">
-                                        Ciclo {{$fila['ciclo']}}
-                                    </span>
-                                </center>
-                            </td>
+                          
                             @if($fila['salida_1']=="Sin datos")
                             <td>
                                 <center> Sin datos</center>
@@ -494,7 +499,6 @@
                                                 onclick="modalEliminar({{$fila['id_bitacora_terminales_1_eco']}})" title="Eliminar">
                                                 <i class="la la-trash" style="font-size: 1.8em;"></i>
                                             </button>
-
                                             @php
                                             $eco = $fila['salida_1_eco'];
                                             $usuario = $fila['credencial'];
@@ -676,6 +680,14 @@
                                 {{$fila['salida_2_com']}}
                             </div>  
                         </div>
+                        
+                    <div class="col-xl-12"> 
+                        <center>
+                            <div class="card-body">
+                                <span class="badge " > </span>
+                            </div>   
+                        </center> 
+                       </div>
                     </div>
                 </td> 
                 @endif
@@ -791,6 +803,7 @@
                             {{$fila['salida_3_com']}}
                         </div>  
                     </div>
+                    
                 </div>
             </td> 
             @endif
@@ -874,6 +887,15 @@
                     {{$fila['salida_4_com']}}
                 </div>  
             </div>
+            
+            <div class="col-xl-12"> 
+                        <center>
+                            <div class="card-body">
+                                <span class="badge " > </span>
+                            </div>   
+                        </center> 
+                       </div>
+                    </div>
         </div>
     </td> 
     @endif
@@ -921,6 +943,20 @@
                     $('#hora_s').val(horaActual);
                     
                 });
+        
+                
+        $('#hora_ll').on('change', function() {
+            let hora = $(this).val();
+            if (hora) {
+                let [hours, minutes] = hora.split(':');
+                let date = new Date();
+                date.setHours(parseInt(hours));
+                date.setMinutes(parseInt(minutes) + 2); 
+                let nuevaHora = date.toTimeString().slice(0, 5);
+                $('#hora_s').val(nuevaHora);
+            }
+        });
+
         $('#credencial').on('change', function() {
             var valorCredencial = $(this).val();
             $('#boton_registra').attr('disabled','true');

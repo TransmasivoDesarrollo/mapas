@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\t_bitacora_terminales;
 use App\Models\BitacoraLiberacionUnidades;
 use DB;
+use App\Models\User;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Carbon\Carbon;
@@ -27,6 +28,10 @@ class OperacionesController extends Controller
     {
         $consulta = DB::connection('mysql')->select('
             SELECT 
+            t1.id_jornada_sem,
+            t_jornada_completa_operacion_2.servicio,
+            t_jornada_completa_operacion_2.jornada,
+            t_jornada_completa_operacion_2.turno,
             t1.credencial,
             u.name AS conductor,
             t1.Servicio,
@@ -72,16 +77,23 @@ class OperacionesController extends Controller
             users as u2 ON u2.id = t1.credencial_apoyo 
         INNER JOIN 
             c_terminal ON c_terminal.id_terminal = t1.terminal
+        INNER JOIN 
+            t_jornada_completa_operacion_2 ON t_jornada_completa_operacion_2.id_jornada_pk = t1.id_jornada_sem
         WHERE 
             t1.dia BETWEEN "' . now()->format('Y-m-d') . ' 00:00:00" AND "' . now()->format('Y-m-d') . ' 23:59:59"
         GROUP BY 
+            t1.id_jornada_sem,
             t1.credencial,
             t1.ciclo,
             t1.Servicio,
+            t_jornada_completa_operacion_2.servicio,
+            t_jornada_completa_operacion_2.jornada,
+            t_jornada_completa_operacion_2.turno,
             t1.dia,
             u.name
         ORDER BY 
         
+            t1.id_jornada_sem, 
             t1.credencial, 
             t1.ciclo,
             t1.dia;
@@ -142,7 +154,6 @@ class OperacionesController extends Controller
             $tr3_ciclos = DB::connection('mysql')->select('
             SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR3" and id_jornada_pk in
             (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
-           
             $tr4_ciclos = DB::connection('mysql')->select('
             SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR4" and id_jornada_pk in
             (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Lunes a Viernes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
@@ -732,14 +743,17 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 // Mostrar el resultado , 'Sabado', 'Domingo', 'Inhábil'
         
         $consulta2 =  DB::connection('mysql')->select(
-            'SELECT * from t_jornada_conductores inner join users on users.id=t_jornada_conductores.id_conductor where semana =  ? and dia_servicio="Lunes a Viernes"',[$semana_hoy['value']]
+            'SELECT * from t_jornada_conductores inner join users on users.id=t_jornada_conductores.id_conductor where semana =  ? 
+            AND estatus IN ("Enrolados") and  dia_servicio="Lunes a Viernes"',[$semana_hoy['value']]
         );
                     //dd($consulta2);
         $consulta3 =  DB::connection('mysql')->select(
-            'SELECT * from t_jornada_conductores inner join users on users.id=t_jornada_conductores.id_conductor where semana =  ? and dia_servicio="Sábado" ',[$semana_hoy['value']]
+            'SELECT * from t_jornada_conductores inner join users on users.id=t_jornada_conductores.id_conductor where semana =  ? 
+            AND estatus IN ("Enrolados") and dia_servicio="Sábado" ',[$semana_hoy['value']]
         );
         $consulta4 =  DB::connection('mysql')->select(
-            'SELECT * from t_jornada_conductores inner join users on users.id=t_jornada_conductores.id_conductor where semana =  ? and dia_servicio="Domingo"',[$semana_hoy['value']]
+            'SELECT * from t_jornada_conductores inner join users on users.id=t_jornada_conductores.id_conductor where semana =  ? 
+            AND estatus IN ("Enrolados") and dia_servicio="Domingo"',[$semana_hoy['value']]
         );
         $conductores = [];
         foreach ($consulta2 as $conductor) {
@@ -986,7 +1000,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             foreach ($jornadas_s as $jornada) {
                 $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
                 if (isset($conductores3[$key])) {
-                    $jornada->conductor = $conductores3[$key]->name. " - ". $conductores[$key]->id;
+                    $jornada->conductor = $conductores3[$key]->name. " - ". $conductores3[$key]->id;
                     $jornada->id_conductor_descanso = $conductores3[$key]->id_conductor_descanso ;
                     $jornada->dia_descanso = $conductores3[$key]->dia_descanso ;
                 } else {
@@ -1000,7 +1014,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
                 if (isset($conductores4[$key])) {
                     
-                    $jornada->conductor = $conductores4[$key]->name. " - ". $conductores[$key]->id;
+                    $jornada->conductor = $conductores4[$key]->name. " - ". $conductores4[$key]->id;
                     $jornada->id_conductor_descanso = $conductores4[$key]->id_conductor_descanso ;
                     $jornada->dia_descanso = $conductores4[$key]->dia_descanso ;
                 } else {
@@ -1019,10 +1033,8 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                     }
                 }
             }
-            
+        
             $conductores = array_values($conductores);
-
-
             $conductores_s = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
             foreach ($conductores_s as $key => $conductor) {
                 foreach ($consulta3 as $c2) {
@@ -1033,7 +1045,6 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             }
 
             $conductores_s = array_values($conductores_s);
-
             $conductores_d = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
             foreach ($conductores_d as $key => $conductor) {
                 foreach ($consulta4 as $c2) {
@@ -1042,23 +1053,19 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                     }
                 }
             }
-
             $conductores_d = array_values($conductores_d);
             $semana = $request->input('semana');
-
             // Dividir la cadena en dos partes usando " al " como delimitador
             list($dia_inicio, $dia_fin) = explode(' al ', $semana);
-
-            // Extraer solo la parte de la fecha (años, mes y día) de cada variable
             $dia_inicio = substr($dia_inicio, 0, 10); // Resultado: 2024-09-23
             $dia_fin = substr($dia_fin, 0, 10);      // Resultado: 2024-09-29
-
-
+            $conductores_descanso = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
+            $conductores_descanso = array_values($conductores_descanso);
             $semana_seleccionada=$request->input('semana');
             $conductores_totales = count($conductores);
             
             return view('Transmasivo.Operaciones.enrolar_horarios_conductores_2',
-                compact('where','dia_inicio','dia_fin','jornadas_m','jornadas_s','jornadas_d','conductores','conductores_s','conductores_d','conductores_totales','semana_seleccionada'));
+                compact('where','conductores_descanso','dia_inicio','dia_fin','jornadas_m','jornadas_s','jornadas_d','conductores','conductores_s','conductores_d','conductores_totales','semana_seleccionada'));
             
         }
         if($request->has('enrolar'))
@@ -1140,8 +1147,6 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
         }
         if($request->has('enrolar_descanso'))
         {
-            //dd($request->all());
-            
             $hidden_id_jornada_pk_descanso = $request->input('hidden_id_jornada_pk_descanso');
             $dia_inicio_lv_descanso = $request->input('dia_inicio_lv_descanso');
             $dia_fin_lv_descanso = $request->input('dia_fin_lv_descanso');
@@ -1174,7 +1179,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             $dia_fin_lv_descanso = $request->input('dia_fin_lv_desenrolar');
 
             $conductores = DB::connection('mysql')->update(
-                'delete from t_jornada_conductores  where id_jornada_fk=? and dia_inicio=? and dia_fin=? ',
+                'update t_jornada_conductores set estatus="Desenrolado" where id_jornada_fk=? and dia_inicio=? and dia_fin=? ',
                 [
                     $hidden_id_jornada_pk_descanso ,
                     $dia_inicio_lv_descanso ,
@@ -2073,7 +2078,11 @@ public function Bitacora_de_operaciones_pdf(Request $request)
 public function buscar_bitacora_filtro($fecha)
 {
     $consulta = DB::connection('mysql')->select('
-            SELECT 
+             SELECT 
+            t1.id_jornada_sem,
+            t_jornada_completa_operacion_2.servicio,
+            t_jornada_completa_operacion_2.jornada,
+            t_jornada_completa_operacion_2.turno,
             t1.credencial,
             u.name AS conductor,
             t1.Servicio,
@@ -2119,18 +2128,27 @@ public function buscar_bitacora_filtro($fecha)
             users as u2 ON u2.id = t1.credencial_apoyo 
         INNER JOIN 
             c_terminal ON c_terminal.id_terminal = t1.terminal
+        INNER JOIN 
+            t_jornada_completa_operacion_2 ON t_jornada_completa_operacion_2.id_jornada_pk = t1.id_jornada_sem
         WHERE 
             t1.dia BETWEEN "' . $fecha . ' 00:00:00" AND "' . $fecha . ' 23:59:59"
         GROUP BY 
+            t1.id_jornada_sem,
             t1.credencial,
             t1.ciclo,
             t1.Servicio,
+            t_jornada_completa_operacion_2.servicio,
+            t_jornada_completa_operacion_2.jornada,
+            t_jornada_completa_operacion_2.turno,
             t1.dia,
             u.name
         ORDER BY 
+        
+            t1.id_jornada_sem, 
             t1.credencial, 
             t1.ciclo,
             t1.dia;
+
         ');
        //dd($consulta);
         $tr1_registro =DB::connection('mysql')->select('
@@ -2166,14 +2184,16 @@ public function buscar_bitacora_filtro($fecha)
             'Saturday' => 'sábado',
             'Sunday' => 'domingo'
         ];
-        $diaActualIngles = date('l'); // Día actual en inglés
-        $diaActualEspanol = $diasSemana[$diaActualIngles]; // Día actual traducido al español
+        $diaSemana = Carbon::parse($fecha)->locale('es')->dayName;
+        
+        //dd($diaSemana);
+        $diaActualEspanol = $diaSemana; // Día actual traducido al español
         $tr1_ciclos;
         $tr1_r_ciclos;
         $tr3_ciclos;
         $tr4_ciclos;
         $total_ciclos;
-        if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
+        if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miércoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
         {
             $tr1_ciclos = DB::connection('mysql')->select('
             SELECT count(*) as conteo from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR1" and id_jornada_pk in
@@ -2184,7 +2204,6 @@ public function buscar_bitacora_filtro($fecha)
             $tr3_ciclos = DB::connection('mysql')->select('
             SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR3" and id_jornada_pk in
             (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Lunes a Viernes" AND "'.$fecha.'" BETWEEN dia_inicio and dia_fin )');
-           
             $tr4_ciclos = DB::connection('mysql')->select('
             SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR4" and id_jornada_pk in
             (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Lunes a Viernes" AND "'.$fecha.'" BETWEEN dia_inicio and dia_fin )');
@@ -2219,12 +2238,13 @@ public function buscar_bitacora_filtro($fecha)
             SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR4" and id_jornada_pk in
             (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Domingo" AND "'.$fecha.'" BETWEEN dia_inicio and dia_fin )');
         }
+        //dd($tr1_ciclos);
         $total_ciclos = $tr1_ciclos[0]->conteo + $tr1_r_ciclos[0]->conteo + $tr3_ciclos[0]->conteo + $tr4_ciclos[0]->conteo ; 
         $recorridos = []; // Array para almacenar los recorridos por id_rol_operador
         //dd($consulta);
         foreach ($consulta as &$registro) {
             $id_rol_operadores;
-                    if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miercoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
+                    if( $diaActualEspanol=='lunes' ||$diaActualEspanol=='martes' ||$diaActualEspanol=='miércoles' ||$diaActualEspanol=='jueves' ||$diaActualEspanol=='viernes' )
                     {
                         $id_rol_operadores = DB::connection('mysql')->select(
                             'SELECT * FROM t_jornada_conductores 
@@ -2595,7 +2615,7 @@ public function Registro_bitacora_terminal(Request $request)
                 'SELECT * FROM t_jornada_conductores 
                 INNER JOIN users ON users.id=t_jornada_conductores.id_conductor
                 WHERE id_conductor = ? 
-                AND ? BETWEEN dia_inicio AND dia_fin  
+                AND ? BETWEEN dia_inicio AND dia_fin  and estatus="Enrolados"
                 AND dia_servicio = "Lunes a Viernes"', [$credencial, $dia]
             );
         } elseif ($diaActualEspanol == 'sábado') {
@@ -2603,7 +2623,7 @@ public function Registro_bitacora_terminal(Request $request)
                 'SELECT * FROM t_jornada_conductores 
                 INNER JOIN users ON users.id=t_jornada_conductores.id_conductor
                 WHERE id_conductor = ? 
-                AND ? BETWEEN dia_inicio AND dia_fin  
+                AND ? BETWEEN dia_inicio AND dia_fin   and estatus="Enrolados"
                 AND dia_servicio = "Sábado"', [$credencial, $dia]
             );
         } elseif ($diaActualEspanol == 'domingo') {
@@ -2611,7 +2631,7 @@ public function Registro_bitacora_terminal(Request $request)
                 'SELECT * FROM t_jornada_conductores 
                 INNER JOIN users ON users.id=t_jornada_conductores.id_conductor
                 WHERE id_conductor = ? 
-                AND ? BETWEEN dia_inicio AND dia_fin  
+                AND ? BETWEEN dia_inicio AND dia_fin   and estatus="Enrolados"
                 AND dia_servicio = "Domingo"', [$credencial, $dia]
             );
         }
@@ -4310,6 +4330,522 @@ public function Autorizacion_check_mantenimiento($mensaje="",$color="")
     return view('Transmasivo.Operaciones.Autorizacion_check_mantenimiento')->with('consulta', $consulta)->with('consulta_fallas', $consulta_fallas)->with('mensaje', $mensaje)->with('color', $color);
 }
 
+
+public function Reporte_de_jornadas()
+{
+    $hoy = Carbon::today();
+    $lunes = $hoy->copy()->startOfWeek();
+    $diasSemana = [
+            'lunes' => $lunes->copy()->format('Y-m-d'),
+            'martes' => $lunes->copy()->addDay()->format('Y-m-d'),
+            'miercoles' => $lunes->copy()->addDays(2)->format('Y-m-d'),
+            'jueves' => $lunes->copy()->addDays(3)->format('Y-m-d'),
+            'viernes' => $lunes->copy()->addDays(4)->format('Y-m-d'),
+            'sabado' => $lunes->copy()->addDays(5)->format('Y-m-d'),
+            'domingo' => $lunes->copy()->addDays(6)->format('Y-m-d'),
+        ];
+        $registro_l =DB::connection('mysql')->select('
+            select count(*) as conteo from t_bitacora_terminales  
+            WHERE  dia BETWEEN "' . $diasSemana['lunes'] . ' 00:00:00"  AND "' . $diasSemana['lunes'] . ' 23:59:59"
+            ');
+        $registro_m =DB::connection('mysql')->select('
+            select count(*) as conteo from t_bitacora_terminales  
+            WHERE  dia BETWEEN "' . $diasSemana['martes'] . ' 00:00:00"  AND "' . $diasSemana['martes'] . ' 23:59:59"
+            ');
+        $registro_mi =DB::connection('mysql')->select('
+            select count(*) as conteo from t_bitacora_terminales  
+            WHERE  dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"
+            ');
+        $registro_j =DB::connection('mysql')->select('
+            select count(*) as conteo from t_bitacora_terminales  
+            WHERE  dia BETWEEN "' . $diasSemana['jueves'] . ' 00:00:00"  AND "' . $diasSemana['jueves'] . ' 23:59:59"
+            ');
+        $registro_v =DB::connection('mysql')->select('
+            select count(*) as conteo from t_bitacora_terminales  
+            WHERE  dia BETWEEN "' . $diasSemana['viernes'] . ' 00:00:00"  AND "' . $diasSemana['viernes'] . ' 23:59:59"
+            ');
+        $registro_s =DB::connection('mysql')->select('
+            select count(*) as conteo from t_bitacora_terminales  
+            WHERE  dia BETWEEN "' . $diasSemana['sabado'] . ' 00:00:00"  AND "' . $diasSemana['sabado'] . ' 23:59:59"
+            ');
+        $registro_d =DB::connection('mysql')->select('
+            select count(*) as conteo from t_bitacora_terminales  
+            WHERE  dia BETWEEN "' . $diasSemana['domingo'] . ' 00:00:00"  AND "' . $diasSemana['domingo'] . ' 23:59:59"
+            ');
+        $registro_l_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['lunes'] . ' 00:00:00"  AND "' . $diasSemana['lunes'] . ' 23:59:59"');
+        $registro_l_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['lunes'] . ' 00:00:00"  AND "' . $diasSemana['lunes'] . ' 23:59:59"');
+        $registro_l_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['lunes'] . ' 00:00:00"  AND "' . $diasSemana['lunes'] . ' 23:59:59"');
+        $registro_l_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['lunes'] . ' 00:00:00"  AND "' . $diasSemana['lunes'] . ' 23:59:59"');
+
+        $registro_m_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['martes'] . ' 00:00:00"  AND "' . $diasSemana['martes'] . ' 23:59:59"');
+        $registro_m_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['martes'] . ' 00:00:00"  AND "' . $diasSemana['martes'] . ' 23:59:59"');
+        $registro_m_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['martes'] . ' 00:00:00"  AND "' . $diasSemana['martes'] . ' 23:59:59"');
+        $registro_m_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+         WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['martes'] . ' 00:00:00"  AND "' . $diasSemana['martes'] . ' 23:59:59"');
+         
+        $registro_mi_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        $registro_mi_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        $registro_mi_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        $registro_mi_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+         
+        $registro_j_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['jueves'] . ' 00:00:00"  AND "' . $diasSemana['jueves'] . ' 23:59:59"');
+        $registro_j_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['jueves'] . ' 00:00:00"  AND "' . $diasSemana['jueves'] . ' 23:59:59"');
+        $registro_j_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['jueves'] . ' 00:00:00"  AND "' . $diasSemana['jueves'] . ' 23:59:59"');
+        $registro_j_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['jueves'] . ' 00:00:00"  AND "' . $diasSemana['jueves'] . ' 23:59:59"');
+         
+        $registro_v_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['viernes'] . ' 00:00:00"  AND "' . $diasSemana['viernes'] . ' 23:59:59"');
+        $registro_v_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['viernes'] . ' 00:00:00"  AND "' . $diasSemana['viernes'] . ' 23:59:59"');
+        $registro_v_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['viernes'] . ' 00:00:00"  AND "' . $diasSemana['viernes'] . ' 23:59:59"');
+        $registro_v_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['viernes'] . ' 00:00:00"  AND "' . $diasSemana['viernes'] . ' 23:59:59"');
+         
+        $registro_s_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['sabado'] . ' 00:00:00"  AND "' . $diasSemana['sabado'] . ' 23:59:59"');
+        $registro_s_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['sabado'] . ' 00:00:00"  AND "' . $diasSemana['sabado'] . ' 23:59:59"');
+        $registro_s_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['sabado'] . ' 00:00:00"  AND "' . $diasSemana['sabado'] . ' 23:59:59"');
+        $registro_s_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['sabado'] . ' 00:00:00"  AND "' . $diasSemana['sabado'] . ' 23:59:59"');
+         
+        $registro_d_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['domingo'] . ' 00:00:00"  AND "' . $diasSemana['domingo'] . ' 23:59:59"');
+        $registro_d_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['domingo'] . ' 00:00:00"  AND "' . $diasSemana['domingo'] . ' 23:59:59"');
+        $registro_d_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['domingo'] . ' 00:00:00"  AND "' . $diasSemana['domingo'] . ' 23:59:59"');
+        $registro_d_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
+        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['domingo'] . ' 00:00:00"  AND "' . $diasSemana['domingo'] . ' 23:59:59"');
+    
+        
+        $registro_t_l = ($registro_l_tr4[0]->conteo * 22.5) +($registro_l_tr1[0]->conteo * 33.6) 
+        +($registro_l_tr1_r[0]->conteo * 33.6) + ($registro_l_tr3[0]->conteo * 33.6);
+
+        $registro_t_m = ($registro_m_tr4[0]->conteo * 22.5) +($registro_m_tr1[0]->conteo * 33.6) 
+        +($registro_m_tr1_r[0]->conteo * 33.6) + ($registro_m_tr3[0]->conteo * 33.6);
+        
+        $registro_t_mi = ($registro_mi_tr4[0]->conteo * 22.5) +($registro_mi_tr1[0]->conteo * 33.6) 
+        +($registro_mi_tr1_r[0]->conteo * 33.6) + ($registro_mi_tr3[0]->conteo * 33.6);
+        
+        $registro_t_j = ($registro_j_tr4[0]->conteo * 22.5) +($registro_j_tr1[0]->conteo * 33.6) 
+        +($registro_j_tr1_r[0]->conteo * 33.6) + ($registro_j_tr3[0]->conteo * 33.6);
+        
+        $registro_t_v = ($registro_v_tr4[0]->conteo * 22.5) +($registro_v_tr1[0]->conteo * 33.6) 
+        +($registro_v_tr1_r[0]->conteo * 33.6) + ($registro_v_tr3[0]->conteo * 33.6);
+        
+        $registro_t_s = ($registro_s_tr4[0]->conteo * 22.5) +($registro_s_tr1[0]->conteo * 33.6) 
+        +($registro_s_tr1_r[0]->conteo * 33.6) + ($registro_s_tr3[0]->conteo * 33.6);
+        
+        $registro_t_d = ($registro_d_tr4[0]->conteo * 22.5) +($registro_d_tr1[0]->conteo * 33.6) 
+        +($registro_d_tr1_r[0]->conteo * 33.6) + ($registro_d_tr3[0]->conteo * 33.6);
+
+        $tr1_ciclos_lv;
+        $tr1_r_ciclos_lv;
+        $tr3_ciclos_lv;
+        $tr4_ciclos_lv;
+
+        $tr1_ciclos_s ;
+        $tr1_r_ciclos_s ;
+        $tr3_ciclos_s ;
+        $tr4_ciclos_s ;
+
+        $tr1_ciclos_d;
+        $tr1_r_ciclos_d;
+        $tr3_ciclos_d;
+        $tr4_ciclos_d;
+
+        $total_ciclos;
+
+        $fecha_busqueda =now()->format('Y-m-d') ;
+    
+            $tr1_ciclos_lv = DB::connection('mysql')->select('
+            SELECT count(*) as conteo from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR1" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Lunes a Viernes" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr1_r_ciclos_lv = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR1-R" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Lunes a Viernes" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr3_ciclos_lv = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR3" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Lunes a Viernes" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr4_ciclos_lv = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Lunes a Viernes" and servicio="TR4" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Lunes a Viernes" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+       
+            $tr1_ciclos_s = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR1" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Sábado" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr1_r_ciclos_s = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR1-R" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Sábado" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr3_ciclos_s = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR3" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Sábado" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr4_ciclos_s = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Sábado" and servicio="TR4" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Sábado" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+       
+            $tr1_ciclos_d = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR1" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1" AND dia_servicio="Domingo" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr1_r_ciclos_d = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR1-R" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR1-R" AND dia_servicio="Domingo" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');;
+            $tr3_ciclos_d = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR3" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR3" AND dia_servicio="Domingo" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+            $tr4_ciclos_d = DB::connection('mysql')->select('
+            SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Domingo" and servicio="TR4" and id_jornada_pk in
+            (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Domingo" AND "'.$fecha_busqueda.'" BETWEEN dia_inicio and dia_fin )');
+       
+    
+        $total_km_tr1_l = ($tr1_ciclos_lv[0]->conteo * 33.6) + ($tr1_r_ciclos_lv[0]->conteo * 33.6) + ($tr3_ciclos_lv[0]->conteo * 33.6) + ($tr4_ciclos_lv[0]->conteo * 22.5) ;
+        $total_km_tr1_s = ($tr1_ciclos_s[0]->conteo * 33.6) + ($tr1_r_ciclos_s[0]->conteo * 33.6) + ($tr3_ciclos_s[0]->conteo * 33.6) + ($tr4_ciclos_s[0]->conteo * 22.5) ;
+        $total_km_tr1_d = ($tr1_ciclos_d[0]->conteo * 33.6) + ($tr1_r_ciclos_d[0]->conteo * 33.6) + ($tr3_ciclos_d[0]->conteo * 33.6) + ($tr4_ciclos_d[0]->conteo * 22.5) ;
+       // dd($total_km_tr1_l);
+        $total_ciclos_lv = ($tr1_ciclos_lv[0]->conteo + $tr1_r_ciclos_lv[0]->conteo + $tr3_ciclos_lv[0]->conteo + $tr4_ciclos_lv[0]->conteo)*1 ; 
+        $total_ciclos_s = $tr1_ciclos_s[0]->conteo + $tr1_r_ciclos_s[0]->conteo + $tr3_ciclos_s[0]->conteo + $tr4_ciclos_s[0]->conteo ; 
+        $total_ciclos_d = $tr1_ciclos_d[0]->conteo + $tr1_r_ciclos_d[0]->conteo + $tr3_ciclos_d[0]->conteo + $tr4_ciclos_d[0]->conteo ; 
+
+        $consulta_l = DB::connection('mysql')->select('
+            SELECT 
+                t1.credencial, u.name AS conductor,
+                t1.Servicio, t1.ciclo, t1.dia,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter
+            FROM  t_bitacora_terminales t1
+            INNER JOIN   users as u ON u.id = t1.credencial 
+            left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
+            INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['lunes'] . ' 00:00:00" AND "' .  $diasSemana['lunes'] . ' 23:59:59"
+            GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
+            ORDER BY  t1.credencial, t1.ciclo,t1.dia;
+        ');
+        $consulta_m = DB::connection('mysql')->select('
+            SELECT 
+                t1.credencial, u.name AS conductor,
+                t1.Servicio, t1.ciclo, t1.dia,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter
+            FROM  t_bitacora_terminales t1
+            INNER JOIN   users as u ON u.id = t1.credencial 
+            left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
+            INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['martes'] . ' 00:00:00" AND "' .  $diasSemana['martes'] . ' 23:59:59"
+            GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
+            ORDER BY  t1.credencial, t1.ciclo,t1.dia;
+        ');
+        $consulta_mi = DB::connection('mysql')->select('
+            SELECT 
+                t1.credencial, u.name AS conductor,
+                t1.Servicio, t1.ciclo, t1.dia,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter
+            FROM  t_bitacora_terminales t1
+            INNER JOIN   users as u ON u.id = t1.credencial 
+            left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
+            INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['miercoles'] . ' 00:00:00" AND "' .  $diasSemana['miercoles'] . ' 23:59:59"
+            GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
+            ORDER BY  t1.credencial, t1.ciclo,t1.dia;
+        ');
+        $consulta_j = DB::connection('mysql')->select('
+            SELECT 
+                t1.credencial, u.name AS conductor,
+                t1.Servicio, t1.ciclo, t1.dia,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter
+            FROM  t_bitacora_terminales t1
+            INNER JOIN   users as u ON u.id = t1.credencial 
+            left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
+            INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['jueves'] . ' 00:00:00" AND "' .  $diasSemana['jueves'] . ' 23:59:59"
+            GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
+            ORDER BY  t1.credencial, t1.ciclo,t1.dia;
+        ');
+        $consulta_v = DB::connection('mysql')->select('
+            SELECT 
+                t1.credencial, u.name AS conductor,
+                t1.Servicio, t1.ciclo, t1.dia,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter
+            FROM  t_bitacora_terminales t1
+            INNER JOIN   users as u ON u.id = t1.credencial 
+            left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
+            INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['viernes'] . ' 00:00:00" AND "' .  $diasSemana['viernes'] . ' 23:59:59"
+            GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
+            ORDER BY  t1.credencial, t1.ciclo,t1.dia;
+        ');
+        
+        $consulta_s = DB::connection('mysql')->select('
+            SELECT 
+                t1.credencial, u.name AS conductor,
+                t1.Servicio, t1.ciclo, t1.dia,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter
+            FROM  t_bitacora_terminales t1
+            INNER JOIN   users as u ON u.id = t1.credencial 
+            left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
+            INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['sabado'] . ' 00:00:00" AND "' .  $diasSemana['sabado'] . ' 23:59:59"
+            GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
+            ORDER BY  t1.credencial, t1.ciclo,t1.dia;
+        ');
+        $consulta_d = DB::connection('mysql')->select('
+            SELECT 
+                t1.credencial, u.name AS conductor,
+                t1.Servicio, t1.ciclo, t1.dia,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.terminal END), "Sin terminal") AS salida_1_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.terminal END), "Sin terminal") AS salida_2_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.terminal END), "Sin terminal") AS salida_3_ter,
+                COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.terminal END), "Sin terminal") AS salida_4_ter
+            FROM  t_bitacora_terminales t1
+            INNER JOIN   users as u ON u.id = t1.credencial 
+            left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
+            INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['domingo'] . ' 00:00:00" AND "' .  $diasSemana['domingo'] . ' 23:59:59"
+            GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
+            ORDER BY  t1.credencial, t1.ciclo,t1.dia;
+        ');
+
+        $Ojo_De_Agua_1 = 0; 
+        $Esmeralda_1 = 1.47; 
+        $Cuauhtemoc_Norte_1 = 2; 
+        $Cuauhtemoc_Sur_1 = 3.05; 
+        $Hidalgo_1 = 3.58; 
+        $Insurgentes_1 = 4.39; 
+        $Central_De_Abastos_1 = 5.3; 
+        $e_19_De_Septiembre_1 = 6.62; 
+        $Palomas_1 = 7.6; 
+        $Jardines_De_Morelos_1 = 8; 
+        $Aquiles_Serdan_1 = 8.26; 
+        $Hospital_1 = 8.77; 
+        $e_1ro_De_Mayo_1 = 9.6; 
+        $Las_Americas_1 = 10.55; 
+        $Valle_De_Ecatepec_1 = 11.64; 
+        $Vocacional_3_1 = 12.4; 
+        $Adolfo_Lopez_Mateos_1 = 12.5; 
+        $Zodiaco_1 = 13; 
+        $Alfredo_Torres_1 = 13.58; 
+        $Unitec_1 = 14.02; 
+        $Estacion_Industrial_1 = 14.5; 
+        $Josefa_Ortiz_De_Dominguez_1 = 15; 
+        $Quinto_Sol_1 = 15.83; 
+        $Ciudad_Azteca_1 = 16.5; 
+
+        $Ojo_De_Agua_2 = 17.1; 
+        $Esmeralda_2 = 15; 
+        $Cuauhtemoc_Norte_2 = 14.5; 
+        $Cuauhtemoc_Sur_2 = 13.47; 
+        $Hidalgo_2 = 12.9; 
+        $Insurgentes_2 = 12.04; 
+        $Central_De_Abastos_2 = 11.3; 
+        $e_19_De_Septiembre_2 = 9.8; 
+        $Palomas_2 = 9.39; 
+        $Jardines_De_Morelos_2 = 8.45; 
+        $Aquiles_Serdan_2 = 8.18; 
+        $Hospital_2 = 7.66; 
+        $e_1ro_De_Mayo_2 = 6.73; 
+        $Las_Americas_2 = 5.88; 
+        $Valle_De_Ecatepec_2 = 4.8; 
+        $Vocacional_3_2 = 4.31; 
+        $Adolfo_Lopez_Mateos_2 = 3.93; 
+        $Zodiaco_2 = 3.45; 
+        $Alfredo_Torres_2 = 2.86; 
+        $Unitec_2 = 2.34; 
+        $Estacion_Industrial_2 = 1.86; 
+        $Josefa_Ortiz_De_Dominguez_2 = 1.41; 
+        $Quinto_Sol_2 = 0.6; 
+        $Ciudad_Azteca_2 = 0; 
+
+   // dd($consulta_l);
+    $salida_1;
+    $salida_2;
+    $salida_3;
+    $salida_4;
+    $km_1_l;
+    $km_2_l;
+    $km_t_l;
+    for($i = 0 ;  count($consulta_l) > $i ; $i++ )
+    {
+        $km_1_l= 0;
+        $km_2_l= 0;
+        if($consulta_l[$i]->salida_1_ter != 'Sin terminal' &&  $consulta_l[$i]->salida_2_ter != 'Sin terminal')
+        {
+            if($consulta_l[$i]->salida_1_ter==1)  { $salida_1 = $Ojo_De_Agua_1; }
+            else if($consulta_l[$i]->salida_1_ter==2)  { $salida_1 = $Central_De_Abastos_1; }
+            else if($consulta_l[$i]->salida_1_ter==3)  { $salida_1 = $Ciudad_Azteca_1 ;}
+            else if($consulta_l[$i]->salida_1_ter==4)  { $salida_1 = $Esmeralda_1; }
+            else if($consulta_l[$i]->salida_1_ter==5)  { $salida_1 = $Cuauhtemoc_Norte_1; }
+            else if($consulta_l[$i]->salida_1_ter==6)  { $salida_1 = $Cuauhtemoc_Sur_1; }
+            else if($consulta_l[$i]->salida_1_ter==7)  { $salida_1 = $Hidalgo_1; }
+            else if($consulta_l[$i]->salida_1_ter==8)  { $salida_1 = $Insurgentes_1; }
+            else if($consulta_l[$i]->salida_1_ter==9)  { $salida_1 = $e_19_De_Septiembre_1; }
+            else if($consulta_l[$i]->salida_1_ter==10)  { $salida_1 = $Palomas_1; }
+            else if($consulta_l[$i]->salida_1_ter==11)  { $salida_1 = $Jardines_De_Morelos_1; }
+            else if($consulta_l[$i]->salida_1_ter==12)  { $salida_1 = $Aquiles_Serdan_1; }
+            else if($consulta_l[$i]->salida_1_ter==13)  { $salida_1 = $Hospital_1; }
+            else if($consulta_l[$i]->salida_1_ter==14)  { $salida_1 = $e_1ro_De_Mayo_1; }
+            else if($consulta_l[$i]->salida_1_ter==15)  { $salida_1 = $Las_Americas_1; }
+            else if($consulta_l[$i]->salida_1_ter==16)  { $salida_1 = $Valle_De_Ecatepec_1; }
+            else if($consulta_l[$i]->salida_1_ter==17)  { $salida_1 = $Vocacional_3_1; }
+            else if($consulta_l[$i]->salida_1_ter==18)  { $salida_1 = $Adolfo_Lopez_Mateos_1; }
+            else if($consulta_l[$i]->salida_1_ter==19)  { $salida_1 = $Zodiaco_1; }
+            else if($consulta_l[$i]->salida_1_ter==20)  { $salida_1 = $Alfredo_Torres_1; }
+            else if($consulta_l[$i]->salida_1_ter==21)  { $salida_1 = $Unitec_1 ; }
+            else if($consulta_l[$i]->salida_1_ter==22)  { $salida_1 = $Estacion_Industrial_1; }
+            else if($consulta_l[$i]->salida_1_ter==23)  { $salida_1 = $Josefa_Ortiz_De_Dominguez_1; }
+            else if($consulta_l[$i]->salida_1_ter==24)  { $salida_1 = $Quinto_Sol_1; }
+
+            if($consulta_l[$i]->salida_2_ter==1)  { $llegada_2 = $Ojo_De_Agua_1; }
+            else if($consulta_l[$i]->salida_2_ter==2)  { $llegada_2 = $Central_De_Abastos_1; }
+            else if($consulta_l[$i]->salida_2_ter==3)  { $llegada_2 = $Ciudad_Azteca_1; }
+            else if($consulta_l[$i]->salida_2_ter==4)  { $llegada_2 = $Esmeralda_1; }
+            else if($consulta_l[$i]->salida_2_ter==5)  { $llegada_2 = $Cuauhtemoc_Norte_1; }
+            else if($consulta_l[$i]->salida_2_ter==6)  { $llegada_2 = $Cuauhtemoc_Sur_1; }
+            else if($consulta_l[$i]->salida_2_ter==7)  { $llegada_2 = $Hidalgo_1; }
+            else if($consulta_l[$i]->salida_2_ter==8)  { $llegada_2 = $Insurgentes_1; }
+            else if($consulta_l[$i]->salida_2_ter==9)  { $llegada_2 = $e_19_De_Septiembre_1; }
+            else if($consulta_l[$i]->salida_2_ter==10)  { $llegada_2 = $Palomas_1; }
+            else if($consulta_l[$i]->salida_2_ter==11)  { $llegada_2 = $Jardines_De_Morelos_1; }
+            else if($consulta_l[$i]->salida_2_ter==12)  { $llegada_2 = $Aquiles_Serdan_1; }
+            else if($consulta_l[$i]->salida_2_ter==13)  { $llegada_2 = $Hospital_1; }
+            else if($consulta_l[$i]->salida_2_ter==14)  { $llegada_2 = $e_1ro_De_Mayo_1; }
+            else if($consulta_l[$i]->salida_2_ter==15)  { $llegada_2 = $Las_Americas_1; }
+            else if($consulta_l[$i]->salida_2_ter==16)  { $llegada_2 = $Valle_De_Ecatepec_1; }
+            else if($consulta_l[$i]->salida_2_ter==17)  { $llegada_2 = $Vocacional_3_1; }
+            else if($consulta_l[$i]->salida_2_ter==18)  { $llegada_2 = $Adolfo_Lopez_Mateos_1; }
+            else if($consulta_l[$i]->salida_2_ter==19)  { $llegada_2 = $Zodiaco_1; }
+            else if($consulta_l[$i]->salida_2_ter==20)  { $llegada_2 = $Alfredo_Torres_1; }
+            else if($consulta_l[$i]->salida_2_ter==21)  { $llegada_2 = $Unitec_1 ; }
+            else if($consulta_l[$i]->salida_2_ter==22)  { $llegada_2 = $Estacion_Industrial_1; }
+            else if($consulta_l[$i]->salida_2_ter==23)  { $llegada_2 = $Josefa_Ortiz_De_Dominguez_1; }
+            else if($consulta_l[$i]->salida_2_ter==24)  { $llegada_2 = $Quinto_Sol_1; }
+
+            $km_1_l = $llegada_1_l - $salida_1_l;
+        }
+        if($consulta_l[$i]->salida_3_ter != 'Sin terminal' &&  $consulta_l[$i]->salida_4_ter != 'Sin terminal')
+        {
+                if($consulta_l[$i]->salida_3_ter==1)  { $salida_2 = $Ojo_De_Agua_2;}
+                else if($consulta_l[$i]->salida_3_ter==2)  { $salida_2 = $Central_De_Abastos_2;}
+                else if($consulta_l[$i]->salida_3_ter==3)  { $salida_2 = $Ciudad_Azteca_2 ;}
+                else if($consulta_l[$i]->salida_3_ter==4)  { $salida_2 = $Esmeralda_2;}
+                else if($consulta_l[$i]->salida_3_ter==5)  { $salida_2 = $Cuauhtemoc_Norte_2;}
+                else if($consulta_l[$i]->salida_3_ter==6)  { $salida_2 = $Cuauhtemoc_Sur_2;}
+                else if($consulta_l[$i]->salida_3_ter==7)  { $salida_2 = $Hidalgo_2;}
+                else if($consulta_l[$i]->salida_3_ter==8)  { $salida_2 = $Insurgentes_2;}
+                else if($consulta_l[$i]->salida_3_ter==9)  { $salida_2 = $e_19_De_Septiembre_2;}
+                else if($consulta_l[$i]->salida_3_ter==10)  { $salida_2 = $Palomas_2;}
+                else if($consulta_l[$i]->salida_3_ter==11)  { $salida_2 = $Jardines_De_Morelos_2;}
+                else if($consulta_l[$i]->salida_3_ter==12)  { $salida_2 = $Aquiles_Serdan_2;}
+                else if($consulta_l[$i]->salida_3_ter==13)  { $salida_2 = $Hospital_2;}
+                else if($consulta_l[$i]->salida_3_ter==14)  { $salida_2 = $e_1ro_De_Mayo_2;}
+                else if($consulta_l[$i]->salida_3_ter==15)  { $salida_2 = $Las_Americas_2;}
+                else if($consulta_l[$i]->salida_3_ter==16)  { $salida_2 = $Valle_De_Ecatepec_2;}
+                else if($consulta_l[$i]->salida_3_ter==17)  { $salida_2 = $Vocacional_3_2;}
+                else if($consulta_l[$i]->salida_3_ter==18)  { $salida_2 = $Adolfo_Lopez_Mateos_2;}
+                else if($consulta_l[$i]->salida_3_ter==19)  { $salida_2 = $Zodiaco_2;}
+                else if($consulta_l[$i]->salida_3_ter==20)  { $salida_2 = $Alfredo_Torres_2;}
+                else if($consulta_l[$i]->salida_3_ter==21)  { $salida_2 = $Unitec_2; }
+                else if($consulta_l[$i]->salida_3_ter==22)  { $salida_2 = $Estacion_Industrial_2;}
+                else if($consulta_l[$i]->salida_3_ter==23)  { $salida_2 = $Josefa_Ortiz_De_Dominguez_2;}
+                else if($consulta_l[$i]->salida_3_ter==24)  { $salida_2 = $Quinto_Sol_2;}
+
+
+                if($consulta_l[$i]->salida_4_ter==1)  { $llegada_2 = $Ojo_De_Agua_2;}
+                else if($consulta_l[$i]->salida_4_ter==2)  { $llegada_2 = $Central_De_Abastos_2;}
+                else if($consulta_l[$i]->salida_4_ter==3)  { $llegada_2 = $Ciudad_Azteca_2; }
+                else if($consulta_l[$i]->salida_4_ter==4)  { $llegada_2 = $Esmeralda_2;}
+                else if($consulta_l[$i]->salida_4_ter==5)  { $llegada_2 = $Cuauhtemoc_Norte_2;}
+                else if($consulta_l[$i]->salida_4_ter==6)  { $llegada_2 = $Cuauhtemoc_Sur_2;}
+                else if($consulta_l[$i]->salida_4_ter==7)  { $llegada_2 = $Hidalgo_2;}
+                else if($consulta_l[$i]->salida_4_ter==8)  { $llegada_2 = $Insurgentes_2;}
+                else if($consulta_l[$i]->salida_4_ter==9)  { $llegada_2 = $e_19_De_Septiembre_2;}
+                else if($consulta_l[$i]->salida_4_ter==10)  { $llegada_2 = $Palomas_2;}
+                else if($consulta_l[$i]->salida_4_ter==11)  { $llegada_2 = $Jardines_De_Morelos_2;}
+                else if($consulta_l[$i]->salida_4_ter==12)  { $llegada_2 = $Aquiles_Serdan_2;}
+                else if($consulta_l[$i]->salida_4_ter==13)  { $llegada_2 = $Hospital_2;}
+                else if($consulta_l[$i]->salida_4_ter==14)  { $llegada_2 = $e_1ro_De_Mayo_2;}
+                else if($consulta_l[$i]->salida_4_ter==15)  { $llegada_2 = $Las_Americas_2;}
+                else if($consulta_l[$i]->salida_4_ter==16)  { $llegada_2 = $Valle_De_Ecatepec_2;}
+                else if($consulta_l[$i]->salida_4_ter==17)  { $llegada_2 = $Vocacional_3_2;}
+                else if($consulta_l[$i]->salida_4_ter==18)  { $llegada_2 = $Adolfo_Lopez_Mateos_2;}
+                else if($consulta_l[$i]->salida_4_ter==19)  { $llegada_2 = $Zodiaco_2;}
+                else if($consulta_l[$i]->salida_4_ter==20)  { $llegada_2 = $Alfredo_Torres_2;}
+                else if($consulta_l[$i]->salida_4_ter==21)  { $llegada_2 = $Unitec_2 ;}
+                else if($consulta_l[$i]->salida_4_ter==22)  { $llegada_2 = $Estacion_Industrial_2;}
+                else if($consulta_l[$i]->salida_4_ter==23)  { $llegada_2 = $Josefa_Ortiz_De_Dominguez_2;}
+                else if($consulta_l[$i]->salida_4_ter==24)  { $llegada_2 = $Quinto_Sol_2;}
+                $km_2_l = $llegada_2 - $salida_2;
+        }
+        
+        $km_t_l = $km_1_l + $km_2_l;
+    }
+    
+    dd($km_t_l);
+    
+    return view('Transmasivo.Operaciones.Reporte_de_jornadas',
+    compact('registro_l','registro_m','registro_mi','registro_j','registro_v','total_km_tr1_l','total_km_tr1_s','total_km_tr1_d'
+    ,'registro_t_l','registro_t_m','registro_t_mi','registro_t_j','registro_t_v','registro_t_s','registro_t_d'
+    ,'registro_s','registro_d','total_ciclos_lv','total_ciclos_s','total_ciclos_d'));
+
+}
+
+public function Registrar_conductor()
+{
+    return view('Transmasivo.Operaciones.Registrar_conductor');
+}
+public function postRegistrar_conductor(Request $request)
+{
+    $id_empleado = $request->input('id_empleado');
+    $Nombre = $request->input('Nombre');
+    $Apellido_Paterno = $request->input('Apellido_Paterno');
+    $Apellido_Materno = $request->input('Apellido_Materno');
+    $nombreCompleto = $Nombre .' ' .$Apellido_Paterno .' ' .$Apellido_Materno ; 
+    $correo = 'conductor_'.$id_empleado.'@transmasivo.mx';
+    User::factory()->create([
+        'id' => $id_empleado,
+        'name' => $nombreCompleto,
+        'password' => bcrypt('123456'),
+        'email' => $correo,
+        'tipo_usuario' => 'Conductor',
+        
+    ]);
+    
+    
+    
+    return redirect()->route('Registrar_conductor')->with('mensaje', 'Se registro correctamente!!')->with('color', 'success');
+}
 
 
 

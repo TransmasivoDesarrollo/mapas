@@ -1658,7 +1658,7 @@ FROM
     {
         $elementos = DB::connection('mysql')->select('SELECT DISTINCT id_elemento FROM t_biometrico ORDER BY id_elemento asc;');
         
-        $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal ORDER BY nombre_horario asc;');
+        $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal where estatus="Activo" ORDER BY nombre_horario asc;');
         $consulta_tabla = DB::connection('mysql')->select('SELECT * from t_horarios_enrolador_personal
             INNER JOIN t_horarios_personal ON t_horarios_personal.id_t_horarios_personal=t_horarios_enrolador_personal.id_horario 
             left JOIN users ON users.id=t_horarios_enrolador_personal.id_empleado 
@@ -1703,41 +1703,59 @@ FROM
     }
     public function Gestion_de_horarios()
     {
-        $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal ;');
+        $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal where estatus="Activo" ;');
         
         return view('Transmasivo.rh.Gestion_de_horarios',compact('consulta'));
     }
     public function postGestion_de_horarios(Request $request)
     {
-        
-        $nombre_h = $request->input('nombre_h');
-        $h_llegada = $request->input('h_llegada');
-        //dd($request->all());
-        $h_i_comida = $request->input('h_i_comida');
-        $h_f_comida = $request->input('h_f_comida');
-        $h_salida = $request->input('h_salida');
-        $id_operador = auth()->id();
-        date_default_timezone_set('America/Mexico_City');
-        $hora_actual = time();
-        $estatus='Activo';
+        if($request->has('Eliminar_horario')){
+            $id_elimina = $request->input('id_hidden');
+            $insert = DB::connection('mysql')->update('update t_horarios_personal set estatus="Inactivo" where id_t_horarios_personal = ?', 
+            [
+                $id_elimina
+            ]);
+            $desenrolar = DB::connection('mysql')->update('update t_horarios_enrolador_personal set id_horario=null where id_horario = ?', 
+            [
+                $id_elimina
+            ]);
             
-        $hora_formateada = date('Y-m-d H:i:s', $hora_actual);
+            $mensaje="Se elimino el horario con éxito ";
+            $color="success";
+            
+            return redirect()->route('Gestion_de_horarios')->with('mensaje', $mensaje)->with('color', $color);
+        }
+        else{
+            $nombre_h = $request->input('nombre_h');
+            $h_llegada = $request->input('h_llegada');
+            //dd($request->all());
+            $h_i_comida = $request->input('h_i_comida');
+            $h_f_comida = $request->input('h_f_comida');
+            $h_salida = $request->input('h_salida');
+            $id_operador = auth()->id();
+            date_default_timezone_set('America/Mexico_City');
+            $hora_actual = time();
+            $estatus='Activo';
+                
+            $hora_formateada = date('Y-m-d H:i:s', $hora_actual);
 
-        $insert = DB::connection('mysql')->insert('insert into t_horarios_personal (nombre_horario,hora_llegada,hora_inicio_comida,hora_fin_comida,hora_salida,fecha_registro,id_operador,estatus) 
-        values (?,?,?,?,?,?,?,?); ', [
-            $nombre_h,
-            $h_llegada,
-            $h_i_comida,
-            $h_f_comida,
-            $h_salida,
-            $hora_formateada,
-            $id_operador,
-            $estatus,
-        ]);
-        $mensaje="Se regristro el horario con éxito ";
-        $color="success";
+            $insert = DB::connection('mysql')->insert('insert into t_horarios_personal (nombre_horario,hora_llegada,hora_inicio_comida,hora_fin_comida,hora_salida,fecha_registro,id_operador,estatus) 
+            values (?,?,?,?,?,?,?,?); ', [
+                $nombre_h,
+                $h_llegada,
+                $h_i_comida,
+                $h_f_comida,
+                $h_salida,
+                $hora_formateada,
+                $id_operador,
+                $estatus,
+            ]);
+            $mensaje="Se regristro el horario con éxito ";
+            $color="success";
+            
+            return redirect()->route('Gestion_de_horarios')->with('mensaje', $mensaje)->with('color', $color);
+        }
         
-        return redirect()->route('Gestion_de_horarios')->with('mensaje', $mensaje)->with('color', $color);
     }
     
 

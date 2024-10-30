@@ -352,8 +352,18 @@
 										</a>
 									</li>
 									<li>
-										<a  href="{{url('/bitacora_de_operaciones_2')}}">
-											<span class="sub-item">Bitácora de operaciones2</span>
+										<a  href="{{url('/Bitacora_de_operaciones')}}">
+											<span class="sub-item">Bitácora de operaciones</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Reporte_de_jornadas')}}">
+											<span class="sub-item">Reporte de jornadas</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Registrar_conductor')}}">
+											<span class="sub-item">Registrar conductores</span>
 										</a>
 									</li>
 									<li>
@@ -361,12 +371,6 @@
 											<span class="sub-item">Autorización check mantenimiento</span>
 										</a>
 									</li>
-									<li>
-										<a  href="{{url('/Bitacora_de_operaciones')}}">
-											<span class="sub-item">Bitácora de operaciones</span>
-										</a>
-									</li>
-									
                                     <li>
 										<a  href="{{url('/Alta_de_reporte')}}">
 											<span class="sub-item">Alta de reporte</span>
@@ -791,8 +795,18 @@
 										</a>
 									</li>
 									<li>
-										<a  href="{{url('/bitacora_de_operaciones_2')}}">
-											<span class="sub-item">Bitácora de operaciones2</span>
+										<a  href="{{url('/Bitacora_de_operaciones')}}">
+											<span class="sub-item">Bitácora de operaciones</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Reporte_de_jornadas')}}">
+											<span class="sub-item">Reporte de jornadas</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Registrar_conductor')}}">
+											<span class="sub-item">Registrar conductores</span>
 										</a>
 									</li>
 									<li>
@@ -800,12 +814,6 @@
 											<span class="sub-item">Autorización check mantenimiento</span>
 										</a>
 									</li>
-									<li>
-										<a  href="{{url('/Bitacora_de_operaciones')}}">
-											<span class="sub-item">Bitácora de operaciones</span>
-										</a>
-									</li>
-									
                                     <li>
 										<a  href="{{url('/Alta_de_reporte')}}">
 											<span class="sub-item">Alta de reporte</span>
