@@ -1,117 +1,26 @@
-<x-app-layout>
-    <style>
-        .input-with-border {
-            border: 1px solid black;
-        }
-
-    </style>
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title" style="display: inline-block;">Alta de reporte</div>
-            <div class="card-title" id="fecha" style="display: inline-block; float: right;"></div>
-        </div>
-
-        
-        
-        <div class="card-body">
-            @if (session('mensaje'))
-            
-            <div class="alert alert-{{ session('color') }} alert-dismissible" data-dismiss="alert">
-                
-                {{ session('mensaje') }}.
-                
-            </div>
-            @endif
-
-            <form method="post" id="formPDF" action="{{url('/Reporte_de_jornadas')}}">
-                @csrf
-                {{-- inicio del row --}}
-
-                <div class="form-group row " >
-				@php
-					$currentYear = \Carbon\Carbon::now()->year;
-					$today = \Carbon\Carbon::today()->format('Y-m-d');
-					$semanas = [];
-					$j = 1;
-					$selectedSemana = '';
-
-					// Encontrar el primer lunes del año actual
-					$startOfWeek = \Carbon\Carbon::create($currentYear, 1, 1)->startOfWeek(\Carbon\Carbon::MONDAY);
-
-					// Generar todas las semanas del año
-					while ($startOfWeek->year == $currentYear) {
-						// Fecha de inicio y fin de la semana
-						$endOfWeek = $startOfWeek->copy()->endOfWeek(\Carbon\Carbon::SUNDAY);
-						$semanaValue = "'{$startOfWeek->format('Y-m-d')} 00:00:00' AND '{$endOfWeek->format('Y-m-d')} 23:59:59'";
-
-						// Crear etiqueta para la semana en español
-						$semanas[] = [
-							'label' => "Semana $j - " . $startOfWeek->translatedFormat('l, d \\d\\e F') . " al " . $endOfWeek->translatedFormat('l, d \\d\\e F') . " $currentYear",
-							'value' => $semanaValue,
-						];
-
-						// Seleccionar la semana actual
-						if ($today >= $startOfWeek->format('Y-m-d') && $today <= $endOfWeek->format('Y-m-d')) {
-							$selectedSemana = $semanaValue;
-						}
-
-						// Avanzar al siguiente lunes
-						$startOfWeek->addWeek();
-						$j++;
-					}
-					@endphp
-
-					<div class="col-xl-5">
-						<label>Semana <span class="required-label"></span></label>
-						<select style="border:1px black solid;" class="form-control" id="semana" name="semana">
-							<option value="-Selecciona-">-Selecciona-</option>
-							@foreach ($semanas as $semana)
-								<option value="{{ $semana['value'] }}" @if($semana['value'] == $selectedSemana) selected style="background-color:green; color:#fff;" @endif>
-									{{ $semana['label'] }}
-								</option>
-							@endforeach
-						</select>
-					</div>
-
-
-
-                    <div class="col-xl-2">
-                        <center>
-							<br>
-                            <input  type="submit" class="btn btn-success" value="Consultar" >
-                        </center>
-                    </div>
-					<div class="col-xl-5">
-						    <div class=" card-stats">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-xl-6">
-										</div>
-										<div class="col-xl-6">
-
-    									<input type="hidden" id="imagenBase64" name="imagenBase64">
-    									<input type="hidden" id="imagenBase642" name="imagenBase642">
-											<button type="button" style="border:1px #fff solid; backgroud-color:#fff; " name="generarPDF" id="generarPDF">
-												<div class="icon-big text-center icon-warning" style="background-color: red; cursor: pointer;">
-													<i class="la la-file-pdf-o text-warning"></i>
-												</div>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div class="form-group row " >
+                  <center  style=" font-family: Arial, sans-serif; font-size: 18px;">
+                    Reporte {{$cadena_resultado}}
+                  </center>
+                    <br>
 					<div class="col-md-11">
                         <div class="chart-container">
-							<canvas style="height:90%" name="multipleLineChart" id="multipleLineChart"></canvas>
-
+                            <img src="{{ $imagenBase64 }}" alt="Gráfica"  style="width: 100%;">
 						</div>
 					</div>
-					
 					<div class="col-md-12 table-responsive" >
-						<table class="table" style="width:100%;">
-							<tr>
+                        <table class="table" style="width:100%; font-family: Arial, sans-serif; font-size: 10px;">
+                            <tr>
+								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:14.2%;">Lunes</td>
 								<td style="width:14.2%;">Martes</td>
@@ -123,6 +32,7 @@
 							</tr>
 							<tr>
 								<td  style="width:1.2%;">&nbsp;</td>
+								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:14.2%;"><span class="badge" style="background-color:#1d7af3;">&nbsp;</span> Ciclos programados: <b>{{$total_ciclos_lv}} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#1d7af3;">&nbsp;</span> Ciclos programados: <b>{{$total_ciclos_lv}} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#1d7af3;">&nbsp;</span> Ciclos programados: <b>{{$total_ciclos_lv}} </b> </td>
@@ -133,6 +43,7 @@
 							</tr>
 							<tr>
 								<td  style="width:1.2%;">&nbsp;</td>
+								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Ciclos realizados: <b>{{$registro_l[0]->conteo}} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Ciclos realizados: <b>{{$registro_m[0]->conteo}} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Ciclos realizados: <b>{{$registro_mi[0]->conteo}} </b> </td>
@@ -142,6 +53,7 @@
 								<td style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Ciclos realizados: <b>{{$registro_d[0]->conteo}} </b> </td>
 							</tr>
 							<tr>
+								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:14.2%;"><span class="badge" style="background-color:#f3545d;">&nbsp;</span> Ciclos no realizados: <b>{{$total_ciclos_lv -$registro_l[0]->conteo}} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#f3545d;">&nbsp;</span> Ciclos no realizados: <b>{{$total_ciclos_lv -$registro_m[0]->conteo}} </b> </td>
@@ -154,14 +66,18 @@
 						</table>
 					</div>
 					<div class="col-md-11">
-					<hr>
+					<br>
+					<br>
+					<br>
                         <div class="chart-container">
-							<canvas id="multipleLineChart2"></canvas>
+                        <img src="{{ $imagenBase642 }}" alt="Gráfica" style="width: 100%;">
 						</div>
 			    	</div>
 					<div class="col-md-12 table-responsive" >
-						<table class="table" style="width:100%;">
-							<tr>
+                    <table class="table" style="width:100%; font-family: Arial, sans-serif; font-size: 10px;">
+						<tr>
+								<td  style="width:1.2%;">&nbsp;</td>
+								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:1.2%;">&nbsp;</td>
 								<td  style="width:14.2%;">Lunes</td>
 								<td style="width:14.2%;">Martes</td>
@@ -173,6 +89,8 @@
 							</tr>
 							<tr>
 								<td style="width:1.2%;">&nbsp;</td>
+								<td style="width:1.2%;">&nbsp;</td>
+								<td style="width:1.2%;">&nbsp;</td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#1d7af3;">&nbsp;</span> Km programados: <b>{{ number_format($total_km_tr1_l, 2, '.', ',') }} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#1d7af3;">&nbsp;</span> Km programados: <b>{{ number_format($total_km_tr1_l, 2, '.', ',') }} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#1d7af3;">&nbsp;</span> Km programados: <b>{{ number_format($total_km_tr1_l, 2, '.', ',') }} </b> </td>
@@ -183,6 +101,8 @@
 							</tr>
 							<tr>
 								<td style="width:1.2%;">&nbsp;</td>
+								<td style="width:1.2%;">&nbsp;</td>
+								<td style="width:1.2%;">&nbsp;</td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Km realizados: <b>{{ number_format($km_t_l, 2, '.', ',') }} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Km realizados: <b>{{ number_format($km_t_m, 2, '.', ',') }} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Km realizados: <b>{{ number_format($km_t_mi, 2, '.', ',') }} </b> </td>
@@ -192,6 +112,8 @@
 								<td style="width:14.2%;"><span class="badge" style="background-color:#59d05d;">&nbsp;</span> Km realizados: <b>{{ number_format($km_t_d, 2, '.', ',') }} </b> </td>
 							</tr>
 							<tr>
+								<td style="width:1.2%;">&nbsp;</td>
+								<td style="width:1.2%;">&nbsp;</td>
 								<td style="width:1.2%;">&nbsp;</td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#f3545d;">&nbsp;</span> Km no realizados: <b>{{ number_format($km_t_l_no, 2, '.', ',') }} </b> </td>
 								<td style="width:14.2%;"><span class="badge" style="background-color:#f3545d;">&nbsp;</span> Km no realizados: <b>{{ number_format($km_t_m_no, 2, '.', ',') }} </b> </td>
@@ -222,12 +144,9 @@
     
 		var multipleLineChart = document.getElementById('multipleLineChart').getContext('2d');
 		var multipleLineChart2 = document.getElementById('multipleLineChart2').getContext('2d');
-		
-		multipleLineChart.width = 1800;  // Aumenta el ancho del lienzo
-		multipleLineChart.height = 1600; // Aumenta la altura del lienzo
 
         var myMultipleLineChart = new Chart(multipleLineChart, {
-			type: 'bar',
+			type: 'line',
 			data: {
 				labels: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado",'Domingo'],
 				datasets: [{
@@ -239,7 +158,7 @@
 					pointHoverRadius: 4,
 					pointHoverBorderWidth: 1,
 					pointRadius: 4,
-					backgroundColor: "#1d7af3",
+					backgroundColor: 'transparent',
 					fill: true,
 					borderWidth: 2,
 					data: [{{$total_ciclos_lv}}, {{$total_ciclos_lv}}, {{$total_ciclos_lv}}, {{$total_ciclos_lv}}, {{$total_ciclos_lv}},
@@ -253,7 +172,7 @@
 					pointHoverRadius: 4,
 					pointHoverBorderWidth: 1,
 					pointRadius: 4,
-					backgroundColor: "#59d05d",
+					backgroundColor: 'transparent',
 					fill: true,
 					borderWidth: 2,
 					data: [{{$registro_l[0]->conteo}}, {{$registro_m[0]->conteo}}, {{$registro_mi[0]->conteo}}, {{$registro_j[0]->conteo}}, {{$registro_v[0]->conteo}},
@@ -267,7 +186,7 @@
 					pointHoverRadius: 4,
 					pointHoverBorderWidth: 1,
 					pointRadius: 4,
-					backgroundColor: "#f3545d",
+					backgroundColor: 'transparent',
 					fill: true,
 					borderWidth: 2,
 					data: [{{$total_ciclos_lv - $registro_l[0]->conteo }}, {{$total_ciclos_lv - $registro_m[0]->conteo}}, 
@@ -295,27 +214,18 @@
 				}
 			}
 		});
-		var image = myMultipleLineChart.toBase64Image();
-
-		document.getElementById('generarPDF').addEventListener('click', function() {
-			const canvas = document.getElementById('multipleLineChart');
-			const imageData = canvas.toDataURL('image/png');
-			
-			// Asigna el base64 al campo oculto en el formulario
-			document.getElementById('imagenBase64').value = imageData;
-
-			const canvas2 = document.getElementById('multipleLineChart2');
-			const imageData2 = canvas2.toDataURL('image/png');
-			
-			// Asigna el base64 al campo oculto en el formulario
-			document.getElementById('imagenBase642').value = imageData2;
-			
-			// Envía el formulario
-			document.getElementById('formPDF').submit();
-		});
-
+        document.getElementById('generarPDF').addEventListener('click', function() {
+            const canvas = document.getElementById('multipleLineChart');
+            const imageData = canvas.toDataURL('image/png');
+            
+            // Asigna el base64 al campo oculto en el formulario
+            document.getElementById('imagenBase64').value = imageData;
+            
+            // Envía el formulario
+            document.getElementById('formPDF').submit();
+        });
         var myMultipleLineChart2 = new Chart(multipleLineChart2, {
-			type: 'bar',
+			type: 'line',
 			data: {
 				labels: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado",'Domingo'],
 				datasets: [{
@@ -327,7 +237,7 @@
 					pointHoverRadius: 4,
 					pointHoverBorderWidth: 1,
 					pointRadius: 4,
-					backgroundColor: "#1d7af3",
+					backgroundColor: 'transparent',
 					fill: true,
 					borderWidth: 2,
 					data: [{{$total_km_tr1_l}}, {{$total_km_tr1_l}}, {{$total_km_tr1_l}}, {{$total_km_tr1_l}}, {{$total_km_tr1_l}},
@@ -341,7 +251,7 @@
 					pointHoverRadius: 4,
 					pointHoverBorderWidth: 1,
 					pointRadius: 4,
-					backgroundColor: "#59d05d",
+					backgroundColor: 'transparent',
 					fill: true,
 					borderWidth: 2,
 					data: [{{$km_t_l}}, {{$km_t_m}}, {{$km_t_mi}}, {{$km_t_j}}, {{$km_t_v}},
@@ -355,7 +265,7 @@
 					pointHoverRadius: 4,
 					pointHoverBorderWidth: 1,
 					pointRadius: 4,
-					backgroundColor: "#f3545d",
+					backgroundColor: 'transparent',
 					fill: true,
 					borderWidth: 2,data: [{{$km_t_l_no}}, {{$km_t_m_no}}, {{$km_t_mi_no}}, {{$km_t_j_no}}, {{$km_t_v_no}},
                     {{$km_t_s_no}},  {{$km_t_d_no}}]
@@ -384,4 +294,5 @@
         
     </script>
     @endsection
-</x-app-layout>
+</body>
+</html>

@@ -294,6 +294,7 @@ Route::middleware('auth')->group(function () {
     Route::POST('/enrolar_horarios_conductores_2', '\App\Http\Controllers\Operaciones\OperacionesController@post_enrolar_horarios_conductores_2')->name('post_enrolar_horarios_conductores_2');
     
     Route::get('/Reporte_de_jornadas', '\App\Http\Controllers\Operaciones\OperacionesController@Reporte_de_jornadas')->name('Reporte_de_jornadas');
+    Route::POST('/Reporte_de_jornadas', '\App\Http\Controllers\Operaciones\OperacionesController@postReporte_de_jornadas')->name('postReporte_de_jornadas');
     
     Route::get('/bitacora_de_operaciones_2', '\App\Http\Controllers\Operaciones\OperacionesController@bitacora_de_operaciones_2')->name('bitacora_de_operaciones_2');
     Route::POST('/bitacora_de_operaciones_2', '\App\Http\Controllers\Operaciones\OperacionesController@post_bitacora_de_operaciones_2')->name('post_bitacora_de_operaciones_2');
