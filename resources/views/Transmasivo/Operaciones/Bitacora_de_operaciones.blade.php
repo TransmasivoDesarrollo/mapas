@@ -10,99 +10,107 @@
                     <div class="accordion accordion-secondary">
                         <div class="card" style="background-color: #fff;">
                             <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="button">
-                                <div class="card-title" style="display: inline-block;">Consulta bitacora de operaciones</div>
+                                <div class="card-title" style="display: inline-block;">Bitácora de operaciones</div>
                                 
                                 <div class="span-mode" style="color:#000000;" id="fecha" ></div>
                             </div>
 
                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
+                                <div class="card-body" style="padding:3px 3px 3px 3px;">
                                     
-                                    @if (session('mensaje'))
-                                    <div class="alert alert-{{ session('color') }} alert-dismissible" data-dismiss="alert">
-                                        {{ session('mensaje') }}.
-                                    </div>
-                                    @endif
                                     <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
                                         @csrf
                                         {{-- inicio del row --}}
                                         <div class="form-group row " >
                                             <div class="col-md-2">
-                                                <label>Día <span class="required-label">*</span></label>
-                                                <input required type="date" class="form-control input-with-border" id="dia" name="dia" value="{{now()->format('Y-m-d')}}">
+                                                <div class="form-group form-group-default">
+                                                    <label>Día <span class="required-label">*</span></label>
+                                                    <input required type="date" class="form-control input-with-border" id="dia" name="dia" onchange="busca_credencial()" value="{{now()->format('Y-m-d')}}">
+                                                </div>
                                             </div>
                                             <div class="col-md-3">
+                                                <div class="form-group form-group-default">
                                                 <label>Credencial <span class="required-label">*</span></label>
-                                                <select required type="text" style=" width:90%;" class="form-control input-with-border" id="credencial" name="credencial">
+                                                <select required style=" width:90%;" class="form-control" id="credencial" name="credencial" onchange="busca_credencial()">
                                                     @foreach($credencial as $cred)
                                                     <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <label>&nbsp;<br><br><br></label>
-                                                <button class="btn btn-primary btn-sm" id="buscar" onclick=""><i class="la flaticon-search-2"></i></button>
+                                                </div>
                                             </div>
                                             <div class="col-md-2">
-                                                <label>Terminal</label>
-                                                <select required  disabled="true" class="form-control input-with-border" id="terminal_c" name="terminal">
-                                                    @foreach($terminal as $term)
-                                                    <option value="{{$term->id_terminal}}">{{$term->terminal}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>Servicio<span class="required-label">*</span></label>
-                                                <input type="hidden"  name="id_jornada_sem" id="id_jornada_sem">
-                                                <select required  disabled="true"  class="form-control input-with-border" id="serv" name="serv">
-                                                    <option value="TR1">TR1 - Ordinario Ojo de agua - Ciudad azteca</option>
-                                                    <option value="TR1-R">TR1-R - Ordinario Ojo de agua - Ciudad azteca</option>
-                                                    <option value="TR3">TR3 - Express Ojo de agua - Ciudad azteca</option>
-                                                    <option value="TR4">TR4 - Express Central de abastos - Ciudad azteca</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row " >
-                                            <div class="col-md-2">
-                                                <label>Economico <span class="required-label">*</span></label>
-                                                <input required type="text"  disabled="true" class="form-control input-with-border" id="eco" name="eco">
+                                                <div class="form-group form-group-default">
+                                                    <label>Economico <span class="required-label">*</span></label>
+                                                    <input required type="text"  disabled="true" class="form-control input-with-border" id="eco" name="eco">
+                                                </div>
                                             </div>
                                             <div class="col-md-2">
-                                                <label>Llegada/Salida  <span class="required-label">*</span></label>
-                                                <select required disabled="true"  class="form-control input-with-border" id="llegada_salida" name="llegada_salida">
-                                                    <option value="1">Salida 1</option>
-                                                    <option value="2">Llegada 1 / Salida 2</option>
-                                                    <option value="4">Llegada 2</option>
-                                                </select>
+                                                <div class="form-group form-group-default">
+                                                    <label>Llegada/Salida  <span class="required-label">*</span></label>
+                                                    <select required disabled="true"  class="form-control input-with-border" id="llegada_salida" name="llegada_salida">
+                                                        <option value="1">Salida 1</option>
+                                                        <option value="2">Llegada 1 / Salida 2</option>
+                                                        <option value="4">Llegada 2</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="col-md-2" id="valida_completo">
-                                                <label>Hora  <span class="required-label">*</span></label>
-                                                <input required  disabled="true" type="time" class="form-control input-with-border" id="hora_salida" name="hora_salida">
+                                                <div class="form-group form-group-default">
+                                                    <label>Hora  <span class="required-label">*</span></label>
+                                                    <input required  disabled="true" type="time" class="form-control input-with-border" id="hora_salida" name="hora_salida">
+                                                </div> 
                                             </div> 
                                             <div class="col-md-2" id="valida_mitad_1" hidden >
-                                                <label>Hora llegada <span class="required-label">*</span></label>
-                                                <input required type="time" class="form-control input-with-border" id="hora_ll" name="hora_ll">
+                                                <div class="form-group form-group-default">
+                                                    <label>Hora llegada <span class="required-label">*</span></label>
+                                                    <input required type="time" class="form-control input-with-border" id="hora_ll" name="hora_ll">
+                                                </div> 
                                             </div> 
                                             <div class="col-md-2" id="valida_mitad_2" hidden>
-                                                <label>Hora salida <span class="required-label">*</span></label>
-                                                <input required type="time" class="form-control input-with-border" id="hora_s" name="hora_s">
+                                                <div class="form-group form-group-default">
+                                                    <label>Hora salida <span class="required-label">*</span></label>
+                                                    <input required type="time" class="form-control input-with-border" id="hora_s" name="hora_s">
+                                                </div> 
                                             </div> 
-                                            <div class="col-md-4">
-                                                <label>Comentario  <span class="required-label"></span></label>
-                                                <textarea  disabled="true"  type="text" class="form-control input-with-border" id="comentarios" name="comentarios"></textarea>
+                                            <div class="col-md-2">
+                                                <div class="form-group form-group-default">
+                                                    <label>Terminal</label>
+                                                    <select required  disabled="true" class="form-control input-with-border" id="terminal_c" name="terminal">
+                                                        @foreach($terminal as $term)
+                                                        <option value="{{$term->id_terminal}}">{{$term->terminal}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                            
                                             <div class="col-md-3">
-                                                <label>Oper. apoyo <span class="required-label">*</span></label>
-                                                <select required type="text" disabled="true"  style=" width:90%;" class="form-control input-with-border" id="credencial_apoyo" name="credencial_apoyo">
-                                                    <option value="0">Sin apoyo</option>
-                                                    @foreach($credencial as $cred)
-                                                    <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <div class="form-group form-group-default">
+                                                    <label>Servicio<span class="required-label">*</span></label>
+                                                    <input type="hidden"  name="id_jornada_sem" id="id_jornada_sem">
+                                                    <select required  disabled="true"  class="form-control input-with-border" id="serv" name="serv">
+                                                        <option value="TR1">TR1 - Ordinario Ojo de agua - Ciudad azteca</option>
+                                                        <option value="TR1-R">TR1-R - Ordinario Ojo de agua - Ciudad azteca</option>
+                                                        <option value="TR3">TR3 - Express Ojo de agua - Ciudad azteca</option>
+                                                        <option value="TR4">TR4 - Express Central de abastos - Ciudad azteca</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row " >
+                                            <div class="col-md-4">
+                                                <div class="form-group form-group-default">
+                                                    <label>Comentario  <span class="required-label"></span></label>
+                                                    <textarea  disabled="true"  type="text" class="form-control input-with-border" id="comentarios" name="comentarios"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group form-group-default">
+                                                    <label>Oper. apoyo <span class="required-label"></span></label>
+                                                    <select required type="text" disabled="true"  style=" width:90%;" class="form-control input-with-border" id="credencial_apoyo" name="credencial_apoyo">
+                                                        <option value="0">Sin apoyo</option>
+                                                        @foreach($credencial as $cred)
+                                                        <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="col-md-12">
                                                 <div class="demo">
                                                     <div class="progress-card">
@@ -117,7 +125,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
+                                    </div>
+                                    <div class="card-footer"  style="padding:3px 3px 3px 3px;">
+
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <center>
@@ -138,55 +148,44 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="card-title" style="display: inline-block;">Bitacora de operaciones</div>
+            <div class="card-title" style="display: inline-block;">Bitácora de operaciones</div>
             <div class="card-title" id="fecha" style="display: inline-block; float: right;"></div>
         </div>
-        <div class="card-body">
-            <div class="row form-group">
+        <div class="card-body"  style="padding:10px 10px 10px 10px;">
+            <div class="row form-group"  style="padding:3px 3px 3px 3px;">
                 <div class="col-sm-3 col-md-2">
+                    
+                <form method="post" id="miFormulario" action="{{url('/Bitacora_de_operaciones')}}">
+                        @csrf
                     <div class=" card-stats">
-                        <div class="card-body" style="border-right:1px black solid;">
+                        <div class="card-body" style="border-right:1px black solid;" onclick="submitFormTR1();">
+                        <input type="hidden" name="buscar_filtroTR1" id="buscar_filtroTR1" value="">
                             <div class="row">
                                 <div class="col-5">
-                                    <div class="icon-big text-center icon-warning" style="background-color: #e5be01;">
-                                        <i class=" la la-bus text-warning"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 col-stats">
-                                    <div class="numbers">
-                                        <p class="card-category">Ciclos TR1</p>
-                                        <h4 class="card-title">{{$tr1_registro / 2}}/{{$tr1_ciclos[0]->conteo}} </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-md-2">
-                    <div class=" card-stats">
-                        <div class="card-body" style="border-right:1px black solid;">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center icon-warning" style="background-color: #FF0080;">
+                                    <div class="icon-big text-center icon-warning" style=" cursor: pointer; border: 1px black solid; background: linear-gradient(to right, #e5be01 50%, #FF0080 50%); cursor: pointer;">
                                         <i class="la la-bus text-warning"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-7 col-stats">
                                     <div class="numbers">
-                                        <p class="card-category">Ciclos TR1-R</p>
-                                        <h4 class="card-title">{{$tr1_r_registro / 2 }}/{{$tr1_r_ciclos[0]->conteo }}</h4>
+                                        <p class="card-category">Ciclos TR1/TR1-R</p>
+                                        <h4 class="card-title">{{($tr1_registro / 2)+ ($tr1_r_registro / 2)}}/{{$tr1_ciclos[0]->conteo + $tr1_r_ciclos[0]->conteo }}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
+                
                 <div class="col-sm-3 col-md-2">
                     <div class=" card-stats">
-                        <div class="card-body" style="border-right:1px black solid;" >
+                        <div class="card-body" style="border-right:1px black solid;" onclick="submitFormTR3();">
+                        <input type="hidden" name="buscar_filtroTR3" id="buscar_filtroTR3" value="">
                             <div class="row">
                                 <div class="col-5">
-                                    <div class="icon-big text-center icon-warning" style="background-color: #008f39;">
+                                    <div class="icon-big text-center icon-warning" style="cursor: pointer; border:1px black solid; background-color: #008f39;">
                                         <i class="la la-bus text-warning"></i>
                                     </div>
                                 </div>
@@ -202,10 +201,11 @@
                 </div>
                 <div class="col-sm-3 col-md-2">
                     <div class=" card-stats">
-                        <div class="card-body" style="border-right:1px black solid;">
+                        <div class="card-body" style="border-right:1px black solid;" onclick="submitFormTR4();">
+                        <input type="hidden" name="buscar_filtroTR4" id="buscar_filtroTR4" value="">
                             <div class="row">
                                 <div class="col-5">
-                                    <div class="icon-big text-center icon-warning" style="background-color: #0000ff;">
+                                    <div class="icon-big text-center icon-warning" style="cursor: pointer; border:1px black solid; background-color: #0000ff;">
                                         <i class="la la-bus text-warning"></i>
                                     </div>
                                 </div>
@@ -221,10 +221,11 @@
                 </div>
                 <div class="col-sm-3 col-md-2">
                     <div class=" card-stats">
-                        <div class="card-body" style="border-right:1px black solid;">
+                        <div class="card-body" style="border-right:1px black solid;" onclick="submitFormT();">
+                        <input type="hidden" name="buscar_filtroT" id="buscar_filtroT" value="">
                             <div class="row">
                                 <div class="col-5">
-                                    <div class="icon-big text-center icon-warning" style="background-color: rgb(135, 38, 55);">
+                                    <div class="icon-big text-center icon-warning" style="cursor: pointer; border:1px black solid; background-color: rgb(135, 38, 55);">
                                         <i class="la la-bus text-warning"></i>
                                     </div>
                                 </div>
@@ -240,21 +241,21 @@
                 </div>
                 
                 <div class="col-sm-3 col-md-2">
-                    <form method="post" id="exampleValidation" action="{{url('/Bitacora_de_operaciones')}}">
-                        @csrf
                         <div class=" card-stats">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <button type="submit" style="border:1px #fff solid; backgroud-color:#fff; "  name="pdf" id="pdf">
-                                            <div class="icon-big text-center icon-warning" style="background-color: red; cursor: pointer;">
+                                            <div class="icon-big text-center icon-warning" 
+                                            style="border:1px black solid; background-color: red; cursor: pointer;">
                                                 <i class="la la-file-pdf-o text-warning"></i>
                                             </div>
                                         </button>
                                     </div>
                                     <div class="col-xl-6">
                                         <button type="submit" style="border:1px #fff solid; backgroud-color:#fff;  "  name="Excel" id="Excel">
-                                            <div class="icon-big text-center icon-warning" style="background-color: #2d572c; cursor: pointer;">
+                                            <div class="icon-big text-center icon-warning" 
+                                            style="border:1px black solid; background-color: #2d572c; cursor: pointer;">
                                                 <i class="la la-file-excel-o text-warning"></i>
                                             </div>
                                         </button>
@@ -263,19 +264,18 @@
                             </div>
                         </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row form-group">
                         <div class="col-xl-2">
-                            <label>Fecha </label>
-                            <input type="date" class="form-control" id="fecha_busqueda" name="fecha_busqueda" 
-                            @if(isset($fecha_busqueda))
-                            value="{{$fecha_busqueda}}">
-                            @else
-                            value="{{now()->format('Y-m-d')}}">
-                            @endif
+                            <label>&nbsp;</label>
+                            <div class="form-group form-group-default">
+                                <label>Fecha </label>
+                                <input type="date" class="form-control" id="fecha_busqueda" name="fecha_busqueda" 
+                                @if(isset($fecha))
+                                value="{{$fecha}}">
+                                @else
+                                value="{{now()->format('Y-m-d')}}">
+                                @endif
+                            </div>
                         </div>
-                        
                         <div class="col-xl-12">
                             <center>
                                 <label><br></label>
@@ -325,16 +325,8 @@
                                                         <label >Hora registrada</label>
                                                         <input type="time" class="form-control" required id="hora_registrada" name="hora_registrada">
                                                     </div>
-                                                    {{-- <div class="col-md-6"> --}}
-                                                        {{-- <label >Conductor</label> --}}
                                                         <input type="hidden" class="form-control" required id="Conductor" name="Conductor"> 
-                                                    {{-- </div> --}}
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
+                                                   
                                                     <div class="col-md-6">
                                                         <label >Economico</label>
                                                         <input type="text" class="form-control" required id="Economico" name="Economico">
@@ -916,7 +908,36 @@
     </div>
     @section('jscustom')
     <script type="text/javascript">
+        @if (session('mensaje'))
+
+            var placementFrom = $('#notify_placement_from option:selected').val();
+			var placementAlign = $('#notify_placement_align option:selected').val();
+			var state = "{{session('color')}}";
+			var style = $('#notify_style option:selected').val();
+			var content = {};
+
+			content.message = "{{session('mensaje')}}";
+			content.title = 'Operaciones';
+			if (style == "withicon") {
+				content.icon = 'la la-bell';
+			} else {
+				content.icon = 'none';
+			}
+
+			$.notify(content,{
+				type: state,
+				placement: {
+					from: placementFrom,
+					align: placementAlign
+				},
+				time: 1000,
+			});
+        @endif
+
         $(document).ready(function() {
+            busca_credencial();
+            $('#credencial').trigger('click');
+
             function actualizarFecha() {
                 var fecha = new Date();
                 var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -1042,6 +1063,127 @@
             }
             
         });
+
+        function busca_credencial()
+        {
+            $.ajax({
+                            url: '{{url("/buscar_rol_operador")}}', // Reemplaza con la URL de tu endpoint
+                            type: 'GET', // Puedes cambiar a POST si es necesario
+                            data: {
+                                'credencial': $('#credencial').val(), // Envía los parámetros necesarios
+                                'dia': $('#dia').val(),
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if(response['conteo_jornada_total']){
+                                    $('#boton_registra').removeAttr('disabled');
+                                    $('#terminal_c').removeAttr('disabled');
+                                    $('#serv').removeAttr('disabled');
+                                    $('#eco').removeAttr('disabled');
+                                    $('#llegada_salida').removeAttr('disabled');
+                                    $('#hora_salida').removeAttr('disabled');
+                                    $('#credencial_apoyo').removeAttr('disabled');
+                                    
+                                    $('#comentarios').removeAttr('disabled');
+                                    var conteo_jornada_total = response['conteo_jornada_total'];
+                                    var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                                    conteo_jornada_total = conteo_jornada_total/2;
+                                    conteo_jornada_hecha = conteo_jornada_hecha/4;
+                                    var Nombre = response['Nombre'];
+                                    var servicio = response['servicio'];
+                                    var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                                    var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                                    ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                                    $('#bar').attr('data-original-title', ciclos_texto);
+                                    $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                                    $('#ciclos_span').html(ciclos_texto);
+                                    $('#progreso').html(Nombre);
+                                    $('#serv').val(servicio); 
+                                    $('#id_jornada_sem').val(response['id_jornada']); 
+                                    var llegada_salida = $('#llegada_salida').val();
+                                    var serv = $('#serv').val();
+                                    if(llegada_salida == "2")
+                                    {
+                                        $('#valida_mitad_1').removeAttr('hidden');
+                                        $('#valida_mitad_2').removeAttr('hidden');
+                                        $('#valida_completo').attr('hidden', true);
+
+                                    }
+                                    else{
+                                        $('#valida_completo').removeAttr('hidden');
+                                        $('#valida_mitad_2').attr('hidden', true);
+                                        $('#valida_mitad_1').attr('hidden', true);
+                                        
+                                    }
+                                    if(serv == "TR1")
+                                    {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('1'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                    }
+                                    if(serv == "TR1-R")
+                                    {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('1'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                    }
+                                    if(serv == "TR3")
+                                    {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('1'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                    }
+                                    if(serv == "TR4")
+                                    {
+                                        if(llegada_salida == "1" || llegada_salida == "4")
+                                        {
+                                            $('#terminal_c').val('2'); 
+                                        }else{
+                                            $('#terminal_c').val('3'); 
+                                        }
+                                    }
+                                } else if(response['error']) {
+                                    $('#boton_registra').attr('disabled','true');
+                                    $('#terminal_c').attr('disabled','true');
+                                    $('#serv').attr('disabled','true');
+                                    $('#eco').attr('disabled','true');
+                                    $('#llegada_salida').attr('disabled','true');
+                                    $('#hora_salida').attr('disabled','true');
+                                    $('#credencial_apoyo').attr('disabled','true');
+                                    $('#comentarios').attr('disabled','true');
+                                    
+                                    
+                                    var conteo_jornada_total = response['conteo_jornada_total'];
+                                    var conteo_jornada_hecha = response['conteo_jornada_hecha'];
+                                    conteo_jornada_total = conteo_jornada_total/2;
+                                    conteo_jornada_hecha = conteo_jornada_hecha/4;
+                                    var Nombre = response['Nombre'];
+                                    var servicio = response['servicio'];
+                                    var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
+                                    var ciclos_porcentaje = 100 / (conteo_jornada_total);
+                                    ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
+                                    
+                                    $('#bar').attr('data-original-title', ciclos_texto);
+                                    $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+                                    $('#ciclos_span').html(ciclos_texto);
+                                    $('#progreso').html('Sin asignar');
+                                    $('#serv').val(servicio); 
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error en la solicitud:', error);
+                            }
+                        });
+        }
         
         $('#buscar').click(function(event) {
             event.preventDefault();
@@ -1164,10 +1306,13 @@
                         });
     });
     $('#credencial').select2();
+    $('#credencial_apoyo').select2();
+    
     $('#list_user2').DataTable({
         scrollX: false,
         scrollCollapse: true,
         filter: true,
+        ordering: false, // Desactiva la ordenación
         lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
         iDisplayLength: 15,
         "language": {
@@ -1222,6 +1367,22 @@
         $('#Conductor').val(usuario);
         $('#Economico').val(economico);
         $('#confirmUpdateModal').modal('show');
+    }
+    function submitFormTR1() {
+        $('#buscar_filtroTR1').val('TR1');  
+        $('#miFormulario').submit();
+    }
+    function submitFormTR3() {
+        $('#buscar_filtroTR3').val('TR3');  
+        $('#miFormulario').submit();
+    }
+    function submitFormTR4() {
+        $('#buscar_filtroTR4').val('TR4');  
+        $('#miFormulario').submit();
+    }
+    function submitFormT() {
+        $('#buscar_filtroT').val('T');  
+        $('#miFormulario').submit();
     }
     </script>
     @endsection

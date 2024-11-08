@@ -98,6 +98,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Renuncias');
     Route::POST('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@descargarRenuncia');
 
+    Route::get('/Gestion_del_personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Gestion_del_personal')->name('Gestion_del_personal');
+    Route::POST('/Gestion_del_personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postGestion_del_personal')->name('postGestion_del_personal');
+
     Route::get('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Personal')->name('Personal');
     Route::POST('/Personal', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@accionParaPersonal');
     

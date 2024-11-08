@@ -13,7 +13,10 @@ class TPersonal extends Model
     protected $primaryKey = 'id_personal'; // Si la tabla tiene una clave primaria distinta a 'id', ajústala aquí
 
     protected $fillable = [
+        'id_empleado',
         'Nombre',
+        'apellido_p',
+        'apellido_m',
         'Edad',
         'Fecha_nacimiento',
         'Sexo',

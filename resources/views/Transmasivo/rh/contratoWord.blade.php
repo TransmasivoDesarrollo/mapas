@@ -14,7 +14,7 @@ font-size: 9pt;
 </style>
 </head>
 <body>
-<b class="nueve">CONTRATO INDIVIDUAL DE TRABAJO POR TIEMPO INDETERMINADO, QUE CELEBRAN, POR UNA PARTE, TRANSMASIVO S.A. DE C.V. REPRESENTADA EN ESTE ACTO POR EL C. ADOLFO ROJAS ZAMORA QUIEN EN LO SUCESIVO SE LE DENOMINARÁ COMO LA “EMPRESA” Y, POR OTRA, {{$nombre}} POR SU PROPIO DERECHO, QUIEN EN LO SUCESIVO SE LE DENOMINARÁ COMO EL “EMPLEADO”, AL TENOR DE LAS SIGUIENTES DECLARACIONES Y CLÁUSULAS: </b>
+<b class="nueve">CONTRATO INDIVIDUAL DE TRABAJO POR TIEMPO INDETERMINADO, QUE CELEBRAN, POR UNA PARTE, TRANSMASIVO S.A. DE C.V. REPRESENTADA EN ESTE ACTO POR EL C. ADOLFO ROJAS ZAMORA QUIEN EN LO SUCESIVO SE LE DENOMINARÁ COMO LA “EMPRESA” Y, POR OTRA, {{$nombre}} {{$apellido_p}} {{$apellido_m}} POR SU PROPIO DERECHO, QUIEN EN LO SUCESIVO SE LE DENOMINARÁ COMO EL “EMPLEADO”, AL TENOR DE LAS SIGUIENTES DECLARACIONES Y CLÁUSULAS: </b>
  <b class="center">DECLARACIONES</b>
  <b class="center"></b>
 <p class="nueve">I. Declara la EMPRESA, a través de su representante:</p>
@@ -24,7 +24,7 @@ font-size: 9pt;
 <p class="nueve">d. Que tiene su domicilio en AV. VALLE DE GUADIANA NUM. EXT. 31 NUM. INT. LT20, COL. GRANJAS INDEPENDENCIA, ECATEPEC DE MORELOS, C.P. 55290, ESTADO DE MEXICO.</p>
 <p class="nueve">II. Declara el EMPLEADO, bajo protesta de decir verdad:</p>
 <p class="nueve">a. Que sus datos generales son los siguientes:</p>
- <p class="nueve">Nombre: {{$nombre}}</p>
+ <p class="nueve">Nombre: {{$nombre}} {{$apellido_p}} {{$apellido_m}}</p>
 <p class="nueve">Edad: {{$Edad}} años</p>
 <p class="nueve">Nacionalidad: {{$Nacionalidad}} </p>
 <p class="nueve">Sexo: {{$Sexo}}</p>
@@ -91,7 +91,7 @@ font-size: 9pt;
     </tr>
     <tr>
         <td  width="50%" class="center">C. ADOLFO ROJAS ZAMORA</td>
-        <td  width="50%" class="center">{{$nombre}}</td>
+        <td  width="50%" class="center">{{$nombre}} {{$apellido_p}} {{$apellido_m}}</td>
     </tr>
 </table>
 

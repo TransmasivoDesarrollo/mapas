@@ -18,175 +18,209 @@
 			<form method="post" id="contratoForm" action="{{url('/Contratos')}}">
 				@csrf
 				<div class="form-group row " >
-					<div class="col-md-3">
-						<label>Nombre completo <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="nombre" name="nombre" >
-					</div>
-					<div class="col-md-2">
-						<label>Fecha de nacimiento <span class="required-label">*</span></label>
-						<input required type="date" class="form-control input-with-border" id="nacimiento" name="nacimiento" >
-					</div>
-					<div class="col-md-2">
-						<label>Edad <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Edad" name="Edad" >
+                    
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>ID Empleado<span class="required-label">*</span></label>
+                            <input id="empleado" name="empleado"  type="text" class="form-control" required >
+                        </div>
 					</div>
                     <div class="col-md-3">
-						<label>Puesto <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Puesto" name="Puesto" >
+                        <div class="form-group form-group-default">
+                            <label>Nombre(s)<span class="required-label">*</span></label>
+                            <input id="nombre" name="nombre"  type="text" class="form-control" required >
+                        </div>
 					</div>
-                   
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Apellido paterno<span class="required-label">*</span></label>
+                            <input id="apellido_p" name="apellido_p"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Apellido materno<span class="required-label">*</span></label>
+                            <input id="apellido_m" name="apellido_m"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Fecha de nacimiento<span class="required-label">*</span></label>
+                            <input id="nacimiento" name="nacimiento"  type="date" class="form-control" required>
+                        </div>
+					</div>
                     
-				</div>
-				<div class="form-group row " >
-					<div class="col-md-3">
-						<label>Nacionalidad <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Nacionalidad" name="Nacionalidad" value="Mexicana" >
+                    <div class="col-md-1">
+                        <div class="form-group form-group-default">
+                            <label>Edad<span class="required-label">*</span></label>
+                            <input id="Edad" name="Edad"  type="text" class="form-control" required>
+                        </div>
 					</div>
-					<div class="col-md-3">
-						<label>Sexo <span class="required-label">*</span></label>
-						<select required class="form-control input-with-border" id="Sexo" name="Sexo">
-							<option value="MASCULINO">Masculino</option>
-							<option value="FEMENINO">Femenino</option>
-						</select>
-					</div>
-					<div class="col-md-3">
-						<label>Estado Civil <span class="required-label">*</span></label>
-						<select required class="form-control input-with-border" id="Civil" name="Civil">
-							<option value="">Seleccione una opción</option>
-							<option value="SOLTERO">Soltero</option>
-                                        <option value="CASADO">Casado</option>
-                                        <option value="DIVORCIADO">Divorciado</option>
-                                        <option value="VIUDO">Viudo</option>
-                                        <option value="UNIÓN LIBRE">Unión libre</option>
-                                        <option value="SEPARADO">Separado</option>
-                                        <option value="COMPROMETIDO">Comprometido</option>
-						</select>
-					</div>
-                  
                     
+                    <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                            <label>Puesto<span class="required-label">*</span></label>
+                            <input id="Puesto" name="Puesto"  type="text" class="form-control" required>
+                        </div>
+					</div>
+					<div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Nacionalidad<span class="required-label">*</span></label>
+                            <input id="Nacionalidad" name="Nacionalidad"  type="text" class="form-control" required value="Mexicana">
+                        </div>
+					</div>
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Sexo<span class="required-label">*</span></label>
+                            <select required class="form-control input-with-border" id="Sexo" name="Sexo">
+                                <option value="MASCULINO">Masculino</option>
+                                <option value="FEMENINO">Femenino</option>
+                            </select>
+                        </div>
+					</div>
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Estado Civil<span class="required-label">*</span></label>
+                            <select required class="form-control" id="Civil" name="Civil">
+							    <option value="">Seleccione una opción</option>
+							    <option value="SOLTERO">Soltero</option>
+                                <option value="CASADO">Casado</option>
+                                <option value="DIVORCIADO">Divorciado</option>
+                                <option value="VIUDO">Viudo</option>
+                                <option value="UNIÓN LIBRE">Unión libre</option>
+                                <option value="SEPARADO">Separado</option>
+                                <option value="COMPROMETIDO">Comprometido</option>
+						</select>
+                        </div>
+					</div>
 				</div>
+                <hr>	
 				<div class="form-group row " >
 					<div class="col-md-12">
-						<hr>	
 						<center><b>Domicilio</b></center>
-						
 					</div>
 				</div>
 				<div class="form-group row " >
 					<div class="col-md-12">
 							
 					</div>
-					<div class="col-md-3">
-						<label>Calle <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Calle" name="Calle"  >
-					</div>
-					<div class="col-md-3">
-						<label>Numero <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Numero" name="Numero"  >
-					</div>
-					<div class="col-md-4">
-						<label>Colonia <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Colonia" name="Colonia"  >
-					</div>
-                    
-                    
-				</div>
-				<div class="form-group row " >
-					
-					<div class="col-md-3">
-						<label>Alcaldía/Municipio <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Alcaldia" name="Alcaldia"  >
-					</div>
-					<div class="col-md-3">
-						<label>Estado <span class="required-label">*</span></label>
-						<select required class="form-control input-with-border" id="Estado" name="Estado">
-						<option value="">SELECCIONE UN ESTADO</option>
-                                                <option value="AGUASCALIENTES">Aguascalientes</option>
-                                                <option value="BAJA CALIFORNIA">Baja California</option>
-                                                <option value="BAJA CALIFORNIA SUR">Baja California Sur</option>
-                                                <option value="CAMPECHE">Campeche</option>
-                                                <option value="CHIAPAS">Chiapas</option>
-                                                <option value="CHIHUAHUA">Chihuahua</option>
-                                                <option value="CIUDAD DE MEXICO">Ciudad de México</option>
-                                                <option value="COAHUILA">Coahuila</option>
-                                                <option value="COLIMA">Colima</option>
-                                                <option value="DURANGO">Durango</option>
-                                                <option value="GUANAJUATO">Guanajuato</option>
-                                                <option value="GUERRERO">Guerrero</option>
-                                                <option value="HIDALGO">Hidalgo</option>
-                                                <option value="JALISCO">Jalisco</option>
-                                                <option value="ESTADO DE MEXICO" selected>Estado de México</option>
-                                                <option value="MICHOACAN">Michoacán</option>
-                                                <option value="MORELOS">Morelos</option>
-                                                <option value="NAYARIT">Nayarit</option>
-                                                <option value="NUEVO LEON">Nuevo León</option>
-                                                <option value="OAXACA">Oaxaca</option>
-                                                <option value="PUEBLA">Puebla</option>
-                                                <option value="QUERÉTARO">Querétaro</option>
-                                                <option value="QUINTANA ROO">Quintana Roo</option>
-                                                <option value="SAN LUIS POTOSÍ">San Luis Potosí</option>
-                                                <option value="SINALOA">Sinaloa</option>
-                                                <option value="SONORA">Sonora</option>
-                                                <option value="TABASCO">Tabasco</option>
-                                                <option value="TAMAULIPAS">Tamaulipas</option>
-                                                <option value="TLAXCALA">Tlaxcala</option>
-                                                <option value="VERACRUZ">Veracruz</option>
-                                                <option value="YUCATÁN">Yucatán</option>
-                                                <option value="ZACATECAS">Zacatecas</option>
-						</select>
-
-					</div>
-					<div class="col-md-2">
-						<label>Código postal <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="postal" name="postal"  >
-					</div>
-					
-                    <div class="col-md-12">
-						
-                    <hr>
-					</div>
-				</div>
-				<div class="form-group row " >
-					<div class="col-md-2">
-						<label>RFC <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="RFC" name="RFC"  >
-					</div>
-					<div class="col-md-4">
-						<label>IMSS <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="IMSS" name="IMSS"  >
-					</div>
-					<div class="col-md-4">
-						<label>CURP <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="CURP" name="CURP"  >
-					</div>
-				</div>
-				<div class="form-group row " >
-					<div class="col-md-4">
-						<label>Correo </label>
-						<input required type="text" class="form-control input-with-border" id="Correo" name="Correo"  >
+                    <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                            <label>Calle<span class="required-label">*</span></label>
+                            <input id="Calle" name="Calle"  type="text" class="form-control" required >
+                        </div>
 					</div>
                     <div class="col-md-3">
-						<label>Salario diario <span class="required-label">*</span></label>
-						<input required type="text" class="form-control input-with-border" id="Salario_diario" name="Salario_diario" oninput="validateAndConvertSalary()">
+                        <div class="form-group form-group-default">
+                            <label>Numero<span class="required-label">*</span></label>
+                            <input id="Numero" name="Numero"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-4">
+                        <div class="form-group form-group-default">
+                            <label>Colonia<span class="required-label">*</span></label>
+                            <input id="Colonia" name="Colonia"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-4">
+                        <div class="form-group form-group-default">
+                            <label>Alcaldía/Municipio<span class="required-label">*</span></label>
+                            <input id="Alcaldia" name="Alcaldia"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Estado<span class="required-label">*</span></label>
+                            <select required class="form-control" id="Estado" name="Estado">
+						        <option value="">SELECCIONE UN ESTADO</option>
+                                <option value="AGUASCALIENTES">Aguascalientes</option>
+                                <option value="BAJA CALIFORNIA">Baja California</option>
+                                <option value="BAJA CALIFORNIA SUR">Baja California Sur</option>
+                                <option value="CAMPECHE">Campeche</option>
+                                <option value="CHIAPAS">Chiapas</option>
+                                <option value="CHIHUAHUA">Chihuahua</option>
+                                <option value="CIUDAD DE MEXICO">Ciudad de México</option>
+                                <option value="COAHUILA">Coahuila</option>
+                                <option value="COLIMA">Colima</option>
+                                <option value="DURANGO">Durango</option>
+                                <option value="GUANAJUATO">Guanajuato</option>
+                                <option value="GUERRERO">Guerrero</option>
+                                <option value="HIDALGO">Hidalgo</option>
+                                <option value="JALISCO">Jalisco</option>
+                                <option value="ESTADO DE MEXICO" selected>Estado de México</option>
+                                <option value="MICHOACAN">Michoacán</option>
+                                <option value="MORELOS">Morelos</option>
+                                <option value="NAYARIT">Nayarit</option>
+                                <option value="NUEVO LEON">Nuevo León</option>
+                                <option value="OAXACA">Oaxaca</option>
+                                <option value="PUEBLA">Puebla</option>
+                                <option value="QUERÉTARO">Querétaro</option>
+                                <option value="QUINTANA ROO">Quintana Roo</option>
+                                <option value="SAN LUIS POTOSÍ">San Luis Potosí</option>
+                                <option value="SINALOA">Sinaloa</option>
+                                <option value="SONORA">Sonora</option>
+                                <option value="TABASCO">Tabasco</option>
+                                <option value="TAMAULIPAS">Tamaulipas</option>
+                                <option value="TLAXCALA">Tlaxcala</option>
+                                <option value="VERACRUZ">Veracruz</option>
+                                <option value="YUCATÁN">Yucatán</option>
+                                <option value="ZACATECAS">Zacatecas</option>
+						</select>
+                        </div>
+					</div>
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Código postal<span class="required-label">*</span></label>
+                            <input id="postal" name="postal"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                   
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>RFC<span class="required-label">*</span></label>
+                            <input id="RFC" name="RFC"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                            <label>IMSS<span class="required-label">*</span></label>
+                            <input id="IMSS" name="IMSS"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                            <label>CURP<span class="required-label">*</span></label>
+                            <input id="CURP" name="CURP"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                            <label>Correo<span class="required-label">*</span></label>
+                            <input id="Correo" name="Correo"  type="text" class="form-control" required >
+                        </div>
+					</div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                            <label>Salario diario <span class="required-label">*</span></label>
+                            <input id="Salario_diario" name="Salario_diario"  type="text" class="form-control" required  oninput="validateAndConvertSalary()" >
+                        </div>
+					</div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label>Salario en letras  <span class="required-label">*</span></label>
+                            <input id="Salario_diario_letras" name="Salario_diario_letras"  type="text" class="form-control" required  >
+                        </div>
+					</div>
+                    <div class="col-md-2">
+                        <div class="form-group form-group-default">
+                            <label>Fecha de contrato <span class="required-label">*</span></label>
+                            <input required type="date" class="form-control input-with-border" id="fecha_contrato" name="fecha_contrato" value="{{ now()->format('Y-m-d') }}">
+						    <input  type="hidden" class="form-control input-with-border" id="fecha_contrato_hidden" name="fecha_contrato_hidden" >
+                        </div>
 					</div>
 					
-					
 				</div>
-				<div class="form-group row " >
-				<div class="col-md-8">
-						<label>Salario en letras <span class="required-label">*</span></label>
-						<input type="text" class="form-control input-with-border" id="Salario_diario_letras" name="Salario_diario_letras" >
-					</div>
-				</div>
-				<div class="form-group row " >
-					<div class="col-md-3">
-						<label>Fecha de contrato <span class="required-label">*</span></label>
-						<input required type="date" class="form-control input-with-border" id="fecha_contrato" name="fecha_contrato" value="{{ now()->format('Y-m-d') }}">
-						<input  type="hidden" class="form-control input-with-border" id="fecha_contrato_hidden" name="fecha_contrato_hidden" >
-
-					</div>
-                    
-				</div>
+                
                 <div class="form-group row " >
                     <div class="col-md-12">
 						<center>

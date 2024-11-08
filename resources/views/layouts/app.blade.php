@@ -191,6 +191,11 @@
 										</a>
 									</li>
                                     <li>
+										<a  href="{{url('/Gestion_del_personal')}}">
+											<span class="sub-item">Gestión del personal</span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/Personal')}}">
 											<span class="sub-item">Personal</span>
 										</a>
@@ -585,6 +590,11 @@
 									<li>
 										<a  href="{{url('/Renuncias')}}">
 											<span class="sub-item">Renuncias</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Gestion_del_personal')}}">
+											<span class="sub-item">Gestión del personal</span>
 										</a>
 									</li>
                                     <li>
