@@ -94,11 +94,11 @@
                     Tip 1: You can change the background color of the navbar header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
                 -->
                 <div class="container-fluid">
-                    <div class="navbar-minimize">
-                        <button class="btn btn-minimize btn-rounded btn-default">
-                            <i class="la la-navicon"></i>
-                        </button>
-                    </div>
+					<div class="navbar-minimize">
+						<button class="btn btn-minimize btn-rounded">
+							<i class="la la-navicon"></i>
+						</button>
+					</div>
                    
                    <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         <li class="nav-item dropdown hidden-caret  card-round" >
@@ -129,7 +129,7 @@
 </div>
 
 <!-- Sidebar -->
-<div class="sidebar">
+<div class="sidebar" >
 
            
             <div class="sidebar-wrapper scrollbar-inner">
@@ -971,6 +971,21 @@
 
                 <div id="app"><!-- id app -->
 					<div id="overlay" class="overlay">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
 						<div class="gif-container">
 							<img src="{{url('/carga.gif')}}" alt="Cargando...">
 						</div>

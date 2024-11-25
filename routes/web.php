@@ -93,7 +93,9 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/Gestion_de_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Gestion_de_horarios')->name('Gestion_de_horarios');
     Route::POST('/Gestion_de_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@postGestion_de_horarios')->name('postGestion_de_horarios');
-
+    Route::get('/Gestion_de_horarios_por_id', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Gestion_de_horarios_por_id')->name('Gestion_de_horarios_por_id');
+    
+    
     
     Route::get('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Renuncias');
     Route::POST('/Renuncias', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@descargarRenuncia');
@@ -236,7 +238,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/consultar_biometrico', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@consultar_biometrico')->name('consultar_biometrico');
     Route::POST('/consultar_biometrico', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_consultar_biometrico')->name('post_consultar_biometrico');
-    
+
+    Route::get('/consultar_biometrico2', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@consultar_biometrico2')->name('consultar_biometrico2');
+    Route::POST('/consultar_biometrico2', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_consultar_biometrico2')->name('post_consultar_biometrico2');
+ 
+
+
     Route::get('/Solicitar_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@Solicitar_herramienta')->name('Solicitar_herramienta');
     Route::POST('/Solicitar_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@post_Solicitar_herramienta')->name('post_Solicitar_herramienta');
     

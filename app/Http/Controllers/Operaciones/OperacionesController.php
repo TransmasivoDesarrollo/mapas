@@ -44,6 +44,8 @@ class OperacionesController extends Controller
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_1_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_1,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN u2.name END), "Sin Apoyo") AS apoyo_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_usuario END), "Credencial") AS Cap_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "fecha") AS fecha_registro_1,
 
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
@@ -52,6 +54,8 @@ class OperacionesController extends Controller
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_2_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN u2.name END), "Sin Apoyo") AS apoyo_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_usuario END), "Credencial") AS Cap_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "fecha") AS fecha_registro_2,
 
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
@@ -60,6 +64,8 @@ class OperacionesController extends Controller
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_3_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_3,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN u2.name END), "Sin Apoyo") AS apoyo_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_usuario END), "Credencial") AS Cap_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "fecha") AS fecha_registro_3,
             
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
@@ -67,7 +73,15 @@ class OperacionesController extends Controller
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_4_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_4,
-            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_usuario END), "Credencial") AS Cap_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "fecha") AS fecha_registro_4,
+            GREATEST(
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "1900-01-01")
+    ) AS ultima_fecha_registro
 
         FROM 
             t_bitacora_terminales t1
@@ -92,13 +106,14 @@ class OperacionesController extends Controller
             t1.dia,
             u.name
         ORDER BY 
-         salida_1 desc,
+         ultima_fecha_registro desc,
             t1.id_jornada_sem, 
             t1.credencial, 
             t1.ciclo,
             t1.dia;
 
         ');
+        //dd($consulta);
        
         $tr1_registro =DB::connection('mysql')->select('
         select count(*) as conteo from t_bitacora_terminales  
@@ -127,7 +142,7 @@ class OperacionesController extends Controller
         $diasSemana = [
             'Monday' => 'lunes',
             'Tuesday' => 'martes',
-            'Wednesday' => 'miercoles',
+            'Wednesday' => 'miércoles',
             'Thursday' => 'jueves',
             'Friday' => 'viernes',
             'Saturday' => 'sábado',
@@ -174,7 +189,7 @@ class OperacionesController extends Controller
             SELECT count(*) as conteo  from t_jornada_completa_operacion_2 where dia_servicio="Martes" and servicio="TR4" and id_jornada_pk in
             (select id_jornada_fk from t_jornada_conductores where servicio="TR4" AND dia_servicio="Martes" AND "'.now()->format('Y-m-d').'" BETWEEN dia_inicio and dia_fin )');
         }
-        if( $diaActualEspanol=='miercoles'  )
+        if( $diaActualEspanol=='miércoles'  )
         {
             
             $tr1_ciclos = DB::connection('mysql')->select('
@@ -471,7 +486,8 @@ class OperacionesController extends Controller
         $total_registros = $tr1_registro +$tr1_r_registro +$tr3_registro +$tr4_registro ;
         //dd($consulta);
         return view('Transmasivo.Operaciones.Bitacora_de_operaciones', 
-        compact('terminal','total_registros', 'consulta', 'credencial','tr1_ciclos','tr1_r_ciclos','tr3_ciclos','tr4_ciclos','total_ciclos','tr1_registro','tr1_r_registro','tr3_registro','tr4_registro'));
+        compact('terminal','total_registros', 'consulta', 'credencial','tr1_ciclos',
+        'tr1_r_ciclos','tr3_ciclos','tr4_ciclos','total_ciclos','tr1_registro','tr1_r_registro','tr3_registro','tr4_registro'));
     }
     
 
@@ -816,7 +832,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             $key = $conductor->servicio . '-' . $conductor->jornada . '-' . $conductor->turno . '-' . $conductor->dia_servicio;
             $conductores_l[$key] = $conductor;
         }
-
+        
         
         foreach ($jornadas_l as $jornada) {
             $key = $jornada->servicio . '-' . $jornada->jornada . '-' . $jornada->turno . '-' . $jornada->dia_servicio;
@@ -824,15 +840,17 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $jornada->conductor = $conductores_l[$key]->name. " - ". $conductores_l[$key]->id;
                 $jornada->id_conductor_descanso = $conductores_l[$key]->id_conductor_descanso ;
                 $jornada->dia_descanso = $conductores_l[$key]->dia_descanso ;
+                $jornada->eco = $conductores_l[$key]->eco ;
             } else {
                 $jornada->conductor = 'Sin conductor';
                 $jornada->id_conductor_descanso = 'Sin conductor' ;
                 $jornada->dia_descanso = 'Sin descanso' ;
+                $jornada->eco = '' ;
             }
             $jornadas_combinadas_l[] = $jornada;
         }
 
-        //dd($jornadas_l);
+        
         
         $conductores_l_select = DB::connection('mysql')->select('select * from users where tipo_usuario="Conductor"');
         foreach ($conductores_l_select as $key => $conductor) {
@@ -884,10 +902,13 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $jornada->id_conductor_descanso = $conductores_m[$key]->id_conductor_descanso ;
                 $jornada->dia_descanso = $conductores_m[$key]->dia_descanso ;
                 
+                $jornada->eco = $conductores_m[$key]->eco ;
+                
             } else {
                 $jornada->conductor = 'Sin conductor';
                 $jornada->id_conductor_descanso = 'Sin conductor' ;
                 $jornada->dia_descanso = 'Sin descanso' ;
+                $jornada->eco = '' ;
             }
             $jornadas_combinadas_m[] = $jornada;
         }
@@ -945,10 +966,13 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $jornada->conductor = $conductores_mi[$key]->name. " - ". $conductores_mi[$key]->id;
                 $jornada->id_conductor_descanso = $conductores_mi[$key]->id_conductor_descanso ;
                 $jornada->dia_descanso = $conductores_mi[$key]->dia_descanso ;
+                
+                $jornada->eco = $conductores_mi[$key]->eco ;
             } else {
                 $jornada->conductor = 'Sin conductor';
                 $jornada->id_conductor_descanso = 'Sin conductor' ;
                 $jornada->dia_descanso = 'Sin descanso' ;
+                $jornada->eco = '' ;
             }
             $jornadas_combinadas_mi[] = $jornada;
         }
@@ -1007,10 +1031,12 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $jornada->conductor = $conductores_j[$key]->name. " - ". $conductores_j[$key]->id;
                 $jornada->id_conductor_descanso = $conductores_j[$key]->id_conductor_descanso ;
                 $jornada->dia_descanso = $conductores_j[$key]->dia_descanso ;
+                $jornada->eco = $conductores_j[$key]->eco ;
             } else {
                 $jornada->conductor = 'Sin conductor';
                 $jornada->id_conductor_descanso = 'Sin conductor' ;
                 $jornada->dia_descanso = 'Sin descanso' ;
+                $jornada->eco = '' ;
             }
             $jornadas_combinadas_j[] = $jornada;
         }
@@ -1070,10 +1096,12 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $jornada->conductor = $conductores_v[$key]->name. " - ". $conductores_v[$key]->id;
                 $jornada->id_conductor_descanso = $conductores_v[$key]->id_conductor_descanso ;
                 $jornada->dia_descanso = $conductores_v[$key]->dia_descanso ;
+                $jornada->eco = $conductores_v[$key]->eco ;
             } else {
                 $jornada->conductor = 'Sin conductor';
                 $jornada->id_conductor_descanso = 'Sin conductor' ;
                 $jornada->dia_descanso = 'Sin descanso' ;
+                $jornada->eco = '' ;
             }
             $jornadas_combinadas_v[] = $jornada;
         }
@@ -1170,10 +1198,13 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $jornada->conductor = $conductores3[$key]->name. " - ". $conductores3[$key]->id; 
                 $jornada->id_conductor_descanso = $conductores3[$key]->id_conductor_descanso ;
                 $jornada->dia_descanso = $conductores3[$key]->dia_descanso ;
+                
+                $jornada->eco = $conductores3[$key]->eco ;
             } else {
                 $jornada->conductor = 'Sin conductor';
                 $jornada->id_conductor_descanso = 'Sin conductor' ;
                 $jornada->dia_descanso = 'Sin descanso' ;
+                $jornada->eco = '' ;
             }
             $jornadas_combinadas3[] = $jornada;
         }
@@ -1184,10 +1215,14 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $jornada->conductor = $conductores4[$key]->name. " - ". $conductores4[$key]->id;
                 $jornada->id_conductor_descanso = $conductores4[$key]->id_conductor_descanso ;
                 $jornada->dia_descanso = $conductores4[$key]->dia_descanso ;
+                
+                $jornada->eco = $conductores4[$key]->eco ;
             } else {
                 $jornada->conductor = 'Sin conductor';
                 $jornada->id_conductor_descanso = 'Sin conductor' ;
                 $jornada->dia_descanso = 'Sin descanso' ;
+                
+                $jornada->eco = '' ;
             }
             $jornadas_combinadas4[] = $jornada;
         }
@@ -1229,7 +1264,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
         $conductores_descanso = array_values($conductores_descanso);
         $semana_seleccionada=$semana_hoy['value'];
         $conductores_totales = count($conductores);
-        //dd($jornadas_m);
+        //dd($jornadas_mi);
         return view('Transmasivo.Operaciones.enrolar_horarios_conductores_2',
             compact('conductores_descanso','where','dia_inicio','dia_fin',
             'jornadas_l','jornadas_m','jornadas_mi','jornadas_j','jornadas_v',
@@ -1456,9 +1491,11 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             $dia_inicio = '';
             $dia_fin = '';
             $hidden_id_jornada_pk = '';
+            $eco = '';
 
             if($request->has('hidden_servicio'))
             {
+                $hidden_servicio = $request->input('hidden_servicio');
                 $hidden_servicio = $request->input('hidden_servicio');
                 $hidden_dia_servicio = $request->input('hidden_dia_servicio');
                 $hidden_turno = $request->input('hidden_turno');
@@ -1466,6 +1503,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $semana_hidden = $request->input('semana_hidden');
                 $dia_inicio = $request->input('dia_inicio_lv');
                 $dia_fin = $request->input('dia_fin_lv');
+                $eco = $request->input('eco_l_v');
                 
                 $hidden_id_jornada_pk = $request->input('hidden_id_jornada_pk');
             }
@@ -1479,6 +1517,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $dia_inicio = $request->input('dia_inicio_s');
                 $dia_fin = $request->input('dia_fin_s');
                 $hidden_id_jornada_pk = $request->input('hidden_id_jornada_pk_s');
+                $eco = $request->input('eco_sabado');
 
             }
             if($request->has('hidden_servicio_d'))
@@ -1491,6 +1530,8 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 $dia_inicio = $request->input('dia_inicio_d');
                 $dia_fin = $request->input('dia_fin_d');
                 $hidden_id_jornada_pk = $request->input('hidden_id_jornada_pk_d');
+                
+                $eco = $request->input('eco_domingo');
                 
             }
             
@@ -1515,14 +1556,22 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             {
                 $conductores = $request->input('conductores_vi');
             }
-
+            if($hidden_dia_servicio=='Sábado')
+            {
+                $conductores = $request->input('conductores');
+            }
+            if($hidden_dia_servicio=='Domingo')
+            {
+                $conductores = $request->input('conductores');
+            }
             $id_operador_registra = auth()->id();
             date_default_timezone_set('America/Mexico_City');
             $hora_actual = time();
             $fecha_registro = date('Y-m-d H:i:s', $hora_actual);
             $conductores = DB::connection('mysql')->insert(
-                'insert into t_jornada_conductores (id_conductor,id_jornada_fk,servicio,dia_servicio,turno,jornada,semana,id_operador,fecha_registro,dia_inicio,dia_fin ) values(?,?,?,?,?,?,?,?,?,?,?)',
+                'insert into t_jornada_conductores (eco,id_conductor,id_jornada_fk,servicio,dia_servicio,turno,jornada,semana,id_operador,fecha_registro,dia_inicio,dia_fin ) values(?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
+                    $eco ,
                     $conductores ,
                     $hidden_id_jornada_pk ,
                     $hidden_servicio ,
@@ -1570,7 +1619,6 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
         }if($request->has('desenrolar_jornada'))
         {
             //dd($request->all());
-            
             $hidden_id_jornada_pk_descanso = $request->input('hidden_id_jornada_pk_desenrolar');
             $dia_inicio_lv_descanso = $request->input('dia_inicio_lv_desenrolar');
             $dia_fin_lv_descanso = $request->input('dia_fin_lv_desenrolar');
@@ -1583,11 +1631,14 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                     $dia_fin_lv_descanso ,
                 ]
             );
-            $mensaje="Se elimino con exito!!";
-            $color="success";
+            $mensaje="Se desenrolo con exito!!";
+            $color="warning";
+            $hidden_dia_servicio_d =  $request->input('hidden_dia_servicio_desenrolar');
+            $hidden_servicio =  $request->input('hidden_servicio_desenrolar');
             
             $semana_seleccionada=$request->input('semana_hidden_desenrolar');
-            return redirect()->route('enrolar_horarios_conductores_2',compact('semana_seleccionada'))->with('mensaje', $mensaje)->with('color', $color)->with('semana_seleccionada', $semana_seleccionada);
+            return redirect()->route('enrolar_horarios_conductores_2',compact('semana_seleccionada'))->with('mensaje', $mensaje)->with('color', $color)->
+            with('semana_seleccionada', $semana_seleccionada)->with('hidden_servicio', $hidden_servicio)->with('hidden_dia_servicio_d', $hidden_dia_servicio_d);
         
         }
         
@@ -2505,6 +2556,8 @@ public function buscar_bitacora_filtro($fecha, $serv_busqueda)
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_1_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_1,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN u2.name END), "Sin Apoyo") AS apoyo_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_usuario END), "Credencial") AS Cap_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "fecha") AS fecha_registro_1,
 
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
@@ -2513,6 +2566,8 @@ public function buscar_bitacora_filtro($fecha, $serv_busqueda)
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_2_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN u2.name END), "Sin Apoyo") AS apoyo_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_usuario END), "Credencial") AS Cap_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "fecha") AS fecha_registro_2,
 
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
@@ -2521,6 +2576,8 @@ public function buscar_bitacora_filtro($fecha, $serv_busqueda)
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_3_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_3,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN u2.name END), "Sin Apoyo") AS apoyo_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_usuario END), "Credencial") AS Cap_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "fecha") AS fecha_registro_3,
             
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
@@ -2528,7 +2585,15 @@ public function buscar_bitacora_filtro($fecha, $serv_busqueda)
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_4_eco,
             COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_4,
-            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_usuario END), "Credencial") AS Cap_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "fecha") AS fecha_registro_4,
+            GREATEST(
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "1900-01-01")
+    ) AS ultima_fecha_registro
 
         FROM 
             t_bitacora_terminales t1
@@ -2553,7 +2618,8 @@ public function buscar_bitacora_filtro($fecha, $serv_busqueda)
             t1.dia,
             u.name
         ORDER BY 
-         salida_1 desc,
+        
+         ultima_fecha_registro desc,
             t1.id_jornada_sem, 
             t1.credencial, 
             t1.ciclo,
@@ -2589,7 +2655,7 @@ public function buscar_bitacora_filtro($fecha, $serv_busqueda)
         $diasSemana = [
             'Monday' => 'lunes',
             'Tuesday' => 'martes',
-            'Wednesday' => 'miercoles',
+            'Wednesday' => 'miércoles',
             'Thursday' => 'jueves',
             'Friday' => 'viernes',
             'Saturday' => 'sábado',
@@ -2971,7 +3037,6 @@ public function Registro_bitacora_terminal(Request $request)
     {
         $fecha = $request->input('fecha_busqueda');
         $credencial = $request->input('credencial');
-        
         $serv_busqueda = $request->input('serv_busqueda');
         
        // dd($fecha);
@@ -2982,6 +3047,12 @@ public function Registro_bitacora_terminal(Request $request)
         $fecha = $request->input('fecha_busqueda');
         $credencial = $request->input('credencial');
         $serv_busqueda = 'TR1';
+        date_default_timezone_set('America/Mexico_City');
+        $hora_actual = time();
+        $hora_una_hora_atras = $hora_actual ;
+        $fecha = date('Y-m-d', $hora_una_hora_atras);
+
+
         return $this->buscar_bitacora_filtro($fecha, $serv_busqueda);
     }
     if($request->input('buscar_filtroTR3')=='TR3')
@@ -2989,6 +3060,10 @@ public function Registro_bitacora_terminal(Request $request)
         $fecha = $request->input('fecha_busqueda');
         $credencial = $request->input('credencial');
         $serv_busqueda = 'TR3';
+        date_default_timezone_set('America/Mexico_City');
+        $hora_actual = time();
+        $hora_una_hora_atras = $hora_actual ;
+        $fecha = date('Y-m-d', $hora_una_hora_atras);
         return $this->buscar_bitacora_filtro($fecha, $serv_busqueda);
     }
     if($request->input('buscar_filtroTR4')=='TR4')
@@ -2996,6 +3071,10 @@ public function Registro_bitacora_terminal(Request $request)
         $fecha = $request->input('fecha_busqueda');
         $credencial = $request->input('credencial');
         $serv_busqueda = 'TR4';
+        date_default_timezone_set('America/Mexico_City');
+        $hora_actual = time();
+        $hora_una_hora_atras = $hora_actual ;
+        $fecha = date('Y-m-d', $hora_una_hora_atras);
         return $this->buscar_bitacora_filtro($fecha, $serv_busqueda);
     }
     if($request->input('buscar_filtroT')=='T')
@@ -3022,6 +3101,7 @@ public function Registro_bitacora_terminal(Request $request)
         return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color);
     }
     else{
+       
         $terminal=$request->input('terminal');
         $serv=$request->input('serv');
         $jorn=$request->input('jorn');
@@ -3190,10 +3270,10 @@ public function Registro_bitacora_terminal(Request $request)
             $bitacora->id_usuario = Auth::id();
             $bitacora->save();    
         }
-            
+        //dd($serv);
         $mensaje="Se registro con exito!";
         $color="success";
-        return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color);
+        return redirect()->route('Bitacora_de_operaciones')->with('mensaje', $mensaje)->with('color', $color)->with('serv',$serv);
     }
         
     }
@@ -3295,6 +3375,7 @@ public function Registro_bitacora_terminal(Request $request)
         $conteo_jornada_hecha = count($t_bitacora_terminales);
         $nombre = $id_rol_operadores[0]->name;
         $servicio=$id_rol_operadores[0]->servicio;
+        $eco =$id_rol_operadores[0]->eco;
         return [
             'conteo_jornada_total' => $conteo_jornada_total,
             'conteo_jornada_hecha' => $conteo_jornada_hecha,
@@ -3302,6 +3383,7 @@ public function Registro_bitacora_terminal(Request $request)
             'Nombre' => $nombre,
             'servicio' => $servicio,
             'dia_actual_espanol' => $diaActualEspanol, 
+            'eco' => $eco, 
         ];
     }
 
@@ -3329,6 +3411,8 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_1_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_1,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN u2.name END), "Sin Apoyo") AS apoyo_1,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_usuario END), "Credencial") AS Cap_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "fecha") AS fecha_registro_1,
 
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
@@ -3337,6 +3421,8 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_2_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_2,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN u2.name END), "Sin Apoyo") AS apoyo_2,
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_usuario END), "Credencial") AS Cap_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "fecha") AS fecha_registro_2,
 
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
@@ -3345,6 +3431,8 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_3_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_3,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN u2.name END), "Sin Apoyo") AS apoyo_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_usuario END), "Credencial") AS Cap_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "fecha") AS fecha_registro_3,
 
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
@@ -3352,7 +3440,16 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_4_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_4,
-        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_usuario END), "Credencial") AS Cap_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "fecha") AS fecha_registro_4,
+            GREATEST(
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "1900-01-01")
+    ) AS ultima_fecha_registro
+
 
         FROM 
         t_bitacora_terminales t1
@@ -3377,7 +3474,7 @@ public function Registro_bitacora_terminal(Request $request)
         t1.dia,
         u.name
         ORDER BY 
-        salida_1 desc,
+         ultima_fecha_registro desc,
         t1.id_jornada_sem, 
         t1.credencial, 
         t1.ciclo,
@@ -3413,7 +3510,7 @@ public function Registro_bitacora_terminal(Request $request)
         $diasSemana = [
         'Monday' => 'lunes',
         'Tuesday' => 'martes',
-        'Wednesday' => 'miercoles',
+        'Wednesday' => 'miércoles',
         'Thursday' => 'jueves',
         'Friday' => 'viernes',
         'Saturday' => 'sábado',
@@ -3791,6 +3888,8 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_1_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_1,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN u2.name END), "Sin Apoyo") AS apoyo_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.id_usuario END), "Credencial") AS Cap_1,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "fecha") AS fecha_registro_1,
 
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.hora_salida END), "Sin datos") AS llegada_1,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.comentario END), "Sin comentario") AS salida_2_com,
@@ -3799,6 +3898,8 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_2_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_2,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN u2.name END), "Sin Apoyo") AS apoyo_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.id_usuario END), "Credencial") AS Cap_2,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "fecha") AS fecha_registro_2,
 
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.hora_salida END), "Sin datos") AS salida_2,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.comentario END), "Sin comentario") AS salida_3_com,
@@ -3807,6 +3908,8 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_3_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_3,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN u2.name END), "Sin Apoyo") AS apoyo_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.id_usuario END), "Credencial") AS Cap_3,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "fecha") AS fecha_registro_3,
 
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.hora_salida END), "Sin datos") AS llegada_2,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.comentario END), "Sin comentario") AS salida_4_com,
@@ -3814,7 +3917,15 @@ public function Registro_bitacora_terminal(Request $request)
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.eco END), "Sin economico") AS salida_4_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_bitacora_terminales END), "Sin economico") AS id_bitacora_terminales_4_eco,
         COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.credencial_apoyo END), "Sin Apoyo") AS id_apoyo_4,
-        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN u2.name END), "Sin Apoyo") AS apoyo_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.id_usuario END), "Credencial") AS Cap_4,
+            COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "fecha") AS fecha_registro_4,
+            GREATEST(
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 1 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 2 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 3 THEN t1.fecha_registro END), "1900-01-01"),
+        COALESCE(MAX(CASE WHEN t1.salida_entrada = 4 THEN t1.fecha_registro END), "1900-01-01")
+    ) AS ultima_fecha_registro
 
         FROM 
         t_bitacora_terminales t1
@@ -3839,7 +3950,7 @@ public function Registro_bitacora_terminal(Request $request)
         t1.dia,
         u.name
         ORDER BY 
-        salida_1 desc,
+         ultima_fecha_registro desc,
         t1.id_jornada_sem, 
         t1.credencial, 
         t1.ciclo,
@@ -3875,7 +3986,7 @@ public function Registro_bitacora_terminal(Request $request)
         $diasSemana = [
         'Monday' => 'lunes',
         'Tuesday' => 'martes',
-        'Wednesday' => 'miercoles',
+        'Wednesday' => 'miércoles',
         'Thursday' => 'jueves',
         'Friday' => 'viernes',
         'Saturday' => 'sábado',
@@ -5246,7 +5357,7 @@ public function Reporte_de_jornadas()
     $diasSemana = [
             'lunes' => $lunes->copy()->format('Y-m-d'),
             'martes' => $lunes->copy()->addDay()->format('Y-m-d'),
-            'miercoles' => $lunes->copy()->addDays(2)->format('Y-m-d'),
+            'miércoles' => $lunes->copy()->addDays(2)->format('Y-m-d'),
             'jueves' => $lunes->copy()->addDays(3)->format('Y-m-d'),
             'viernes' => $lunes->copy()->addDays(4)->format('Y-m-d'),
             'sabado' => $lunes->copy()->addDays(5)->format('Y-m-d'),
@@ -5272,13 +5383,13 @@ public function Reporte_de_jornadas()
          WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['martes'] . ' 00:00:00"  AND "' . $diasSemana['martes'] . ' 23:59:59"');
          
         $registro_mi_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
         $registro_mi_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
         $registro_mi_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
         $registro_mi_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
          
         $registro_j_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
         WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['jueves'] . ' 00:00:00"  AND "' . $diasSemana['jueves'] . ' 23:59:59"');
@@ -5529,7 +5640,7 @@ public function Reporte_de_jornadas()
             INNER JOIN   users as u ON u.id = t1.credencial 
             left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
             INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
-            WHERE   t1.dia BETWEEN "' .  $diasSemana['miercoles'] . ' 00:00:00" AND "' .  $diasSemana['miercoles'] . ' 23:59:59"
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['miércoles'] . ' 00:00:00" AND "' .  $diasSemana['miércoles'] . ' 23:59:59"
             GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
             ORDER BY  t1.credencial, t1.ciclo,t1.dia;
         ');
@@ -6552,7 +6663,7 @@ public function postReporte_de_jornadas(Request $request)
     $diasSemana = [
             'lunes' => $lunes->copy()->format('Y-m-d'),
             'martes' => $lunes->copy()->addDay()->format('Y-m-d'),
-            'miercoles' => $lunes->copy()->addDays(2)->format('Y-m-d'),
+            'miércoles' => $lunes->copy()->addDays(2)->format('Y-m-d'),
             'jueves' => $lunes->copy()->addDays(3)->format('Y-m-d'),
             'viernes' => $lunes->copy()->addDays(4)->format('Y-m-d'),
             'sabado' => $lunes->copy()->addDays(5)->format('Y-m-d'),
@@ -6568,7 +6679,7 @@ public function postReporte_de_jornadas(Request $request)
             ');
         $registro_mi =DB::connection('mysql')->select('
             select count(*) as conteo from t_bitacora_terminales  
-            WHERE  dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"
+            WHERE  dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"
             ');
         $registro_j =DB::connection('mysql')->select('
             select count(*) as conteo from t_bitacora_terminales  
@@ -6605,13 +6716,13 @@ public function postReporte_de_jornadas(Request $request)
          WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['martes'] . ' 00:00:00"  AND "' . $diasSemana['martes'] . ' 23:59:59"');
          
         $registro_mi_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
         $registro_mi_tr1_r  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR1-R" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
         $registro_mi_tr3  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR3" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
         $registro_mi_tr4  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
-        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['miercoles'] . ' 00:00:00"  AND "' . $diasSemana['miercoles'] . ' 23:59:59"');
+        WHERE Servicio="TR4" and dia BETWEEN "' . $diasSemana['miércoles'] . ' 00:00:00"  AND "' . $diasSemana['miércoles'] . ' 23:59:59"');
          
         $registro_j_tr1  =DB::connection('mysql')->select('select count(*) as conteo from t_bitacora_terminales
         WHERE Servicio="TR1" and dia BETWEEN "' . $diasSemana['jueves'] . ' 00:00:00"  AND "' . $diasSemana['jueves'] . ' 23:59:59"');
@@ -6782,7 +6893,7 @@ public function postReporte_de_jornadas(Request $request)
             INNER JOIN   users as u ON u.id = t1.credencial 
             left  JOIN  users as u2 ON u2.id = t1.credencial_apoyo 
             INNER JOIN   c_terminal ON c_terminal.id_terminal = t1.terminal
-            WHERE   t1.dia BETWEEN "' .  $diasSemana['miercoles'] . ' 00:00:00" AND "' .  $diasSemana['miercoles'] . ' 23:59:59"
+            WHERE   t1.dia BETWEEN "' .  $diasSemana['miércoles'] . ' 00:00:00" AND "' .  $diasSemana['miércoles'] . ' 23:59:59"
             GROUP BY  t1.credencial,t1.ciclo,t1.Servicio,t1.dia,u.name
             ORDER BY  t1.credencial, t1.ciclo,t1.dia;
         ');

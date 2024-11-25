@@ -251,7 +251,13 @@
                                     <input type="hidden" id="dia_fin_lv" name="dia_fin_lv" value="{{$dia_fin}}">
                                     
                                     <div class="col-md-12">
-                                    <div class="form-group">
+                                        <div class="form-group form-group-default">
+                                            <label>Economico <span class="required-label">*</span></label>
+                                            <input  type="text"  class="form-control input-with-border" id="eco_l_v" name="eco_l_v">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                         <label>Conductores <span class="required-label"></span></label>
                                         <div class="select2-input" id="select_lunes">
                                             <select id="conductores_lu" name="conductores_lu" class="form-control">
@@ -330,7 +336,12 @@
                                     <input type="hidden" id="hidden_id_jornada_pk_s" name="hidden_id_jornada_pk_s">
                                     <input type="hidden" id="dia_inicio_s" name="dia_inicio_s" value="{{$dia_inicio}}">
                                     <input type="hidden" id="dia_fin_s" name="dia_fin_s" value="{{$dia_fin}}">
-                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group form-group-default">
+                                            <label>Economico <span class="required-label">*</span></label>
+                                            <input  type="text"  class="form-control input-with-border" id="eco_sabado" name="eco_sabado">
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <label>Conductores <span class="required-label"></span></label>
                                         <select style="border:1px black solid; width:100%;" class="form-control" id="conductores_s" name="conductores">
@@ -370,7 +381,12 @@
                                     <input type="hidden" id="semana_hidden_d" name="semana_hidden_d">
                                     <input type="hidden" id="dia_inicio_d" name="dia_inicio_d" value="{{$dia_inicio}}">
                                     <input type="hidden" id="dia_fin_d" name="dia_fin_d" value="{{$dia_fin}}">
-                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group form-group-default">
+                                            <label>Economico <span class="required-label">*</span></label>
+                                            <input  type="text"  class="form-control input-with-border" id="eco_domingo" name="eco_domingo">
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <label>Conductores <span class="required-label"></span></label>
                                         <select style="border:1px black solid; width:100%;" class="form-control" id="conductores_d" name="conductores">
@@ -572,7 +588,7 @@
                                                                         </center><hr>
                                                                         
                                                                     @else
-                                                                        <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                        <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -581,7 +597,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -613,7 +629,7 @@
                                                                             class="btn btn-default btn-border" type="button" style="padding: 4px; font-size: 1.5em;"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     
                                                                     <center>
                                                                         
@@ -623,7 +639,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -644,7 +660,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -654,7 +670,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -703,7 +719,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -712,7 +728,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -744,7 +760,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -754,7 +770,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -775,7 +791,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -784,7 +800,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -832,7 +848,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -841,7 +857,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -873,7 +889,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -882,7 +898,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -903,7 +919,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -912,7 +928,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -960,7 +976,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -969,7 +985,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1001,7 +1017,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1010,7 +1026,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1031,7 +1047,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1040,7 +1056,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1094,7 +1110,7 @@
                                                                         </center><hr>
                                                                         
                                                                     @else
-                                                                        <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                        <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -1103,7 +1119,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1135,7 +1151,7 @@
                                                                             class="btn btn-default btn-border" type="button" style="padding: 4px; font-size: 1.5em;"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     
                                                                     <center>
                                                                         
@@ -1145,7 +1161,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1166,7 +1182,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -1176,7 +1192,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1225,7 +1241,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -1234,7 +1250,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1266,7 +1282,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -1276,7 +1292,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1297,7 +1313,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1306,7 +1322,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1354,7 +1370,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -1363,7 +1379,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1395,7 +1411,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1404,7 +1420,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1425,7 +1441,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1434,7 +1450,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1482,7 +1498,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -1491,7 +1507,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1523,7 +1539,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1532,7 +1548,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1553,7 +1569,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1562,7 +1578,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1615,7 +1631,7 @@
                                                                         </center><hr>
                                                                         
                                                                     @else
-                                                                        <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                        <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -1624,7 +1640,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1656,7 +1672,7 @@
                                                                             class="btn btn-default btn-border" type="button" style="padding: 4px; font-size: 1.5em;"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     
                                                                     <center>
                                                                         
@@ -1666,7 +1682,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1687,7 +1703,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -1697,7 +1713,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1746,7 +1762,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -1755,7 +1771,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1787,7 +1803,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -1797,7 +1813,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1818,7 +1834,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1827,7 +1843,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1875,7 +1891,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -1884,7 +1900,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1916,7 +1932,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1925,7 +1941,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -1946,7 +1962,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -1955,7 +1971,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2003,7 +2019,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2012,7 +2028,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2044,7 +2060,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2053,7 +2069,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2074,7 +2090,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2083,7 +2099,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2137,7 +2153,7 @@
                                                                         </center><hr>
                                                                         
                                                                     @else
-                                                                        <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                        <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2146,7 +2162,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2178,7 +2194,7 @@
                                                                             class="btn btn-default btn-border" type="button" style="padding: 4px; font-size: 1.5em;"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     
                                                                     <center>
                                                                         
@@ -2188,7 +2204,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2209,7 +2225,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -2219,7 +2235,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2268,7 +2284,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2277,7 +2293,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2309,7 +2325,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -2319,7 +2335,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2340,7 +2356,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2349,7 +2365,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2397,7 +2413,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2406,7 +2422,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2438,7 +2454,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2447,7 +2463,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2468,7 +2484,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2477,7 +2493,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2525,7 +2541,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2534,7 +2550,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2566,7 +2582,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2575,7 +2591,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2596,7 +2612,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2605,7 +2621,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2660,7 +2676,7 @@
                                                                         </center><hr>
                                                                         
                                                                     @else
-                                                                        <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                        <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2669,7 +2685,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2701,7 +2717,7 @@
                                                                             class="btn btn-default btn-border" type="button" style="padding: 4px; font-size: 1.5em;"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     
                                                                     <center>
                                                                         
@@ -2711,7 +2727,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2732,7 +2748,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                         </center>
                                                                     @else
-                                                                    <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                    <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -2742,7 +2758,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else<br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2791,7 +2807,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2800,7 +2816,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2832,7 +2848,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center>
                                                                     <hr>
                                                                     <center>
                                                                         
@@ -2842,7 +2858,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2863,7 +2879,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2872,7 +2888,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2920,7 +2936,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -2929,7 +2945,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2961,7 +2977,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -2970,7 +2986,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -2991,7 +3007,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -3000,7 +3016,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3048,7 +3064,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                             <center>
                                                                                 
                                                                                 <button  onclick="
@@ -3057,7 +3073,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3089,7 +3105,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                         
                                                                                 <button  onclick="
@@ -3098,7 +3114,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3119,7 +3135,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar_vi('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3127,7 +3143,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3180,7 +3196,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3188,7 +3204,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3221,7 +3237,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3229,7 +3245,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3250,7 +3266,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3258,7 +3274,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3316,7 +3332,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3324,7 +3340,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3357,7 +3373,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3365,7 +3381,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3386,7 +3402,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3394,7 +3410,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3443,7 +3459,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3451,7 +3467,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3484,7 +3500,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3492,7 +3508,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3513,7 +3529,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3521,7 +3537,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3570,7 +3586,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr>
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3578,7 +3594,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3611,7 +3627,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3619,7 +3635,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3640,7 +3656,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3648,7 +3664,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3697,7 +3713,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr> 
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3705,7 +3721,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3739,7 +3755,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3747,7 +3763,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3768,7 +3784,7 @@
                                                                         class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3776,7 +3792,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3825,7 +3841,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr> 
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3833,7 +3849,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3866,7 +3882,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3874,7 +3890,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3895,7 +3911,7 @@
                                                                         class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3903,7 +3919,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3952,7 +3968,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr> 
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -3960,7 +3976,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -3993,7 +4009,7 @@
                                                                         class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -4001,7 +4017,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -4022,7 +4038,7 @@
                                                                         class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -4030,7 +4046,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -4079,7 +4095,7 @@
                                                                             class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center><hr>
                                                                         @else
-                                                                            <center><b>{{$cons->conductor}}</b></center><hr> 
+                                                                            <center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center><hr> 
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -4087,7 +4103,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -4120,7 +4136,7 @@
                                                                                 class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
                                                                     <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
@@ -4128,7 +4144,7 @@
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -4149,15 +4165,15 @@
                                                                         class="btn btn-default btn-border" style="padding: 4px; font-size: 1.5em;" type="button"><i class="la flaticon-add-user"></i></button>
                                                                             </center>
                                                                         @else
-                                                                        <hr><center><b>{{$cons->conductor}}</b></center> <hr>
-                                                                    <center>
+                                                                        <hr><center><b>{{$cons->conductor}}<br>Eco: {{$cons->eco}}</b></center> <hr>
+                                                                            <center>
                                                                                 <button  onclick="
                                                                                 abrirModalDesenrolar('{{$cons->id_jornada_pk}}','{{$cons->servicio}}','{{$cons->dia_servicio}}'
                                                                                 ,'{{$cons->turno}}','{{$cons->jornada}}','{{$cons->id_conductor_descanso}}','{{$cons->dia_descanso}}')"
                                                                                 class="btn btn-default btn-border" type="button" style="padding:4px; font-size: 1.3em;"><i class="flaticon-remove-user"></i></button>
                                                                                 
                                                                                 @if($cons->dia_descanso == null)
-                                                                                <br>Sin descanso
+                                                                                
                                                                                 @else  <br>
                                                                                 {{$cons->dia_descanso}} - Oper: {{$cons->id_conductor_descanso}}
                                                                                 @endif
@@ -4437,14 +4453,17 @@
             $('#exampleModal_d').modal('show');
         }
         @if (session('hidden_servicio'))
-
-        @if(session('hidden_servicio') == 'TR1' && session('hidden_dia_servicio_d') == 'Lunes' )
+        
+        
+            @if(session('hidden_servicio') == 'TR1' && session('hidden_dia_servicio_d') == 'Lunes' )
                 deselecciona();
                 $('#pills-home-tab-nobd_l').css('background-color', 'rgba(229,190,1,.7)');
                 $('#pills-home-tab-nobd_l').click();
             @endif
             @if(session('hidden_servicio')  == 'TR1-R' && session('hidden_dia_servicio_d') == 'Lunes' )
             
+        console.log('servicio '+"{{session('hidden_servicio')}}");
+        console.log('dia '+"{{session('hidden_dia_servicio_d')}}");
                 deselecciona();
                 $('#pills-profile-tab-nobd_l').css('background-color', 'rgba(255,0,128,.6)');
                 $('#pills-profile-tab-nobd_l').click();

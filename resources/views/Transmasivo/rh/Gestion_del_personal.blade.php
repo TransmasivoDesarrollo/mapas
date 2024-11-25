@@ -145,598 +145,667 @@
 								</button>
 							</div>
 							<div class="modal-body modal-body-custom">
-                                <div class="form-group row ">
-                                    <div class="col-md-12">
-                                        <center><b>Datos personales                                        </b></center>
-                                    </div>
-                                </div>
-								<div class="form-group row">
-                                    
-									
-									<div class="col-md-3">
-										<div  id="nombre_m_v" class="form-group form-group-default">
-											<label>Nombre(s)<span class="required-label">*</span></label>
-											<input id="nombre_m" name="nombre_m"  type="text" class="form-control" required >
-										</div>
-									</div>
-									<div class="col-md-2">
-										<div   id="apellido_p_v" class="form-group form-group-default">
-											<label>Apellido paterno<span class="required-label">*</span></label>
-											<input id="apellido_p_m" name="apellido_p_m"  type="text" class="form-control" required >
-										</div>
-									</div>
-									<div class="col-md-2">
-										<div   id="apellido_m_v" class="form-group form-group-default">
-											<label>Apellido materno<span class="required-label">*</span></label>
-											<input id="apellido_m_m" name="apellido_m_m"  type="text" class="form-control" required >
-										</div>
-									</div>
-									<div class="col-md-2">
-										<div   id="nacimiento_v" class="form-group form-group-default">
-											<label>Fecha de nacimiento<span class="required-label">*</span></label>
-											<input id="nacimiento" name="nacimiento"  type="date" class="form-control" required>
-										</div>
-									</div>
-									
-									<div class="col-md-1">
-										<div   id="Edad_v" class="form-group form-group-default">
-											<label>Edad<span class="required-label">*</span></label>
-											<input id="Edad" name="Edad"  type="text" class="form-control" required>
-										</div>
-									</div>
-                                    <div class="col-md-3">
-                                        <div   id="CURP_v" class="form-group form-group-default">
-                                            <label>CURP<span class="required-label">*</span></label>
-                                            <input id="CURP" name="CURP"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div   id="ine_v" class="form-group form-group-default">
-                                            <label>INE<span class="required-label">*</span></label>
-                                            <input required type="text" class="form-control input-with-border" id="ine_m" name="ine_m" >
-                                        </div>
-                                    </div>                                    
-                                    <div class="col-md-3">
-                                        <div   id="IMSS_v" class="form-group form-group-default">
-                                            <label>Número de Seguridad Social<span class="required-label">*</span></label>
-                                            <input id="IMSS" name="IMSS"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div   id="Civil_v" class="form-group form-group-default">
-                                            <label>Estado Civil<span class="required-label">*</span></label>
-                                            <select required class="form-control" id="Civil_m" name="Civil_m">
-                                                <option value="">Seleccione una opción</option>
-                                                <option value="SOLTERO">Soltero</option>
-                                                <option value="CASADO">Casado</option>
-                                                <option value="DIVORCIADO">Divorciado</option>
-                                                <option value="VIUDO">Viudo</option>
-                                                <option value="UNIÓN LIBRE">Unión libre</option>
-                                                <option value="SEPARADO">Separado</option>
-                                                <option value="COMPROMETIDO">Comprometido</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div   id="n_hijos_v" class="form-group form-group-default">
-                                            <label>Numero de hijos<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="n_hijos_m" name="n_hijos_m" onchange="valida_hijos()"> 
-                                                <option value=null>-Sin hijos-</option>    
-                                                <option value="1">1</option>    
-                                                <option value="2">2</option>    
-                                                <option value="3">3</option>    
-                                                <option value="4">4</option>    
-                                                <option value="5">5</option>    
-                                                <option value="6">6</option>    
-                                                <option value="7">7</option>    
-                                                <option value="8">8</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo1_1">
-                                        <div   id="genero_h_1_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 1<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_1_m" name="genero_h_1_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo1_2">
-                                        <div   id="fecha_h_1_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 1<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_1_m" name="fecha_h_1_m" >
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3" id="hijo2_1">
-                                        <div   id="genero_h_2_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 2<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_2_m" name="genero_h_2_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo2_2">
-                                        <div   id="fecha_h_2_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 2<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_2_m" name="fecha_h_2_m" >
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3" id="hijo3_1">
-                                        <div   id="genero_h_3_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 3<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_3_m" name="genero_h_3_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo3_2">
-                                        <div   id="fecha_h_3_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 3<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_3_m" name="fecha_h_3_m" >
-                                        </div>
-                                    </div>
+                                <div class="card-body">
+                                <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link active" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;  " id="pills-home-tab" 
+                                            data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Datos personales</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link"  style="background-color:#F1D592; border-bottom:1px #F1D592 solid;"  id="pills-profile-tab"
+                                             data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Datos de Contacto</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact-tab" 
+                                            data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Datos Laborales
+                                            </a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact2-tab" 
+                                            data-toggle="pill" href="#pills-contact2" role="tab" aria-controls="pills-contact2" aria-selected="false">Documentación
+                                            </a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact3-tab" 
+                                            data-toggle="pill" href="#pills-contact3" role="tab" aria-controls="pills-contact3" aria-selected="false">Información Médica
+                                            </a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact4-tab" 
+                                            data-toggle="pill" href="#pills-contact4" role="tab" aria-controls="pills-contact4" aria-selected="false">Otros Datos 
+                                            </a>
+										</li>
+                                        
+									</ul>
 
-                                    <div class="col-md-3" id="hijo4_1">
-                                        <div   id="genero_h_4_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 4<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_4_m" name="genero_h_4_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo4_2">
-                                        <div   id="fecha_h_4_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 4<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_4_m" name="fecha_h_4_m" >
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3" id="hijo5_1">
-                                        <div   id="genero_h_5_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 5<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_5_m" name="genero_h_5_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo5_2">
-                                        <div   id="fecha_h_5_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 5<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_5_m" name="fecha_h_5_m" >
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3" id="hijo6_1">
-                                        <div   id="genero_h_6_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 6<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_6_m" name="genero_h_6_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo6_2">
-                                        <div   id="fecha_h_6_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 6<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_6_m" name="fecha_h_6_m" >
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3" id="hijo7_1">
-                                        <div   id="genero_h_7_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 7<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_7_m" name="genero_h_7_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo7_2">
-                                        <div   id="fecha_h_7_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 7<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_7_m" name="fecha_h_7_m" >
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3" id="hijo8_1">
-                                        <div   id="genero_h_8_v" class="form-group form-group-default">
-                                            <label>Genero hij@ 8<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="genero_h_8_m" name="genero_h_8_m" > 
-                                                <option value='Masculino'>Masculino</option>    
-                                                <option value='Femenino'>Femenino</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo8_2">
-                                        <div   id="fecha_h_8_v" class="form-group form-group-default">
-                                            <label>Fecha de nacimiento hij@ 8<span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_h_8_m" name="fecha_h_8_m" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div   id="Nacionalidad_v" class="form-group form-group-default">
-                                            <label>Nacionalidad<span class="required-label">*</span></label>
-                                            <input id="Nacionalidad" name="Nacionalidad"  type="text" class="form-control" required value="Mexicana">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div   id="Sexo_v" class="form-group form-group-default">
-                                            <label>Sexo<span class="required-label">*</span></label>
-                                            <select required class="form-control input-with-border" id="Sexo_m" name="Sexo_m">
-                                                <option value="MASCULINO">Masculino</option>
-                                                <option value="FEMENINO">Femenino</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>	
-                                <div class="form-group row " >
-                                    <div class="col-md-12">
-                                        <center><b>Datos de Contacto</b></center>
-                                    </div>
-                                </div>	
-                                <div class="form-group row " >
-                                    <div class="col-md-3">
-                                        <div  id="m_celular_v" class="form-group form-group-default">
-                                            <label>Numero Celular<span class="required-label">*</span></label>
-                                            <input required type="text" max="10" class="form-control input-with-border" id="m_celular_m" name="m_celular_m" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="Correo_v" class="form-group form-group-default">
-                                            <label>Correo<span class="required-label">*</span></label>
-                                            <input id="Correo" name="Correo"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div id="Calle_v" class="form-group form-group-default">
-                                            <label>Calle<span class="required-label">*</span></label>
-                                            <input id="Calle" name="Calle"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div id="Numero_v" class="form-group form-group-default">
-                                            <label>Numero<span class="required-label">*</span></label>
-                                            <input id="Numero" name="Numero"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div id="Colonia_v" class="form-group form-group-default">
-                                            <label>Colonia<span class="required-label">*</span></label>
-                                            <input id="Colonia" name="Colonia"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div id="Alcaldia_v" class="form-group form-group-default">
-                                            <label>Alcaldía/Municipio<span class="required-label">*</span></label>
-                                            <input id="Alcaldia" name="Alcaldia"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div  id="Estado_v"class="form-group form-group-default">
-                                            <label>Estado<span class="required-label">*</span></label>
-                                            <select required class="form-control" id="Estado" name="Estado">
-                                                <option value="">SELECCIONE UN ESTADO</option>
-                                                <option value="AGUASCALIENTES">Aguascalientes</option>
-                                                <option value="BAJA CALIFORNIA">Baja California</option>
-                                                <option value="BAJA CALIFORNIA SUR">Baja California Sur</option>
-                                                <option value="CAMPECHE">Campeche</option>
-                                                <option value="CHIAPAS">Chiapas</option>
-                                                <option value="CHIHUAHUA">Chihuahua</option>
-                                                <option value="CIUDAD DE MEXICO">Ciudad de México</option>
-                                                <option value="COAHUILA">Coahuila</option>
-                                                <option value="COLIMA">Colima</option>
-                                                <option value="DURANGO">Durango</option>
-                                                <option value="GUANAJUATO">Guanajuato</option>
-                                                <option value="GUERRERO">Guerrero</option>
-                                                <option value="HIDALGO">Hidalgo</option>
-                                                <option value="JALISCO">Jalisco</option>
-                                                <option value="ESTADO DE MEXICO" selected>Estado de México</option>
-                                                <option value="MICHOACAN">Michoacán</option>
-                                                <option value="MORELOS">Morelos</option>
-                                                <option value="NAYARIT">Nayarit</option>
-                                                <option value="NUEVO LEON">Nuevo León</option>
-                                                <option value="OAXACA">Oaxaca</option>
-                                                <option value="PUEBLA">Puebla</option>
-                                                <option value="QUERÉTARO">Querétaro</option>
-                                                <option value="QUINTANA ROO">Quintana Roo</option>
-                                                <option value="SAN LUIS POTOSÍ">San Luis Potosí</option>
-                                                <option value="SINALOA">Sinaloa</option>
-                                                <option value="SONORA">Sonora</option>
-                                                <option value="TABASCO">Tabasco</option>
-                                                <option value="TAMAULIPAS">Tamaulipas</option>
-                                                <option value="TLAXCALA">Tlaxcala</option>
-                                                <option value="VERACRUZ">Veracruz</option>
-                                                <option value="YUCATÁN">Yucatán</option>
-                                                <option value="ZACATECAS">Zacatecas</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div id="postal_v" class="form-group form-group-default">
-                                            <label>Código postal<span class="required-label">*</span></label>
-                                            <input id="postal" name="postal"  type="text" class="form-control" required >
-                                        </div>
-                                    </div>
-                                
-                                </div>
-                                <hr>	
-                                <div class="form-group row " >
-                                    <div class="col-md-12">
-                                        <center><b>Datos Laborales</b></center>
-                                    </div>
-                                </div>	
-                                <div class="form-group row " >
-                                    <div class="col-md-2">
-                                        <div  id="estatus_v" class="form-group form-group-default">
-                                            <label>Estatus <span class="required-label">*</span></label>
-                                            <input id="estatus_m" name="estatus_m"  type="text" class="form-control" disabled  >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-										<div id="empleado_m_v" class="form-group form-group-default ">
-											<label>Credencial<span class="required-label">*</span></label>
-											<input id="empleado_m" name="empleado_m"  type="number" class="form-control" required >
-										</div>
-									</div>
-                                    <div class="col-md-3">
-                                        <div  id="departamento_v" class="form-group form-group-default">
-                                            <label>Departamento<span class="required-label">*</span></label>
-                                            <select id="departamento_m" name="departamento_m"  class="form-control" required  onchange="valida_formulario()">
-                                                <option value=null>-Sin departamento-</option>    
-                                                @foreach($c_departamento as $c_depa)
-                                                <option value="{{$c_depa->id_departamento}}">{{$c_depa->departamento}}</option>    
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="Puesto_v" class="form-group form-group-default">
-                                            <label>Puesto<span class="required-label">*</span></label>
-                                            <input id="Puesto" name="Puesto"  type="text" class="form-control" required  onkeyup="valida_formulario()">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div  id="RFC_v" class="form-group form-group-default">
-                                            <label>RFC<span class="required-label">*</span></label>
-                                            <input id="RFC" name="RFC"  type="text" class="form-control" required  onkeyup="valida_formulario()">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="horario_v" class="form-group form-group-default">
-                                            <label>Horario<span class="required-label">*</span></label>
-                                            <select id="horario_m" name="horario_m"  class="form-control" required   onchange="valida_formulario()">
-                                                <option value=null>-Sin horario-</option>    
-                                                @foreach($t_horarios_personal as $t_horario)
-                                                <option value="{{$t_horario->id_t_horarios_personal}}">{{$t_horario->nombre_horario}}</option>    
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div  id="fecha_contrato_v" class="form-group form-group-default">
-                                            <label>Fecha de contrato <span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_contrato" name="fecha_contrato" disabled  onchange="valida_formulario()">
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div  id="fecha_baja_v" class="form-group form-group-default">
-                                            <label>Fecha de baja <span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="fecha_baja_m" name="fecha_baja_m" disabled  onchange="valida_formulario()">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div  id="reingreso_v" class="form-group form-group-default">
-                                            <label>Reingreso <span class="required-label">*</span></label>
-                                            <input required type="date" class="form-control input-with-border" id="reingreso_m" name="reingreso_m" disabled  onchange="valida_formulario()">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="c_estudio_v" class="form-group form-group-default">
-                                            <label>Nivel de estudios<span class="required-label">*</span></label> 
-                                            <select required  class="form-control input-with-border" id="c_estudio" name="c_estudio"  onchange="valida_formulario()" > 
-                                                <option value=null>-Sin estudios asignados-</option>    
-                                                @foreach($c_nivel_estudio as $c_estudio)
-                                                <option value="{{$c_estudio->id_nivel}}">{{$c_estudio->nivel_estudio}}</option>    
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="c_banco_v" class="form-group form-group-default">
-                                            <label>Bancos<span class="required-label">*</span></label> 
-                                            <select required  class="form-control input-with-border" id="c_banco" name="c_banco"  onchange="valida_formulario()" > 
+									<div class="tab-content mb-3" marid="pills-tabContent">
+										<div class="tab-pane fade show active" 
+                                        style="border-left:1px black solid; border-right:1px black solid; border-bottom:1px black solid; margin-top: -16px; 
+                                        border-top:1px black solid;  background-color: rgba(241,213,146,.7)"
+                                         id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                            <div class="form-group row ">
+                                                <div class="col-md-12">
+                                                    <center><b>Datos personales</b></center>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 
-                                                <option value=null>-Sin banco asignado-</option>    
-                                                @foreach($c_banco as $c_ban)
-                                                <option value="{{$c_ban->id_banco}}">{{$c_ban->banco}}</option>    
-                                                @endforeach
-                                            </select>
+                                            
+                                                <div class="col-md-3">
+                                                    <div  id="nombre_m_v" class="form-group form-group-default">
+                                                        <label>Nombre(s)<span class="required-label">*</span></label>
+                                                        <input id="nombre_m" name="nombre_m"  type="text" class="form-control" required >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div   id="apellido_p_v" class="form-group form-group-default">
+                                                        <label>Apellido paterno<span class="required-label">*</span></label>
+                                                        <input id="apellido_p_m" name="apellido_p_m"  type="text" class="form-control" required >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div   id="apellido_m_v" class="form-group form-group-default">
+                                                        <label>Apellido materno<span class="required-label">*</span></label>
+                                                        <input id="apellido_m_m" name="apellido_m_m"  type="text" class="form-control" required >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div   id="nacimiento_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento<span class="required-label">*</span></label>
+                                                        <input id="nacimiento" name="nacimiento"  type="date" class="form-control" required>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-1">
+                                                    <div   id="Edad_v" class="form-group form-group-default">
+                                                        <label>Edad<span class="required-label">*</span></label>
+                                                        <input id="Edad" name="Edad"  type="text" class="form-control" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div   id="CURP_v" class="form-group form-group-default">
+                                                        <label>CURP<span class="required-label">*</span></label>
+                                                        <input id="CURP" name="CURP"  type="text" class="form-control" required >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div   id="ine_v" class="form-group form-group-default">
+                                                        <label>INE<span class="required-label">*</span></label>
+                                                        <input required type="text" class="form-control input-with-border" id="ine_m" name="ine_m" >
+                                                    </div>
+                                                </div>                                    
+                                                <div class="col-md-3">
+                                                    <div   id="IMSS_v" class="form-group form-group-default">
+                                                        <label>Número de Seguridad Social<span class="required-label">*</span></label>
+                                                        <input id="IMSS" name="IMSS"  type="text" class="form-control" required >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div   id="Civil_v" class="form-group form-group-default">
+                                                        <label>Estado Civil<span class="required-label">*</span></label>
+                                                        <select required class="form-control" id="Civil_m" name="Civil_m">
+                                                            <option value="">Seleccione una opción</option>
+                                                            <option value="SOLTERO">Soltero</option>
+                                                            <option value="CASADO">Casado</option>
+                                                            <option value="DIVORCIADO">Divorciado</option>
+                                                            <option value="VIUDO">Viudo</option>
+                                                            <option value="UNIÓN LIBRE">Unión libre</option>
+                                                            <option value="SEPARADO">Separado</option>
+                                                            <option value="COMPROMETIDO">Comprometido</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div   id="n_hijos_v" class="form-group form-group-default">
+                                                        <label>Numero de hijos<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="n_hijos_m" name="n_hijos_m" onchange="valida_hijos()"> 
+                                                            <option value=null>-Sin hijos-</option>    
+                                                            <option value="1">1</option>    
+                                                            <option value="2">2</option>    
+                                                            <option value="3">3</option>    
+                                                            <option value="4">4</option>    
+                                                            <option value="5">5</option>    
+                                                            <option value="6">6</option>    
+                                                            <option value="7">7</option>    
+                                                            <option value="8">8</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo1_1">
+                                                    <div   id="genero_h_1_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 1<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_1_m" name="genero_h_1_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo1_2">
+                                                    <div   id="fecha_h_1_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 1<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_1_m" name="fecha_h_1_m" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3" id="hijo2_1">
+                                                    <div   id="genero_h_2_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 2<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_2_m" name="genero_h_2_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo2_2">
+                                                    <div   id="fecha_h_2_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 2<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_2_m" name="fecha_h_2_m" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3" id="hijo3_1">
+                                                    <div   id="genero_h_3_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 3<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_3_m" name="genero_h_3_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo3_2">
+                                                    <div   id="fecha_h_3_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 3<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_3_m" name="fecha_h_3_m" >
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3" id="hijo4_1">
+                                                    <div   id="genero_h_4_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 4<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_4_m" name="genero_h_4_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo4_2">
+                                                    <div   id="fecha_h_4_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 4<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_4_m" name="fecha_h_4_m" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3" id="hijo5_1">
+                                                    <div   id="genero_h_5_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 5<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_5_m" name="genero_h_5_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo5_2">
+                                                    <div   id="fecha_h_5_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 5<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_5_m" name="fecha_h_5_m" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3" id="hijo6_1">
+                                                    <div   id="genero_h_6_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 6<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_6_m" name="genero_h_6_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo6_2">
+                                                    <div   id="fecha_h_6_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 6<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_6_m" name="fecha_h_6_m" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3" id="hijo7_1">
+                                                    <div   id="genero_h_7_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 7<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_7_m" name="genero_h_7_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo7_2">
+                                                    <div   id="fecha_h_7_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 7<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_7_m" name="fecha_h_7_m" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3" id="hijo8_1">
+                                                    <div   id="genero_h_8_v" class="form-group form-group-default">
+                                                        <label>Genero hij@ 8<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="genero_h_8_m" name="genero_h_8_m" > 
+                                                            <option value='Masculino'>Masculino</option>    
+                                                            <option value='Femenino'>Femenino</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo8_2">
+                                                    <div   id="fecha_h_8_v" class="form-group form-group-default">
+                                                        <label>Fecha de nacimiento hij@ 8<span class="required-label">*</span></label>
+                                                        <input required type="date" class="form-control input-with-border" id="fecha_h_8_m" name="fecha_h_8_m" >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div   id="Nacionalidad_v" class="form-group form-group-default">
+                                                        <label>Nacionalidad<span class="required-label">*</span></label>
+                                                        <input id="Nacionalidad" name="Nacionalidad"  type="text" class="form-control" required value="Mexicana">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div   id="Sexo_v" class="form-group form-group-default">
+                                                        <label>Sexo<span class="required-label">*</span></label>
+                                                        <select required class="form-control input-with-border" id="Sexo_m" name="Sexo_m">
+                                                            <option value="MASCULINO">Masculino</option>
+                                                            <option value="FEMENINO">Femenino</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="clabe_v" class="form-group form-group-default">
-                                            <label>CLABE Inter Bancaria<span class="required-label">*</span></label>
-                                            <input required type="text" class="form-control input-with-border" id="clabe" name="clabe" onkeyup="valida_formulario()" >
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-2">
-                                        <div  id="Salario_diario_v" class="form-group form-group-default">
-                                            <label>Salario diario <span class="required-label">*</span></label>
-                                            <input id="Salario_diario" name="Salario_diario"  type="text" class="form-control" required  oninput="convertSalary()"  onkeyup="valida_formulario()" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div  id="Salario_diario_letras_v" class="form-group form-group-default">
-                                            <label>Salario en letras  <span class="required-label">*</span></label>
-                                            <input id="Salario_diario_letras" name="Salario_diario_letras"  type="text" class="form-control" required   onkeyup="valida_formulario()" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="n_infonavit_v" class="form-group form-group-default">
-                                            <label>Crédito Infonavit <span class="required-label">*</span></label> 
-                                            Si tiene<input required type="radio" class="form-control input-with-border" id="credito_m" name="credito_m" value="Si" >
-                                            <input required type="text" class="form-control input-with-border" id="n_infonavit" name="n_infonavit" placeholder="Sin crédito infonavit"  onkeyup="valida_formulario()">
-                                            <hr>
-                                            No tiene<input required type="radio" class="form-control input-with-border" id="credito_m" name="credito_m" Value="No">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div id="licencia_v"  class="form-group form-group-default">
-                                            <label>Licencia Tipo B No.<span class="required-label">*</span></label>
-                                            <input required type="text" max="12" class="form-control input-with-border" id="licencia_m" name="licencia_m" onkeyup="valida_formulario()" >
-                                        </div>
-                                    </div>
-                                    </div>
-                                <hr>	
-                                <div class="form-group row " >
-                                    <div class="col-md-12">
-                                        <center><b>Documentación</b></center>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row " >
-                                    <div class="col-md-3">
-                                        <div id="acta_n_v"  class="form-group form-group-default">
-                                            <label>Acta de nacimiento<span class="required-label">*</span></label>
-                                            Si tiene<input required type="radio" class="form-control input-with-border" id="acta_n_m" name="acta_n_m" value="Si" onclick="valida_formulario()" ><hr>
-                                            No tiene<input required type="radio" class="form-control input-with-border" id="acta_n_m" name="acta_n_m" Value="No" onclick="valida_formulario()">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div id="carta_1_v"  class="form-group form-group-default">
-                                            <label>Carta de recomendación 1<span class="required-label">*</span></label>
-                                            Si tiene<input required type="radio" class="form-control input-with-border" id="carta_1_m" name="carta_1_m" value="Si" onclick="valida_formulario()" ><hr>
-                                            No tiene<input required type="radio" class="form-control input-with-border" id="carta_1_m" name="carta_1_m" Value="No" onclick="valida_formulario()">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div id="carta_2_v"  class="form-group form-group-default">
-                                            <label>Carta de recomendación 2<span class="required-label">*</span></label>
-                                            Si tiene<input required type="radio" class="form-control input-with-border" id="carta_2_m" name="carta_2_m" value="Si"  onclick="valida_formulario()"><hr>
-                                            No tiene<input required type="radio" class="form-control input-with-border" id="carta_2_m" name="carta_2_m" Value="No"  onclick="valida_formulario()">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div id="penales_v"  class="form-group form-group-default">
-                                            <label>Antecedentes No Penales<span class="required-label">*</span></label> 
-                                            Si tiene<input required type="radio" class="form-control input-with-border" id="penales_m" name="penales_m" value="Si"  onclick="valida_formulario()"><hr>
-                                            No tiene<input required type="radio" class="form-control input-with-border" id="penales_m" name="penales_m" Value="No"  onclick="valida_formulario()">
+										<div class="tab-pane fade" 
+                                        style="border-left:1px black solid; border-right:1px black solid; border-bottom:1px black solid; margin-top: -16px; 
+                                        border-top:1px black solid;  background-color: rgba(241,213,146,.7)"
+                                         id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+										
+                                        <div class="form-group row " >
+                                            <div class="col-md-12">
+                                                <center><b>Datos de Contacto</b></center>
+                                            </div>
+                                        </div>	
+                                        <div class="form-group row " >
+                                            <div class="col-md-3">
+                                                <div  id="m_celular_v" class="form-group form-group-default">
+                                                    <label>Numero Celular<span class="required-label">*</span></label>
+                                                    <input required type="text" max="10" class="form-control input-with-border" id="m_celular_m" name="m_celular_m" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="Correo_v" class="form-group form-group-default">
+                                                    <label>Correo<span class="required-label">*</span></label>
+                                                    <input id="Correo" name="Correo"  type="text" class="form-control" required >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div id="Calle_v" class="form-group form-group-default">
+                                                    <label>Calle<span class="required-label">*</span></label>
+                                                    <input id="Calle" name="Calle"  type="text" class="form-control" required >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div id="Numero_v" class="form-group form-group-default">
+                                                    <label>Numero<span class="required-label">*</span></label>
+                                                    <input id="Numero" name="Numero"  type="text" class="form-control" required >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div id="Colonia_v" class="form-group form-group-default">
+                                                    <label>Colonia<span class="required-label">*</span></label>
+                                                    <input id="Colonia" name="Colonia"  type="text" class="form-control" required >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div id="Alcaldia_v" class="form-group form-group-default">
+                                                    <label>Alcaldía/Municipio<span class="required-label">*</span></label>
+                                                    <input id="Alcaldia" name="Alcaldia"  type="text" class="form-control" required >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div  id="Estado_v"class="form-group form-group-default">
+                                                    <label>Estado<span class="required-label">*</span></label>
+                                                    <select required class="form-control" id="Estado" name="Estado">
+                                                        <option value="">SELECCIONE UN ESTADO</option>
+                                                        <option value="AGUASCALIENTES">Aguascalientes</option>
+                                                        <option value="BAJA CALIFORNIA">Baja California</option>
+                                                        <option value="BAJA CALIFORNIA SUR">Baja California Sur</option>
+                                                        <option value="CAMPECHE">Campeche</option>
+                                                        <option value="CHIAPAS">Chiapas</option>
+                                                        <option value="CHIHUAHUA">Chihuahua</option>
+                                                        <option value="CIUDAD DE MEXICO">Ciudad de México</option>
+                                                        <option value="COAHUILA">Coahuila</option>
+                                                        <option value="COLIMA">Colima</option>
+                                                        <option value="DURANGO">Durango</option>
+                                                        <option value="GUANAJUATO">Guanajuato</option>
+                                                        <option value="GUERRERO">Guerrero</option>
+                                                        <option value="HIDALGO">Hidalgo</option>
+                                                        <option value="JALISCO">Jalisco</option>
+                                                        <option value="ESTADO DE MEXICO" selected>Estado de México</option>
+                                                        <option value="MICHOACAN">Michoacán</option>
+                                                        <option value="MORELOS">Morelos</option>
+                                                        <option value="NAYARIT">Nayarit</option>
+                                                        <option value="NUEVO LEON">Nuevo León</option>
+                                                        <option value="OAXACA">Oaxaca</option>
+                                                        <option value="PUEBLA">Puebla</option>
+                                                        <option value="QUERÉTARO">Querétaro</option>
+                                                        <option value="QUINTANA ROO">Quintana Roo</option>
+                                                        <option value="SAN LUIS POTOSÍ">San Luis Potosí</option>
+                                                        <option value="SINALOA">Sinaloa</option>
+                                                        <option value="SONORA">Sonora</option>
+                                                        <option value="TABASCO">Tabasco</option>
+                                                        <option value="TAMAULIPAS">Tamaulipas</option>
+                                                        <option value="TLAXCALA">Tlaxcala</option>
+                                                        <option value="VERACRUZ">Veracruz</option>
+                                                        <option value="YUCATÁN">Yucatán</option>
+                                                        <option value="ZACATECAS">Zacatecas</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="postal_v" class="form-group form-group-default">
+                                                    <label>Código postal<span class="required-label">*</span></label>
+                                                    <input id="postal" name="postal"  type="text" class="form-control" required >
+                                                </div>
+                                            </div>
                                         
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div id="fotos_v"  class="form-group form-group-default">
-                                            <label>Fotos <span class="required-label">*</span></label> 
-                                            1 foto <input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" value="1"  onclick="valida_formulario()"  >
-                                            <hr>
-                                            2 fotos<input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" Value="2" onclick="valida_formulario()">
-                                            <hr>
-                                            3 fotos<input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" Value="3" onclick="valida_formulario()">
-                                            <hr>
-                                            4 fotos<input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" Value="4" onclick="valida_formulario()">
+                                        
+										</div>
+										<div class="tab-pane fade" 
+                                        style="border-left:1px black solid; border-right:1px black solid; border-bottom:1px black solid; margin-top: -16px; 
+                                        border-top:1px black solid;  background-color: rgba(241,213,146,.7)"
+                                        id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+										
+                                        <div class="form-group row " >
+                                            <div class="col-md-12">
+                                                <center><b>Datos Laborales</b></center>
+                                            </div>
+                                        </div>	
+                                        <div class="form-group row " >
+                                            <div class="col-md-2">
+                                                <div  id="estatus_v" class="form-group form-group-default">
+                                                    <label>Estatus <span class="required-label">*</span></label>
+                                                    <input id="estatus_m" name="estatus_m"  type="text" class="form-control" disabled  >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="empleado_m_v" class="form-group form-group-default ">
+                                                    <label>Credencial<span class="required-label">*</span></label>
+                                                    <input id="empleado_m" name="empleado_m"  type="number" class="form-control" required >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="departamento_v" class="form-group form-group-default">
+                                                    <label>Departamento<span class="required-label">*</span></label>
+                                                    <select id="departamento_m" name="departamento_m"  class="form-control" required  onchange="valida_formulario()">
+                                                        <option value=null>-Sin departamento-</option>    
+                                                        @foreach($c_departamento as $c_depa)
+                                                        <option value="{{$c_depa->id_departamento}}">{{$c_depa->departamento}}</option>    
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="Puesto_v" class="form-group form-group-default">
+                                                    <label>Puesto<span class="required-label">*</span></label>
+                                                    <input id="Puesto" name="Puesto"  type="text" class="form-control" required  onkeyup="valida_formulario()">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div  id="RFC_v" class="form-group form-group-default">
+                                                    <label>RFC<span class="required-label">*</span></label>
+                                                    <input id="RFC" name="RFC"  type="text" class="form-control" required  onkeyup="valida_formulario()">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="horario_v" class="form-group form-group-default">
+                                                    <label>Horario<span class="required-label">*</span></label>
+                                                    <select id="horario_m" name="horario_m"  class="form-control" required   onchange="valida_formulario()">
+                                                        <option value=null>-Sin horario-</option>    
+                                                        @foreach($t_horarios_personal as $t_horario)
+                                                        <option value="{{$t_horario->id_t_horarios_personal}}">{{$t_horario->nombre_horario}}</option>    
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div  id="fecha_contrato_v" class="form-group form-group-default">
+                                                    <label>Fecha de contrato <span class="required-label">*</span></label>
+                                                    <input required type="date" class="form-control input-with-border" id="fecha_contrato" name="fecha_contrato" disabled  onchange="valida_formulario()">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div  id="fecha_baja_v" class="form-group form-group-default">
+                                                    <label>Fecha de baja <span class="required-label">*</span></label>
+                                                    <input required type="date" class="form-control input-with-border" id="fecha_baja_m" name="fecha_baja_m" disabled  onchange="valida_formulario()">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div  id="reingreso_v" class="form-group form-group-default">
+                                                    <label>Reingreso <span class="required-label">*</span></label>
+                                                    <input required type="date" class="form-control input-with-border" id="reingreso_m" name="reingreso_m" disabled  onchange="valida_formulario()">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="c_estudio_v" class="form-group form-group-default">
+                                                    <label>Nivel de estudios<span class="required-label">*</span></label> 
+                                                    <select required  class="form-control input-with-border" id="c_estudio" name="c_estudio"  onchange="valida_formulario()" > 
+                                                        <option value=null>-Sin estudios asignados-</option>    
+                                                        @foreach($c_nivel_estudio as $c_estudio)
+                                                        <option value="{{$c_estudio->id_nivel}}">{{$c_estudio->nivel_estudio}}</option>    
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="c_banco_v" class="form-group form-group-default">
+                                                    <label>Bancos<span class="required-label">*</span></label> 
+                                                    <select required  class="form-control input-with-border" id="c_banco" name="c_banco"  onchange="valida_formulario()" > 
+                                                        
+                                                        <option value=null>-Sin banco asignado-</option>    
+                                                        @foreach($c_banco as $c_ban)
+                                                        <option value="{{$c_ban->id_banco}}">{{$c_ban->banco}}</option>    
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="clabe_v" class="form-group form-group-default">
+                                                    <label>CLABE Inter Bancaria<span class="required-label">*</span></label>
+                                                    <input required type="text" class="form-control input-with-border" id="clabe" name="clabe" onkeyup="valida_formulario()" >
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-2">
+                                                <div  id="Salario_diario_v" class="form-group form-group-default">
+                                                    <label>Salario diario <span class="required-label">*</span></label>
+                                                    <input id="Salario_diario" name="Salario_diario"  type="text" class="form-control" required  oninput="convertSalary()"  onkeyup="valida_formulario()" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div  id="Salario_diario_letras_v" class="form-group form-group-default">
+                                                    <label>Salario en letras  <span class="required-label">*</span></label>
+                                                    <input id="Salario_diario_letras" name="Salario_diario_letras"  type="text" class="form-control" required   onkeyup="valida_formulario()" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div  id="n_infonavit_v" class="form-group form-group-default">
+                                                    <label>Crédito Infonavit <span class="required-label">*</span></label> 
+                                                    Si tiene<input required type="radio" class="form-control input-with-border" id="credito_m" name="credito_m" value="Si" >
+                                                    <input required type="text" class="form-control input-with-border" id="n_infonavit" name="n_infonavit" placeholder="Sin crédito infonavit"  onkeyup="valida_formulario()">
+                                                    <hr>
+                                                    No tiene<input required type="radio" class="form-control input-with-border" id="credito_m" name="credito_m" Value="No">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div id="licencia_v"  class="form-group form-group-default">
+                                                    <label>Licencia Tipo B No.<span class="required-label">*</span></label>
+                                                    <input required type="text" max="12" class="form-control input-with-border" id="licencia_m" name="licencia_m" onkeyup="valida_formulario()" >
+                                                </div>
+                                            </div>
+                                            </div>	
                                         </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3">
-                                        <div id="comprobante_dom_v"  class="form-group form-group-default">
-                                            <label>Comprobante de Domicilio<span class="required-label">*</span></label>
-                                            <input required type="text" class="form-control input-with-border" id="comprobante_dom_m" name="comprobante_dom_m"  onkeyup="valida_formulario()" >
+                                        <div class="tab-pane fade" 
+                                        style="border-left:1px black solid; border-right:1px black solid; border-bottom:1px black solid; margin-top: -16px; 
+                                        border-top:1px black solid;  background-color: rgba(241,213,146,.7)"
+                                        id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact2-tab">
+                                            <div class="form-group row " >
+                                                <div class="col-md-12">
+                                                    <center><b>Documentación</b></center>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group row " >
+                                                <div class="col-md-3">
+                                                    <div id="acta_n_v"  class="form-group form-group-default">
+                                                        <label>Acta de nacimiento<span class="required-label">*</span></label>
+                                                        Si tiene<input required type="radio" class="form-control input-with-border" id="acta_n_m" name="acta_n_m" value="Si" onclick="valida_formulario()" ><hr>
+                                                        No tiene<input required type="radio" class="form-control input-with-border" id="acta_n_m" name="acta_n_m" Value="No" onclick="valida_formulario()">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div id="carta_1_v"  class="form-group form-group-default">
+                                                        <label>Carta de recomendación 1<span class="required-label">*</span></label>
+                                                        Si tiene<input required type="radio" class="form-control input-with-border" id="carta_1_m" name="carta_1_m" value="Si" onclick="valida_formulario()" ><hr>
+                                                        No tiene<input required type="radio" class="form-control input-with-border" id="carta_1_m" name="carta_1_m" Value="No" onclick="valida_formulario()">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div id="carta_2_v"  class="form-group form-group-default">
+                                                        <label>Carta de recomendación 2<span class="required-label">*</span></label>
+                                                        Si tiene<input required type="radio" class="form-control input-with-border" id="carta_2_m" name="carta_2_m" value="Si"  onclick="valida_formulario()"><hr>
+                                                        No tiene<input required type="radio" class="form-control input-with-border" id="carta_2_m" name="carta_2_m" Value="No"  onclick="valida_formulario()">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div id="penales_v"  class="form-group form-group-default">
+                                                        <label>Antecedentes No Penales<span class="required-label">*</span></label> 
+                                                        Si tiene<input required type="radio" class="form-control input-with-border" id="penales_m" name="penales_m" value="Si"  onclick="valida_formulario()"><hr>
+                                                        No tiene<input required type="radio" class="form-control input-with-border" id="penales_m" name="penales_m" Value="No"  onclick="valida_formulario()">
+                                                    
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div id="fotos_v"  class="form-group form-group-default">
+                                                        <label>Fotos <span class="required-label">*</span></label> 
+                                                        1 foto <input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" value="1"  onclick="valida_formulario()"  >
+                                                        <hr>
+                                                        2 fotos<input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" Value="2" onclick="valida_formulario()">
+                                                        <hr>
+                                                        3 fotos<input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" Value="3" onclick="valida_formulario()">
+                                                        <hr>
+                                                        4 fotos<input required type="radio" class="form-control input-with-border" id="fotos_m" name="fotos_m" Value="4" onclick="valida_formulario()">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3">
+                                                    <div id="comprobante_dom_v"  class="form-group form-group-default">
+                                                        <label>Comprobante de Domicilio<span class="required-label">*</span></label>
+                                                        <input required type="text" class="form-control input-with-border" id="comprobante_dom_m" name="comprobante_dom_m"  onkeyup="valida_formulario()" >
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <hr>	
-                                <div class="form-group row " >
-                                    <div class="col-md-12">
-                                        <center><b>Información Médica</b></center>
-                                    </div>
+                                        <div class="tab-pane fade"
+                                        style="border-left:1px black solid; border-right:1px black solid; border-bottom:1px black solid; margin-top: -16px; 
+                                        border-top:1px black solid;  background-color: rgba(241,213,146,.7)"
+                                         id="pills-contact3" role="tabpanel" aria-labelledby="pills-contact3-tab">
+										
+                                            <div class="form-group row " >
+                                                <div class="col-md-12">
+                                                    <center><b>Información Médica</b></center>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group row " >
+                                                
+                                                
+                                                <div class="col-md-3">
+                                                    <div  id="padecimiento_v" class="form-group form-group-default">
+                                                        <label>Padecimiento<span class="required-label">*</span></label>
+                                                        <input required type="text" class="form-control input-with-border" id="padecimiento_m" name="padecimiento_m"  onkeyup="valida_formulario()"  >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div  id="alergias_v" class="form-group form-group-default">
+                                                        <label>Alergias<span class="required-label">*</span></label>
+                                                        <input required type="text" class="form-control input-with-border" id="alergias_m" name="alergias_m"  onkeyup="valida_formulario()" >
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>	
+                                        </div>
+                                        <div class="tab-pane fade" 
+                                        style="border-left:1px black solid; border-right:1px black solid; border-bottom:1px black solid; margin-top: -16px; 
+                                        border-top:1px black solid;  background-color: rgba(241,213,146,.7)"
+                                        id="pills-contact4" role="tabpanel" aria-labelledby="pills-contact4-tab">
+										    <div class="form-group row " >
+                                                <div class="col-md-12">
+                                                    <center><b>Otros Datos</b></center>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group row " >
+                                                <div class="col-md-3" id="hijo8_2">
+                                                    <div  id="t_zapatos_v" class="form-group form-group-default">
+                                                        <label>Talla de zapatos<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="t_zapatos_m"  onchange="valida_formulario()" name="t_zapatos_m" > 
+                                                            <option value=null>-Sin talla asignada-</option>    
+                                                            <option value='22'>22</option>    
+                                                            <option value='23'>23</option>    
+                                                            <option value='24'>24</option>    
+                                                            <option value='25'>25</option>    
+                                                            <option value='26'>26</option>    
+                                                            <option value='27'>27</option>    
+                                                            <option value='28'>28</option>    
+                                                            <option value='29'>29</option>    
+                                                            <option value='30'>30</option>    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo8_2">
+                                                    <div id="t_camisola_v"  class="form-group form-group-default">
+                                                        <label>Talla de camisola<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="t_camisola_m"  onchange="valida_formulario()" name="t_camisola_m" > 
+                                                            <option value=null>-Sin talla asignada-</option>    
+                                                            <option value='32'>32</option>    
+                                                            <option value='34'>34</option>    
+                                                            <option value='36'>36</option>    
+                                                            <option value='38'>38</option>    
+                                                            <option value='40'>40</option>    
+                                                            <option value='42'>42</option>    
+                                                            <option value='44'>44</option>    
+                                                            <option value='46'>46</option>     
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="hijo8_2">
+                                                    <div id="t_pantalon_v"  class="form-group form-group-default">
+                                                        <label>Talla de pantalon<span class="required-label">*</span></label>
+                                                        <select required  class="form-control input-with-border" id="t_pantalon_m" onchange="valida_formulario()" name="t_pantalon_m" > 
+                                                            <option value=null>-Sin talla asignada-</option>    
+                                                            <option value='28'>28</option>    
+                                                            <option value='30'>30</option>    
+                                                            <option value='32'>32</option>    
+                                                            <option value='34'>34</option>    
+                                                            <option value='36'>36</option>    
+                                                            <option value='38'>38</option>    
+                                                            <option value='40'>40</option>  
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+									</div>
+
+
+
                                 </div>
                                 
-                                <div class="form-group row " >
-                                    
-                                    
-                                    <div class="col-md-3">
-                                        <div  id="padecimiento_v" class="form-group form-group-default">
-                                            <label>Padecimiento<span class="required-label">*</span></label>
-                                            <input required type="text" class="form-control input-with-border" id="padecimiento_m" name="padecimiento_m"  onkeyup="valida_formulario()"  >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div  id="alergias_v" class="form-group form-group-default">
-                                            <label>Alergias<span class="required-label">*</span></label>
-                                            <input required type="text" class="form-control input-with-border" id="alergias_m" name="alergias_m"  onkeyup="valida_formulario()" >
-                                        </div>
-                                    </div>
-                                   
-                                </div>
-                                <hr>	
-                                <div class="form-group row " >
-                                    <div class="col-md-12">
-                                        <center><b>Otros Datos</b></center>
-                                    </div>
-                                </div>
                                 
-                                <div class="form-group row " >
-                                <div class="col-md-3" id="hijo8_2">
-                                        <div  id="t_zapatos_v" class="form-group form-group-default">
-                                            <label>Talla de zapatos<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="t_zapatos_m"  onchange="valida_formulario()" name="t_zapatos_m" > 
-                                                <option value=null>-Sin talla asignada-</option>    
-                                                <option value='22'>22</option>    
-                                                <option value='23'>23</option>    
-                                                <option value='24'>24</option>    
-                                                <option value='25'>25</option>    
-                                                <option value='26'>26</option>    
-                                                <option value='27'>27</option>    
-                                                <option value='28'>28</option>    
-                                                <option value='29'>29</option>    
-                                                <option value='30'>30</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo8_2">
-                                        <div id="t_camisola_v"  class="form-group form-group-default">
-                                            <label>Talla de camisola<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="t_camisola_m"  onchange="valida_formulario()" name="t_camisola_m" > 
-                                                <option value=null>-Sin talla asignada-</option>    
-                                                <option value='32'>32</option>    
-                                                <option value='34'>34</option>    
-                                                <option value='36'>36</option>    
-                                                <option value='38'>38</option>    
-                                                <option value='40'>40</option>    
-                                                <option value='42'>42</option>    
-                                                <option value='44'>44</option>    
-                                                <option value='46'>46</option>     
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" id="hijo8_2">
-                                        <div id="t_pantalon_v"  class="form-group form-group-default">
-                                            <label>Talla de pantalon<span class="required-label">*</span></label>
-                                            <select required  class="form-control input-with-border" id="t_pantalon_m" onchange="valida_formulario()" name="t_pantalon_m" > 
-                                                <option value=null>-Sin talla asignada-</option>    
-                                                <option value='28'>28</option>    
-                                                <option value='30'>30</option>    
-                                                <option value='32'>32</option>    
-                                                <option value='34'>34</option>    
-                                                <option value='36'>36</option>    
-                                                <option value='38'>38</option>    
-                                                <option value='40'>40</option>  
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                </div>
+                                
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

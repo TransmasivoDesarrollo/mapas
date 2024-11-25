@@ -38,7 +38,32 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+                        <div class="col-md-2">
+                            <label><br>Jornada <span class="required-label"></span></label>
+                            <select  id="jornadas" name="jornadas" class="form-control" >
+                                    <option value="-Selecciona-">-Selecciona-</option>
+                                @foreach($jornadas as $jornada)
+                                @if(isset($jornada_select))
+                                @if($jornada_select == $jornada->id_t_horarios_personal)
+                                    <option selected value="{{$jornada->id_t_horarios_personal}}">{{$jornada->nombre_horario}}</option> 
+                                @else
+                                    <option  value="{{$jornada->id_t_horarios_personal}}">{{$jornada->nombre_horario}}</option> 
+                                @endif
+                                @else
+
+                                    <option  value="{{$jornada->id_t_horarios_personal}}">{{$jornada->nombre_horario}}</option> 
+                                @endif 
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label><br>Fecha inicio <span class="required-label"></span></label>
+                            <input type="date" style="border: 1px solid black;" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{$fecha_inicio}}" max="<?php echo date('Y-m-d'); ?>">
+                        </div>
+                        <div class="col-md-2">
+                            <label><br>Fecha fin <span class="required-label"></span></label>
+                            <input type="date" style="border:1px black solid;" class="form-control" id="fecha_fin" name="fecha_fin" value="{{$fecha_fin}}" max="<?php echo date('Y-m-d'); ?>">
+                        </div>
                         @php
                             $currentYear = \Carbon\Carbon::now()->year;
                             $today = \Carbon\Carbon::today()->format('Y-m-d');
@@ -79,14 +104,7 @@
                             <option value="-Selecciona-">-Selecciona-</option>
                             </option>
                                 @foreach ($quincenas as $quincena)
-                                    <option value="{{ $quincena['value'] }}" @if($qna == $quincena['value']) selected @endif 
-                                    @if($quincena['value'] == $selectedQna) 
-                                        @if($qna == $quincena['value'])
-                                        @else
-                                        selected
-                                        @endif 
-                                        style="background-color:green; color:#fff;" 
-                                    @endif>
+                                    <option value="{{ $quincena['value'] }}" @if($qna == $quincena['value']) selected @endif @if($quincena['value'] == $selectedQna) style="background-color:green; color:#fff;" @endif>
                                         {{ $quincena['label'] }}
                                     </option>
                                 @endforeach
@@ -105,9 +123,6 @@
                             <center>
                                 <br>
                                 <input type="submit" value="Excel" class="btn btn-success" id="Excel" name="Excel">
-
-                                
-                                <input type="submit" value="Excel2" class="btn btn-success" id="Excel2" name="Excel2">
                             </center>
                         </div>
                     </div>
@@ -131,22 +146,15 @@
                             </thead>
                             <tbody id="llenaTabla">
                                 @php $i = 1; @endphp
-                                @if($consulta !== "")
-                                    @foreach($consulta as $consul)
+                                @if($arreglo !== "")
+                                    @foreach($arreglo as $consul)
                                             <tr >
                                                 <td>{{$consul->nombre_horario}}</td>
                                                 <td>{{$consul->id_empleado}}</td>
                                                 <td><b>{{$consul->fecha_formato_largo}}</b></td>
                                                 <td>Jornada {{ date('h:i A', strtotime($consul->hora_esperada_llegada)) }} <hr><b>Biome. {{ date('h:i A', strtotime( substr($consul->registro_biometrico, 11) ))}}                                                </b></td>
                                                 <td>Jornada {{ date('h:i A', strtotime($consul->hora_esperada_salida)) }} <hr><b>Biome. {{  date('h:i A', strtotime( substr($consul->ultimo_registro_biometrico, 11) ))}}</b></td>
-                                                <td
-                                                @if($consul->horas_trabajo_esperadas < $consul->tiempo_trabajado) 
-                                                style=" background-color:rgba(0, 143, 57, 0.2);"
-                                                @else
-                                                
-                                                style=" background-color: rgba(229, 190, 1, 0.2);"
-                                                @endif
-                                                >Esperado: {{$consul->horas_trabajo_esperadas}}<hr> <b>Trabajado: {{$consul->tiempo_trabajado}}</b></td>
+                                                <td>{{$consul->tiempo_trabajado}}</td>
                                                 <td>
                                                     @if($consul->estado_llegada == "Tarde")
                                                         <b style="color:orange">{{$consul->estado_llegada}}</b>

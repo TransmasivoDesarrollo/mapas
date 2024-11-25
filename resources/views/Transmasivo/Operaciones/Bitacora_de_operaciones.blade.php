@@ -25,23 +25,17 @@
                                             <div class="col-md-2">
                                                 <div class="form-group form-group-default">
                                                     <label>Día <span class="required-label">*</span></label>
-                                                    <input required type="date" class="form-control input-with-border" id="dia" name="dia" onchange="busca_credencial()" value="{{now()->format('Y-m-d')}}">
+                                                    <input required type="date" class="form-control input-with-border" id="dia" name="dia" onchange="busca_credencial()" >
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <div class="form-group form-group-default">
+                                                <div class="form-group form-group-default" >
                                                 <label>Credencial <span class="required-label">*</span></label>
                                                 <select required style=" width:90%;" class="form-control" id="credencial" name="credencial" onchange="busca_credencial()">
                                                     @foreach($credencial as $cred)
                                                     <option value="{{$cred->id}}">{{$cred->id}} - {{$cred->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group form-group-default">
-                                                    <label>Economico <span class="required-label">*</span></label>
-                                                    <input required type="text"  disabled="true" class="form-control input-with-border" id="eco" name="eco">
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
@@ -72,6 +66,15 @@
                                                     <input required type="time" class="form-control input-with-border" id="hora_s" name="hora_s">
                                                 </div> 
                                             </div> 
+                                            
+                                            <div class="col-md-2">
+                                                <div class="form-group form-group-default">
+                                                    <label>Economico <span class="required-label">*</span></label>
+                                                    <input required type="text"  disabled="true" class="form-control input-with-border" id="eco" name="eco">
+                                                </div>
+                                            </div>
+                                            
+                                            
                                             <div class="col-md-2">
                                                 <div class="form-group form-group-default">
                                                     <label>Terminal</label>
@@ -83,7 +86,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <div class="form-group form-group-default">
+                                                <div class="form-group form-group-default" id="valida_servicio">
                                                     <label>Servicio<span class="required-label">*</span></label>
                                                     <input type="hidden"  name="id_jornada_sem" id="id_jornada_sem">
                                                     <select required  disabled="true"  class="form-control input-with-border" id="serv" name="serv">
@@ -119,7 +122,7 @@
                                                             <span id="ciclos_span" class="text-muted fw-bold">Ciclo 0 de 0 </span>
                                                         </div>
                                                         <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" id="bar" style="width: 0%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="" data-original-title=""></div>
+                                                            <div class="progress-bar progress-bar-striped " role="progressbar" id="bar" style="width: 100%; " aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="" data-original-title=""></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -264,24 +267,22 @@
                             </div>
                         </div>
                 </div>
-                        <div class="col-xl-2">
-                            <label>&nbsp;</label>
-                            <div class="form-group form-group-default">
-                                <label>Fecha </label>
-                                <input type="date" class="form-control" id="fecha_busqueda" name="fecha_busqueda" 
-                                @if(isset($fecha))
-                                value="{{$fecha}}">
-                                @else
-                                value="{{now()->format('Y-m-d')}}">
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <center>
-                                <label><br></label>
-                                <input type="submit" id="buscar_filtro" name="buscar_filtro" value="Buscar" class="btn btn-success">
-                            </center>   
-                        </div>
+                <div class="col-xl-2">
+                    <label>&nbsp;</label>
+                    <div class="form-group form-group-default">
+                        <label>Fecha </label>
+                        <input type="date" class="form-control" id="fecha_busqueda" name="fecha_busqueda" 
+                        @if(isset($fecha))
+                        value="{{$fecha}}">
+                        @endif
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <center>
+                        <label><br></label>
+                        <input type="submit" id="buscar_filtro" name="buscar_filtro" value="Buscar" class="btn btn-success">
+                    </center>   
+                </div>
                 </form>
             </div>
                 <input type="hidden" name="pdf" value="pdf" id="pdf-input">
@@ -482,7 +483,7 @@
                             </td>
                             @else
                             <td>
-                                <div class="row">
+                                <div class="row" >
                                     <div class="col-xl-12">
                                         <div class="card-sub" style="position: relative;">
                                             <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
@@ -505,7 +506,7 @@
                                     </div>
                                     <center >
                                         <br>
-                                        <div class="icon-preview" style="margin:15px;">
+                                        <div class="icon-preview" style="margin:5px;">
                                             <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
                                             @if($fila['apoyo_1'] != 'Sin Apoyo')<br>
                                             Apoyo: {{$fila['apoyo_1']}}
@@ -513,49 +514,50 @@
                                         </div>
                                         <div class="icon-preview">
                                             <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_1_eco']}} - Terminal: {{$fila['terminal1']}}
+                                            <br>Cap. {{$fila['Cap_1']}}
                                         </div>
                                     </center>
                                 </div>
 
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-6" style="padding: 1px;">
                                 <center>
                                     <div class="card-body">
-                                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> {{$fila['salida_1']}} hrs.</span>
+                                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida<br> &nbsp;&nbsp;{{$fila['salida_1']}} hrs.&nbsp;&nbsp;</span>
                                     </div>   
                                 </center> 
                             </div>
-                            <div class="col-xl-6"> 
+                            <div class="col-xl-6" style="padding: 1px;"> 
                                 <div class="card-body">
                                     <center>
                                         @if($fila['hora_salida_rol']=="Fuera de jornada")
                                         <span class="badge" style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_salida_rol']}}</span>
                                         @else
-                                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida rol<br> {{$fila['hora_salida_rol']}} hrs.</span>
+                                        <span class="badge badge-success" style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Salida rol<br> &nbsp;&nbsp;{{$fila['hora_salida_rol']}} hrs.&nbsp;&nbsp;</span>
                                         @endif
                                     </center>
                                 </div>    
                             </div>
-                            <div class="col-xl-6">    
+                            <div class="col-xl-6" style="padding: 1px;">    
                                 <div class="card-body">
                                     <center>
                                         @if($fila['hora_diferencia']=="Fuera de jornada")
                                         <span class="badge "  style="background-color: yellow; color:black; font-size:12px;"> {{$fila['hora_diferencia']}}</span>
                                         @else
-                                        <span class="badge badge-success"  style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Dif. <br>{{$fila['hora_diferencia']}} hrs.</span>
+                                        <span class="badge badge-success"  style="background-color: #a9e9a9; color:black"><i class="la la-bus"></i> Dif. <br>&nbsp;&nbsp;{{$fila['hora_diferencia']}} hrs.&nbsp;&nbsp;</span>
                                         @endif
                                     </center>
                                 </div>    
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-6" style="padding: 1px;">
                                 <center>
                                     <div class="card-body" >
                                         @if($fila['estatus']=="Retardo")
-                                        <span class="badge "  style="background-color: #fffeba; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
+                                        <span class="badge "  style="background-color: #fffeba; color:black; font-size:14px;"> &nbsp;&nbsp;{{$fila['estatus']}}&nbsp;&nbsp;</span>
                                         @elseif($fila['estatus']=="Sobretiempo")
-                                        <span class="badge "  style="background-color: #c4dafa; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
+                                        <span class="badge "  style="background-color: #c4dafa; color:black; font-size:14px;"> &nbsp;&nbsp;{{$fila['estatus']}}&nbsp;&nbsp;</span>
                                         @elseif($fila['estatus']=="En tiempo")
-                                        <span class="badge "  style="background-color: #92fd70; color:black; font-size:14px;"> {{$fila['estatus']}}</span>
+                                        <span class="badge "  style="background-color: #92fd70; color:black; font-size:14px;"> &nbsp;&nbsp;{{$fila['estatus']}}&nbsp;&nbsp;</span>
                                         @endif
                                     </div>  
                                 </center>
@@ -648,7 +650,7 @@
                                 </div>
                                 <center>
                                     <br>
-                                    <div class="icon-preview"  style="margin:15px;">
+                                    <div class="icon-preview"  style="margin:5px;">
                                         <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
                                         @if($fila['apoyo_2'] != 'Sin Apoyo')<br>
                                         Apoyo: {{$fila['apoyo_2']}}
@@ -656,6 +658,7 @@
                                     </div>
                                     <div class="icon-preview">
                                         <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_2_eco']}} - Terminal: {{$fila['terminal2']}}
+                                        <br>Cap. {{$fila['Cap_1']}}
                                     </div>
                                 </center>
                             </div>
@@ -736,7 +739,7 @@
                             </div>
                             <center>
                                 <br>
-                                <div class="icon-preview"  style="margin:15px;">
+                                <div class="icon-preview"  style="margin:5px;">
                                     <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
                                     @if($fila['apoyo_3'] != 'Sin Apoyo')<br>
                                     Apoyo: {{$fila['apoyo_3']}}
@@ -744,6 +747,7 @@
                                 </div>
                                 <div class="icon-preview">
                                     <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_3_eco']}} - Terminal: {{$fila['terminal3']}}
+                                    <br>Cap. {{$fila['Cap_1']}}
                                 </div>
                             </center>
                         </div>
@@ -855,7 +859,7 @@
                     </div>
                     <center >
                         <br>
-                        <div class="icon-preview"  style="margin:15px;">
+                        <div class="icon-preview"  style="margin:5px;">
                             <i class="la flaticon-user" style="font-size: 1.3em;"></i> {{$fila['credencial']}} - {{$fila['conductor']}}
                             @if($fila['apoyo_4'] != 'Sin Apoyo')<br>
                             Apoyo: {{$fila['apoyo_4']}}
@@ -863,6 +867,7 @@
                         </div>
                         <div class="icon-preview">
                             <i class="la la-bus" style="font-size: 1.5em;"></i> {{$fila['salida_4_eco']}} - Terminal: {{$fila['terminal4']}}
+                            <br>Cap. {{$fila['Cap_1']}}
                         </div>
                     </center>
                 </div>
@@ -908,6 +913,26 @@
     </div>
     @section('jscustom')
     <script type="text/javascript">
+
+        @if(session('serv') == "TR1" || session('serv') == "TR1-R")
+        
+        $(document).ready(function() {
+        submitFormTR1();
+        });
+        @endif
+
+        @if(session('serv') == "TR3")
+        $(document).ready(function() {
+        submitFormTR3();
+    });
+        @endif
+        
+        @if(session('serv') == "TR4")
+        $(document).ready(function() {
+        submitFormTR4();
+    });
+        @endif
+
         @if (session('mensaje'))
 
             var placementFrom = $('#notify_placement_from option:selected').val();
@@ -935,6 +960,43 @@
         @endif
 
         $(document).ready(function() {
+            $(document).on('keydown', function(event) {
+        // Detecta si se presionan Ctrl + Q (keyCode para 'Q' es 81)
+        if (event.ctrlKey && event.key === 'q') {
+            event.preventDefault(); // Evita cualquier comportamiento predeterminado
+            $('#boton_registra').click(); // Simula un clic en el botón con el id 'guardarFormulario'
+        }
+
+        if (event.ctrlKey && event.key === 'z') {
+            event.preventDefault(); // Evita cualquier comportamiento predeterminado
+            $('#llegada_salida').val('1').trigger('change');
+            $('#hora_salida').focus();
+        }
+        if (event.ctrlKey && event.key === 'x') {
+            event.preventDefault(); // Evita cualquier comportamiento predeterminado
+            $('#llegada_salida').val('2').trigger('change');
+            $('#hora_ll').focus();
+            
+        }
+        if (event.ctrlKey && event.key === 'c') {
+            event.preventDefault(); // Evita cualquier comportamiento predeterminado
+            $('#llegada_salida').val('4').trigger('change');
+            $('#hora_salida').focus();
+        }
+        
+    });
+            var fecha = new Date();
+            var year = fecha.getFullYear();
+            var month = ("0" + (fecha.getMonth() + 1)).slice(-2); // Se suma 1 porque los meses empiezan desde 0
+            var day = ("0" + fecha.getDate()).slice(-2);
+            var fecha_input = year + '-' + month + '-' + day;
+            
+            console.log(fecha_input); 
+            
+            $('#dia').val(fecha_input);
+            $('#fecha_busqueda').val(fecha_input);
+            
+
             busca_credencial();
             $('#credencial').trigger('click');
 
@@ -1006,6 +1068,40 @@
             $('#serv').val(servicio); 
         });
 
+        $('#serv').on('change', function() {
+
+            var servicio = $('#serv').val();
+        if (servicio == 'TR1') {
+            $('#bar').css('background-color', '  rgba(229, 190, 1, 1) ');
+        }
+        if (servicio == 'TR1-R') {
+            $('#bar').css('background-color', ' rgba(255, 0, 128, 1) ');
+        }
+        if (servicio == 'TR3') {
+            $('#bar').css('background-color', ' rgba(0, 143, 57, 1) ');
+        }
+        if (servicio == 'TR4') {
+            $('#bar').css('background-color', ' rgba(0, 0, 255, 1) ');
+        }
+        if (servicio == 'TR1') {
+            $('#valida_servicio').css('border', '2px  rgba(229, 190, 1, 0.2) solid');
+            $('#valida_servicio').css('background-color', ' rgba(229, 190, 1, 0.1)');
+        }
+        if (servicio == 'TR1-R') {
+            $('#valida_servicio').css('border', '2px rgba(255, 0, 128, 0.1) solid');
+            $('#valida_servicio').css('background-color', ' rgba(255, 0, 128, 0.1)');
+        }
+        if (servicio == 'TR3') {
+            $('#valida_servicio').css('border', '2px rgba(0, 143, 57, 0.1) solid');
+            $('#valida_servicio').css('background-color', ' rgba(0, 143, 57, 0.1)');
+        }
+        if (servicio == 'TR4') {
+            $('#valida_servicio').css('border', '2px rgba(0, 0, 255, 0.1) solid');
+            $('#valida_servicio').css('background-color', ' rgba(0, 0, 255, 0.1)');
+        }
+
+        });
+
         $('#llegada_salida').on('change', function() {
             var llegada_salida = $(this).val();
             var serv = $('#serv').val();
@@ -1074,12 +1170,13 @@
                                 'dia': $('#dia').val(),
                             },
                             success: function(response) {
-                                console.log(response);
                                 if(response['conteo_jornada_total']){
+                                    console.log(response);
                                     $('#boton_registra').removeAttr('disabled');
                                     $('#terminal_c').removeAttr('disabled');
                                     $('#serv').removeAttr('disabled');
                                     $('#eco').removeAttr('disabled');
+                                    
                                     $('#llegada_salida').removeAttr('disabled');
                                     $('#hora_salida').removeAttr('disabled');
                                     $('#credencial_apoyo').removeAttr('disabled');
@@ -1091,14 +1188,46 @@
                                     conteo_jornada_hecha = conteo_jornada_hecha/4;
                                     var Nombre = response['Nombre'];
                                     var servicio = response['servicio'];
+                                    console.log(servicio);
+
+                                    if (servicio == 'TR1') {
+                                        $('#valida_servicio').css('border', '2px  rgba(229, 190, 1, 0.2) solid');
+                                        $('#valida_servicio').css('background-color', ' rgba(229, 190, 1, 0.1)');
+                                    }
+                                    if (servicio == 'TR1-R') {
+                                        $('#valida_servicio').css('border', '2px rgba(255, 0, 128, 0.1) solid');
+                                        $('#valida_servicio').css('background-color', ' rgba(255, 0, 128, 0.1)');
+                                    }
+                                    if (servicio == 'TR3') {
+                                        $('#valida_servicio').css('border', '2px rgba(0, 143, 57, 0.1) solid');
+                                        $('#valida_servicio').css('background-color', ' rgba(0, 143, 57, 0.1)');
+                                    }
+                                    if (servicio == 'TR4') {
+                                        $('#valida_servicio').css('border', '2px rgba(0, 0, 255, 0.1) solid');
+                                        $('#valida_servicio').css('background-color', ' rgba(0, 0, 255, 0.1)');
+                                    }
                                     var ciclos_texto = conteo_jornada_hecha + ' de ' + conteo_jornada_total + ' ciclos';
                                     var ciclos_porcentaje = 100 / (conteo_jornada_total);
                                     ciclos_porcentaje = conteo_jornada_hecha * ciclos_porcentaje;
                                     $('#bar').attr('data-original-title', ciclos_texto);
                                     $('#bar').attr('style', 'width: ' + ciclos_porcentaje + '%');
+
+                                    if (servicio == 'TR1') {
+                                        $('#bar').css('background-color', '  rgba(229, 190, 1, 1) ');
+                                    }
+                                    if (servicio == 'TR1-R') {
+                                        $('#bar').css('background-color', ' rgba(255, 0, 128, 1) ');
+                                    }
+                                    if (servicio == 'TR3') {
+                                        $('#bar').css('background-color', ' rgba(0, 143, 57, 1) ');
+                                    }
+                                    if (servicio == 'TR4') {
+                                        $('#bar').css('background-color', ' rgba(0, 0, 255, 1) ');
+                                    }
                                     $('#ciclos_span').html(ciclos_texto);
                                     $('#progreso').html(Nombre);
                                     $('#serv').val(servicio); 
+                                    $('#eco').val(response['eco']); 
                                     $('#id_jornada_sem').val(response['id_jornada']); 
                                     var llegada_salida = $('#llegada_salida').val();
                                     var serv = $('#serv').val();
@@ -1107,13 +1236,11 @@
                                         $('#valida_mitad_1').removeAttr('hidden');
                                         $('#valida_mitad_2').removeAttr('hidden');
                                         $('#valida_completo').attr('hidden', true);
-
                                     }
                                     else{
                                         $('#valida_completo').removeAttr('hidden');
                                         $('#valida_mitad_2').attr('hidden', true);
                                         $('#valida_mitad_1').attr('hidden', true);
-                                        
                                     }
                                     if(serv == "TR1")
                                     {
@@ -1160,7 +1287,8 @@
                                     $('#hora_salida').attr('disabled','true');
                                     $('#credencial_apoyo').attr('disabled','true');
                                     $('#comentarios').attr('disabled','true');
-                                    
+                                    $('#valida_servicio').css('border', '1px rgba(0, 0, 0, 0.1) solid');
+                                    $('#valida_servicio').css('background-color', ' rgba(255, 255, 255, 0.8)');
                                     
                                     var conteo_jornada_total = response['conteo_jornada_total'];
                                     var conteo_jornada_hecha = response['conteo_jornada_hecha'];
@@ -1204,7 +1332,6 @@
                                     $('#llegada_salida').removeAttr('disabled');
                                     $('#hora_salida').removeAttr('disabled');
                                     $('#credencial_apoyo').removeAttr('disabled');
-                                    
                                     $('#comentarios').removeAttr('disabled');
                                     var conteo_jornada_total = response['conteo_jornada_total'];
                                     var conteo_jornada_hecha = response['conteo_jornada_hecha'];
@@ -1306,6 +1433,8 @@
                         });
     });
     $('#credencial').select2();
+
+    $('#credencial').select2('open');
     $('#credencial_apoyo').select2();
     
     $('#list_user2').DataTable({
@@ -1314,7 +1443,7 @@
         filter: true,
         ordering: false, // Desactiva la ordenación
         lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
-        iDisplayLength: 15,
+        iDisplayLength: -1,
         "language": {
             "lengthMenu": "Mostrar _MENU_ datos",
             "zeroRecords": "No existe el dato introducido",
