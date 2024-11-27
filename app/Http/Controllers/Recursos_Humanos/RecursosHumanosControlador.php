@@ -1357,9 +1357,12 @@ class RecursosHumanosControlador extends Controller
                            //dd($t_horario);
                            //dd($t_horario);
                         }
-                    //dd($t_horario);
+                    //dd($fechas_qna);
                     $fecha = $fechas_qna[$i]->fecha;
                     $diaSemana = $this->obtenerDiaSemana($fecha);
+                    
+                    
+
                     $h_ll;
                     $h_ll_c;
                     $h_s_c;
@@ -1368,6 +1371,7 @@ class RecursosHumanosControlador extends Controller
                     {
                         if($diaSemana == "Lunes")
                         {
+                            
                             if($t_horario[0]->jornada_l == "Jornada de lunes" )
                             {
                                 //llegada
@@ -1377,6 +1381,7 @@ class RecursosHumanosControlador extends Controller
                                 $h_s_c = $t_horario[0]->hora_fin_comida_l;
                                 $h_s = $t_horario[0]->hora_salida_l;
                                 $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+
                                 if($resultado){
                                 $hora_llegada_real = $resultado[0]->fecha_hora;
                                 $hora_llegada_jornada = $fecha.' '.$h_ll;
@@ -1462,19 +1467,38 @@ class RecursosHumanosControlador extends Controller
                             }
                             if($t_horario[0]->jornada_l == "Descanso" )
                             {
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                $tiempo_trabajado="";
+                                for($k=0 ; count($resultado)>$k ; $k++ )
+                                {
+                                    $tiempo_trabajado .= $resultado[$k]->fecha_hora.'<br>';
+                                }
+                                if($resultado)
+                                {
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                }else{
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                }
                             }
                             
                         }
                         if($diaSemana == "Martes")
                         {
+                            
                             if($t_horario[0]->jornada_m == "Jornada de martes" )
                             {
                                 //llegada
@@ -1567,14 +1591,32 @@ class RecursosHumanosControlador extends Controller
                             }
                             if($t_horario[0]->jornada_m == "Descanso" )
                             {
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                $tiempo_trabajado="";
+                                for($k=0 ; count($resultado)>$k ; $k++ )
+                                {
+                                    $tiempo_trabajado .= $resultado[$k]->fecha_hora.'<br>';
+                                }
+                                if($resultado)
+                                {
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                }else{
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                }
                                 
                             }
 
@@ -1674,14 +1716,32 @@ class RecursosHumanosControlador extends Controller
                             }
                             if($t_horario[0]->jornada_mi == "Descanso" )
                             {
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                $tiempo_trabajado="";
+                                for($k=0 ; count($resultado)>$k ; $k++ )
+                                {
+                                    $tiempo_trabajado .= $resultado[$k]->fecha_hora.'<br>';
+                                }
+                                if($resultado)
+                                {
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                }else{
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                }
                                 
                             }
 
@@ -1781,14 +1841,32 @@ class RecursosHumanosControlador extends Controller
                             }
                             if($t_horario[0]->jornada_j == "Descanso" )
                             {
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                $tiempo_trabajado="";
+                                for($k=0 ; count($resultado)>$k ; $k++ )
+                                {
+                                    $tiempo_trabajado .= $resultado[$k]->fecha_hora.'<br>';
+                                }
+                                if($resultado)
+                                {
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                }else{
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                }
                                 
                             }
 
@@ -1888,14 +1966,32 @@ class RecursosHumanosControlador extends Controller
                             }
                             if($t_horario[0]->jornada_v == "Descanso" )
                             {
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                $tiempo_trabajado="";
+                                for($k=0 ; count($resultado)>$k ; $k++ )
+                                {
+                                    $tiempo_trabajado .= $resultado[$k]->fecha_hora.'<br>';
+                                }
+                                if($resultado)
+                                {
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                }else{
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                }
                                 
                             }
 
@@ -1911,6 +2007,7 @@ class RecursosHumanosControlador extends Controller
                                 $h_s_c = $t_horario[0]->hora_fin_comida_s;
                                 $h_s = $t_horario[0]->hora_salida_s;
                                 $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                //dd($resultado);
                                 if($resultado){
                                     $hora_llegada_real = $resultado[0]->fecha_hora;
                                     $hora_llegada_jornada = $fecha.' '.$h_ll;
@@ -1994,19 +2091,42 @@ class RecursosHumanosControlador extends Controller
                             }
                             if($t_horario[0]->jornada_s == "Descanso" )
                             {
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                $tiempo_trabajado="";
+                                for($k=0 ; count($resultado)>$k ; $k++ )
+                                {
+                                    
+                                    $tiempo_trabajado .= Carbon::parse($resultado[$k]->fecha_hora)
+                                    ->locale('es') 
+                                    ->translatedFormat('l, d F Y - <b>H:i:s</b>').'<br>';
+                                }
+                                if($resultado)
+                                {
+                                    
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                }else{
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                }
                             }
 
                         }
                         if($diaSemana == "Domingo")
                         {
+                            
                             if($t_horario[0]->jornada_d == "Jornada de domingo" )
                             {
                                 //llegada
@@ -2015,6 +2135,7 @@ class RecursosHumanosControlador extends Controller
                                 $h_s_c = $t_horario[0]->hora_fin_comida_d;
                                 $h_s = $t_horario[0]->hora_salida_d;
                                 $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                
                                 if($resultado){
                                 $hora_llegada_real = $resultado[0]->fecha_hora;
                                 $hora_llegada_jornada = $fecha.' '.$h_ll;
@@ -2100,14 +2221,36 @@ class RecursosHumanosControlador extends Controller
                             }
                             if($t_horario[0]->jornada_d == "Descanso" )
                             {
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
-                                $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                
+                                $resultado = $this->consulta_t_biometrico($elementos[$j]->id_elemento , $fecha, 'asc');
+                                $tiempo_trabajado="";
+                                for($k=0 ; count($resultado)>$k ; $k++ )
+                                {
+                                    $tiempo_trabajado .= Carbon::parse($resultado[$k]->fecha_hora)
+                                    ->locale('es') 
+                                    ->translatedFormat('l, d F Y - <b>H:i:s</b>').'<br>';
+                                }
+                                if($resultado)
+                                {
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso, pero trabajo ".$tiempo_trabajado;
+                                }else{
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_llegada'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_llegada_estatus'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_r'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_j'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_dif_salida'] = "Descanso";
+                                    $array_completo[$elementos[$j]->id_elemento][$fecha]['hora_salida_estatus'] = "Descanso";
+                                }
+                                
                             }
 
                         }
@@ -2121,7 +2264,7 @@ class RecursosHumanosControlador extends Controller
                 }
             }
             
-            //dd($array_completo);
+           // dd($array_completo);
 
         }else if($request->has('Excel2')){
            
@@ -2587,7 +2730,7 @@ foreach ($resultados as $resultado) {
             'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" and fecha_hora between '.$qna.' ORDER BY id_elemento asc;'
         );
         //dd($fechas_qna);
-        return view('Transmasivo.rh.consultar_biometrico2',compact('jornadas','array_completo','fechas_qna','qna','consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
+        return view('Transmasivo.rh.consultar_biometrico2',compact('id_empleado','jornadas','array_completo','fechas_qna','qna','consulta','elementos','id_ele','fecha_fin','fecha_inicio'));
 
     }
     function aumentarUnDia($fecha) {
@@ -2653,6 +2796,7 @@ foreach ($resultados as $resultado) {
     }
     public function consulta_t_biometrico($elemento, $fecha, $menor_mayor)
     {
+       
         return DB::connection('mysql')->select(
             'SELECT * FROM t_biometrico where id_elemento='.$elemento.' and 
             fecha_hora between "'.$fecha.' 00:00:00" and "'.$fecha.' 23:59:59"  order by fecha_hora '.$menor_mayor
@@ -3605,6 +3749,82 @@ foreach ($resultados as $resultado) {
         
     }
     
+
+    
+
+    public function Consultar_historial_horario()
+    {
+        $elementos = DB::connection('mysql')->select(
+            'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" ORDER BY id_elemento asc;');
+        return view('Transmasivo.rh.Consultar_historial_horario',compact('elementos'));
+    }
+
+    public function post_Consultar_historial_horario(Request $request)
+    {
+        $id_empleado = $request->input('id_empleado');
+        $result = DB::connection('mysql')->select(
+            'SELECT * FROM t_horarios_enrolador_personal where id_empleado="'.$id_empleado.'" ORDER BY fecha_inicio asc;');
+        
+        $fechas = [];
+        $i=0;
+        foreach ($result as $registro) {
+            $inicio = new \DateTime($registro->fecha_inicio); 
+            $fin = $registro->fecha_fin 
+            ? new \DateTime($registro->fecha_fin) 
+            : (new \DateTime())->modify('+15 days'); 
+            $id_horario = $registro->id_horario ; 
+            if (!$fin) {
+                $fin = new \DateTime(); 
+            }
+            while ($inicio < $fin) {
+                $fecha_actual = $inicio->format('Y-m-d');
+                $dia_semana = Carbon::parse($fecha_actual)->locale('es')->dayName; 
+                $select = "";
+                    if($dia_semana=='lunes'){
+                    $select = " jornada_l as nombre, hora_llegada_l as llegada, hora_inicio_comida_l as comida, hora_fin_comida_l as fin_comida, hora_salida_l as salida ";
+                    }
+                    if($dia_semana=='martes'){
+                        $select = " jornada_m as nombre, hora_llegada_m as llegada, hora_inicio_comida_m as comida, hora_fin_comida_m as fin_comida, hora_salida_m as salida ";
+                    }
+                    if($dia_semana=='miércoles'){
+                        $select = " jornada_mi as nombre, hora_llegada_mi as llegada, hora_inicio_comida_mi as comida, hora_fin_comida_mi as fin_comida, hora_salida_mi as salida ";
+                    }
+                    if($dia_semana=='jueves'){
+                        $select = " jornada_j as nombre, hora_llegada_j as llegada, hora_inicio_comida_j as comida, hora_fin_comida_j as fin_comida, hora_salida_j as salida ";
+                    }
+                    if($dia_semana=='viernes'){
+                        $select = " jornada_v as nombre, hora_llegada_v as llegada, hora_inicio_comida_v as comida, hora_fin_comida_v as fin_comida, hora_salida_v as salida ";
+                    }
+                    if($dia_semana=='sábado'){
+                        $select = " jornada_s as nombre, hora_llegada_s as llegada, hora_inicio_comida_s as comida, hora_fin_comida_s as fin_comida, hora_salida_s as salida ";
+                    }
+                    if($dia_semana=='domingo'){
+                        $select = " jornada_d as nombre, hora_llegada_d as llegada, hora_inicio_comida_d as comida, hora_fin_comida_d as fin_comida, hora_salida_d as salida ";
+                    }
+
+                $result2 = DB::connection('mysql')->select(
+                        'SELECT '.$select.' FROM t_horarios_personal where id_t_horarios_personal='.$id_horario.' ');
+                    
+                $fechas[$i]['fecha'] = $fecha_actual;
+                $fechas[$i]['id_horario'] = $id_horario;
+                $fechas[$i]['nombre'] = $result2[0]->nombre;
+                $fechas[$i]['llegada'] = $result2[0]->llegada;
+                $fechas[$i]['comida'] = $result2[0]->comida;
+                $fechas[$i]['fin_comida'] = $result2[0]->fin_comida;
+                $fechas[$i]['salida'] = $result2[0]->salida;
+                $fechas[$i]['dia_semana'] = ucfirst($dia_semana); 
+                $inicio->modify('+1 day'); 
+                $i++;
+            }
+        }
+        //dd($fechas);
+        
+        $elementos = DB::connection('mysql')->select(
+            'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" ORDER BY id_elemento asc;');
+        return view('Transmasivo.rh.Consultar_historial_horario',compact('result','fechas','elementos','id_empleado'));
+    }
+
+
     public function Solicitar_herramienta()
     {
         return view('Transmasivo.rh.consultar_biometrico',compact('consulta','elementos','id_ele'));

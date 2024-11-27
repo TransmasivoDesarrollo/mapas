@@ -292,6 +292,10 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/Enrolar_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Enrolar_horarios')->name('Enrolar_horarios');
     Route::POST('/Enrolar_horarios', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_Enrolar_horarios')->name('post_Enrolar_horarios');
+
+    Route::get('/Consultar_historial_horario', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@Consultar_historial_horario')->name('Consultar_historial_horario');
+    Route::POST('/Consultar_historial_horario', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@post_Consultar_historial_horario')->name('post_Consultar_historial_horario');
+    
     
     Route::get('/enrolar_horarios_conductores', '\App\Http\Controllers\Operaciones\OperacionesController@enrolar_horarios_conductores')->name('enrolar_horarios_conductores');
     Route::POST('/enrolar_horarios_conductores', '\App\Http\Controllers\Operaciones\OperacionesController@post_enrolar_horarios_conductores')->name('post_enrolar_horarios_conductores');

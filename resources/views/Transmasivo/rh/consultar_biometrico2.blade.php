@@ -10,6 +10,7 @@
             text-align: right;
             padding: 2px;
         }
+        
 
 	</style>
 	<div class="card">
@@ -26,19 +27,24 @@
                     @csrf
                     <div class="form-group row " >
                         <div class="col-md-2">
-                        <div class="form-group form-group-default">
-                            <label><br>ID empleado <span class="required-label"></span></label>
-                            <select  id="id_empleado" name="id_empleado" class="form-control" >
-                                    <option value="-Selecciona-">-Selecciona-</option>
-                                @foreach($elementos as $elemento)
-                                    @if($elemento->id_elemento == $id_ele)
-                                        <option selected value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>
-                                    @else
-                                        <option value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>  
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="form-group form-group-default">
+                                <label><br>ID empleado <span class="required-label"></span></label>
+                                <select  id="id_empleado" name="id_empleado" class="form-control" >
+                                        <option value="-Selecciona-">-Selecciona-</option>
+                                    @foreach($elementos as $elemento)
+
+                                        @if(isset($id_empleado))
+                                            @if($elemento->id_elemento == $id_empleado)
+                                                <option selected value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>
+                                            @else
+                                                <option value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>  
+                                            @endif
+                                        @else
+                                            <option value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>  
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         
                         @php
@@ -76,25 +82,25 @@
                             }
                         @endphp
                         <div class="col-md-4">
-                        <div class="form-group form-group-default">
-                            <label><br>Qna <span class="required-label"></span></label>
-                            <select  class="form-control" id="qna" name="qna">
-                            <option value="-Selecciona-">-Selecciona-</option>
-                            </option>
-                                @foreach ($quincenas as $quincena)
-                                    <option value="{{ $quincena['value'] }}" @if($qna == $quincena['value']) selected @endif 
-                                    @if($quincena['value'] == $selectedQna) 
-                                        @if($qna == $quincena['value'])
-                                        @else
-                                        selected
-                                        @endif 
-                                        style="background-color:green; color:#fff;" 
-                                    @endif>
-                                        {{ $quincena['label'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="form-group form-group-default">
+                                <label><br>Qna <span class="required-label"></span></label>
+                                <select  class="form-control" id="qna" name="qna">
+                                <option value="-Selecciona-">-Selecciona-</option>
+                                </option>
+                                    @foreach ($quincenas as $quincena)
+                                        <option value="{{ $quincena['value'] }}" @if($qna == $quincena['value']) selected @endif 
+                                        @if($quincena['value'] == $selectedQna) 
+                                            @if($qna == $quincena['value'])
+                                            @else
+                                            selected
+                                            @endif 
+                                            style="background-color:green; color:#fff;" 
+                                        @endif>
+                                            {{ $quincena['label'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <center>
@@ -110,7 +116,6 @@
         <div class="card-header" style="font-family: Arial; font-size: 15px;">
 			<div class="card-title"> <i class="la la-calendar-plus-o custom-icon"></i> Consultar biométrico </div>
 		</div>
-        
 		<div class="card-body">
             @if (session('mensaje'))
 			<div class="alert alert-{{ session('color') }} alert-dismissible" data-dismiss="alert">
@@ -123,43 +128,61 @@
                             <label>
                             <table >
                                 <tr style="width:25px;">
-                                    <td style="font-size: 10px; background-color: rgba(0,128,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="font-size: 10px; background-color: rgba(0,128,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                     <td style="border:1px white solid;">&nbsp;Salio bien / Llego bien</td>
                                 </tr>
                             </table>    
                             </label>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label>
                             <table>
                                 <tr style="width:25px;">
-                                    <td style="font-size: 10px; background-color: rgba(255,255,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="font-size: 10px; background-color: rgba(255,255,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                     <td style="border:1px white solid;">&nbsp;Descanso</td>
                                 </tr>
                             </table>    
                             </label>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label>
                             <table>
                                 <tr style="width:25px;">
-                                    <td style="font-size: 10px; background-color: rgba(254,0,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="font-size: 10px; background-color: rgba(254,0,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                     <td style="border:1px white solid;">&nbsp;Falta</td>
                                 </tr>
                             </table>    
                             </label>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label>
                             <table>
                                 <tr style="width:25px;"> 
-                                    <td style="font-size: 10px; background-color: rgba(255,128,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="font-size: 10px; background-color: rgba(255,128,0,.2);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                     <td style="border:1px white solid;">&nbsp;Salio antes</td>
                                 </tr>
                             </table>    
                            </label>
                         </div>
-                        <div class="col-xl-3">
+                        
+                        <div class="col-md-2">
+                            <label>
+                            <table>
+                                <tr style="width:25px;"> 
+                                    <td style="font-size: 10px; background-color: rgba(174,204,204,1);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border:1px white solid;">&nbsp;Trabajo en descanso</td>
+                                </tr>
+                            </table>    
+                           </label>
+                        </div>
+                        <div class="col-xl-4">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="submit" class="btn btn-sm"  style="background-color: #2d572c; color:#fff;" name="Excel2" id="Excel2">
                                 <b>
                                     <span class="btn-label">
@@ -172,24 +195,142 @@
                 </form>
                 <div class="form-group row " >
                     <div class="col-md-12">
-                        <div class="table-responsive" style="overflow-x: auto;">
+                    <div class="table-responsive">
                         <table class="table table-hover table-striped table-bordered display dataTable no-footer" id="list_user2">
                             <thead>
                                 <tr>
-                                    
-                                    <th class=" sorting" style="font-size: 10px; color:#ffffff; background-color:#872637; width: 5%;"><center>Empleado</center></th>
+                                    <th class="sorting" style="font-size: 9px; color:#ffffff; background-color:#872637; width: 5%;"><center>Empleado</center></th>
                                     @foreach($fechas_qna as $qna)
-                                    <th class=" sorting" style="font-size: 10px;  color:#ffffff; background-color:#872637; width: 450px;"><center>
-                                    {{ \Carbon\Carbon::parse($qna->fecha)
-                                                                    ->locale('es') // Configurar idioma a español
-                                                                    ->translatedFormat('l, d \d\e F \d\e\l Y ') }}
-                                                                    </center></th>
+                                    <th class="sorting" style="font-size: 9px; color:#ffffff; background-color:#872637; width: 450px;">
+                                        <center>{{ \Carbon\Carbon::parse($qna->fecha)->locale('es')->translatedFormat('l, d \d\e F \d\e\l Y ') }}</center>
+                                    </th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody id="llenaTabla">
                                 @php $i = 1; @endphp
-                                @if($array_completo !== null)
+                                @if(isset($id_empleado) && $id_empleado!= "-Selecciona-")
+                                <tr>
+                                                <td  style="font-size: 9px; ">
+                                                    <center>
+                                                        {{$id_empleado}}
+                                                    </center>
+                                                </td>
+                                                @php 
+                                                for($i=0 ; count($fechas_qna)>$i ; $i++)
+                                                {
+                                                @endphp
+                                                @if(isset($array_completo[$id_empleado]))
+                                                <td>
+                                                    <table>
+                                                        
+                                                            @if($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Descanso")
+                                                            <tr>
+                                                                @if($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_r'] == "Descanso")
+                                                                <td  style="font-size: 9px; background-color: rgba(255,255,0,.2);">
+                                                                    <center>  
+                                                                        {!! $array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_r'] !!}
+                                                                    </center> 
+                                                                </td>
+                                                                @else
+                                                                <td  style="font-size: 9px; background-color: rgba(174,204,204,1);">
+                                                                    <center>  
+                                                                        {!! $array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_r'] !!}
+                                                                    </center> 
+                                                                </td>
+                                                                @endif
+                                                            </tr>
+                                                            @elseif($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Llego tarde")
+                                                            <tr>
+                                                                <td  style="font-size: 9px;  background-color: rgba(255,128,0,.2);"> <center>Llego tarde</center> </td>
+                                                            </tr>
+                                                            @elseif($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Falta")
+                                                            <tr>
+                                                                <td  style="font-size: 9px; background-color: rgba(254,0,0,.2);"> <center>Falta</center> </td>
+                                                            </tr>
+                                                            @elseif($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Sin datos")
+                                                            <tr>
+                                                                <td  style="font-size: 9px; background-color: rgba(161,130,98,.2);"> <center>Sin datos</center> </td>
+                                                            </tr>
+                                                            @else
+                                                            <tr style="border-bottom: 1px solid black;">
+                                                                <td  style="font-size: 9px;"> Rol: 
+                                                                {!! \Carbon\Carbon::parse($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_j'])
+                                                                    ->locale('es') 
+                                                                    ->translatedFormat('l, d F Y - <b>H:i:s</b>') !!}
+                                                                <hr> Real: 
+                                                                {!! \Carbon\Carbon::parse($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_r'])
+                                                                    ->locale('es') 
+                                                                    ->translatedFormat('l, d F Y - <b>H:i:s</b>') !!}
+                                                                </td>
+                                                                
+                                                                @if($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_estatus']=="Llego bien")
+                                                                <td  style="font-size: 9px; background-color: rgba(0,128,0,.2);"> <br>
+                                                                Diferencia: 
+                                                                    {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_dif_llegada']}}<hr>    
+                                                                Estatus: 
+                                                                    {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_estatus']}}
+                                                                </td>
+                                                                @elseif($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_estatus']=="Llego tarde")
+                                                                <td  style="font-size: 9px; background-color: rgba(255,128,0,.2);"> <br>
+                                                                Diferencia: 
+                                                                    {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_dif_llegada']}}<hr>   
+                                                                     Estatus: 
+                                                                    {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_llegada_estatus']}}
+                                                                </td>
+                                                                @endif
+                                                               
+                                                                
+                                                            </tr>
+                                                            <tr>
+                                                            @if($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_salida_j'] == "Sin datos")
+                                                                <tr>
+                                                                    <td  style="font-size: 9px; background-color: rgba(161,130,98,.2);"> Sin datos </td>
+                                                                </tr>
+                                                            @else
+                                                                <td  style="font-size: 9px;"> 
+                                                                    Rol: 
+                                                                    {!! \Carbon\Carbon::parse($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_salida_j'])
+                                                                    ->locale('es') // Configurar idioma a español
+                                                                    ->translatedFormat('l, d F Y - <b>H:i:s</b>') !!}
+                                                                    <hr>
+                                                                    Real: 
+                                                                    {!! \Carbon\Carbon::parse($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_salida_r'])
+                                                                    ->locale('es') // Configurar idioma a español
+                                                                    ->translatedFormat('l, d F Y - <b>H:i:s</b>') !!}
+                                                                </td>
+                                                                
+                                                                @if($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_salida_estatus']=="Salio bien")
+                                                                <td  style="font-size: 9px; background-color: rgba(0,128,0,.2);"><br>
+                                                                Diferencia:  {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_dif_salida']}}<hr>
+                                                                 Estatus: 
+                                                                    {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_salida_estatus']}}
+                                                                </td>
+                                                                @elseif($array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_salida_estatus']=="Salio antes")
+                                                                <td  style="font-size: 9px; background-color: rgba(255,128,0,.2);"> <br>
+                                                                Diferencia:  {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_dif_salida']}}<hr>
+                                                                Estatus: 
+                                                                    {{$array_completo[$id_empleado][$fechas_qna[$i]->fecha]['hora_salida_estatus']}}
+                                                                </td>
+                                                                @endif
+                                                                
+                                                            @endif
+                                                            </tr>
+                                                            @endif
+                                                    </table>
+                                                   
+                                                </td>
+                                                @else
+                                                <td>
+                                                    Sin horario asignado
+                                                   
+                                                </td>
+                                                @endif
+                                                @php 
+                                                }
+                                                @endphp
+                                            </tr>
+                                @elseif($array_completo !== null)
                                     @foreach($elementos as $elem)
                                             <tr>
                                                 <td>{{$elem->id_elemento}} </td>
@@ -203,23 +344,35 @@
                                                         
                                                             @if($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Descanso")
                                                             <tr>
-                                                                <td  style="font-size: 10px; background-color: rgba(255,255,0,.2);"><center> Descanso</center> </td>
+                                                                @if($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_r'] == "Descanso")
+                                                                <td  style="font-size: 9px; background-color: rgba(255,255,0,.2);">
+                                                                    <center>  
+                                                                        {!! $array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_r'] !!}
+                                                                    </center> 
+                                                                </td>
+                                                                @else
+                                                                <td  style="font-size: 9px; background-color: rgba(174,204,204,1);">
+                                                                    <center>  
+                                                                        {!! $array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_r'] !!}
+                                                                    </center> 
+                                                                </td>
+                                                                @endif
                                                             </tr>
                                                             @elseif($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Llego tarde")
                                                             <tr>
-                                                                <td  style="font-size: 10px;  background-color: rgba(255,128,0,.2);"> <center>Llego tarde</center> </td>
+                                                                <td  style="font-size: 9px;  background-color: rgba(255,128,0,.2);"> <center>Llego tarde</center> </td>
                                                             </tr>
                                                             @elseif($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Falta")
                                                             <tr>
-                                                                <td  style="font-size: 10px; background-color: rgba(254,0,0,.2);"> <center>Falta</center> </td>
+                                                                <td  style="font-size: 9px; background-color: rgba(254,0,0,.2);"> <center>Falta</center> </td>
                                                             </tr>
                                                             @elseif($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Sin datos")
                                                             <tr>
-                                                                <td  style="font-size: 10px; background-color: rgba(161,130,98,.2);"> <center>Sin datos</center> </td>
+                                                                <td  style="font-size: 9px; background-color: rgba(161,130,98,.2);"> <center>Sin datos</center> </td>
                                                             </tr>
                                                             @else
                                                             <tr style="border-bottom: 1px solid black;">
-                                                                <td  style="font-size: 10px;"> Rol: 
+                                                                <td  style="font-size: 9px;"> Rol: 
                                                                 {!! \Carbon\Carbon::parse($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_j'])
                                                                     ->locale('es') 
                                                                     ->translatedFormat('l, d F Y - <b>H:i:s</b>') !!}
@@ -230,14 +383,14 @@
                                                                 </td>
                                                                 
                                                                 @if($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_estatus']=="Llego bien")
-                                                                <td  style="font-size: 10px; background-color: rgba(0,128,0,.2);"> <br>
+                                                                <td  style="font-size: 9px; background-color: rgba(0,128,0,.2);"> <br>
                                                                 Diferencia: 
                                                                     {{$array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_dif_llegada']}}<hr>    
                                                                 Estatus: 
                                                                     {{$array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_estatus']}}
                                                                 </td>
                                                                 @elseif($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_estatus']=="Llego tarde")
-                                                                <td  style="font-size: 10px; background-color: rgba(255,128,0,.2);"> <br>
+                                                                <td  style="font-size: 9px; background-color: rgba(255,128,0,.2);"> <br>
                                                                 Diferencia: 
                                                                     {{$array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_dif_llegada']}}<hr>   
                                                                      Estatus: 
@@ -250,10 +403,10 @@
                                                             <tr>
                                                             @if($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_salida_j'] == "Sin datos")
                                                                 <tr>
-                                                                    <td  style="font-size: 10px; background-color: rgba(161,130,98,.2);"> Sin datos </td>
+                                                                    <td  style="font-size: 9px; background-color: rgba(161,130,98,.2);"> Sin datos </td>
                                                                 </tr>
                                                             @else
-                                                                <td  style="font-size: 10px;"> 
+                                                                <td  style="font-size: 9px;"> 
                                                                     Rol: 
                                                                     {!! \Carbon\Carbon::parse($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_salida_j'])
                                                                     ->locale('es') // Configurar idioma a español
@@ -266,13 +419,13 @@
                                                                 </td>
                                                                 
                                                                 @if($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_salida_estatus']=="Salio bien")
-                                                                <td  style="font-size: 10px; background-color: rgba(0,128,0,.2);"><br>
+                                                                <td  style="font-size: 9px; background-color: rgba(0,128,0,.2);"><br>
                                                                 Diferencia:  {{$array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_dif_salida']}}<hr>
                                                                  Estatus: 
                                                                     {{$array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_salida_estatus']}}
                                                                 </td>
                                                                 @elseif($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_salida_estatus']=="Salio antes")
-                                                                <td  style="font-size: 10px; background-color: rgba(255,128,0,.2);"> <br>
+                                                                <td  style="font-size: 9px; background-color: rgba(255,128,0,.2);"> <br>
                                                                 Diferencia:  {{$array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_dif_salida']}}<hr>
                                                                 Estatus: 
                                                                     {{$array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_salida_estatus']}}
@@ -330,8 +483,9 @@
     scrollX: false,
     scrollCollapse: true,
     filter: true,
-    lengthMenu: [[15, 30, 45, 60, 75, -1], [15, 30, 45, 60, 75, "Todos"]],
-    iDisplayLength: 15,
+    fixedHeader: true, // Activa el encabezado fijo
+    lengthMenu: [[5, 10, 15, 20, 25, -1], [5, 10, 15, 20, 25, "Todos"]],
+    iDisplayLength: 5,
     "language": {
         "lengthMenu": "Mostrar _MENU_ datos",
         "zeroRecords": "No existe el dato introducido",

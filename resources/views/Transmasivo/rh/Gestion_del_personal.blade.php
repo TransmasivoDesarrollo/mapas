@@ -148,31 +148,44 @@
                                 <div class="card-body">
                                 <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
 										<li class="nav-item">
-											<a class="nav-link active" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;  " id="pills-home-tab" 
-                                            data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Datos personales</a>
+											<a id="id_1" class="nav-link active" style="background-color:rgba(241,213,146,.7);
+                                             border-bottom:1px rgb(245,226,178) solid; border-right:1px black solid; border-top:1px black solid; 
+                                             border-left:1px black solid; color:black !important; " id="pills-home-tab" 
+                                            data-toggle="pill" onclick="seleccionaCarpeta(1)" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Datos personales</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link"  style="background-color:#F1D592; border-bottom:1px #F1D592 solid;"  id="pills-profile-tab"
-                                             data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Datos de Contacto</a>
+											<a id="id_2" class="nav-link"  style="background-color:#F1D592; 
+                                             border-bottom:1px black solid;   border-right:1px black solid;  border-top:1px black solid; 
+                                             border-left:1px black solid;  border-bottom:1px black solid;  
+                                             color:black !important;"  id="pills-profile-tab"
+                                             data-toggle="pill"  onclick="seleccionaCarpeta(2)" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Datos de Contacto</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact-tab" 
-                                            data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Datos Laborales
+											<a id="id_3" class="nav-link" style="background-color:#F1D592; 
+                                              border-bottom:1px black solid;   border-right:1px black solid;  border-top:1px black solid; 
+                                             border-left:1px black solid; color:black !important;" id="pills-contact-tab" 
+                                            data-toggle="pill"  onclick="seleccionaCarpeta(3)" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Datos Laborales
                                             </a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact2-tab" 
-                                            data-toggle="pill" href="#pills-contact2" role="tab" aria-controls="pills-contact2" aria-selected="false">Documentación
+											<a id="id_4" class="nav-link" style="background-color:#F1D592; 
+                                              border-bottom:1px black solid;   border-right:1px black solid;  border-top:1px black solid; 
+                                             border-left:1px black solid; color:black !important;" id="pills-contact2-tab" 
+                                            data-toggle="pill"  onclick="seleccionaCarpeta(4)" href="#pills-contact2" role="tab" aria-controls="pills-contact2" aria-selected="false">Documentación
                                             </a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact3-tab" 
-                                            data-toggle="pill" href="#pills-contact3" role="tab" aria-controls="pills-contact3" aria-selected="false">Información Médica
+											<a id="id_5" class="nav-link" style="background-color:#F1D592; 
+                                             border-bottom:1px black solid;   border-right:1px black solid;  border-top:1px black solid; 
+                                             border-left:1px black solid; color:black !important;" id="pills-contact3-tab" 
+                                            data-toggle="pill"  onclick="seleccionaCarpeta(5)" href="#pills-contact3" role="tab" aria-controls="pills-contact3" aria-selected="false">Información Médica
                                             </a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" style="background-color:#F1D592; border-bottom:1px #F1D592 solid;" id="pills-contact4-tab" 
-                                            data-toggle="pill" href="#pills-contact4" role="tab" aria-controls="pills-contact4" aria-selected="false">Otros Datos 
+											<a id="id_6" class="nav-link" style="background-color:#F1D592; 
+                                              border-bottom:1px black solid;   border-right:1px black solid;  border-top:1px black solid; 
+                                             border-left:1px black solid; color:black !important;" id="pills-contact4-tab" 
+                                            data-toggle="pill"  onclick="seleccionaCarpeta(6)" href="#pills-contact4" role="tab" aria-controls="pills-contact4" aria-selected="false">Otros Datos 
                                             </a>
 										</li>
                                         
@@ -825,6 +838,89 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
 
     <script type="text/javascript">
+
+        function seleccionaCarpeta(id)
+        {
+            limpiarC(id);
+            if(id==1){
+                $('#id_1').css('background-color','rgb(245,226,178)');
+                $('#id_1').css('border-bottom','1px rgb(245, 226, 178) solid');
+            }
+            if(id==2){
+                $('#id_2').css('background-color','rgb(245,226,178)');
+                $('#id_2').css('border-bottom','1px rgb(245, 226, 178) solid');
+            }
+            if(id==3){
+                $('#id_3').css('background-color','rgb(245,226,178)');
+                $('#id_3').css('border-bottom','1px rgb(245, 226, 178) solid');
+            }
+            if(id==4){
+                $('#id_4').css('background-color','rgb(245,226,178)');
+                $('#id_4').css('border-bottom','1px rgb(245, 226, 178) solid');
+            }
+            if(id==5){
+                $('#id_5').css('background-color','rgb(245,226,178)');
+                $('#id_5').css('border-bottom','1px rgb(245, 226, 178) solid');
+            }
+            if(id==6){
+                $('#id_6').css('background-color','rgb(245,226,178)');
+                $('#id_6').css('border-bottom','1px rgb(245, 226, 178) solid');
+            }
+
+        }
+        function limpiarC(id)
+        {
+            $('#id_1').css('background-color','#F1D592');
+            $('#id_2').css('background-color','#F1D592');
+            $('#id_3').css('background-color','#F1D592');
+            $('#id_4').css('background-color','#F1D592');
+            $('#id_5').css('background-color','#F1D592');
+            $('#id_6').css('background-color','#F1D592');
+            if(id==1){
+                $('#id_2').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_3').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_4').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_5').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_6').css('border-bottom','1px rgb(0, 0, 0) solid');
+            }
+            if(id==2){
+                $('#id_1').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_3').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_4').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_5').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_6').css('border-bottom','1px rgb(0, 0, 0) solid');
+            }
+            if(id==3){
+                $('#id_1').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_2').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_4').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_5').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_6').css('border-bottom','1px rgb(0, 0, 0) solid');
+            }
+            if(id==4){
+                $('#id_1').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_3').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_2').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_5').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_6').css('border-bottom','1px rgb(0, 0, 0) solid');
+            }
+            if(id==5){
+                $('#id_1').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_3').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_4').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_2').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_6').css('border-bottom','1px rgb(0, 0, 0) solid');
+            }
+            if(id==6){
+                $('#id_1').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_3').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_4').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_5').css('border-bottom','1px rgb(0, 0, 0) solid');
+                $('#id_2').css('border-bottom','1px rgb(0, 0, 0) solid');
+            }
+            
+        }
+
         function valida_formulario()
         {
             var id_empleado =$('#empleado_m').val();

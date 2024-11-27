@@ -95,7 +95,7 @@
                 -->
                 <div class="container-fluid">
 					<div class="navbar-minimize">
-						<button class="btn btn-minimize btn-rounded">
+						<button class="btn btn-minimize btn-rounded" id="mini">
 							<i class="la la-navicon"></i>
 						</button>
 					</div>
@@ -220,6 +220,12 @@
 											<span class="sub-item">Gestión de horarios  </span>
 										</a>
 									</li>
+									
+									<li>
+										<a  href="{{url('/Consultar_historial_horario')}}">
+											<span class="sub-item">Consultar historial de horarios  </span>
+										</a>
+									</li>
 									<li>
 										<a  href="{{url('/Enrolar_horarios')}}">
 											<span class="sub-item">Enrolar horarios  </span>
@@ -228,6 +234,11 @@
 									<li>
 										<a  href="{{url('/consultar_biometrico')}}">
 											<span class="sub-item">Consultar biométrico  </span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/consultar_biometrico2')}}">
+											<span class="sub-item">Consultar biométrico 2  </span>
 										</a>
 									</li>
 									<li>
@@ -623,6 +634,11 @@
 										</a>
 									</li>
 									<li>
+										<a  href="{{url('/Consultar_historial_horario')}}">
+											<span class="sub-item">Consultar historial de horarios  </span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/Enrolar_horarios')}}">
 											<span class="sub-item">Enrolar horarios  </span>
 										</a>
@@ -630,6 +646,12 @@
 									<li>
 										<a  href="{{url('/consultar_biometrico')}}">
 											<span class="sub-item">Consultar biométrico  </span>
+										</a>
+									</li>
+									
+									<li>
+										<a  href="{{url('/consultar_biometrico2')}}">
+											<span class="sub-item">Consultar biométrico 2  </span>
 										</a>
 									</li>
 									<li>
@@ -1085,6 +1107,11 @@
     $('#BotonProfile').click(function(e){
       $(".dropdown-menu").dropdown('toggle')
     });
+	$(document).ready(function() {
+    $('#mini').click(); // Simula el clic en el botón al cargar la página
+});
+
+
     $('#list_user').DataTable({
     scrollX: false,
     scrollCollapse: true,
