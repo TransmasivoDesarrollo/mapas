@@ -173,7 +173,7 @@
 							</a>
 							<div class="collapse" id="forms">
 								<ul class="nav nav-collapse">
-                                {{--
+                                	{{--
 									<li>
 										<a  href="{{url('/Alta_de_personal')}}">
 											<span class="sub-item">Alta de personal</span>
@@ -220,10 +220,9 @@
 											<span class="sub-item">Gestión de horarios  </span>
 										</a>
 									</li>
-									
 									<li>
 										<a  href="{{url('/Consultar_historial_horario')}}">
-											<span class="sub-item">Consultar historial de horarios  </span>
+											<span class="sub-item">Historial de horarios  </span>
 										</a>
 									</li>
 									<li>
@@ -246,7 +245,6 @@
 											<span class="sub-item">Contrato Dasimo </span>
 										</a>
 									</li>
-									
 								</ul>
 							</div>
 					</li>
@@ -635,7 +633,7 @@
 									</li>
 									<li>
 										<a  href="{{url('/Consultar_historial_horario')}}">
-											<span class="sub-item">Consultar historial de horarios  </span>
+											<span class="sub-item">Historial de horarios  </span>
 										</a>
 									</li>
 									<li>

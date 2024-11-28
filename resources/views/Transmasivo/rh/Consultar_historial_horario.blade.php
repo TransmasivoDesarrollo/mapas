@@ -44,7 +44,61 @@
                             <div class="col-md-12">
                                 <br>
                                 <center>
-                                    <input type="submit" class="btn btn-primary" value="Buscar">
+                                    <input type="submit" class="btn btn-primary" value="Buscar" id="Buscar" name="Buscar">
+                                </center>
+                            </div>
+                        </form>
+                    </div>
+                </div>    
+            </div>
+            <div class="card">
+                <div class="card-header" style="font-family: Arial; font-size: 15px;">
+                    <div class="card-title"> <i class="la la-calendar-plus-o custom-icon"></i> Enrolar horarios </div>
+                </div>
+                    <form method="post" id="contratoForm" action="{{url('/Consultar_historial_horario')}}">
+                    @csrf
+                    <div class="card-body">
+                        <div class="form-group row " >
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label><br>ID empleado <span class="required-label"></span></label>
+                                    <select  id="id_empleado" name="id_empleado" class="form-control" >
+                                            <option value="-Selecciona-">-Selecciona-</option>
+                                        @foreach($elementos as $elemento)
+                                            @if(isset($id_empleado))
+                                                @if($elemento->id_elemento == $id_empleado)
+                                                    <option selected value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>
+                                                @else
+                                                    <option value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>  
+                                                @endif
+                                            @else
+                                                <option value="{{$elemento->id_elemento}}">{{$elemento->id_elemento}}</option>  
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label><br>Horarios<span class="required-label"></span></label>
+                                    <select  id="id_horarios" name="id_horarios" class="form-control" >
+                                        <option value="Sin asignar">Sin asignar</option>
+                                        @foreach($consulta as $cons)
+                                            <option  value="{{$cons->id_t_horarios_personal}}">{{$cons->nombre_horario}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label><br>Día que comienza a aplicar <span class="required-label"></span></label>
+                                    <input type="date" id="dia_aplica" name="dia_aplica" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <center>
+                                    <input type="submit" class="btn btn-primary" value="Enrolar" id="Enrolar" name="Enrolar">
                                 </center>
                             </div>
                         </form>
@@ -119,7 +173,7 @@
                             },
                         @else
                             {
-                                title: '{{ substr($llegada, 0, 5) }} Entrada',
+                                title: '{{ substr($llegada, 0, 5) }} - Entrada',
                                 start: new Date({{ substr($fecha_array, 0, 4) }}, {{ substr($fecha_array, 5, 2) }} - 1, {{ substr($fecha_array, 8, 2) }}),
                                 allDay: true,
                                 className: 'fc-info'
@@ -127,13 +181,13 @@
 
                             @if($comida!==null && $fin_comida!==null )
                                 {
-                                    title: '{{ substr($comida, 0, 5) }} Comida',
+                                    title: '{{ substr($comida, 0, 5) }} - Comida',
                                     start: new Date({{ substr($fecha_array, 0, 4) }}, {{ substr($fecha_array, 5, 2) }} - 1, {{ substr($fecha_array, 8, 2) }}),
                                     allDay: true,
                                     className: 'fc-success'
                                 },
                                 {
-                                    title: '{{ substr($fin_comida, 0, 5) }} Fin comida',
+                                    title: '{{ substr($fin_comida, 0, 5) }} - Fin comida',
                                     start: new Date({{ substr($fecha_array, 0, 4) }}, {{ substr($fecha_array, 5, 2) }} - 1, {{ substr($fecha_array, 8, 2) }}),
                                     allDay: true,
                                     className: 'fc-success'
@@ -141,7 +195,7 @@
                             @endif
                             
                             {
-                                title: '{{ substr($salida, 0, 5) }} Salida',
+                                title: '{{ substr($salida, 0, 5) }} - Salida',
                                 start: new Date({{ substr($fecha_array, 0, 4) }}, {{ substr($fecha_array, 5, 2) }} - 1, {{ substr($fecha_array, 8, 2) }}),
                                 allDay: true,
                                 className: 'fc-info'

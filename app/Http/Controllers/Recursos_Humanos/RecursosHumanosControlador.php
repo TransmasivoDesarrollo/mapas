@@ -3756,72 +3756,185 @@ foreach ($resultados as $resultado) {
     {
         $elementos = DB::connection('mysql')->select(
             'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" ORDER BY id_elemento asc;');
-        return view('Transmasivo.rh.Consultar_historial_horario',compact('elementos'));
+            
+        $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal where estatus="Activo" ORDER BY nombre_horario asc;');
+        return view('Transmasivo.rh.Consultar_historial_horario',compact('elementos','consulta'));
     }
 
     public function post_Consultar_historial_horario(Request $request)
     {
-        $id_empleado = $request->input('id_empleado');
-        $result = DB::connection('mysql')->select(
-            'SELECT * FROM t_horarios_enrolador_personal where id_empleado="'.$id_empleado.'" ORDER BY fecha_inicio asc;');
-        
-        $fechas = [];
-        $i=0;
-        foreach ($result as $registro) {
-            $inicio = new \DateTime($registro->fecha_inicio); 
-            $fin = $registro->fecha_fin 
-            ? new \DateTime($registro->fecha_fin) 
-            : (new \DateTime())->modify('+15 days'); 
-            $id_horario = $registro->id_horario ; 
-            if (!$fin) {
-                $fin = new \DateTime(); 
-            }
-            while ($inicio < $fin) {
-                $fecha_actual = $inicio->format('Y-m-d');
-                $dia_semana = Carbon::parse($fecha_actual)->locale('es')->dayName; 
-                $select = "";
-                    if($dia_semana=='lunes'){
-                    $select = " jornada_l as nombre, hora_llegada_l as llegada, hora_inicio_comida_l as comida, hora_fin_comida_l as fin_comida, hora_salida_l as salida ";
-                    }
-                    if($dia_semana=='martes'){
-                        $select = " jornada_m as nombre, hora_llegada_m as llegada, hora_inicio_comida_m as comida, hora_fin_comida_m as fin_comida, hora_salida_m as salida ";
-                    }
-                    if($dia_semana=='miércoles'){
-                        $select = " jornada_mi as nombre, hora_llegada_mi as llegada, hora_inicio_comida_mi as comida, hora_fin_comida_mi as fin_comida, hora_salida_mi as salida ";
-                    }
-                    if($dia_semana=='jueves'){
-                        $select = " jornada_j as nombre, hora_llegada_j as llegada, hora_inicio_comida_j as comida, hora_fin_comida_j as fin_comida, hora_salida_j as salida ";
-                    }
-                    if($dia_semana=='viernes'){
-                        $select = " jornada_v as nombre, hora_llegada_v as llegada, hora_inicio_comida_v as comida, hora_fin_comida_v as fin_comida, hora_salida_v as salida ";
-                    }
-                    if($dia_semana=='sábado'){
-                        $select = " jornada_s as nombre, hora_llegada_s as llegada, hora_inicio_comida_s as comida, hora_fin_comida_s as fin_comida, hora_salida_s as salida ";
-                    }
-                    if($dia_semana=='domingo'){
-                        $select = " jornada_d as nombre, hora_llegada_d as llegada, hora_inicio_comida_d as comida, hora_fin_comida_d as fin_comida, hora_salida_d as salida ";
-                    }
+        if($request->has('Buscar'))
+        {
+            $id_empleado = $request->input('id_empleado');
+            $result = DB::connection('mysql')->select(
+                'SELECT * FROM t_horarios_enrolador_personal where id_empleado="'.$id_empleado.'" ORDER BY fecha_inicio asc;');
+            $fechas = [];
+            $i=0;
+            foreach ($result as $registro) {
+                $inicio = new \DateTime($registro->fecha_inicio); 
+                $fin = $registro->fecha_fin 
+                ? new \DateTime($registro->fecha_fin) 
+                : (new \DateTime())->modify('+15 days'); 
+                
+                $id_horario = $registro->id_horario ; 
+                if (!$fin) {
+                    $fin = new \DateTime();
+                     
+                }
+                while ($inicio < $fin) {
+                    $fecha_actual = $inicio->format('Y-m-d');
+                    $dia_semana = Carbon::parse($fecha_actual)->locale('es')->dayName; 
+                    $select = "";
+                        if($dia_semana=='lunes'){
+                        $select = " jornada_l as nombre, hora_llegada_l as llegada, hora_inicio_comida_l as comida, hora_fin_comida_l as fin_comida, hora_salida_l as salida ";
+                        }
+                        if($dia_semana=='martes'){
+                            $select = " jornada_m as nombre, hora_llegada_m as llegada, hora_inicio_comida_m as comida, hora_fin_comida_m as fin_comida, hora_salida_m as salida ";
+                        }
+                        if($dia_semana=='miércoles'){
+                            $select = " jornada_mi as nombre, hora_llegada_mi as llegada, hora_inicio_comida_mi as comida, hora_fin_comida_mi as fin_comida, hora_salida_mi as salida ";
+                        }
+                        if($dia_semana=='jueves'){
+                            $select = " jornada_j as nombre, hora_llegada_j as llegada, hora_inicio_comida_j as comida, hora_fin_comida_j as fin_comida, hora_salida_j as salida ";
+                        }
+                        if($dia_semana=='viernes'){
+                            $select = " jornada_v as nombre, hora_llegada_v as llegada, hora_inicio_comida_v as comida, hora_fin_comida_v as fin_comida, hora_salida_v as salida ";
+                        }
+                        if($dia_semana=='sábado'){
+                            $select = " jornada_s as nombre, hora_llegada_s as llegada, hora_inicio_comida_s as comida, hora_fin_comida_s as fin_comida, hora_salida_s as salida ";
+                        }
+                        if($dia_semana=='domingo'){
+                            $select = " jornada_d as nombre, hora_llegada_d as llegada, hora_inicio_comida_d as comida, hora_fin_comida_d as fin_comida, hora_salida_d as salida ";
+                        }
+    
+                    $result2 = DB::connection('mysql')->select(
+                            'SELECT '.$select.' FROM t_horarios_personal where id_t_horarios_personal='.$id_horario.' ');
+                    $fechas[$i]['fecha'] = $fecha_actual;
+                    $fechas[$i]['id_horario'] = $id_horario;
+                    $fechas[$i]['nombre'] = $result2[0]->nombre;
 
-                $result2 = DB::connection('mysql')->select(
-                        'SELECT '.$select.' FROM t_horarios_personal where id_t_horarios_personal='.$id_horario.' ');
-                    
-                $fechas[$i]['fecha'] = $fecha_actual;
-                $fechas[$i]['id_horario'] = $id_horario;
-                $fechas[$i]['nombre'] = $result2[0]->nombre;
-                $fechas[$i]['llegada'] = $result2[0]->llegada;
-                $fechas[$i]['comida'] = $result2[0]->comida;
-                $fechas[$i]['fin_comida'] = $result2[0]->fin_comida;
-                $fechas[$i]['salida'] = $result2[0]->salida;
-                $fechas[$i]['dia_semana'] = ucfirst($dia_semana); 
-                $inicio->modify('+1 day'); 
-                $i++;
+                        $fechas[$i]['llegada'] = $result2[0]->llegada;
+                        $fechas[$i]['comida'] = $result2[0]->comida;
+                        $fechas[$i]['fin_comida'] = $result2[0]->fin_comida;
+                        $fechas[$i]['salida'] = $result2[0]->salida;
+                   
+                    $fechas[$i]['dia_semana'] = ucfirst($dia_semana); 
+                    $inicio->modify('+1 day'); 
+                    $i++;
+                }
             }
+            $elementos = DB::connection('mysql')->select(
+                'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" ORDER BY id_elemento asc;');
+            $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal where estatus="Activo" ORDER BY nombre_horario asc;');
+            return view('Transmasivo.rh.Consultar_historial_horario',compact('result','consulta','fechas','elementos','id_empleado'));
+
         }
-        //dd($fechas);
-        
-        $elementos = DB::connection('mysql')->select(
-            'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" ORDER BY id_elemento asc;');
-        return view('Transmasivo.rh.Consultar_historial_horario',compact('result','fechas','elementos','id_empleado'));
+        else if($request->has('Enrolar'))
+        {
+            $id_empleado = $request->input('id_empleado');
+            $id_horarios = $request->input('id_horarios');
+            $dia_aplica = $request->input('dia_aplica');
+            $id_operador = auth()->id();
+            date_default_timezone_set('America/Mexico_City');
+            $hora_actual = time();
+            $estatus='Activo';
+                
+            $hora_formateada = date('Y-m-d H:i:s', $hora_actual);
+            $valida = DB::connection('mysql')->select('select * from t_horarios_enrolador_personal where id_empleado=? and estatus="Activo"', [
+                $id_empleado,
+              
+            ]);
+            if(count($valida)>0){
+                $Inactivo = "Inactivo";
+                $id = $valida[0]->id_t_horarios_enrolador_personal;
+                DB::connection('mysql')->update(
+                    'UPDATE t_horarios_enrolador_personal 
+                     SET fecha_fin = ?, estatus = ? 
+                     WHERE id_t_horarios_enrolador_personal = ?', 
+                    [
+                        $dia_aplica,
+                        $Inactivo,
+                        $id,
+                    ]
+                );
+                
+            }
+    
+            $insert = DB::connection('mysql')->insert('insert into t_horarios_enrolador_personal (fecha_inicio,id_empleado,id_horario,fecha_registro,id_operador,estatus) 
+            values (?,?,?,?,?,?); ', [
+                $dia_aplica,
+                $id_empleado,
+                $id_horarios,
+                $hora_formateada,
+                $id_operador,
+                $estatus,
+            ]);
+            
+            $mensaje="Se enrolo el horario con éxito ";
+            $color="success";
+            
+            $result = DB::connection('mysql')->select(
+                'SELECT * FROM t_horarios_enrolador_personal where id_empleado="'.$id_empleado.'" ORDER BY fecha_inicio asc;');
+            $fechas = [];
+            $i=0;
+            foreach ($result as $registro) {
+                $inicio = new \DateTime($registro->fecha_inicio); 
+                $fin = $registro->fecha_fin 
+                ? new \DateTime($registro->fecha_fin) 
+                : (new \DateTime())->modify('+15 days'); 
+                
+                $id_horario = $registro->id_horario ; 
+                if (!$fin) {
+                    $fin = new \DateTime(); 
+                }
+                while ($inicio < $fin) {
+                    $fecha_actual = $inicio->format('Y-m-d');
+                    $dia_semana = Carbon::parse($fecha_actual)->locale('es')->dayName; 
+                    $select = "";
+                        if($dia_semana=='lunes'){
+                        $select = " jornada_l as nombre, hora_llegada_l as llegada, hora_inicio_comida_l as comida, hora_fin_comida_l as fin_comida, hora_salida_l as salida ";
+                        }
+                        if($dia_semana=='martes'){
+                            $select = " jornada_m as nombre, hora_llegada_m as llegada, hora_inicio_comida_m as comida, hora_fin_comida_m as fin_comida, hora_salida_m as salida ";
+                        }
+                        if($dia_semana=='miércoles'){
+                            $select = " jornada_mi as nombre, hora_llegada_mi as llegada, hora_inicio_comida_mi as comida, hora_fin_comida_mi as fin_comida, hora_salida_mi as salida ";
+                        }
+                        if($dia_semana=='jueves'){
+                            $select = " jornada_j as nombre, hora_llegada_j as llegada, hora_inicio_comida_j as comida, hora_fin_comida_j as fin_comida, hora_salida_j as salida ";
+                        }
+                        if($dia_semana=='viernes'){
+                            $select = " jornada_v as nombre, hora_llegada_v as llegada, hora_inicio_comida_v as comida, hora_fin_comida_v as fin_comida, hora_salida_v as salida ";
+                        }
+                        if($dia_semana=='sábado'){
+                            $select = " jornada_s as nombre, hora_llegada_s as llegada, hora_inicio_comida_s as comida, hora_fin_comida_s as fin_comida, hora_salida_s as salida ";
+                        }
+                        if($dia_semana=='domingo'){
+                            $select = " jornada_d as nombre, hora_llegada_d as llegada, hora_inicio_comida_d as comida, hora_fin_comida_d as fin_comida, hora_salida_d as salida ";
+                        }
+    
+                    $result2 = DB::connection('mysql')->select(
+                            'SELECT '.$select.' FROM t_horarios_personal where id_t_horarios_personal='.$id_horario.' ');
+                    $fechas[$i]['fecha'] = $fecha_actual;
+                    $fechas[$i]['id_horario'] = $id_horario;
+                    $fechas[$i]['nombre'] = $result2[0]->nombre;
+                     
+                            
+                            $fechas[$i]['llegada'] = $result2[0]->llegada;
+                            $fechas[$i]['comida'] = $result2[0]->comida;
+                            $fechas[$i]['fin_comida'] = $result2[0]->fin_comida;
+                            $fechas[$i]['salida'] = $result2[0]->salida;
+                      
+                    $fechas[$i]['dia_semana'] = ucfirst($dia_semana); 
+                    $inicio->modify('+1 day'); 
+                    $i++;
+                }
+            }
+            $elementos = DB::connection('mysql')->select(
+                'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" ORDER BY id_elemento asc;');
+            $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal where estatus="Activo" ORDER BY nombre_horario asc;');
+            return view('Transmasivo.rh.Consultar_historial_horario',compact('result','consulta','fechas','elementos','id_empleado'));
+        }
     }
 
 
