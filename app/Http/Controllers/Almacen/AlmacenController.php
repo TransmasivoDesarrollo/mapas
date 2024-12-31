@@ -61,6 +61,10 @@ class AlmacenController extends Controller
     {
         return view('Transmasivo.rh.Contratos');
     }
+    public function Gestion_refacciones()
+    {
+        return view('Transmasivo.Almacen.Gestion_refacciones');
+    }
     public function Consultar_caja_herramienta()
     {
         $inventario=DB::connection('mysql')->select('select * from  t_caja_herramienta');

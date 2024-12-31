@@ -1303,6 +1303,7 @@ class RecursosHumanosControlador extends Controller
                     $id_horario =null;
                         $fecha_inicio = $horario_tiene[$elementos[$j]->id_elemento]['horario_1_i'];
                         $fecha_fin = $horario_tiene[$elementos[$j]->id_elemento]['horario_1_f'];
+
                         if($fecha_fin == null)
                         {
                             $id_horario = $horario_tiene[$elementos[$j]->id_elemento]['horario_1_id'];
@@ -1346,15 +1347,15 @@ class RecursosHumanosControlador extends Controller
 
                         
                    
-                    $t_horario;
+                    $t_horario=null;
                     if($id_horario !== null){
                         $t_horario = DB::connection('mysql')->select(
                             'SELECT * FROM t_horarios_personal where id_t_horarios_personal='.$id_horario
                         );
                     }
-                    if($elementos[$j]->id_elemento == 182)
+                    if($elementos[$j]->id_elemento == 2708)
                         {
-                           //dd($t_horario);
+                           //dd( $fecha_inicio);
                            //dd($t_horario);
                         }
                     //dd($fechas_qna);
@@ -3823,6 +3824,7 @@ foreach ($resultados as $resultado) {
                     $i++;
                 }
             }
+            //DD($fechas);
             $elementos = DB::connection('mysql')->select(
                 'SELECT DISTINCT id_elemento FROM t_biometrico where id_elemento!="" ORDER BY id_elemento asc;');
             $consulta = DB::connection('mysql')->select('SELECT * FROM t_horarios_personal where estatus="Activo" ORDER BY nombre_horario asc;');

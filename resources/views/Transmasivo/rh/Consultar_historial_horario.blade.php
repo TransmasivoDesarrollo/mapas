@@ -24,7 +24,7 @@
                     <div class="form-group row " >
                             <div class="col-md-12">
                                 <div class="form-group form-group-default">
-                                    <label><br>ID empleado <span class="required-label"></span></label>
+                                    <label>ID empleado <span class="required-label"></span></label>
                                     <select  id="id_empleado" name="id_empleado" class="form-control" >
                                             <option value="-Selecciona-">-Selecciona-</option>
                                         @foreach($elementos as $elemento)
@@ -61,7 +61,7 @@
                         <div class="form-group row " >
                             <div class="col-md-12">
                                 <div class="form-group form-group-default">
-                                    <label><br>ID empleado <span class="required-label"></span></label>
+                                    <label>ID empleado <span class="required-label"></span></label>
                                     <select  id="id_empleado" name="id_empleado" class="form-control" >
                                             <option value="-Selecciona-">-Selecciona-</option>
                                         @foreach($elementos as $elemento)
@@ -80,7 +80,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-group-default">
-                                    <label><br>Horarios<span class="required-label"></span></label>
+                                    <label>Horarios<span class="required-label"></span></label>
                                     <select  id="id_horarios" name="id_horarios" class="form-control" >
                                         <option value="Sin asignar">Sin asignar</option>
                                         @foreach($consulta as $cons)
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-group-default">
-                                    <label><br>Día que comienza a aplicar <span class="required-label"></span></label>
+                                    <label>Día que comienza a aplicar <span class="required-label"></span></label>
                                     <input type="date" id="dia_aplica" name="dia_aplica" class="form-control" >
                                 </div>
                             </div>

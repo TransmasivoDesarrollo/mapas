@@ -23,6 +23,383 @@ use Illuminate\Support\Facades\Auth; // Asegúrate de importar Auth
 class OperacionesController extends Controller
 {
     
+    public function Bitacora_de_operaciones3()
+    {
+        
+        $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
+        return view('Transmasivo.Operaciones.Bitacora_de_operaciones3',compact('terminal'));
+    }
+    
+
+    public function Bitacora_de_operaciones3_tr1_tr1_r()
+    {
+        $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
+        $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
+        return view('Transmasivo.Operaciones.Bitacora_de_operaciones3_tr1_tr1_r',compact('credencial','terminal'));
+    }
+    public function Bitacora_de_operaciones3_tr3()
+    {
+        $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
+        $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
+        return view('Transmasivo.Operaciones.Bitacora_de_operaciones3_tr3',compact('credencial','terminal'));
+    }
+    public function Bitacora_de_operaciones3_tr4()
+    {
+        $terminal = DB::connection('mysql')->select('SELECT * FROM c_terminal');
+        $credencial = DB::connection('mysql')->select('SELECT * FROM users WHERE tipo_usuario = "Conductor"');
+        return view('Transmasivo.Operaciones.Bitacora_de_operaciones3_tr4',compact('credencial','terminal'));
+    }
+    public function insertar_bitacora_operaciones(Request $request)
+    {
+        $dia = $request->input('dia');
+        $llegada_salida = $request->input('llegada_salida');
+        $ciclo = $request->input('ciclo');
+        $credencial = $request->input('credencial');
+
+        $hora_salida_1 = $request->input('hora_salida_1');
+        $hora_llegada_1 = $request->input('hora_llegada_1');
+        $hora_salida_2 = $request->input('hora_salida_2');
+        $hora_llegada_2 = $request->input('hora_llegada_2');
+        $id_jornada = $request->input('id_jornada');
+        
+        $eco = $request->input('eco');
+        $terminal = $request->input('terminal');
+        $serv = $request->input('serv');
+        $comentarios = $request->input('comentarios');
+        
+        $valida_existencia = DB::connection('mysql')->select('SELECT * FROM t_bitacora_terminales_2 where dia=? and ciclo=? and servicio=?'
+            ,[$dia,$ciclo,$serv]);
+        if($valida_existencia)
+        {
+            if($llegada_salida == 1 )
+            {
+                $valida_existencia = DB::connection('mysql')->select('update t_bitacora_terminales_2 
+                set hora_salida_1=?,hora_llegada_2=? ,eco=? ,conductor=? ,fk_terminal_s1=? ,servicio=? 
+                where dia=? and ciclo=? and fk_id_jornada=?'
+                ,[$hora_salida_1,$hora_llegada_2,$eco,$credencial,$terminal,$serv,$dia,$ciclo,$id_jornada]);
+            }else if($llegada_salida == 2 ){
+                $valida_existencia = DB::connection('mysql')->select('update t_bitacora_terminales_2 
+                set hora_salida_2=?,hora_llegada_1=? ,eco=? ,conductor=? ,fk_terminal_s2=? ,servicio=? 
+                where dia=? and ciclo=? and fk_id_jornada=?'
+                ,[$hora_salida_2,$hora_llegada_1,$eco,$credencial,$terminal,$serv,$dia,$ciclo,$id_jornada]);
+            }
+
+        }else{
+            $fecha= now()->format('Y-m-d');
+            $id_operador_registra = auth()->id();
+
+            if($llegada_salida == 1 )
+            {
+                $valida_existencia = DB::connection('mysql')->select('insert into t_bitacora_terminales_2 (dia,ciclo,conductor,hora_salida_1,
+                hora_llegada_2,eco,fk_terminal_s1,servicio,comentario,fecha_hora_captura_s1,usuario_captura_s1,fk_id_jornada) 
+                value(?,?,?,?,?,?,?,?,?,?,?,?) '
+                ,[$dia,
+                $ciclo,$credencial,$hora_salida_1,$hora_llegada_2,
+                $eco,$terminal,$serv,
+                $comentarios,$fecha,$id_operador_registra,$id_jornada ]);
+
+            }else if($llegada_salida == 2 ){
+                $valida_existencia = DB::connection('mysql')->select('insert into t_bitacora_terminales_2 (dia,ciclo,conductor,
+                hora_llegada_1,hora_salida_2,eco,fk_terminal_s2,servicio,comentario,fecha_hora_captura_s2,usuario_captura_s2,fk_id_jornada) 
+                value(?,?,?,?,?,?,?,?,?,?,?,?) '
+                ,[$dia,
+                $ciclo,$credencial,
+                $hora_llegada_1,$hora_salida_2,
+                $eco,$terminal,$serv,
+                $comentarios,$fecha,$id_operador_registra,$id_jornada ]);
+
+            }
+        }
+
+    }
+    public function buscar_por_ciclo_tr1(Request $request)
+    {
+        $ciclo = $request->input('ciclo');
+        $dia = $request->input('dia');
+        $llegada_salida = $request->input('llegada_salida');
+
+        
+        $fecha_form =  date('l', strtotime($dia));
+        $diasSemana = [
+            'Monday' => 'Lunes',
+            'Tuesday' => 'Martes',
+            'Wednesday' => 'Miércoles',
+            'Thursday' => 'Jueves',
+            'Friday' => 'Viernes',
+            'Saturday' => 'Sábado',
+            'Sunday' => 'Domingo'
+        ];
+        
+        $diaActualEspanol = $diasSemana[$fecha_form]; // Día actual traducido al español
+        //dd($diaActualEspanol);
+        $consulta = DB::connection('mysql')->select('
+           
+                SELECT ROW_NUMBER() OVER (ORDER BY 
+                 CASE 
+                     WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+                     ELSE 2
+                 END, salida_base ASC
+             ) AS numero,
+             t_jornada_completa_operacion_2.*,  
+             t_jornada_conductores.id_conductor,  
+             t_jornada_conductores.eco, 
+             t_bitacora_terminales_2.conductor as conductor_registrado,
+             t_bitacora_terminales_2.eco as eco_registrado,
+             t_bitacora_terminales_2.hora_salida_1,
+             t_bitacora_terminales_2.hora_llegada_1,
+             t_bitacora_terminales_2.hora_salida_2,
+             t_bitacora_terminales_2.hora_llegada_2,
+             t_bitacora_terminales_2.fk_terminal_s1,
+             t_bitacora_terminales_2.fk_terminal_s2
+FROM t_jornada_completa_operacion_2 
+LEFT JOIN t_jornada_conductores 
+    ON t_jornada_conductores.id_jornada_fk = t_jornada_completa_operacion_2.id_jornada_pk
+    AND ("'.$dia.'" BETWEEN t_jornada_conductores.dia_inicio AND t_jornada_conductores.dia_fin 
+         OR t_jornada_conductores.dia_inicio IS NULL)
+LEFT JOIN t_bitacora_terminales_2 
+    ON t_bitacora_terminales_2.fk_id_jornada = t_jornada_completa_operacion_2.id_jornada
+    AND t_bitacora_terminales_2.dia = "'.$dia.'" -- Mover la condición de fecha al JOIN
+WHERE t_jornada_completa_operacion_2.servicio IN ("TR1","TR1-R") 
+  AND t_jornada_completa_operacion_2.dia_servicio = "'.$diaActualEspanol.'"
+ORDER BY 
+    CASE 
+        WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+        ELSE 2
+    END, salida_base ASC;
+        ');
+
+        $bitacora = DB::connection('mysql')->select(
+            'SELECT * FROM t_bitacora_terminales_2 WHERE dia = ? AND ciclo = ?', 
+            [$dia, $ciclo]
+        );
+
+        return [
+            'consulta' => $consulta,
+            'bitacora' => $bitacora
+        ];
+
+    }
+    
+    public function buscar_por_ciclo_tr3(Request $request)
+    {
+        $ciclo = $request->input('ciclo');
+        $dia = $request->input('dia');
+        $llegada_salida = $request->input('llegada_salida');
+
+        
+        $fecha_form =  date('l', strtotime($dia));
+        $diasSemana = [
+            'Monday' => 'Lunes',
+            'Tuesday' => 'Martes',
+            'Wednesday' => 'Miércoles',
+            'Thursday' => 'Jueves',
+            'Friday' => 'Viernes',
+            'Saturday' => 'Sábado',
+            'Sunday' => 'Domingo'
+        ];
+        
+        $diaActualEspanol = $diasSemana[$fecha_form]; // Día actual traducido al español
+        //dd($diaActualEspanol);
+        $consulta = DB::connection('mysql')->select('
+            SELECT ROW_NUMBER() OVER (ORDER BY 
+                 CASE 
+                     WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+                     ELSE 2
+                 END, salida_base ASC
+             ) AS numero,
+             t_jornada_completa_operacion_2.*,  
+             t_jornada_conductores.id_conductor,  
+             t_jornada_conductores.eco, 
+             t_bitacora_terminales_2.conductor as conductor_registrado,
+             t_bitacora_terminales_2.eco as eco_registrado,
+             t_bitacora_terminales_2.hora_salida_1,
+             t_bitacora_terminales_2.hora_llegada_1,
+             t_bitacora_terminales_2.hora_salida_2,
+             t_bitacora_terminales_2.hora_llegada_2,
+             t_bitacora_terminales_2.fk_terminal_s1,
+             t_bitacora_terminales_2.fk_terminal_s2,
+             c_t_1.terminal AS terminal_1,
+             c_t_2.terminal AS terminal_2
+FROM t_jornada_completa_operacion_2 
+LEFT JOIN t_jornada_conductores 
+    ON t_jornada_conductores.id_jornada_fk = t_jornada_completa_operacion_2.id_jornada_pk
+    AND ("'.$dia.'" BETWEEN t_jornada_conductores.dia_inicio AND t_jornada_conductores.dia_fin 
+         OR t_jornada_conductores.dia_inicio IS NULL)
+LEFT JOIN t_bitacora_terminales_2 
+    ON t_bitacora_terminales_2.fk_id_jornada = t_jornada_completa_operacion_2.id_jornada
+    AND t_bitacora_terminales_2.dia = "'.$dia.'" 
+
+    left join c_terminal as c_t_1 on t_bitacora_terminales_2.fk_terminal_s1=c_t_1.id_terminal
+    left join c_terminal as c_t_2 on t_bitacora_terminales_2.fk_terminal_s1=c_t_2.id_terminal
+
+WHERE t_jornada_completa_operacion_2.servicio IN ("TR3") 
+  AND t_jornada_completa_operacion_2.dia_servicio = "'.$diaActualEspanol.'"
+ORDER BY 
+    CASE 
+        WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+        ELSE 2
+    END, salida_base ASC;
+
+                
+        ');
+
+        $bitacora = DB::connection('mysql')->select(
+            'SELECT * FROM t_bitacora_terminales_2 WHERE dia = ? AND ciclo = ?', 
+            [$dia, $ciclo]
+        );
+
+        return [
+            'consulta' => $consulta,
+            'bitacora' => $bitacora
+        ];
+
+    }
+    
+    public function buscar_por_ciclo_tr4(Request $request)
+    {
+        $ciclo = $request->input('ciclo');
+        $dia = $request->input('dia');
+        $llegada_salida = $request->input('llegada_salida');
+
+        
+        $fecha_form =  date('l', strtotime($dia));
+        $diasSemana = [
+            'Monday' => 'Lunes',
+            'Tuesday' => 'Martes',
+            'Wednesday' => 'Miércoles',
+            'Thursday' => 'Jueves',
+            'Friday' => 'Viernes',
+            'Saturday' => 'Sábado',
+            'Sunday' => 'Domingo'
+        ];
+        
+        $diaActualEspanol = $diasSemana[$fecha_form]; // Día actual traducido al español
+        //dd($diaActualEspanol);
+        $consulta = DB::connection('mysql')->select('
+           SELECT ROW_NUMBER() OVER (ORDER BY 
+                 CASE 
+                     WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+                     ELSE 2
+                 END, salida_base ASC
+             ) AS numero,
+             t_jornada_completa_operacion_2.*,  
+             t_jornada_conductores.id_conductor,  
+             t_jornada_conductores.eco, 
+             t_bitacora_terminales_2.conductor as conductor_registrado,
+             t_bitacora_terminales_2.eco as eco_registrado,
+             t_bitacora_terminales_2.hora_salida_1,
+             t_bitacora_terminales_2.hora_llegada_1,
+             t_bitacora_terminales_2.hora_salida_2,
+             t_bitacora_terminales_2.hora_llegada_2,
+             t_bitacora_terminales_2.fk_terminal_s1,
+             t_bitacora_terminales_2.fk_terminal_s2,
+             c_t_1.terminal AS terminal_1,
+             c_t_2.terminal AS terminal_2
+FROM t_jornada_completa_operacion_2 
+LEFT JOIN t_jornada_conductores 
+    ON t_jornada_conductores.id_jornada_fk = t_jornada_completa_operacion_2.id_jornada_pk
+    AND ("'.$dia.'" BETWEEN t_jornada_conductores.dia_inicio AND t_jornada_conductores.dia_fin 
+         OR t_jornada_conductores.dia_inicio IS NULL)
+LEFT JOIN t_bitacora_terminales_2 
+    ON t_bitacora_terminales_2.fk_id_jornada = t_jornada_completa_operacion_2.id_jornada
+    AND t_bitacora_terminales_2.dia = "'.$dia.'" 
+    
+    left join c_terminal as c_t_1 on t_bitacora_terminales_2.fk_terminal_s1=c_t_1.id_terminal
+    left join c_terminal as c_t_2 on t_bitacora_terminales_2.fk_terminal_s1=c_t_2.id_terminal
+WHERE t_jornada_completa_operacion_2.servicio IN ("TR4") 
+  AND t_jornada_completa_operacion_2.dia_servicio = "'.$diaActualEspanol.'"
+ORDER BY 
+    CASE 
+        WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+        ELSE 2
+    END, salida_base ASC;
+        ');
+
+        $bitacora = DB::connection('mysql')->select(
+            'SELECT * FROM t_bitacora_terminales_2 WHERE dia = ? AND ciclo = ?', 
+            [$dia, $ciclo]
+        );
+
+        return [
+            'consulta' => $consulta,
+            'bitacora' => $bitacora
+        ];
+
+    }
+
+    public function llenar_tabla_bitacora_3(Request $request)
+    {
+        $dia = $request->input('dia');
+        $servicio = $request->input('servicio');
+        $serv="";
+        if($servicio == "TR1"){
+            $serv.='"TR1", "TR1-R"';
+        }
+        if($servicio == "TR3"){
+            $serv.='"TR3"';
+        }
+        if($servicio == "TR4"){
+            $serv.='"TR4"';
+        }
+        $fecha_form =  date('l', strtotime($dia));
+        $diasSemana = [
+            'Monday' => 'Lunes',
+            'Tuesday' => 'Martes',
+            'Wednesday' => 'Miércoles',
+            'Thursday' => 'Jueves',
+            'Friday' => 'Viernes',
+            'Saturday' => 'Sábado',
+            'Sunday' => 'Domingo'
+        ];
+        
+        $diaActualEspanol = $diasSemana[$fecha_form]; // Día actual traducido al español
+        //dd($diaActualEspanol);
+        $consulta = DB::connection('mysql')->select('
+            
+                
+                
+                SELECT ROW_NUMBER() OVER (ORDER BY 
+                 CASE 
+                     WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+                     ELSE 2
+                 END, salida_base ASC
+             ) AS numero,
+             t_jornada_completa_operacion_2.*,  
+             t_jornada_conductores.id_conductor,  
+             t_jornada_conductores.eco, 
+             t_bitacora_terminales_2.conductor as conductor_registrado,
+             t_bitacora_terminales_2.eco as eco_registrado,
+             t_bitacora_terminales_2.hora_salida_1,
+             t_bitacora_terminales_2.hora_llegada_1,
+             t_bitacora_terminales_2.hora_salida_2,
+             t_bitacora_terminales_2.hora_llegada_2,
+             t_bitacora_terminales_2.fk_terminal_s1,
+             t_bitacora_terminales_2.fk_terminal_s2,
+             c_t_1.terminal AS terminal_1,
+             c_t_2.terminal AS terminal_2
+FROM t_jornada_completa_operacion_2 
+LEFT JOIN t_jornada_conductores 
+    ON t_jornada_conductores.id_jornada_fk = t_jornada_completa_operacion_2.id_jornada_pk
+    AND ("'.$dia.'" BETWEEN t_jornada_conductores.dia_inicio AND t_jornada_conductores.dia_fin 
+         OR t_jornada_conductores.dia_inicio IS NULL)
+LEFT JOIN t_bitacora_terminales_2 
+    ON t_bitacora_terminales_2.fk_id_jornada = t_jornada_completa_operacion_2.id_jornada
+    AND t_bitacora_terminales_2.dia = "'.$dia.'"
+    
+    left join c_terminal as c_t_1 on t_bitacora_terminales_2.fk_terminal_s1=c_t_1.id_terminal
+    left join c_terminal as c_t_2 on t_bitacora_terminales_2.fk_terminal_s1=c_t_2.id_terminal
+WHERE t_jornada_completa_operacion_2.servicio IN ('.$serv.') 
+  AND t_jornada_completa_operacion_2.dia_servicio = "'.$diaActualEspanol.'"
+ORDER BY 
+    CASE 
+        WHEN t_jornada_completa_operacion_2.salida_base >= "04:00:00" THEN 1
+        ELSE 2
+    END, salida_base ASC;
+
+                
+        ');
+        return $consulta;
+    }
 
     public function Bitacora_de_operaciones()
     {
@@ -777,7 +1154,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
     $dia_fin = '';
         $semana_hoy = null; // Variable para almacenar la semana actual
 
-        for ($week = 1; $week <= 52; $week++) {
+        for ($week = 1; $week <= 53; $week++) {
             $startOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->startOfWeek()->format('Y-m-d');
             $endOfWeek = \Carbon\Carbon::now()->setISODate($currentYear, $week)->endOfWeek()->format('Y-m-d');
             $semanaValue = "$startOfWeek 00:00:00 al $endOfWeek 23:59:59";
@@ -785,6 +1162,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
                 'label' => "Semana $j - " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($startOfWeek)->translatedFormat('F') . " al " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('d') . " de " . \Carbon\Carbon::parse($endOfWeek)->translatedFormat('F') . " $currentYear",
                 'value' => $semanaValue
             ];
+            
             
             if ($today >= $startOfWeek && $today <= $endOfWeek) {
                 $selectedSemana = $semanaValue;
@@ -797,7 +1175,7 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             }
             $j++;
         }
-
+//dd($semanas);
         $jornadas_l = DB::connection('mysql')->select(
             "SELECT servicio,id_jornada_pk, dia_servicio, turno, jornada,
             COUNT(ciclo) AS total_ciclos,
@@ -1274,6 +1652,10 @@ public function enrolar_horarios_conductores_2($semanas_del_post="")
             'conductores_d','conductores_totales','semana_seleccionada'));
     }
 
+    public function alta_cliente()
+    {
+        return view('Transmasivo.celedi.registro');
+    }
     public function post_enrolar_horarios_conductores_2(Request $request)
     {
         if($request->has('Buscar'))

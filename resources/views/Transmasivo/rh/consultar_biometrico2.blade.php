@@ -370,6 +370,10 @@
                                                             <tr>
                                                                 <td  style="font-size: 9px; background-color: rgba(161,130,98,.2);"> <center>Sin datos</center> </td>
                                                             </tr>
+                                                            @elseif($array_completo[$elem->id_elemento][$fechas_qna[$i]->fecha]['hora_llegada_j'] == "Sin horario asignado")
+                                                            <tr>
+                                                                <td  style="font-size: 9px; background-color: rgba(161,130,98,.2);"> <center>Sin horario asignado</center> </td>
+                                                            </tr>
                                                             @else
                                                             <tr style="border-bottom: 1px solid black;">
                                                                 <td  style="font-size: 9px;"> Rol: 

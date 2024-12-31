@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::POST('/AltaAccesoAlSistema', '\App\Http\Controllers\Sistemas\SistemasController@Registro_de_acceso')->name('Registro_de_acceso');
     
     Route::get('/Revision_de_camaras', '\App\Http\Controllers\Sistemas\SistemasController@Revision_de_camaras')->name('Revision_de_camaras');
+    Route::get('/orden_servicio', '\App\Http\Controllers\Sistemas\SistemasController@orden_servicio')->name('orden_servicio');
     //mantenimiento
     
     Route::get('/Reporte_de_estado_fisico_y_funcionamiento', '\App\Http\Controllers\Mantenimiento\MantenimientoController@Reporte_de_estado_fisico_y_funcionamiento')->name('Reporte_de_estado_fisico_y_funcionamiento');
@@ -84,6 +85,9 @@ Route::middleware('auth')->group(function () {
     Route::POST('/Consultar_caja_herramienta', '\App\Http\Controllers\Almacen\AlmacenController@post_Consultar_caja_herramienta')->name('post_Consultar_caja_herramienta');
     
     Route::get('/exportar-a-word', '\App\Http\Controllers\Almacen\AlmacenController@exportToWord');
+    Route::get('/Gestion_refacciones', '\App\Http\Controllers\Almacen\AlmacenController@Gestion_refacciones')->name('Gestion_refacciones');
+
+    
 
     //recursos humanos
     Route::get('/check-location', '\App\Http\Controllers\Recursos_Humanos\RecursosHumanosControlador@checkLocation');
@@ -196,6 +200,23 @@ Route::middleware('auth')->group(function () {
     Route::POST('/Bitacora_de_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@Registro_bitacora_terminal')->name('Registro_bitacora_terminal');
     Route::POST('/Bitacora_de_operaciones_pdf', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones_pdf')->name('Bitacora_de_operaciones_pdf');
     
+
+    Route::get('/Bitacora_de_operaciones3', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones3')->name('Bitacora_de_operaciones3');
+    Route::POST('/Bitacora_de_operaciones3', '\App\Http\Controllers\Operaciones\OperacionesController@postBitacora_de_operaciones3')->name('postBitacora_de_operaciones3');
+
+    
+    Route::get('/buscar_por_ciclo_tr1', '\App\Http\Controllers\Operaciones\OperacionesController@buscar_por_ciclo_tr1')->name('buscar_por_ciclo_tr1');
+    Route::get('/buscar_por_ciclo_tr3', '\App\Http\Controllers\Operaciones\OperacionesController@buscar_por_ciclo_tr3')->name('buscar_por_ciclo_tr3');
+    Route::get('/buscar_por_ciclo_tr4', '\App\Http\Controllers\Operaciones\OperacionesController@buscar_por_ciclo_tr4')->name('buscar_por_ciclo_tr4');
+    
+    Route::get('/insertar_bitacora_operaciones', '\App\Http\Controllers\Operaciones\OperacionesController@insertar_bitacora_operaciones')->name('insertar_bitacora_operaciones');
+    Route::get('/llenar_tabla_bitacora_3', '\App\Http\Controllers\Operaciones\OperacionesController@llenar_tabla_bitacora_3')->name('llenar_tabla_bitacora_3');
+    
+    
+    Route::get('/Bitacora_de_operaciones3_tr1_tr1_r', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones3_tr1_tr1_r')->name('Bitacora_de_operaciones3_tr1_tr1_r');
+    Route::get('/Bitacora_de_operaciones3_tr3', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones3_tr3')->name('Bitacora_de_operaciones3_tr3');
+    Route::get('/Bitacora_de_operaciones3_tr4', '\App\Http\Controllers\Operaciones\OperacionesController@Bitacora_de_operaciones3_tr4')->name('Bitacora_de_operaciones3_tr4');
+    
     Route::get('/Alta_de_reporte', '\App\Http\Controllers\Operaciones\OperacionesController@Alta_de_reporte')->name('Alta_de_reporte');
     Route::get('/Alta_de_reporte/subgrupo', '\App\Http\Controllers\Operaciones\OperacionesController@catalogo_subgrupo')->name('catalogo_subgrupo');
     Route::get('/Bitacora_De_Liberacion_De_Unidades/km', '\App\Http\Controllers\Mantenimiento\MantenimientoController@consultakm')->name('consultakm');
@@ -301,6 +322,9 @@ Route::middleware('auth')->group(function () {
     Route::POST('/enrolar_horarios_conductores', '\App\Http\Controllers\Operaciones\OperacionesController@post_enrolar_horarios_conductores')->name('post_enrolar_horarios_conductores');
     
     Route::get('/buscar_horario_completo', '\App\Http\Controllers\Operaciones\OperacionesController@buscar_horario_completo')->name('buscar_horario_completo');
+    
+    
+    Route::get('/alta_cliente', '\App\Http\Controllers\Operaciones\OperacionesController@alta_cliente')->name('alta_cliente');
     
 
 

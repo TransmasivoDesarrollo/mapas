@@ -371,6 +371,11 @@
 										</a>
 									</li>
 									<li>
+										<a  href="{{url('/Bitacora_de_operaciones3')}}">
+											<span class="sub-item">Bitácora de operaciones 3</span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/Reporte_de_jornadas')}}">
 											<span class="sub-item">Reporte de jornadas</span>
 										</a>
@@ -748,6 +753,11 @@
 							<div class="collapse" id="Inventario_caja_herramienta">
 								<ul class="nav nav-collapse">
 									<li>
+										<a  href="{{url('/Gestion_refacciones')}}">
+											<span class="sub-item">Gestión refacciones</span>
+										</a>
+									</li>
+									<li>
 										<a  href="{{url('/Inventario_caja_herramienta')}}">
 											<span class="sub-item">Inventario caja de herramienta</span>
 										</a>
@@ -827,6 +837,11 @@
 									<li>
 										<a  href="{{url('/Bitacora_de_operaciones')}}">
 											<span class="sub-item">Bitácora de operaciones</span>
+										</a>
+									</li>
+									<li>
+										<a  href="{{url('/Bitacora_de_operaciones3')}}">
+											<span class="sub-item">Bitácora de operaciones 3</span>
 										</a>
 									</li>
 									<li>

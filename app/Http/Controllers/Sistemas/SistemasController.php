@@ -17,9 +17,13 @@ class SistemasController extends Controller
 
     public function AltaAccesoAlSistema()
     {
-        
         return view('Transmasivo.Sistemas.Alta_Acceso_Al_Sistema');
     }
+    public function orden_servicio()
+    {
+        return view('Transmasivo.Sistemas.orden_servicio');
+    }
+
     public function Registro_de_acceso(Request $request)
     {
        

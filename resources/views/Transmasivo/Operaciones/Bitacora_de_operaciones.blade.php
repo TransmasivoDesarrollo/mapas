@@ -961,30 +961,30 @@
 
         $(document).ready(function() {
             $(document).on('keydown', function(event) {
-        // Detecta si se presionan Ctrl + Q (keyCode para 'Q' es 81)
-        if (event.ctrlKey && event.key === 'q') {
-            event.preventDefault(); // Evita cualquier comportamiento predeterminado
-            $('#boton_registra').click(); // Simula un clic en el botón con el id 'guardarFormulario'
-        }
+                // Detecta si se presionan Ctrl + Q (keyCode para 'Q' es 81)
+                if (event.ctrlKey && event.key === 'q') {
+                    event.preventDefault(); // Evita cualquier comportamiento predeterminado
+                    $('#boton_registra').click(); // Simula un clic en el botón con el id 'guardarFormulario'
+                }
 
-        if (event.ctrlKey && event.key === 'z') {
-            event.preventDefault(); // Evita cualquier comportamiento predeterminado
-            $('#llegada_salida').val('1').trigger('change');
-            $('#hora_salida').focus();
-        }
-        if (event.ctrlKey && event.key === 'x') {
-            event.preventDefault(); // Evita cualquier comportamiento predeterminado
-            $('#llegada_salida').val('2').trigger('change');
-            $('#hora_ll').focus();
-            
-        }
-        if (event.ctrlKey && event.key === 'c') {
-            event.preventDefault(); // Evita cualquier comportamiento predeterminado
-            $('#llegada_salida').val('4').trigger('change');
-            $('#hora_salida').focus();
-        }
-        
-    });
+                if (event.ctrlKey && event.key === 'z') {
+                    event.preventDefault(); // Evita cualquier comportamiento predeterminado
+                    $('#llegada_salida').val('1').trigger('change');
+                    $('#hora_salida').focus();
+                }
+                if (event.ctrlKey && event.key === 'x') {
+                    event.preventDefault(); // Evita cualquier comportamiento predeterminado
+                    $('#llegada_salida').val('2').trigger('change');
+                    $('#hora_ll').focus();
+                    
+                }
+                if (event.ctrlKey && event.key === 'c') {
+                    event.preventDefault(); // Evita cualquier comportamiento predeterminado
+                    $('#llegada_salida').val('4').trigger('change');
+                    $('#hora_salida').focus();
+                }
+                
+            });
             var fecha = new Date();
             var year = fecha.getFullYear();
             var month = ("0" + (fecha.getMonth() + 1)).slice(-2); // Se suma 1 porque los meses empiezan desde 0
